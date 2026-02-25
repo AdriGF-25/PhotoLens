@@ -2,7 +2,7 @@
 
 ## Descripción del Proyecto
 
-PhotoLens es una plataforma web interactiva dedicada a la fotografía. Permite a los usuarios explorar novedades, tendencias, mercado de equipos, participar en foros y gestionar compras.
+PhotoLens es una plataforma web interactiva dedicada a la fotografía (Proyecto Intermodular - Tipo 2). Permite a los usuarios explorar novedades, tendencias, mercado de equipos, participar en foros y gestionar compras. La arquitectura sigue el modelo Tipo 2: Frontend HTML/CSS/JavaScript consumiendo una API REST propia desarrollada con Python.
 
 ## Características Principales
 
@@ -23,8 +23,8 @@ PhotoLens es una plataforma web interactiva dedicada a la fotografía. Permite a
 - JavaScript (Vanilla)
 
 ### Backend
-- Python
-- Framework: Flask/Django
+- Python 3.9+
+- Flask (API REST)
 
 ### Base de Datos
 - MariaDB
@@ -32,6 +32,17 @@ PhotoLens es una plataforma web interactiva dedicada a la fotografía. Permite a
 ### Herramientas
 - Git
 - GitHub
+
+---
+
+## Decisiones Técnicas
+
+Se ha elegido Python con Flask como framework backend, en lugar de PHP/Laravel, como aprendizaje adicional y reto profesional. Esta decisión se justifica por:
+
+- Versatilidad: Flask permite construir APIs REST modernas y escalables de forma simple
+- Transferencia de conocimientos: Habilidades aplicables a proyectos profesionales actuales
+- Cumplimiento de especificaciones: Satisface completamente los requisitos del Tipo 2 (API REST propia + BD propia)
+- Modernidad: Python es ampliamente utilizado en desarrollo web contemporáneo
 
 ---
 
@@ -53,12 +64,14 @@ PhotoLens es una plataforma web interactiva dedicada a la fotografía. Permite a
 - Navegador: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
 - SO Servidor: Linux/Windows Server 2019+
 - Python: 3.9+
+- Flask: 2.0+
 - MariaDB: 10.5+
 
 ### Software Recomendado
 - Navegador: Latest versión de Chrome/Firefox
 - SO Servidor: Ubuntu 20.04 LTS o Windows Server 2022
 - Python: 3.11+
+- Flask: 2.3+
 - MariaDB: 10.11+
 - IDE: VS Code
 
@@ -75,7 +88,7 @@ cd PhotoLens
 ### 2. Configurar Frontend
 Los archivos HTML, CSS y JS están listos para usar.
 
-### 3. Configurar Backend (Python)
+### 3. Configurar Backend (Python + Flask)
 ```bash
 python -m venv venv
 venv\Scripts\activate
