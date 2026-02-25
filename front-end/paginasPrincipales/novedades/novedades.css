@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*--------- DIVISIONES ---------*/
+.divisiones {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+}
+
+.fila {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+/*--------- DESTACADOS ---------*/
+
+.fila:nth-child(1), 
+.fila:nth-child(3) {
+    background-color: #030013;
+    padding: 50px;
+}
+
+#imgInicio-div {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    display: block;
+}
+
+#imgInicio-div img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    filter: brightness(0.85);
+}
+
+#imgInicio-div .title {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 50%;
+    color: white;
+    text-align: right;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    z-index: 2;
+}
+
+#imgInicio-div .description {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 40%;
+    color: #e0e0e0;
+    text-align: left;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    z-index: 2;
+}
+
+/*--------- CARRUSEL ---------*/
+
+.fila:nth-child(2) {
+    background-color: #17029F;
+    padding: 40px;
+}
+
+.carousel-container {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    animation: carouselInfinito 30s linear infinite;
+    transition: 0.3s ease;
+}
+
+.carousel-slide {
+    position: relative;
+    cursor: pointer;
+    flex: 0 0 33.33%;
+    transform: translateY(0) scale(1);
+    transition: all 0.3s ease-in-out;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+.carousel-slide .description {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    color: black;
+    background-color: #F6D1D6;
+    border-radius: 5px;
+    text-align: center;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+}
+
+.carousel-slide .num {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    color: black;
+    padding: 2px;
+    border-radius: 5px;
+    background-color: #F6D1D6;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.carousel-track:hover .carousel-slide {
+    transform: translateY(10px) scale(0.95);
+    opacity: 0.7;
+}
+
+.carousel-track:hover .carousel-slide:hover {
+    transform: scale(1.00001);
+    box-shadow: 1px 1px 25px white;
+    opacity: 1;
+    z-index: 10;
+}
+
+/*--------- ANIMACIONES ---------*/
+
+@keyframes carouselInfinito {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.fila:nth-child(1) #imgInicio-div , .fila:nth-child(3) #imgInicio-div   {
+    animation: entradaDestacado1 1.2s ease-out forwards;
+}
+
+@keyframes entradaDestacado1 {
+    0% { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/*--------- RESPONSIVE ---------*/
+
+@media (max-width: 768px) {
+    .fila {
+        padding: 20px;
+    }
+    
+    #imgInicio-div img {
+        height: 250px;
+    }
+
+    #imgInicio-div .title {
+        font-size: 1.2rem;
+        bottom: 50px;
+        right: 15px;
+        width: 60%;
+    }
+
+    #imgInicio-div .description {
+        bottom: 15px;
+        left: 15px;
+        width: 90%;
+        font-size: 0.8rem;
+    }
+    
+    @media (max-width: 480px) {
+        #imgInicio-div .title {
+            position: relative;
+            bottom: auto;
+            right: auto;
+            width: 100%;
+            text-align: left;
+            padding: 10px 0 0 0;
+        }
+        #imgInicio-div .description {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            width: 100%;
+            padding: 5px 0 10px 0;
+        }
+        #imgInicio-div img {
+            height: 200px;
+        }
+    }
+
+    .carousel-slide {
+        flex: 0 0 240px;
+    }
+}

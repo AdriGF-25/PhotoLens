@@ -1,0 +1,225 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+}
+
+
+/*------------ HEADER ------------*/
+
+
+header {
+  display: flex;
+  justify-content: center;
+
+  background-color: #fff;
+  padding: 20px 0;
+  width: 100%;
+}
+
+
+/*------------ NAV ------------*/
+
+
+nav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  position: relative;
+  z-index: 999;
+  align-items: center;
+
+  gap: 1rem;
+  padding: 10px 20px;
+  border-radius: 100px;
+  width: 95%;
+  background-color: rgb(246, 209, 214);
+}
+
+
+/*------------ LOGO ------------*/
+
+
+#logo img {
+  height: 80px;
+}
+
+
+/*------------ MENÚ ESCRITORIO ------------*/
+
+
+ul.menu {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  list-style: none;
+  justify-content: center;
+  gap: 20px;
+}
+
+ul.menu li > a {
+  display: block;
+  padding: 5px 15px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: black;
+
+  transition: all 0.3s ease;
+}
+
+ul.menu li > a:hover:not(.activo) {
+  background: linear-gradient(90deg, rgba(0,123,255,0.3), rgba(0,0,255,0.3));
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+ul.menu li > a.activo {
+  background-color: blue;
+  color: white;
+}
+
+ul.menu li > a.activo:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/*------------ BOTONES DERECHA ------------*/
+
+.nav-buttons {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+}
+
+.nav-buttons a {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-decoration: none;
+  background-color: white;
+  place-items: center;
+  overflow: hidden;
+
+  transition: 
+  transform 0.25s ease, 
+    box-shadow 0.25s ease, 
+    background-color 0.25s ease;
+}
+
+.nav-buttons a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+  background-color: rgba(255,255,255,0.95);
+}
+
+.nav-buttons a img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.nav-buttons .activo {
+  background-color: lightblue;
+}
+
+/*------------ MENÚ MÓVIL ------------*/
+
+.check-menu {
+  display: none;
+}
+
+.boton-hamburguesa {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  user-select: none;
+  z-index: 1000;
+  color: black;
+}
+
+.menu-movil {
+  display: none;
+  flex-direction: column;
+  z-index: 998;
+  gap: 12px;
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  right: 10%;
+  
+  background-color: rgb(246, 209, 214);
+  padding: 15px 20px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.menu-movil a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 12px;
+
+  transition: all 0.3s ease;
+}
+
+.menu-movil a.activo {
+  background-color: blue;
+  color: white;
+}
+
+.menu-movil a:hover:not(.activo) {
+  background: rgba(0,0,255,0.3);
+  transform: translateX(4px);
+}
+
+.check-menu:checked ~ .menu-movil {
+  display: flex;
+}
+
+/*------------ RESPONSIVE ------------*/
+@media (max-width: 1000px) {
+  ul.menu {
+    gap: 15px;
+  }
+
+  .nav-buttons a {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 750px) {
+  ul.menu {
+    display: none;
+  }
+
+  .boton-hamburguesa {
+    display: block;
+  }
+
+  .nav-buttons a {
+    width: 40px;
+    height: 40px;
+  }
+
+  nav {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .boton-hamburguesa {
+    font-size: 1.5rem;
+  }
+
+  .nav-buttons a {
+    width: 35px;
+    height: 35px;
+  }
+}

@@ -1,0 +1,392 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Montserrat, sans-serif;
+  background-color: #030013;
+  color: white;
+  min-height: 100vh;
+}
+
+/* -------------------- PERFIL -------------------- */
+.perfil {
+  display: grid;
+  grid-template-rows: auto;
+  flex: 1;
+  padding: 110px 15px 30px;
+  opacity: 0;
+  animation: fadeIn 0.7s ease forwards;
+}
+
+/* -------------------- GRID GENERAL -------------------- */
+.perfil-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+}
+
+.perfil-contenido {
+  display: grid;
+  gap: 25px;
+}
+
+/* -------------------- FILA PERFIL FORM -------------------- */
+.fila-perfil-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding: 18px;
+  background-color: #17029f;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: translateY(16px);
+  animation: slideUp 0.75s ease forwards;
+  animation-delay: 0.1s;
+}
+
+/* -------------------- FORMULARIO -------------------- */
+.formulario {
+  display: grid;
+  gap: 10px;
+  color: white;
+}
+
+.formulario h2 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.formulario label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.formulario input,
+.formulario select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-color: rgba(3,0,19,0.55);
+  color: white;
+  font-family: inherit;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.formulario input:hover,
+.formulario select:hover {
+  background-color: rgba(3,0,19,0.75);
+}
+
+.formulario input:focus,
+.formulario select:focus {
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+}
+
+.formulario button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  font-family: inherit;
+  transition: 0.25s ease;
+}
+
+.formulario button:hover {
+  transform: translateY(-2px);
+  background-color: white;
+  color: black;
+}
+
+.formulario button:active {
+  transform: translateY(0px);
+}
+
+/* -------------------- PERFIL FOTO -------------------- */
+.perfil-foto {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 15px;
+  color: white;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: slideInRight 0.75s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.perfil-foto img {
+  display: block;
+  width: 175px;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 16px;
+  background-color: white;
+  border: 2px solid rgba(0,0,0,0.55);
+  transition: 0.25s ease;
+}
+
+.perfil-foto img:hover {
+  transform: scale(1.03);
+  filter: brightness(1.07);
+}
+
+.perfil-foto p {
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  max-width: 320px;
+}
+
+.btn-personalizar {
+  width: 100%;
+  text-align: center;
+  padding: 12px 18px;
+  border-radius: 20px;
+  background: rgba(3,0,19,0.7);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+
+.btn-personalizar:hover {
+  transform: translateY(-2px);
+  background: rgba(3,0,19,0.9);
+  border-color: rgba(255,255,255,0.35);
+}
+
+.btn-personalizar:active {
+  transform: translateY(0px);
+}
+
+/* -------------------- PANEL LATERAL -------------------- */
+.perfil-lateral {
+  display: grid;
+  gap: 20px;
+  order: -1;
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 20px;
+  height: fit-content;
+  animation: slideInRight 0.8s ease forwards;
+}
+
+.usuario-box {
+  display: grid;
+  text-align: center;
+  gap: 8px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  background: #c7a600;
+  color: black;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 0 auto;
+}
+
+.usuario-box p {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.usuario-box a {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  text-decoration: none;
+  color: white;
+}
+
+.usuario-box a:hover {
+  opacity: 1;
+}
+
+.usuario-links {
+  display: grid;
+  gap: 12px;
+}
+
+.usuario-links a {
+  padding: 12px 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  background: rgba(0,0,0,0.4);
+  color: white;
+  transition: 0.25s ease;
+}
+
+.usuario-links a:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+/* -------------------- RESUMENES -------------------- */
+.perfil-resumenes {
+  display: grid;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.perfil-resumenes h3 {
+  margin-bottom: 5px;
+}
+
+.resumen-card {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  transition: 0.25s ease;
+}
+
+.resumen-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.08);
+}
+
+.resumen-card img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.resumen-card img:nth-child(1) {
+  transform: scale(1.15);
+}
+
+.resumen-card p {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.resumen-card span {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.estrellas {
+  color: gold;
+  font-size: 0.85rem;
+}
+
+/* -------------------- ANIMACIONES -------------------- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+/* -------------------- RESPONSIVE -------------------- */
+@media (min-width: 480px) {
+    .perfil {
+        padding: 115px 20px 35px;
+    }
+    .fila-perfil-form {
+        padding: 22px;
+        border-radius: 18px;
+        gap: 22px;
+    }
+    .formulario h2 {
+        font-size: 1.45rem;
+    }
+    .perfil-foto img {
+        width: 200px;
+        height: 200px;
+    }
+    .formulario button,
+    .btn-personalizar {
+        width: auto;
+    }
+}
+
+@media (min-width: 750px) {
+    .perfil {
+        padding: 125px 25px 40px;
+    }
+    .perfil-lateral {
+        order: 0;
+    }
+    .perfil-foto img {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .perfil {
+        padding: 40px 40px 40px;
+    }
+    .perfil-grid {
+        grid-template-columns: 3fr 1fr;
+        gap: 30px;
+    }
+    .fila-perfil-form {
+        grid-template-columns: 2fr 1.2fr;
+        gap: 30px;
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .perfil-lateral {
+        padding: 25px;
+        border-radius: 20px;
+    }
+    .perfil-foto img {
+        width: 240px;
+        height: 240px;
+        border-radius: 20px;
+    }
+    .formulario h2 {
+        font-size: 1.6rem;
+    }
+}

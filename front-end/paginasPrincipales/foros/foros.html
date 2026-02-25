@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foros</title>
+
+    <!-- Tipografía y estilos generales -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/header.css" />
+    <link rel="stylesheet" href="../../css/footer.css" />
+    <link rel="stylesheet" href="../../paginasPrincipales/foros/foros.css" />
+    
+  </head>
+
+  <body>
+
+    <!-- --------------------HEADER--------------------- -->
+
+    <header class="header">
+      <nav class="nav">
+        <div id="logo">
+          <a href="../../paginasPrincipales/novedades/novedades.html">
+            <img src="../../imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
+          </a>
+        </div>
+    
+        <!-- menu escritorio -->
+
+        <ul class="menu">
+          <li><a href="../../paginasPrincipales/novedades/novedades.html" >Novedades</a></li>
+          <li><a href="../../paginasPrincipales/mercado/mercado.html">Mercado</a></li>
+          <li><a href="../../paginasPrincipales/foros/foros.html" class="activo">Foros</a></li>
+        </ul>
+
+    
+        <!-- botones derecha -->
+
+        <div class="nav-buttons">
+          <a href="../../carrito/carrito.html" class="icono-boton">
+            <img src="../../imagenes/carrito.png" alt="Carrito">
+          </a>
+          <a href="../../perfil/perfil.html" class="icono-boton">
+            <img src="../../imagenes/perfil.png" alt="Perfil">
+          </a>
+        </div>
+
+    
+        <!-- menu hamburguesa -->
+
+        <input type="checkbox" id="botonMenu" class="check-menu">
+        <label for="botonMenu" class="boton-hamburguesa">☰</label>
+
+    
+        <!-- desplegable (menu para movil) -->
+
+        <div class="menu-movil">
+          <a href="../../paginasPrincipales/novedades/novedades.html" >Novedades</a>
+          <a href="../../paginasPrincipales/mercado/mercado.html">Mercado</a>
+          <a href="../../paginasPrincipales/foros/foros.html" class="activo">Foros</a>
+        </div>
+    
+      </nav>
+    </header>
+
+    <!-- -------------------- MAIN --------------------- -->
+    <main class="contenedor-foros">
+
+      <!-- buscador -->
+
+      <div class="buscador">
+        <input type="text" placeholder="Buscar en foros...">
+        <button type="button" class="btn-buscar">Buscar</button>
+      </div>
+
+
+      <!-- fila 1 -->
+
+      <section class="fila fila-hero">
+        <div class="hero-fondo">
+          <img src="../../imagenes/stock-photo-hands-holding-community-word.webp" alt="Comunidad">
+          <div class="hero-texto">
+            <h1>Descubre</h1>
+            <p>Comparte con la comunidad</p>
+            <button class="btn-pub">Nueva publicación</button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- fila 2 -->
+
+      <section class="fila fila-pub">
+        <div class="titulo-bloque">
+          <h2>Publicaciones recientes</h2>
+          <a href="#">Ver todo</a>
+        </div>
+
+        <div class="grid-pub">
+          <article class="publicacion">
+            <h3>Fotografía nocturna</h3>
+            <p>Ajustes para cielos limpios</p>
+            <span>Técnica</span>
+          </article>
+
+          <article class="publicacion">
+            <h3>Objetivos retrato</h3>
+            <p>Luminoso full-frame económico</p>
+            <span>General</span>
+          </article>
+
+          <article class="publicacion">
+            <h3>Primera foto analógica</h3>
+            <p>Sube tu primera película</p>
+            <span>General</span>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- fila 3 -->
+       
+      <section class="fila fila-cat">
+        <h2>Categorías foro</h2>
+
+        <div class="grid-cat">
+          <article class="categoria">
+            <img src="../../imagenes/tecnicas-composicion-fotografica-inmofotos-zaragoza-movimiento-17-trafico-de-noche-luces-de-trafico.webp" alt="Técnica">
+            <h3>Técnica consejos</h3>
+            <p>Iluminación composición</p>
+          </article>
+
+          <article class="categoria">
+            <img src="../../imagenes/whereslugo-C2-qz9YP54k-unsplash-1-768x432.webp" alt="Equipo">
+            <h3>Equipo mercado</h3>
+            <p>Cámaras objetivos</p>
+          </article>
+
+          <article class="categoria">
+            <img src="../../imagenes/fi002329-1587980243.webp" alt="Analógica">
+            <h3>Analógica vintage</h3>
+            <p>Película clásicas</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+
+    <!-- -------------------- FOOTER --------------------- -->
+
+    <footer>
+      <div class="fcontenido">
+          <div class="finfo">
+              <h3>Contáctenos</h3>
+              <p>Contáctenos</p>
+              <p><a href="mailto:adriangomezferreiro@gmail.com">adriangomezferreiro@gmail.com</a></p>
+              <p><a href="tel:+34633949090">+34 633 94 90 90</a></p>
+          </div>
+
+          <div class="fsobre">
+            <a href="../novedades/novedades.html"><img src="../../imagenes/Logo_PhotoLens.png" alt="PhotoLens"></a>
+            <p>Tienda especializada en fotografía profesional.</p>
+            <p>Líder en objetivos y accesorios en Galicia.</p>
+        </div>
+
+          <div class="fredes">
+              <a class="icono" href="#" target="_blank"><img src="../../imagenes/facebook-removebg-preview.png" alt="facebook"></a>
+              <a class="icono" href="#" target="_blank"><img src="../../imagenes/twitter.png" alt="twitter"></a>
+              <a class="icono" href="#" target="_blank"><img src="../../imagenes/intagram.png" alt="instagram"></a>
+          </div>
+      </div>
+
+      <div class="CC">
+          <p>PhotoLens © 2025 <br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+      </div>
+  </footer>
+
+  </body>
+</html>

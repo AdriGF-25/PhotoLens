@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil</title>
+
+    <!-- Tipografía y estilos generales -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../perfil/perfil.css" />
+
+  </head>
+    <body>
+
+      <!-- --------------------HEADER--------------------- -->
+
+      <header class="header">
+        <nav class="nav">
+
+          <!-- logo -->
+          <div id="logo">
+            <a href="../paginasPrincipales/novedades/novedades.html">
+              <img src="../imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
+            </a>
+          </div>
+
+          <!-- menu escritorio -->
+
+          <ul class="menu">
+            <li><a href="../paginasPrincipales/novedades/novedades.html" >Novedades</a></li>
+            <li><a href="../paginasPrincipales/mercado/mercado.html">Mercado</a></li>
+            <li><a href="../paginasPrincipales/foros/foros.html">Foros</a></li>
+          </ul>
+
+
+          <!-- botones derecha -->
+
+          <div class="nav-buttons">
+            <a href="../carrito/carrito.html" class="icono-boton">
+              <img src="../imagenes/carrito.png" alt="Carrito">
+            </a>
+            <a href="../perfil/perfil.html" class="icono-boton activo">
+              <img src="../imagenes/perfil.png" alt="Perfil">
+            </a>
+          </div>
+
+
+          <!-- desplegable movil -->
+
+          <input type="checkbox" id="botonMenu" class="check-menu">
+          <label for="botonMenu" class="boton-hamburguesa">☰</label>
+
+          <div class="menu-movil">
+            <a href="../paginasPrincipales/novedades/novedades.html">Novedades</a>
+            <a href="../paginasPrincipales/mercado/mercado.html">Mercado</a>
+            <a href="../paginasPrincipales/foros/foros.html">Foros</a>
+          </div>
+
+        </nav>
+      </header>
+
+
+      <!-- --------- MAIN ---------- -->
+
+
+      <main class="perfil">
+        <section class="perfil-grid">
+
+          <!-- columna izquierda -->
+
+          <div class="perfil-contenido">
+
+            <!-- formulario -->
+
+            <section class="fila-perfil-form">
+              <form class="formulario">
+                <h2>Datos personales</h2>
+
+                <label>Nombre</label>
+                <input type="text" placeholder="Adrián" />
+
+                <label>Contraseña</label>
+                <input type="password" />
+
+                <label>Correo electrónico</label>
+                <input type="email" placeholder="adriangomezferreiro@gmail.com" />
+
+                <label>País</label>
+                <select>
+                  <option>España</option>
+                  <option>Alemania</option>
+                  <option>Suiza</option>
+                </select>
+
+                <button type="submit">Guardar cambios</button>
+              </form>
+
+              <div class="perfil-foto">
+                <img src="../imagenes/1f464-removebg-preview.png" alt="Foto de perfil">
+                <p>Actualiza tu información para disfrutar de una experiencia más personalizada.</p>
+                <a href="#" class="btn-personalizar">Personalizar ajustes</a>
+              </div>
+            </section>
+
+
+            <!-- resumenes -->
+
+            <section class="perfil-resumenes">
+              <h3>Resumen de compra</h3>
+
+              <div class="resumen-card">
+                <img src="../imagenes/e8d4b0903356f8eb0d47231cef261217-removebg-preview.png" alt="Sony Alpha 7">
+                <div>
+                  <p>Sony Alpha 7</p>
+                  <span>Coste: 1.199 €</span>
+                  <div class="estrellas">★★★★★</div>
+                </div>
+              </div>
+
+              <div class="resumen-card">
+                <img src="../imagenes/Canon_EOS_R-removebg-preview.png" alt="Canon EOS R">
+                <div>
+                  <p>Canon EOS R</p>
+                  <span>Coste: 1.499 €</span>
+                  <div class="estrellas">★★★★★</div>
+                </div>
+              </div>
+
+              <div class="resumen-card">
+                <img src="../imagenes/4515C005_RF-50mm-F1-removebg-preview.png" alt="Canon RF 50mm">
+                <div>
+                  <p>Canon RF 50mm f/1.8</p>
+                  <span>Coste: 229 €</span>
+                  <div class="estrellas">★★★★★</div>
+                </div>
+              </div>
+
+            </section>
+
+          </div>
+
+          <!-- columna derecha --> 
+
+          <aside class="perfil-lateral">
+            <div class="usuario-box">
+              <div class="avatar">A</div>
+              <h4>Adrián</h4>
+              <p>adriangomezferreiro@gmail.com</p>
+              <a href="#">Editar información</a>
+            </div>
+
+            <div class="usuario-links">
+              <a href="#">Direcciones</a>
+              <a href="#">Conexión & seguridad</a>
+            </div>
+          </aside>
+        </section>
+      </main>
+
+
+      <!-- --------------------FOOTER--------------------- -->
+
+      <footer>
+        <div class="fcontenido">
+            <div class="finfo">
+                <h3>Contáctenos</h3>
+                <p>Contáctenos</p>
+                <p><a href="mailto:adriangomezferreiro@gmail.com">adriangomezferreiro@gmail.com</a></p>
+                <p><a href="tel:+34633949090">+34 633 94 90 90</a></p>
+            </div>
+
+            <div class="fsobre">
+              <a href="../paginasPrincipales/novedades/novedades.html"><img src="../imagenes/Logo_PhotoLens.png" alt="PhotoLens"></a>
+              <p>Tienda especializada en fotografía profesional.</p>
+              <p>Líder en objetivos y accesorios en Galicia.</p>
+            </div>
+    
+            <div class="fredes">
+                <a class="icono" href="#" target="_blank"><img src="../imagenes/facebook-removebg-preview.png" alt="facebook"></a>
+                <a class="icono" href="#" target="_blank"><img src="../imagenes/twitter.png" alt="twitter"></a>
+                <a class="icono" href="#" target="_blank"><img src="../imagenes/intagram.png" alt="instagram"></a>
+            </div>
+        </div>
+    
+        <div class="CC">
+            <p>PhotoLens © 2025 <br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+        </div>
+    </footer>
+  </body>
+</html>

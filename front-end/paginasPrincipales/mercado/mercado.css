@@ -1,0 +1,366 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+  background-color: #030013;
+  color: white;
+}
+
+
+/* -------------------- CONTENEDOR PRINCIPAL -------------------- */
+.mercado {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 35px;
+  padding: 140px 40px 50px;
+}
+
+
+/* -------------------- TITULO -------------------- */
+.fila-mercado-titulo {
+  display: grid;
+  text-align: center;
+  gap: 10px;
+}
+
+.fila-mercado-titulo h1 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.fila-mercado-titulo p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 70ch;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+
+/* -------------------- FILTRO -------------------- */
+#buttonInputFiltro {
+  display: none;
+}
+
+.filtro {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  padding: 10px 18px;
+  background: #f6d1d6;
+  border-radius: 100px;
+  color: black;
+  font-weight: 700;
+
+  transition: transform 0.22s ease, filter 0.22s ease, background-color 0.22s ease,
+              color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.filtroImg {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+
+/* -------------------- MODAL FILTRO -------------------- */
+.overlay-filtro {
+  display: none;
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+
+  z-index: 998;
+}
+
+.modal-filtro {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 380px;
+  max-width: 90vw;
+
+  background: rgba(20, 20, 35, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 22px;
+
+  z-index: 999;
+}
+
+#buttonInputFiltro:checked ~ .overlay-filtro {
+  display: block;
+}
+
+#buttonInputFiltro:checked ~ .modal-filtro {
+  display: grid;
+  gap: 18px;
+}
+
+.modal-filtro h3 {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.filtro-grupo {
+  display: grid;
+  gap: 10px;
+}
+
+.filtro-grupo p {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.filtro-grupo label {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.cerrar-modal {
+  display: block;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+
+  background: #f6d1d6;
+  color: black;
+  font-weight: 700;
+
+  transition: transform 0.22s ease, filter 0.22s ease, background-color 0.22s ease,
+              color 0.22s ease, box-shadow 0.22s ease;
+}
+
+
+/* -------------------- GRID PRODUCTOS -------------------- */
+.fila-mercado-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 22px;
+}
+
+
+/* -------------------- TARJETA PRODUCTO -------------------- */
+.producto {
+  display: grid;
+  gap: 10px;
+
+  background: rgba(23, 2, 159, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px;
+  border-radius: 14px;
+
+  opacity: 0;
+  transform: translateY(30px) scale(0.92) rotate(-10deg);
+  animation: entradaProducto 0.75s ease forwards;
+
+  transition: transform 0.22s ease, filter 0.22s ease, background-color 0.22s ease,
+              color 0.22s ease, box-shadow 0.22s ease;
+}
+
+/* ----- imagen ----- */
+.producto img {
+  display: block;
+  width: 100%;
+  height: 260px;
+
+  object-fit: contain;
+  border-radius: 12px;
+
+  transition: transform 0.22s ease, filter 0.22s ease, background-color 0.22s ease,
+              color 0.22s ease, box-shadow 0.22s ease;
+}
+
+/* ----- textos ----- */
+.producto h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.producto .precio {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.producto .detalle {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+/* ----- botón ----- */
+.boton-carrito {
+  display: inline-block;
+  text-align: center;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  background-color: white;
+  color: black;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: transform 0.22s ease, filter 0.22s ease, background-color 0.22s ease,
+              color 0.22s ease, box-shadow 0.22s ease;
+}
+
+
+/* -------------------- AJUSTES IMAGEN -------------------- */
+.producto:first-child > img {
+  transform: scale(1.12);
+}
+
+
+/* -------------------- HOVERS -------------------- */
+.filtro:hover,
+.cerrar-modal:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.filtro-grupo label:hover {
+  opacity: 1;
+}
+
+.producto img:hover {
+  transform: scale(1.06);
+  cursor: pointer;
+  transform-origin: center;
+}
+
+.boton-carrito:hover {
+  transform: translateY(-2px);
+  background-color: #f6d1d6;
+  color: black;
+}
+
+.producto:hover > .oferta {
+  animation: ofertaHover 1.2s linear forwards;
+}
+
+
+/* -------------------- BANDA OFERTA -------------------- */
+.producto .oferta {
+  position: absolute;
+  top: 40px;
+  left: px;
+  background-color: #4CAF50;
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 8px 30px;
+  transform: rotate(-45deg);
+  text-transform: uppercase;
+  border-radius: 100px;
+  z-index: 10;
+}
+
+
+/* -------------------- ANIMACION PRODUCTOS -------------------- */
+@keyframes entradaProducto {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.85) rotate(-18deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.05) rotate(-3deg);
+  }
+  85% {
+    transform: translateY(0px) scale(1) rotate(-6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes ofertaHover {
+  0% { transform: rotate(-45deg) scale(1); }
+  35% { transform: rotate(-45deg) scale(1.25); }
+  60% { transform: rotate(-45deg) scale(0.95); }
+  85% { transform: rotate(-45deg) scale(1.08); }
+  100% { transform: rotate(-45deg) scale(1); }
+}
+
+
+/* -------------------- DELAYS -------------------- */
+.producto:nth-child(1) { animation-delay: 0s; }
+.producto:nth-child(2) { animation-delay: 0.07s; }
+.producto:nth-child(3) { animation-delay: 0.14s; }
+.producto:nth-child(4) { animation-delay: 0.21s; }
+.producto:nth-child(5) { animation-delay: 0.28s; }
+.producto:nth-child(6) { animation-delay: 0.35s; }
+.producto:nth-child(7) { animation-delay: 0.42s; }
+.producto:nth-child(8) { animation-delay: 0.49s; }
+.producto:nth-child(9) { animation-delay: 0.56s; }
+.producto:nth-child(10){ animation-delay: 0.63s; }
+
+
+/* -------------------- RESPONSIVE -------------------- */
+@media (min-width: 1001px) {
+  .fila-mercado-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .mercado {
+    padding: 140px 40px 50px;
+  }
+  .fila-mercado-titulo h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (min-width: 751px) and (max-width: 1000px) {
+  .mercado {
+    padding: 130px 30px 45px;
+  }
+  .fila-mercado-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  .fila-mercado-titulo h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 750px) {
+  .mercado {
+    padding: 110px 16px 35px;
+  }
+  .fila-mercado-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .fila-mercado-titulo h1 {
+    font-size: 1.9rem;
+  }
+  .producto img {
+    height: 210px;
+  }
+  .producto {
+    padding: 12px;
+  }
+  .filtro {
+    justify-self: center;
+  }
+}

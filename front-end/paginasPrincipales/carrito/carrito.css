@@ -1,0 +1,457 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+
+  background-color: #030013;
+  color: white;
+}
+
+
+/* -------------------- MENÚ -------------------- */
+ul.menu li > a.activo {
+  background-color: #F6D1D6;
+  color: black;
+}
+
+
+/* -------------------- CARRITO -------------------- */
+.carrito {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 22px;
+  padding: 120px 15px 25px;
+
+  animation: fadeIn 0.7s ease forwards;
+}
+
+
+/* -------------------- ANIMACIÓN -------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* -------------------- FILA CARRITO TITULO -------------------- */
+.fila-carrito-titulo {
+  text-align: center;
+
+  animation: slideUp 0.7s ease forwards;
+}
+
+.fila-carrito-titulo h1 {
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.fila-carrito-titulo p {
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* -------------------- FILA CARRITO TABLA -------------------- */
+.fila-carrito-tabla {
+  display: grid;
+  gap: 15px;
+
+  background: linear-gradient(180deg, #17029f 0%, #0f0075 100%);
+  border-radius: 22px;
+  padding: 16px;
+
+  box-shadow: 0 0 30px rgba(23, 2, 159, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  animation: fadeIn 0.8s ease forwards;
+}
+
+
+/* -------------------- CABECERA -------------------- */
+.cabecera {
+  display: none;
+}
+
+
+/* -------------------- LINEA PRODUCTO -------------------- */
+.linea-producto {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 12px;
+
+  background-color: rgba(3, 0, 19, 0.55);
+  border-radius: 14px;
+  padding: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.linea-producto:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+
+/* -------------------- PRODUCTO INFO -------------------- */
+.producto-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.producto-info img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+}
+
+.producto-info h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.producto-info p {
+  opacity: 0.75;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+
+/* -------------------- INPUT CANTIDAD -------------------- */
+.linea-producto input[type="number"] {
+  width: 100%;
+  padding: 7px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+
+  transition: border 0.25s ease, background 0.25s ease;
+}
+
+.linea-producto input[type="number"]:focus {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+
+/* -------------------- PRECIOS -------------------- */
+.linea-producto span {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.linea-producto span:nth-of-type(1)::before {
+  content: "Precio: ";
+  opacity: 0.7;
+  margin-right: 6px;
+}
+
+.linea-producto span:nth-of-type(2)::before {
+  content: "Total: ";
+  opacity: 0.7;
+  margin-right: 6px;
+}
+
+
+/* -------------------- RESUMEN -------------------- */
+.resumen {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+
+  background-color: rgba(3, 0, 19, 0.75);
+  border-radius: 14px;
+  padding: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.fila-resumen {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.fila-resumen.total {
+  font-weight: 600;
+  opacity: 1;
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+
+.resumen button {
+  margin-top: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+
+  width: 100%;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.resumen button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
+}
+
+.resumen button:active {
+  transform: translateY(0);
+}
+
+
+/* -------------------- FILA CUPÓN -------------------- */
+.fila-cupon {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.fila-cupon input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background-color: rgba(255,255,255,0.08);
+  color: white;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+
+  transition: border 0.25s ease, background 0.25s ease;
+}
+
+.fila-cupon input:focus {
+  border: 1px solid rgba(255,255,255,0.35);
+  background-color: rgba(255,255,255,0.12);
+}
+
+.fila-cupon button {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+
+  transition: transform 0.25s ease;
+}
+
+.fila-cupon button:hover {
+  transform: translateY(-2px);
+  background-color: #f6d1d6;
+  color: black;
+}
+
+
+/* -------------------- OR SEPARADOR -------------------- */
+.or-separador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 15px;
+}
+
+.or-separador .linea {
+  flex: 1;
+  height: 1px;
+  background-color: rgba(255,255,255,0.3);
+}
+
+.or-separador .texto {
+  font-weight: 600;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+
+/* -------------------- SEGUIR COMPRANDO -------------------- */
+.seguir-comprando {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.seguir-comprando a {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background-color: rgba(255,255,255,0.15);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: 0.25s ease;
+}
+
+.seguir-comprando a:hover {
+  background-color: #f6d1d6;
+  color: black;
+  transform: translateY(-2px);
+}
+
+
+/* -------------------- BREAKPOINTS -------------------- */
+
+@media (min-width: 480px) {
+  .carrito {
+    padding: 120px 20px 30px;
+    gap: 30px;
+  }
+
+  .fila-carrito-titulo h1 {
+    font-size: 2rem;
+  }
+
+  .fila-carrito-titulo p {
+    font-size: 1rem;
+  }
+
+  .fila-carrito-tabla {
+    padding: 20px;
+  }
+
+  .producto-info img {
+    width: 75px;
+    height: 75px;
+  }
+
+  .producto-info h2 {
+    font-size: 1.05rem;
+  }
+
+  .producto-info p {
+    font-size: 0.9rem;
+  }
+
+  .fila-resumen {
+    font-size: 0.95rem;
+  }
+
+  .fila-cupon {
+    flex-direction: row;
+  }
+
+  .fila-cupon button {
+    width: auto;
+  }
+
+  .resumen button {
+    width: auto;
+  }
+}
+
+@media (min-width: 750px) {
+  .carrito {
+    padding: 130px 20px 30px;
+  }
+
+  .cabecera {
+    display: grid;
+    grid-template-columns: 2fr 0.8fr 1fr 1fr;
+    font-weight: 600;
+    opacity: 0.9;
+    padding: 10px 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .cabecera span {
+    font-size: 0.9rem;
+  }
+
+  .linea-producto {
+    grid-template-columns: 2fr 0.8fr 1fr 1fr;
+    gap: 10px;
+    padding: 14px 12px;
+  }
+
+  .linea-producto span:nth-of-type(1)::before,
+  .linea-producto span:nth-of-type(2)::before {
+    margin-right: 0;
+  }
+
+  .linea-producto input[type="number"] {
+    width: 70px;
+  }
+
+  .producto-info img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .resumen button {
+    width: auto;
+  }
+}
+
+@media (min-width: 1000px) {
+  .carrito {
+    padding: 140px 40px 40px;
+  }
+
+  .fila-carrito-titulo h1 {
+    font-size: 2.2rem;
+  }
+
+  .fila-carrito-tabla {
+    padding: 25px;
+  }
+
+  .cabecera {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+
+  .linea-producto {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+
+  .producto-info img {
+    width: 75px;
+    height: 75px;
+  }
+}
