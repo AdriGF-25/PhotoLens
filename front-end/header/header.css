@@ -17,9 +17,23 @@ header {
   display: flex;
   justify-content: center;
 
-  background-color: #fff;
-  padding: 20px 0;
+  background-color: #05050A;
+  padding: 15px 0;
   width: 100%;
+  position: relative;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 
@@ -34,10 +48,12 @@ nav {
   align-items: center;
 
   gap: 1rem;
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 100px;
-  width: 95%;
-  background-color: rgb(246, 209, 214);
+  width: 90%;
+  background: linear-gradient(90deg, #F6D1D6 0%, #ff6b35 50%, #F6D1D6 100%);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border: 2px solid rgba(255,255,255,0.2);
 }
 
 
@@ -65,20 +81,20 @@ ul.menu li > a {
   padding: 5px 15px;
   border-radius: 20px;
   text-decoration: none;
-  color: black;
+  color: #ffffff;
 
   transition: all 0.3s ease;
 }
 
 ul.menu li > a:hover:not(.activo) {
-  background: linear-gradient(90deg, rgba(0,123,255,0.3), rgba(0,0,255,0.3));
+  background: linear-gradient(90deg, rgba(255,107,53,0.3), rgba(255,107,53,0.3));
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 ul.menu li > a.activo {
-  background-color: blue;
-  color: white;
+  background-color: #ff6b35;
+  color: #ffffff;
 }
 
 ul.menu li > a.activo:hover {
@@ -96,12 +112,12 @@ ul.menu li > a.activo:hover {
 
 .nav-buttons a {
   display: grid;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   text-decoration: none;
-  background-color: white;
+  background-color: #1e1e1e;
   place-items: center;
   overflow: hidden;
 
@@ -114,7 +130,7 @@ ul.menu li > a.activo:hover {
 .nav-buttons a:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-  background-color: rgba(255,255,255,0.95);
+  background-color: #333333;
 }
 
 .nav-buttons a img {
@@ -124,7 +140,7 @@ ul.menu li > a.activo:hover {
 }
 
 .nav-buttons .activo {
-  background-color: lightblue;
+  background-color: #ff6b35;
 }
 
 /*------------ MENÚ MÓVIL ------------*/
@@ -139,7 +155,7 @@ ul.menu li > a.activo:hover {
   cursor: pointer;
   user-select: none;
   z-index: 1000;
-  color: black;
+  color: #ffffff;
 }
 
 .menu-movil {
@@ -189,8 +205,8 @@ ul.menu li > a.activo:hover {
   }
 
   .nav-buttons a {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
   }
 }
 
@@ -204,12 +220,12 @@ ul.menu li > a.activo:hover {
   }
 
   .nav-buttons a {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
   }
 
   nav {
-    width: 90%;
+    width: 85%;
   }
 }
 

@@ -26,7 +26,7 @@ body {
 
 .fila:nth-child(1), 
 .fila:nth-child(3) {
-    background-color: #030013;
+    background-color: #05050a;
     padding: 50px;
 }
 
@@ -78,7 +78,7 @@ body {
 /*--------- CARRUSEL ---------*/
 
 .fila:nth-child(2) {
-    background-color: #17029F;
+    background-color: #0a0f17;
     padding: 40px;
 }
 
@@ -117,8 +117,8 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    color: black;
-    background-color: #F6D1D6;
+    color: #0b0b0b;
+    background-color: rgba(255, 215, 0, 0.25);
     border-radius: 5px;
     text-align: center;
     padding: 4px 8px;
@@ -129,10 +129,10 @@ body {
     position: absolute;
     top: 8px;
     left: 10px;
-    color: black;
+    color: #0b0b0b;
     padding: 2px;
     border-radius: 5px;
-    background-color: #F6D1D6;
+    background-color: rgba(255, 215, 0, 0.25);
     font-weight: 600;
     text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }

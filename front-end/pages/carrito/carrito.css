@@ -7,15 +7,15 @@
 body {
   font-family: Montserrat, sans-serif;
 
-  background-color: #030013;
-  color: white;
+  background-color: #05050a;
+  color: #f0f0f7;
 }
 
 
 /* -------------------- MENÚ -------------------- */
 ul.menu li > a.activo {
-  background-color: #F6D1D6;
-  color: black;
+  background-color: rgba(255, 215, 0, 0.3);
+  color: #0b0b0b;
 }
 
 
@@ -79,7 +79,7 @@ ul.menu li > a.activo {
   display: grid;
   gap: 15px;
 
-  background: linear-gradient(180deg, #17029f 0%, #0f0075 100%);
+  background: linear-gradient(180deg, #05050a 0%, #0a0f17 100%);
   border-radius: 22px;
   padding: 16px;
 
@@ -220,8 +220,8 @@ ul.menu li > a.activo {
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  background-color: white;
-  color: black;
+  background-color: #ffd700;
+  color: #0b0b0b;
   font-family: inherit;
   font-weight: 600;
   font-size: 1rem;
@@ -272,8 +272,8 @@ ul.menu li > a.activo {
   padding: 10px 16px;
   border-radius: 999px;
   border: none;
-  background-color: white;
-  color: black;
+  background-color: #ffd700;
+  color: #0b0b0b;
   font-weight: 600;
   cursor: pointer;
   width: 100%;
@@ -283,8 +283,8 @@ ul.menu li > a.activo {
 
 .fila-cupon button:hover {
   transform: translateY(-2px);
-  background-color: #f6d1d6;
-  color: black;
+  background-color: #e6c400;
+  color: #0b0b0b;
 }
 
 
@@ -321,8 +321,8 @@ ul.menu li > a.activo {
   display: inline-block;
   padding: 10px 18px;
   border-radius: 999px;
-  background-color: rgba(255,255,255,0.15);
-  color: white;
+  background-color: rgba(255, 215, 0, 0.15);
+  color: #f0f0f7;
   font-weight: 600;
   text-decoration: none;
 
@@ -330,8 +330,8 @@ ul.menu li > a.activo {
 }
 
 .seguir-comprando a:hover {
-  background-color: #f6d1d6;
-  color: black;
+  background-color: #ffd700;
+  color: #0b0b0b;
   transform: translateY(-2px);
 }
 
