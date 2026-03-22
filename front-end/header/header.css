@@ -43,19 +43,31 @@ header::before {
 nav {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  position: relative;
-  z-index: 999;
   align-items: center;
 
   gap: 1rem;
   padding: 8px 15px;
   border-radius: 100px;
   width: 90%;
-  background: linear-gradient(90deg, #F6D1D6 0%, #ff6b35 50%, #F6D1D6 100%);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  border: 2px solid rgba(255,255,255,0.2);
+
+  background-color: #f6f6f6;
+  position: relative;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
+nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+
+  background-image: radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 6px 6px;
+
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 /*------------ LOGO ------------*/
 
@@ -117,7 +129,7 @@ ul.menu li > a.activo:hover {
   border-radius: 50%;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   text-decoration: none;
-  background-color: #1e1e1e;
+  background-color: rgba(255, 255, 255, 0.264);
   place-items: center;
   overflow: hidden;
 
@@ -130,7 +142,6 @@ ul.menu li > a.activo:hover {
 .nav-buttons a:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-  background-color: #333333;
 }
 
 .nav-buttons a img {
