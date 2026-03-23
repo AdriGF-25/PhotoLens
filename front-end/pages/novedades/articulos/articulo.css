@@ -1,0 +1,145 @@
+/* -------------------- ARTICULO INDIVIDUAL -------------------- */
+body {
+    background-color: #05050a;
+    color: #f0f0f7;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.articulo-main {
+    width: 100%;
+    padding-top: 80px; /* Header height */
+}
+
+/* Hero del artículo */
+.articulo-hero {
+    position: relative;
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.articulo-hero img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.articulo-hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 10, 0.6);
+}
+
+.titulo-container {
+    position: relative;
+    z-index: 2;
+    padding: 0 5%;
+    max-width: 800px;
+}
+
+.titulo-container h1 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+}
+
+.categoria {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    color: rgba(240, 240, 247, 0.8);
+}
+
+/* Contenido de texto */
+.articulo-contenido {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 5%;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(240, 240, 247, 0.9);
+}
+
+.articulo-contenido h3 {
+    color: #f0f0f7;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.btn-volver {
+    display: inline-block;
+    margin-top: 3rem;
+    color: #f0f0f7;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border 0.3s ease;
+}
+
+.btn-volver:hover {
+    border-bottom: 1px solid #f0f0f7;
+}
+
+/* -------------------- NOTICIAS RELACIONADAS -------------------- */
+.seccion-relacionados {
+    max-width: 1200px;
+    margin: 4rem auto 6rem;
+    padding: 0 5%;
+}
+
+.seccion-relacionados h3 {
+    font-size: 1.5rem;
+    border-left: 3px solid #f0f0f7;
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+    color: #f0f0f7;
+}
+
+.grid-relacionados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.articulo-card {
+    background: #0f0f1a;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.articulo-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-content h4 {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
