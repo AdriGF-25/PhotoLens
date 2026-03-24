@@ -7,8 +7,8 @@
 
     <!-- Tipografía y estilos generales -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../header/header.css" />
-    <link rel="stylesheet" href="../../footer/footer.css" />
+    <link rel="stylesheet" href="../../../header/header.css" />
+    <link rel="stylesheet" href="../../../footer/footer.css" />
     <link rel="stylesheet" href="../mercado.css" />
 
   </head>
@@ -20,8 +20,8 @@
       <nav class="nav">
     
         <div id="logo">
-          <a href="../../index.html">
-            <img src="../../imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
+          <a href="../../../index.html">
+            <img src="../../../imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
           </a>
         </div>
 
@@ -39,10 +39,10 @@
 
         <div class="nav-buttons">
           <a href="../../carrito/index.html" class="icono-boton">
-            <img src="../../imagenes/carrito.png" alt="Carrito">
+            <img src="../../../imagenes/carrito.png" alt="Carrito">
           </a>
           <a href="../../perfil/index.html" class="icono-boton">
-            <img src="../../imagenes/perfil.png" alt="Perfil">
+            <img src="../../../imagenes/perfil.png" alt="Perfil">
           </a>
         </div>
 
@@ -61,37 +61,86 @@
 
     <!-- --------------------MAIN--------------------- -->
 
-    <main>
-      <h1>Accesorios</h1>
-      <p>Explora nuestros accesorios para fotografía profesional.</p>
-      <!-- Aquí iría el contenido de la página de accesorios -->
+    <main class="mercado">
+      <section class="fila fila-mercado-titulo">
+        <h1>Accesorios</h1>
+        <p>Complementos esenciales para tu equipo: trípodes, mochilas, filtros y más.</p>
+      </section>
+
+      <!-- Navegación de categorías simple para volver -->
+      <section class="categorias-mercado">
+        <div class="categoria-links">
+          <a href="../index.html">← Volver a Mercado</a>
+          <a href="camaras.html">Ver Cámaras</a>
+        </div>
+      </section>
+
+      <!-- Grid de Accesorios -->
+      <section class="fila fila-mercado-grid">
+        
+        <article class="producto">
+          <img src="../../../imagenes/manfrotto_mkcompactlt_bk_compact_light_tripod_black_1648127138_1059024-removebg-preview.png" alt="Trípode Manfrotto"/>
+          <h2>Trípode Manfrotto Compact</h2>
+          <p class="precio">129 €</p>
+          <p class="detalle">Estable y ligero, ideal para viajes.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+        <article class="producto">
+          <img src="../../../imagenes/lowepro-protactic-bp-350-aw-iii-removebg-preview.png" alt="Mochila Lowepro"/>
+          <h2>Mochila Lowepro ProTactic</h2>
+          <p class="precio">189 €</p>
+          <p class="detalle">Protección pro para todo tu equipo.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+        <article class="producto">
+          <div class="oferta">Oferta</div>
+          <img src="../../../imagenes/619mzoUVLML._AC_SX679_-removebg-preview.png" alt="Filtro ND"/>
+          <h2>Filtro ND Variable</h2>
+          <p class="precio">79 €</p>
+          <p class="detalle">Control total de la luz y la exposición.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+        <article class="producto">
+          <img src="../../../imagenes/descarga.png" alt="Tarjeta SD 128GB"/>
+          <h2>Tarjeta SD 128GB</h2>
+          <p class="precio">20 €</p>
+          <p class="detalle">Alta velocidad para foto y vídeo 4K.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+      </section>
     </main>
 
     <!-- --------------------FOOTER--------------------- -->
 
     <footer class="footer">
-      <div class="fcontenido">
-        <div class="finfo">
-          <h3>Contáctenos</h3>
-          <p><a href="mailto:adriangomezferreiro@gmail.com">adriangomezferreiro@gmail.com</a></p>
+      <div class="footer__container">
+        <div class="footer__col">
+          <img src="../../imagenes/Logo_PhotoLens.png" alt="PhotoLens" class="footer__logo">
+          <p class="footer__text">Tienda especializada en fotografía profesional.</p>
+        </div>
+
+        <div class="footer__col">
+          <h4>Explorar</h4>
+          <ul class="footer__links">
+            <li><a href="../../novedades/index.html">Novedades</a></li>
+            <li><a href="../index.html">Mercado</a></li>
+            <li><a href="../../foros/index.html">Foros</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col footer__contact">
+          <h4>Contacto</h4>
+          <p><a href="mailto:info@photolens.com">info@photolens.com</a></p>
           <p><a href="tel:+34633949090">+34 633 94 90 90</a></p>
-        </div>
-
-        <div class="fsobre">
-          <h3><img src="../../imagenes/Logo_PhotoLens.png" alt="PhotoLens"></h3>
-          <p>Tienda especializada en fotografía profesional.</p>
-          <p>Líder en objetivos y accesorios en Galicia.</p>
-        </div>
-
-        <div class="fredes">
-          <a class="icono" href="#" target="_blank"><img src="../../imagenes/facebook-removebg-preview.png" alt="facebook"></a>
-          <a class="icono" href="#" target="_blank"><img src="../../imagenes/twitter.png" alt="twitter"></a>
-          <a class="icono" href="#" target="_blank"><img src="../../imagenes/intagram.png" alt="instagram"></a>
         </div>
       </div>
 
-      <div class="CC">
-        <p>PhotoLens © 2025 <br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+      <div class="footer__bottom">
+        <p class="footer__copy">PhotoLens © 2025</p>
       </div>
     </footer>
 

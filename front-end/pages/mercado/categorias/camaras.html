@@ -7,8 +7,8 @@
 
     <!-- Tipografía y estilos generales -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../header/header.css" />
-    <link rel="stylesheet" href="../../footer/footer.css" />
+    <link rel="stylesheet" href="../../../header/header.css" />
+    <link rel="stylesheet" href="../../../footer/footer.css" />
     <link rel="stylesheet" href="../mercado.css" />
 
   </head>
@@ -20,8 +20,8 @@
       <nav class="nav">
     
         <div id="logo">
-          <a href="../../index.html">
-            <img src="../../imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
+          <a href="../../../index.html">
+            <img src="../../../imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
           </a>
         </div>
 
@@ -39,10 +39,10 @@
 
         <div class="nav-buttons">
           <a href="../../carrito/index.html" class="icono-boton">
-            <img src="../../imagenes/carrito.png" alt="Carrito">
+            <img src="../../../imagenes/carrito.png" alt="Carrito">
           </a>
           <a href="../../perfil/index.html" class="icono-boton">
-            <img src="../../imagenes/perfil.png" alt="Perfil">
+            <img src="../../../imagenes/perfil.png" alt="Perfil">
           </a>
         </div>
 
@@ -61,40 +61,96 @@
 
     <!-- --------------------MAIN--------------------- -->
 
-    <main>
-      <h1>Cámaras</h1>
-      <p>Explora nuestra selección de cámaras profesionales.</p>
-      <!-- Aquí iría el contenido de la página de cámaras -->
+    <main class="mercado">
+      <section class="fila fila-mercado-titulo">
+        <h1>Cámaras</h1>
+        <p>Explora nuestra selección de cuerpos profesionales Mirrorless y DSLR.</p>
+      </section>
+
+      <!-- Navegación de categorías simple para volver -->
+      <section class="categorias-mercado">
+        <div class="categoria-links">
+          <a href="../index.html">← Volver a Mercado</a>
+          <a href="objetivos.html">Ver Objetivos</a>
+        </div>
+      </section>
+
+      <!-- Grid de Cámaras -->
+      <section class="fila fila-mercado-grid">
+        
+        <article class="producto">
+          <img src="../../../imagenes/e8d4b0903356f8eb0d47231cef261217-removebg-preview.png" alt="Sony Alpha 7"/>
+          <h2>Sony Alpha 7</h2>
+          <p class="precio">1.199 €</p>
+          <p class="detalle">Full-frame ideal para estudio y paisaje.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+        <article class="producto">
+          <img src="../../../imagenes/Canon_EOS_R-removebg-preview.png" alt="Canon EOS R"/>
+          <h2>Canon EOS R</h2>
+          <p class="precio">1.499 €</p>
+          <p class="detalle">Mirrorless con enfoque automático muy preciso.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+        <article class="producto">
+          <img src="../../../imagenes/z6ii-front-removebg-preview.png" alt="Nikon Z6 II"/>
+          <h2>Nikon Z6 II</h2>
+          <p class="precio">1.699 €</p>
+          <p class="detalle">Equilibrada para foto profesional y vídeo.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+        <article class="producto">
+          <div class="oferta">Oferta</div>
+          <img src="../../../imagenes/61cpwJy9JsL._AC_SX679_-removebg-preview.png" alt="Fujifilm X-T4"/>
+          <h2>Fujifilm X-T4</h2>
+          <p class="precio">1.349 €</p>
+          <p class="detalle">Color Fujifilm + estabilización en cuerpo.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+        <article class="producto">
+          <img src="../../../imagenes/sony-alpha-6400-cuerpo-removebg-preview (1).png" alt="Sony Alpha 6400"/>
+          <h2>Sony Alpha 6400</h2>
+          <p class="precio">999 €</p>
+          <p class="detalle">Compacta y rápida para fotografía urbana.</p>
+          <a class="boton-carrito" href="../../carrito/index.html">Añadir al carrito</a>
+        </article>
+
+      </section>
     </main>
 
     <!-- --------------------FOOTER--------------------- -->
 
     <footer class="footer">
-      <div class="fcontenido">
-        <div class="finfo">
-          <h3>Contáctenos</h3>
-          <p><a href="mailto:adriangomezferreiro@gmail.com">adriangomezferreiro@gmail.com</a></p>
+      <div class="footer__container">
+        <div class="footer__col">
+          <img src="../../imagenes/Logo_PhotoLens.png" alt="PhotoLens" class="footer__logo">
+          <p class="footer__text">Tienda especializada en fotografía profesional.</p>
+        </div>
+
+        <div class="footer__col">
+          <h4>Explorar</h4>
+          <ul class="footer__links">
+            <li><a href="../../novedades/index.html">Novedades</a></li>
+            <li><a href="../index.html">Mercado</a></li>
+            <li><a href="../../foros/index.html">Foros</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col footer__contact">
+          <h4>Contacto</h4>
+          <p><a href="mailto:info@photolens.com">info@photolens.com</a></p>
           <p><a href="tel:+34633949090">+34 633 94 90 90</a></p>
-        </div>
-
-        <div class="fsobre">
-          <h3><img src="../../imagenes/Logo_PhotoLens.png" alt="PhotoLens"></h3>
-          <p>Tienda especializada en fotografía profesional.</p>
-          <p>Líder en objetivos y accesorios en Galicia.</p>
-        </div>
-
-        <div class="fredes">
-          <a class="icono" href="#" target="_blank"><img src="../../imagenes/facebook-removebg-preview.png" alt="facebook"></a>
-          <a class="icono" href="#" target="_blank"><img src="../../imagenes/twitter.png" alt="twitter"></a>
-          <a class="icono" href="#" target="_blank"><img src="../../imagenes/intagram.png" alt="instagram"></a>
         </div>
       </div>
 
-      <div class="CC">
-        <p>PhotoLens © 2025 <br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+      <div class="footer__bottom">
+        <p class="footer__copy">PhotoLens © 2025</p>
       </div>
     </footer>
 
   </body>
 </html>
-
