@@ -6,214 +6,149 @@
     <title>PhotoLens - Tienda de Fotografía Profesional</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./header/header.css" />
-    <link rel="stylesheet" href="./footer/footer.css" />
-    <link rel="stylesheet" href="./index.css" />
-
+    <link rel="stylesheet" href="header/header.css" />
+    <link rel="stylesheet" href="footer/footer.css" />
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
 
     <!-- --------------------HEADER--------------------- -->
 
     <header class="header">
-      <nav class="nav">
-        <div id="logo">
-          <a href="./index.html">
-            <img src="./imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
-          </a>
-        </div>
+    <nav class="nav">
+        <a href="index.html" id="logo">
+            <img src="imagenes/Logo_PhotoLens.png" alt="Logo PhotoLens">
+        </a>
 
         <ul class="menu">
-          <li><a href="./pages/novedades/index.html">Novedades</a></li>
-          <li><a href="./pages/mercado/index.html">Mercado</a></li>
-          <li><a href="./pages/foros/index.html">Foros</a></li>
+            <li><a href="pages/novedades/index.html">Novedades</a></li>
+            <li><a href="pages/mercado/index.html">Mercado</a></li>
+            <li><a href="pages/foros/index.html">Foros</a></li>
         </ul>
 
         <div class="nav-buttons">
-          <a href="./pages/carrito/index.html" class="icono-boton">
-            <img src="./imagenes/carrito.png" alt="Carrito">
-          </a>
-          <a href="./pages/perfil/index.html" class="icono-boton">
-            <img src="./imagenes/perfil.png" alt="Perfil">
-          </a>
+            <a href="pages/carrito/index.html" class="icono-boton">
+                <img src="imagenes/carrito.png" alt="Carrito">
+            </a>
+            <a href="pages/perfil/index.html" class="icono-boton">
+                <img src="imagenes/1f464-removebg-preview.png" alt="Perfil">
+            </a>
         </div>
 
         <input type="checkbox" id="botonMenu" class="check-menu">
-        <label for="botonMenu" class="boton-hamburguesa">☰</label>
+        <label for="botonMenu" class="boton-hamburguesa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </label>
 
         <div class="menu-movil">
-          <a href="./pages/novedades/index.html">Novedades</a>
-          <a href="./pages/mercado/index.html">Mercado</a>
-          <a href="./pages/foros/index.html">Foros</a>
+            <a href="pages/novedades/index.html">Novedades</a>
+            <a href="pages/mercado/index.html">Mercado</a>
+            <a href="pages/foros/index.html">Foros</a>
         </div>
-
-      </nav>
-    </header>
+    </nav>
+</header>
 
     <!-- ---------- MAIN ---------- -->
 
     <main class="index">
 
-      <!-- HERO SECTION -->
+      <!-- -------- HERO -------- -->
       <section class="hero">
-        <div class="hero-contenido">
-          <h1>Captura la Realidad con Precisión</h1>
-          <p>Los mejores equipos de fotografía profesional en Galicia</p>
-          <div class="hero-buttons">
-            <a href="./pages/mercado/index.html" class="btn btn-primario">Explorar Mercado</a>
-            <a href="./pages/foros/index.html" class="btn btn-secundario">Comunidad</a>
-          </div>
-        </div>
-        <div class="hero-imagen">
-          <img src="./imagenes/Sony A7R VI 100MP con IA 2026.webp" alt="Cámara profesional">
+        <img src="./imagenes/Sony A7R VI 100MP con IA 2026.webp" alt="Hero">
+        
+        <div class="hero-overlay">
+          <h1>Captura la Realidad</h1>
+          <p>Fotografía profesional sin límites</p>
+          <a href="./pages/mercado/index.html" class="btn">Explorar</a>
         </div>
       </section>
-
-      <!-- CATEGORÍAS PRINCIPALES -->
+    
+      <!-- -------- CATEGORÍAS (GALERÍA) -------- -->
       <section class="categorias">
-        <h2>Categorías Principales</h2>
         <div class="grid-categorias">
-          <div class="categoria-card">
-            <div class="categoria-icon">📷</div>
-            <h3>Cámaras</h3>
-            <p>Mirrorless y DSLR de última generación</p>
-            <a href="./pages/mercado/categorias/camaras.html">Ver más</a>
-          </div>
-
-          <div class="categoria-card">
-            <div class="categoria-icon">🔍</div>
-            <h3>Objetivos</h3>
-            <p>Óptica profesional para cada situación</p>
-            <a href="./pages/mercado/categorias/objetivos.html">Ver más</a>
-          </div>
-
-          <div class="categoria-card">
-            <div class="categoria-icon">⚙️</div>
-            <h3>Accesorios</h3>
-            <p>Complementos esenciales para fotografía</p>
-            <a href="./pages/mercado/categorias/accesorios.html">Ver más</a>
-          </div>
+    
+          <a href="#" class="categoria">
+            <img src="./imagenes/Sony A7R VI 100MP con IA 2026.webp">
+            <div class="overlay">Cámaras</div>
+          </a>
+    
+          <a href="#" class="categoria">
+            <img src="./imagenes/Canon EOS R7 Mark II presentada.webp">
+            <div class="overlay">Objetivos</div>
+          </a>
+    
+          <a href="#" class="categoria">
+            <img src="./imagenes/Nikon ZRC para creadores 2026.webp">
+            <div class="overlay">Accesorios</div>
+          </a>
+    
         </div>
       </section>
-
-      <!-- NOVEDADES -->
-      <section class="novedades-home">
+    
+      <!-- -------- NOVEDADES -------- -->
+      <section class="novedades">
         <h2>Últimas Novedades</h2>
-        <p>Las cámaras y equipos más innovadores del mercado</p>
+    
         <div class="grid-novedades">
-          <article class="novedad-card">
-            <img src="./imagenes/Sony A7R VI 100MP con IA 2026.webp" alt="Sony A7R VI">
-            <div class="novedad-content">
-              <span class="novedad-date">Feb 26, 2025</span>
-              <h3>Sony A7R VI: 100MP con IA 2026</h3>
-              <p>La mirrorless más avanzada ya tiene fecha de lanzamiento confirmada</p>
-              <a href="./pages/novedades/articulos/articulo1.html">Leer más</a>
+    
+          <article class="novedad">
+            <img src="./imagenes/Sony A7R VI 100MP con IA 2026.webp">
+            <div class="novedad-info">
+              <span>Feb 2025</span>
+              <h3>Sony A7R VI</h3>
             </div>
           </article>
-
-          <article class="novedad-card">
-            <img src="./imagenes/Canon EOS R7 Mark II presentada.webp" alt="Canon EOS R7">
-            <div class="novedad-content">
-              <span class="novedad-date">Feb 20, 2025</span>
-              <h3>Canon EOS R7 Mark II Presentada</h3>
-              <p>Nueva cámara profesional con procesador mejorado</p>
-              <a href="./pages/novedades/articulos/articulo2.html">Leer más</a>
+    
+          <article class="novedad">
+            <img src="./imagenes/Canon EOS R7 Mark II presentada.webp">
+            <div class="novedad-info">
+              <span>Feb 2025</span>
+              <h3>Canon EOS R7 II</h3>
             </div>
           </article>
-
-          <article class="novedad-card">
-            <img src="./imagenes/Nikon ZRC para creadores 2026.webp" alt="Nikon ZRC">
-            <div class="novedad-content">
-              <span class="novedad-date">Feb 15, 2025</span>
-              <h3>Nikon ZRC para Creadores 2026</h3>
-              <p>Sistema optimizado para creadores de contenido</p>
-              <a href="./pages/novedades/articulos/articulo3.html">Leer más</a>
+    
+          <article class="novedad">
+            <img src="./imagenes/Nikon ZRC para creadores 2026.webp">
+            <div class="novedad-info">
+              <span>Feb 2025</span>
+              <h3>Nikon ZRC</h3>
             </div>
           </article>
+    
         </div>
       </section>
-
-      <!-- CARACTERÍSTICAS -->
-      <section class="caracteristicas">
-        <h2>¿Por qué PhotoLens?</h2>
-        <div class="grid-caracteristicas">
-          <div class="caracteristica-item">
-            <div class="caracteristica-number">01</div>
-            <h3>Productos Originales</h3>
-            <p>Equipos certificados y con garantía oficial</p>
-          </div>
-
-          <div class="caracteristica-item">
-            <div class="caracteristica-number">02</div>
-            <h3>Expertos en Fotografía</h3>
-            <p>Asesoramiento profesional en cada compra</p>
-          </div>
-
-          <div class="caracteristica-item">
-            <div class="caracteristica-number">03</div>
-            <h3>Comunidad Activa</h3>
-            <p>Foros y espacios para compartir experiencias</p>
-          </div>
-
-          <div class="caracteristica-item">
-            <div class="caracteristica-number">04</div>
-            <h3>Envío Rápido</h3>
-            <p>Entrega en toda Galicia y península ibérica</p>
-          </div>
-
-          <div class="caracteristica-item">
-            <div class="caracteristica-number">05</div>
-            <h3>Precios Competitivos</h3>
-            <p>Las mejores ofertas en equipos de fotografía</p>
-          </div>
-
-          <div class="caracteristica-item">
-            <div class="caracteristica-number">06</div>
-            <h3>Soporte Técnico</h3>
-            <p>Ayuda post-venta y mantenimiento</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- CALL TO ACTION -->
-      <section class="cta-section">
-        <div class="cta-contenido">
-          <h2>¿Listo para empezar?</h2>
-          <p>Descubre nuestra selección completa de equipos de fotografía profesional</p>
-          <a href="./pages/mercado/index.html" class="btn btn-primario">Ver Catálogo Completo</a>
-        </div>
-      </section>
-
-    </main>
+    
+    </main> 
 
     <!-- --------------------FOOTER--------------------- -->
 
-    <footer>
-      <div class="fcontenido">
-        <div class="finfo">
-          <h3>Contáctenos</h3>
-          <p><a href="mailto:adriangomezferreiro@gmail.com">adriangomezferreiro@gmail.com</a></p>
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__col">
+          <img src="./imagenes/Logo_PhotoLens.png" alt="PhotoLens" class="footer__logo">
+          <p class="footer__text">Tienda especializada en fotografía profesional.</p>
+        </div>
+
+        <div class="footer__col">
+          <h4>Explorar</h4>
+          <ul class="footer__links">
+            <li><a href="./pages/novedades/index.html">Novedades</a></li>
+            <li><a href="./pages/mercado/index.html">Mercado</a></li>
+            <li><a href="./pages/foros/index.html">Foros</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col footer__contact">
+          <h4>Contacto</h4>
+          <p><a href="mailto:info@photolens.com">info@photolens.com</a></p>
           <p><a href="tel:+34633949090">+34 633 94 90 90</a></p>
-        </div>
-
-        <div class="fsobre">
-          <a href="./index.html"><img src="./imagenes/Logo_PhotoLens.png" alt="PhotoLens"></a>
-          <p>Tienda especializada en fotografía profesional.</p>
-          <p>Líder en objetivos y accesorios en Galicia.</p>
-        </div>
-
-        <div class="fredes">
-          <a class="icono" href="#" target="_blank"><img src="./imagenes/facebook-removebg-preview.png" alt="facebook"></a>
-          <a class="icono" href="#" target="_blank"><img src="./imagenes/twitter.png" alt="twitter"></a>
-          <a class="icono" href="#" target="_blank"><img src="./imagenes/intagram.png" alt="instagram"></a>
         </div>
       </div>
 
-      <div class="CC">
-        <p>PhotoLens © 2025 <br><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+      <div class="footer__bottom">
+        <p class="footer__copy">PhotoLens © 2025</p>
       </div>
     </footer>
 
   </body>
 </html>
-
