@@ -1,203 +1,164 @@
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-    font-family: Montserrat, sans-serif;
-}
-
+/* -------------------- LAYOUT GENERAL (STICKY FOOTER) -------------------- */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
 }
 
 main {
     flex: 1;
 }
 
-/* ---------------- FOOTER ---------------- */
-footer {
-    background-color: rgb(246, 209, 214); 
-    padding: 40px 20px 20px;
-    color: #000000;
+/* -------------------- FOOTER -------------------- */
+.footer {
+    /* Layout */
+    display: block;
+    position: relative;
+    z-index: 10;
+
+    /* Size */
     width: 100%;
-    margin-top: auto;
+    padding: 5rem 5% 2rem;
+
+    /* Visual */
+    background-color: #0a0a12;
+    border-top: 1px solid rgba(240, 240, 247, 0.08);
 }
 
-.fcontenido {
+/* -------------------- CONTENEDOR PRINCIPAL FOOTER -------------------- */
+.footer__container {
+    /* Layout */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    justify-items: center;
-    border-bottom: 1px solid #333333;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.finfo, .fsobre, .fredes {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
+    gap: 4rem;
     text-align: center;
-    margin-bottom: 20px;
-    justify-content: center;
-    overflow-wrap: break-word;
+
+    /* Size */
+    max-width: 1200px;
+    margin: 0 auto 4rem;
 }
 
-.finfo h3, .fsobre h3 {
-    margin-bottom: 15px;
+/* -------------------- COLUMNAS -------------------- */
+.footer__col h4 {
+    /* Typography */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
     font-weight: 600;
-    font-size: 1.1rem;
-    color: #000000;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    
+    /* Size */
+    margin-bottom: 1.5rem;
+    
+    /* Visual */
+    color: #f0f0f7;
 }
 
-.finfo p {
-    margin: 8px 0;
+.footer__logo {
+    /* Size */
+    height: 55px;
+    margin-bottom: 1.5rem;
+
+    /* Visual */
+    filter: brightness(0) invert(1);
     opacity: 0.9;
-    color: rgba(0, 0, 0, 0.9);
 }
 
-.fsobre img {
-    max-width: 180px;
-    height: auto;
-    margin: 0 auto 10px;
+.footer__text {
+    /* Typography */
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-weight: 300;
+
+    /* Visual */
+    color: rgba(240, 240, 247, 0.6);
 }
 
-.finfo a {
+.footer__links {
+    /* Layout */
+    list-style: none;
+    padding: 0;
+}
+
+.footer__links li {
+    /* Size */
+    margin-bottom: 0.75rem;
+}
+
+.footer__links a,
+.footer__contact a {
+    /* Typography */
+    font-size: 0.9rem;
     text-decoration: none;
-    color: inherit;
+    font-weight: 300;
 
+    /* Visual */
+    color: rgba(240, 240, 247, 0.6);
+
+    /* Animation */
     transition: color 0.3s ease;
 }
 
-.finfo a:hover {
-    color: #ff6b35;
+.footer__links a:hover,
+.footer__contact a:hover {
+    /* Visual */
+    color: #f0f0f7;
 }
 
-.fredes {
+/* -------------------- COPYRIGHT -------------------- */
+.footer__bottom {
+    /* Layout */
     display: flex;
     justify-content: center;
-    gap: 15px;
-}
-
-.fredes .icono img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.fredes .icono {
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background: rgba(255,255,255,0.08);
-
-    transition: all 0.3s ease-in-out;
-}
-
-.fredes .icono:hover {
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-    background: rgba(255,107,53,0.25);
-}
-
-.CC {
-    text-align: center;
-    font-size: 0.85rem;
-    color: #333333;
-    padding-top: 20px;
-    width: 100%;
-    margin: 0 auto;
+    
+    /* Size */
     max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 2rem;
+
+    /* Visual */
+    border-top: 1px solid rgba(240, 240, 247, 0.05);
 }
 
-.CC a {
-    color: #000000;
+.footer__copy {
+    /* Typography */
+    font-size: 0.8rem;
+    
+    /* Visual */
+    color: rgba(240, 240, 247, 0.4);
 }
 
+/* -------------------- RESPONSIVE -------------------- */
 
-/* ---------------- RESPONSIVE ---------------- */
+/* >1100px (Default handled above) */
 
-@media (min-width: 1001px) {
-    .fcontenido {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 40px;
-    }
-    footer {
-        padding: 30px 40px 20px;
-    }
-}
-
-
-@media (min-width: 751px) and (max-width: 1000px) {
-    footer {
-        padding: 25px 20px 15px;
-    }
-    .fcontenido {
+/* 1100px – 701px */
+@media (max-width: 1100px) and (min-width: 701px) {
+    .footer__container {
         grid-template-columns: 1fr 1fr;
-        gap: 30px;
-    }
-    .fredes {
-        grid-column: span 2;
+        gap: 3rem;
     }
 }
 
-
-@media (min-width: 481px) and (max-width: 750px) {
-    footer {
-        padding: 25px 15px 15px;
-    }
-    .fcontenido {
+/* 700px – 501px */
+@media (max-width: 700px) and (min-width: 501px) {
+    .footer__container {
         grid-template-columns: 1fr 1fr;
-        gap: 25px;
-    }
-    .fredes {
-        grid-column: span 2;
-    }
-    .fredes .icono {
-        width: 40px;
-        height: 40px;
     }
 }
 
-
-@media (max-width: 480px) {
-    footer {
-        padding: 20px 10px 10px;
-    }
-    .fcontenido {
+/* ≤500px */
+@media (max-width: 500px) {
+    .footer__container {
         grid-template-columns: 1fr;
-        gap: 20px;
+        text-align: center;
+        gap: 2.5rem;
     }
-    .finfo h3, .fsobre h3 {
-        font-size: 1rem;
-    }
-    .finfo p {
-        font-size: 0.9rem;
-    }
-    .fredes {
-        gap: 12px;
-    }
-    .fredes .icono {
-        width: 35px;
-        height: 35px;
-    }
-    .CC {
-        font-size: 0.8rem;
-        padding-top: 15px;
+
+    .footer__bottom {
+        flex-direction: column;
+        gap: 1rem;
     }
 }
