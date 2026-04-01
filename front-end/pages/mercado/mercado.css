@@ -10,6 +10,33 @@ body {
   color: #f0f0f7;
 }
 
+/* Estados de carga */
+
+.loading {
+    text-align: center;
+    padding: 50px 20px;
+    color: #666;
+    font-size: 18px;
+}
+
+.error-mensajes {
+    text-align: center;
+    padding: 40px 20px;
+    color: #d9534f;
+    background: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+.error-mensajes code {
+    background: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #333;
+}
+
 /* -------------------- MERCADO -------------------- */
 
 .mercado {
