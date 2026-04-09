@@ -1,0 +1,31 @@
+Resumen para memoria 01/04/2026
+Trabajo realizado: Se preparó un catálogo inicial completo de productos para el mercado de PhotoLens, usando los nombres, descripciones y archivos de imagen disponibles en la carpeta local del proyecto.
+
+Resultado obtenido: Cada producto quedó definido con datos listos para cargar en la base de datos Django, incluyendo URL directa de imagen, precio y categoría normalizada.
+
+Observaciones técnicas: Las imágenes deben guardarse como URL limpia servida desde el frontend local, y las categorías se mantienen simples para facilitar el filtrado posterior en la interfaz.
+
+Resumen para memoria - 01/04/2026
+Trabajo realizado: Se realizó commit de todos los cambios del backend Django, documentando la configuración completa de API REST con modelos, serializers, vistas y datos de prueba.
+
+Resultado obtenido: El proyecto queda en estado estable y versionado, listo para desarrollo frontend dinámico sin riesgo de pérdida de trabajo backend.
+
+Observaciones técnicas: Git permite rollback instantáneo a este punto si algo falla en el frontend; el mensaje de commit sirve como resumen técnico para la memoria del proyecto.
+
+Siguiente paso: Implementar fetch() en mercado/index.html para mostrar productos dinámicamente desde la API.
+
+Resumen para memoria - 01/04/2026 22:24
+Se completó backend Django con API /productos/ (13 productos reales) y se preparó mercado dinámico modular (mercado.js + CSS simple + HTML limpio). El fetch da error de conexión (probable CORS Django-LiveServer) pero la estructura está lista para conexión frontend-backend completa del Tipo 2.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Resumen para memoria - 02/04/2026 00:17
+Se dejó guardado el estado actual del proyecto con un commit y se continuó con la conexión entre el frontend y la API de Django. Como el endpoint /productos/ ya devuelve JSON correctamente, el siguiente paso es configurar CORS para permitir que Live Server en el puerto 5500 pueda hacer peticiones al backend en el puerto 8000.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Resumen para memoria - 07/04/2026 10:46
+Se preparó un texto de comandos organizado por procesos para usarlo como guía rápida del proyecto en otro dispositivo o en tareas de mantenimiento. El contenido se simplificó para dejar solo los comandos realmente usados, con títulos en una sola línea y sin explicaciones extra para que quede limpio y fácil de copiar.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
