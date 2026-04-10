@@ -1,6 +1,9 @@
-from django.urls import path
-from .views import obtener_usuarios
+# /* -------- ROUTER DRF -------- */
+from rest_framework.routers import DefaultRouter
+from .views import UsuarioViewSet, ProductoViewSet
 
-urlpatterns = [
-    path('usuarios/', obtener_usuarios),
-]
+router = DefaultRouter()
+router.register(r'usuarios', UsuarioViewSet)
+router.register(r'productos', ProductoViewSet)
+
+urlpatterns = router.urls
