@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p class="detalle">${producto.descripcion}</p>
                 <a class="boton-carrito" href="../../carrito/index.html" 
                    data-producto-id="${producto.id}">
-                    Añadir al carrito
+                    Añadir al carrito       
                 </a>
             </article>
         `).join('');

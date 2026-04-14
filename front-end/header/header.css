@@ -241,3 +241,27 @@ body{
 
     /* Aquí irían los estilos del menú móvil que ahora es relevante */
 }
+
+/* -------------------- AUTH DYNAMIC -------------------- */
+.nav-auth {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-login, .btn-perfil, .btn-logout {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-login { background: #ff6b35; color: white; border: none; }
+.btn-perfil { background: #4caf50; color: white; border: none; }
+.btn-logout { background: transparent; color: #ff4444; border: 1px solid #ff4444; }
+
+.btn-login:hover { background: #f7931e; transform: translateY(-2px); }
