@@ -1,303 +1,223 @@
 <!DOCTYPE html>
 <html lang="es" data-tema="oscuro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Novedades — anime'n'chill</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novedades | anime'n'chill</title>
 
-  <!-- Fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-  <!-- Iconos Lucide -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-
-  <link rel="stylesheet" href="novedades.css" />
+    <link rel="stylesheet" href="novedades.css">
+    <link rel="stylesheet" href="novedades.js">
 </head>
 <body>
 
-    <!-- ------------------- CABEZERA/NAV ---------------- -->
-  <header class="cabecera">
-    <div class="cabecera__interior">
+    <div id="contenedor-header"></div>
 
-      <!-- Logo -->
-      <a href="#" class="logo" aria-label="anime'n'chill inicio">
-        <svg class="logo__icono" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <rect x="2" y="2" width="28" height="28" rx="8" fill="currentColor" opacity="0.15"/>
-          <path d="M8 22 L16 8 L24 22" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M10.5 17 L21.5 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-        <span class="logo__texto">anime<span class="logo__acento">'n'</span>chill</span>
-      </a>
+    <main class="contenido-principal">
+        <section class="hero" aria-label="Noticia destacada">
+            <article class="hero__tarjeta">
+                <img
+                    class="hero__imagen"
+                    src="https://picsum.photos/seed/anime-hero/1200/500"
+                    alt="Noticia destacada de Chainsaw Man"
+                >
 
-      <!-- Navegación principal -->
-      <nav class="nav" aria-label="Navegación principal">
-        <ul class="nav__lista" role="list">
-          <li><a href="#" class="nav__enlace nav__enlace--activo">Novedades</a></li>
-          <li><a href="#" class="nav__enlace">Manga</a></li>
-          <li><a href="#" class="nav__enlace">Anime</a></li>
-          <li><a href="#" class="nav__enlace">Noticias</a></li>
-        </ul>
-      </nav>
+                <div class="hero__contenido">
+                    <span class="etiqueta etiqueta--manga">Manga</span>
+                    <h1 class="hero__titulo">Chainsaw Man: Fujimoto confirma el inicio de un nuevo arco argumental</h1>
+                    <p class="hero__descripcion">
+                        El autor de Chainsaw Man ha compartido una nueva imagen promocional
+                        que apunta a cambios importantes en la historia.
+                    </p>
+                    <div class="hero__meta">
+                        <span>17 abr 2026</span>
+                        <span>·</span>
+                        <span>3 min de lectura</span>
+                    </div>
+                    <a href="#" class="boton-primario">Leer noticia</a>
+                </div>
+            </article>
+        </section>
 
-      <!-- Controles derecha -->
-      <div class="cabecera__controles">
-        <!-- Selector de tema (brillo) -->
-        <div class="selector-tema" aria-label="Cambiar tema visual">
-          <button class="selector-tema__boton" id="btnTema" aria-label="Cambiar tema">
-            <i data-lucide="sun-moon" width="18" height="18"></i>
-          </button>
-          <div class="selector-tema__menu" id="menuTema" role="listbox" aria-label="Temas disponibles" hidden>
-            <button class="selector-tema__opcion" data-tema="claro" role="option">
-              <i data-lucide="sun" width="15" height="15"></i> Claro
-            </button>
-            <button class="selector-tema__opcion" data-tema="tarde" role="option">
-              <i data-lucide="cloud-sun" width="15" height="15"></i> Tarde
-            </button>
-            <button class="selector-tema__opcion" data-tema="oscuro" role="option">
-              <i data-lucide="moon" width="15" height="15"></i> Oscuro
-            </button>
-            <button class="selector-tema__opcion" data-tema="noche" role="option">
-              <i data-lucide="stars" width="15" height="15"></i> Noche
-            </button>
-          </div>
-        </div>
+        <section class="zona-filtros" aria-label="Filtros de novedades">
+            <div class="zona-filtros__interior">
+                <div class="filtros">
+                    <button class="filtro filtro--activo" data-filtro="todo">Todo</button>
+                    <button class="filtro" data-filtro="manga">Manga</button>
+                    <button class="filtro" data-filtro="anime">Anime</button>
+                    <button class="filtro" data-filtro="noticia">Noticias</button>
+                    <button class="filtro" data-filtro="lanzamiento">Lanzamientos</button>
+                </div>
 
-        <!-- Buscador -->
-        <button class="boton-icono" aria-label="Buscar">
-          <i data-lucide="search" width="18" height="18"></i>
-        </button>
-
-        <!-- Perfil -->
-        <button class="boton-icono" aria-label="Mi perfil">
-          <i data-lucide="user-circle" width="18" height="18"></i>
-        </button>
-
-        <!-- Hamburguesa (solo móvil) -->
-        <button class="boton-icono boton-menu" id="btnMenu" aria-label="Abrir menú" aria-expanded="false">
-          <i data-lucide="menu" width="20" height="20"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ------------------- MAIN ---------------- -->
-
-  <main>
-
-    <!-- ── HERO destacado ─────────────────── -->
-    <section class="hero" aria-label="Noticia destacada">
-      <article class="hero__tarjeta">
-        <img
-          class="hero__imagen"
-          src="https://picsum.photos/seed/anime-hero/1200/500"
-          alt="Portada de Chainsaw Man – nuevo arco confirmado"
-          width="1200"
-          height="500"
-          loading="eager"
-        />
-        <div class="hero__contenido">
-          <span class="etiqueta etiqueta--manga">Manga</span>
-          <h1 class="hero__titulo">Chainsaw Man: Fujimoto confirma el inicio de un nuevo arco argumental</h1>
-          <p class="hero__descripcion">El autor de Chainsaw Man ha compartido en sus redes sociales una imagen críptica que apunta a un giro inesperado en la historia de Denji. Los fans no paran de especular.</p>
-          <div class="hero__meta">
-            <time datetime="2026-04-17">17 abr 2026</time>
-            <span>·</span>
-            <span>3 min de lectura</span>
-          </div>
-          <a href="#" class="boton-primario">Leer noticia</a>
-        </div>
-      </article>
-    </section>
-
-    <!-- ── FILTROS ─────────────────────────── -->
-    <section class="zona-filtros" aria-label="Filtrar novedades">
-      <div class="zona-filtros__interior">
-        <div class="filtros" role="group" aria-label="Categorías">
-          <button class="filtro filtro--activo" data-filtro="todo">Todo</button>
-          <button class="filtro" data-filtro="manga">Manga</button>
-          <button class="filtro" data-filtro="anime">Anime</button>
-          <button class="filtro" data-filtro="noticias">Noticias</button>
-          <button class="filtro" data-filtro="lanzamientos">Lanzamientos</button>
-        </div>
-        <p class="conteo-resultados" aria-live="polite">Mostrando <strong>8</strong> novedades</p>
-      </div>
-    </section>
-
-    <!-- ── GRID DE NOTICIAS ───────────────── -->
-    <section class="seccion-noticias" aria-label="Lista de novedades">
-      <div class="cuadricula-noticias">
-
-        <!-- Tarjeta 1 -->
-        <article class="tarjeta" data-categoria="anime">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/anime-1/600/340" alt="One Piece episodio especial" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--anime">Anime</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">One Piece celebra su episodio 1100 con una edición especial remasterizada</a>
-            </h2>
-            <p class="tarjeta__resumen">Toei Animation ha anunciado que el capítulo especial incluirá escenas inéditas del arco de Wano narradas por los propios protagonistas.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-16">16 abr 2026</time>
-              <span class="tarjeta__lectura">4 min</span>
+                <p class="conteo-resultados">Mostrando <strong>8</strong> novedades</p>
             </div>
-          </div>
-        </article>
+        </section>
 
-        <!-- Tarjeta 2 -->
-        <article class="tarjeta" data-categoria="manga">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/manga-2/600/340" alt="Jujutsu Kaisen portada" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--manga">Manga</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">Jujutsu Kaisen: El capítulo final ya tiene fecha oficial de publicación en España</a>
-            </h2>
-            <p class="tarjeta__resumen">Norma Editorial ha confirmado que el último tomo estará disponible el próximo mes en todas las librerías especializadas del país.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-15">15 abr 2026</time>
-              <span class="tarjeta__lectura">2 min</span>
+        <section class="seccion-noticias" aria-label="Listado de novedades">
+            <div class="cuadricula-noticias">
+
+                <article class="tarjeta" data-categoria="anime">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/anime-1/600/340" alt="One Piece episodio especial">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--anime">Anime</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">One Piece celebra su episodio 1100 con una edición especial</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            Toei Animation prepara un episodio con contenido inédito y mejoras visuales.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>16 abr 2026</span>
+                            <span>4 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta" data-categoria="manga">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/manga-2/600/340" alt="Jujutsu Kaisen final">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--manga">Manga</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">Jujutsu Kaisen ya tiene fecha oficial para su tomo final en España</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            La editorial confirma el lanzamiento del último volumen y una edición especial de salida.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>15 abr 2026</span>
+                            <span>3 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta" data-categoria="lanzamiento">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/lanzamiento-3/600/340" alt="Temporada anime primavera">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--lanzamiento">Lanzamiento</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">Temporada primavera 2026: animes que más están dando que hablar</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            Repaso rápido a los títulos más seguidos de la nueva temporada.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>14 abr 2026</span>
+                            <span>5 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta" data-categoria="noticia">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/noticia-4/600/340" alt="Crunchyroll cambia su plan">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--noticia">Noticia</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">Crunchyroll anuncia cambios en su plan básico para 2026</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            La plataforma ajusta funciones y condiciones en su servicio de streaming.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>13 abr 2026</span>
+                            <span>2 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta" data-categoria="anime">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/anime-5/600/340" alt="Demon Slayer estreno">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--anime">Anime</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">Demon Slayer pone fecha al estreno de su nueva temporada</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            Ufotable comparte un nuevo cartel y confirma la ventana de lanzamiento.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>12 abr 2026</span>
+                            <span>3 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta" data-categoria="manga">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/manga-6/600/340" alt="Berserk edición nueva">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--manga">Manga</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">Berserk tendrá una nueva edición deluxe en el mercado español</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            La reedición reunirá varios tomos con mejor acabado y material adicional.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>10 abr 2026</span>
+                            <span>4 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta" data-categoria="lanzamiento">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/lanzamiento-7/600/340" alt="Blue Box anime">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--lanzamiento">Lanzamiento</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">Blue Box da el salto al anime con una primera temporada de 24 episodios</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            La adaptación promete mantenerse fiel al tono romántico y deportivo del manga.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>9 abr 2026</span>
+                            <span>4 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta" data-categoria="noticia">
+                    <a href="#" class="tarjeta__enlace-imagen">
+                        <img class="tarjeta__imagen" src="https://picsum.photos/seed/noticia-8/600/340" alt="Jump Festa anuncios">
+                    </a>
+                    <div class="tarjeta__cuerpo">
+                        <span class="etiqueta etiqueta--noticia">Noticia</span>
+                        <h2 class="tarjeta__titulo">
+                            <a href="#" class="tarjeta__enlace">Jump Festa 2026 deja nuevos anuncios de anime y manga</a>
+                        </h2>
+                        <p class="tarjeta__resumen">
+                            Resumen de los anuncios más comentados del evento para que no te pierdas nada.
+                        </p>
+                        <div class="tarjeta__pie">
+                            <span>8 abr 2026</span>
+                            <span>6 min</span>
+                        </div>
+                    </div>
+                </article>
+
             </div>
-          </div>
-        </article>
 
-        <!-- Tarjeta 3 -->
-        <article class="tarjeta" data-categoria="lanzamientos">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/lanzamiento-3/600/340" alt="Temporada de primavera 2026" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--lanzamiento">Lanzamiento</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">Temporada de primavera 2026: todos los animes que deberías tener en tu lista</a>
-            </h2>
-            <p class="tarjeta__resumen">Repasamos los títulos más esperados de esta temporada, desde las continuaciones más esperadas hasta las sorpresas del momento.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-14">14 abr 2026</time>
-              <span class="tarjeta__lectura">6 min</span>
+            <div class="zona-cargar">
+                <button class="boton-secundario">Cargar más novedades</button>
             </div>
-          </div>
-        </article>
+        </section>
+    </main>
 
-        <!-- Tarjeta 4 -->
-        <article class="tarjeta" data-categoria="noticias">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/noticia-4/600/340" alt="Crunchyroll nuevas funciones" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--noticia">Noticia</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">Crunchyroll lanza la descarga sin conexión en su plan básico a partir de mayo</a>
-            </h2>
-            <p class="tarjeta__resumen">La plataforma más usada para ver anime en streaming amplía sus funciones gratuitas en respuesta a la presión de la competencia.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-13">13 abr 2026</time>
-              <span class="tarjeta__lectura">3 min</span>
-            </div>
-          </div>
-        </article>
+    <div id="contenedor-footer"></div>
 
-        <!-- Tarjeta 5 -->
-        <article class="tarjeta" data-categoria="anime">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/anime-5/600/340" alt="Demon Slayer nueva temporada" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--anime">Anime</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">Demon Slayer anuncia fecha de estreno para su esperada quinta temporada</a>
-            </h2>
-            <p class="tarjeta__resumen">Ufotable desvela el póster oficial y confirma que la nueva entrega llegará en otoño de 2026 con un nuevo director al frente.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-12">12 abr 2026</time>
-              <span class="tarjeta__lectura">3 min</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tarjeta 6 -->
-        <article class="tarjeta" data-categoria="manga">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/manga-6/600/340" alt="Berserk edición definitiva" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--manga">Manga</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">Berserk: la edición deluxe tapa dura llega a España con traducción revisada</a>
-            </h2>
-            <p class="tarjeta__resumen">Panini Comics presenta la reedición definitiva de la obra de Kentaro Miura con papel de alta calidad y un nuevo prólogo de Kouji Mori.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-10">10 abr 2026</time>
-              <span class="tarjeta__lectura">5 min</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tarjeta 7 -->
-        <article class="tarjeta" data-categoria="lanzamientos">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/lanzamiento-7/600/340" alt="Blue Box anime" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--lanzamiento">Lanzamiento</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">Blue Box debuta en anime con su primera temporada completa de 24 episodios</a>
-            </h2>
-            <p class="tarjeta__resumen">El manga deportivo de Koji Miura llega a la pantalla de la mano de TMS Entertainment con una adaptación muy fiel al original.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-09">9 abr 2026</time>
-              <span class="tarjeta__lectura">4 min</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tarjeta 8 -->
-        <article class="tarjeta" data-categoria="noticias">
-          <a href="#" class="tarjeta__enlace-imagen" tabindex="-1" aria-hidden="true">
-            <img class="tarjeta__imagen" src="https://picsum.photos/seed/noticia-8/600/340" alt="Jump Festa 2026 resumen" width="600" height="340" loading="lazy" />
-          </a>
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta etiqueta--noticia">Noticia</span>
-            <h2 class="tarjeta__titulo">
-              <a href="#" class="tarjeta__enlace">Jump Festa 2026: todos los anuncios más importantes del evento en un solo lugar</a>
-            </h2>
-            <p class="tarjeta__resumen">Desde nuevas adaptaciones anime hasta continuaciones inesperadas, el mayor evento del manga en Japón no ha defraudado este año.</p>
-            <div class="tarjeta__pie">
-              <time datetime="2026-04-08">8 abr 2026</time>
-              <span class="tarjeta__lectura">7 min</span>
-            </div>
-          </div>
-        </article>
-
-      </div>
-
-      <!-- Botón cargar más -->
-      <div class="zona-cargar">
-        <button class="boton-secundario">Cargar más novedades</button>
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- ----------------- FOOTER ----------------------- -->
-  <footer class="pie">
-    <div class="pie__interior">
-      <p class="pie__texto">© 2026 anime'n'chill — Proyecto TFC DAW</p>
-      <nav aria-label="Navegación del pie">
-        <ul class="pie__lista" role="list">
-          <li><a href="#" class="pie__enlace">Sobre el proyecto</a></li>
-          <li><a href="#" class="pie__enlace">Contacto</a></li>
-          <li><a href="#" class="pie__enlace">GitHub</a></li>
-        </ul>
-      </nav>
-    </div>
-  </footer>
-
-  <script src="novedades.js"></script>
+    <script src="../../components/componentes.js"></script>
+    <script src="./novedades.js"></script>
 </body>
 </html>

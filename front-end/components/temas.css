@@ -1,0 +1,53 @@
+/* ------------------- TEMAS ------------------- */
+
+[data-tema="oscuro"] {
+    --fondo: #141414;
+    --fondo-tarjeta: #1e1e1e;
+    --fondo-cabecera: rgba(20, 20, 20, 0.92);
+    --borde: rgba(255, 255, 255, 0.08);
+    --texto: #e8e8e8;
+    --texto-suave: #a0a0a0;
+    --texto-muy-suave: #5a5a5a;
+    --acento: #e8a838;
+    --acento-hover: #f0bb55;
+    --sombra: rgba(0, 0, 0, 0.4);
+}
+
+[data-tema="claro"] {
+    --fondo: #f5f4f0;
+    --fondo-tarjeta: #ffffff;
+    --fondo-cabecera: rgba(245, 244, 240, 0.92);
+    --borde: rgba(0, 0, 0, 0.08);
+    --texto: #1a1a1a;
+    --texto-suave: #5a5a5a;
+    --texto-muy-suave: #9c9c9c;
+    --acento: #c8890a;
+    --acento-hover: #a86f05;
+    --sombra: rgba(0, 0, 0, 0.08);
+}
+
+[data-tema="tarde"] {
+    --fondo: #2a1f14;
+    --fondo-tarjeta: #352718;
+    --fondo-cabecera: rgba(42, 31, 20, 0.92);
+    --borde: rgba(255, 200, 120, 0.12);
+    --texto: #f0dfc0;
+    --texto-suave: #b89870;
+    --texto-muy-suave: #7a6040;
+    --acento: #f0a030;
+    --acento-hover: #ffb845;
+    --sombra: rgba(0, 0, 0, 0.45);
+}
+
+[data-tema="noche"] {
+    --fondo: #090909;
+    --fondo-tarjeta: #121212;
+    --fondo-cabecera: rgba(9, 9, 9, 0.96);
+    --borde: rgba(255, 255, 255, 0.05);
+    --texto: #c0c0c0;
+    --texto-suave: #707070;
+    --texto-muy-suave: #404040;
+    --acento: #c8a060;
+    --acento-hover: #d8b070;
+    --sombra: rgba(0, 0, 0, 0.7);
+}

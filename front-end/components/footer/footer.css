@@ -1,0 +1,129 @@
+/* ------------------- PIE DE PAGINA ------------------- */
+
+.pie {
+    padding: 3rem 1.5rem 1.25rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--borde);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.pie__contenedor {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pie__bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.pie__bloque--marca {
+    max-width: 420px;
+}
+
+.pie__logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--texto);
+    text-decoration: none;
+}
+
+.pie__logo-acento {
+    color: var(--acento);
+}
+
+.pie__descripcion {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--texto-suave);
+}
+
+.pie__titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.pie__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    list-style: none;
+}
+
+.pie__item {
+    list-style: none;
+}
+
+.pie__enlace {
+    color: var(--texto-suave);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pie__enlace:hover {
+    color: var(--acento);
+}
+
+.pie__inferior {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--borde);
+}
+
+.pie__copyright {
+    font-size: 0.85rem;
+    color: var(--texto-muy-suave);
+}
+
+/* ------------------- RESPONSIVE 1100px - 701px ------------------- */
+
+@media (max-width: 1100px) {
+    .pie__contenedor {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .pie__bloque--marca {
+        grid-column: 1 / -1;
+        max-width: 100%;
+    }
+}
+
+/* ------------------- RESPONSIVE 700px - 501px ------------------- */
+
+@media (max-width: 700px) {
+    .pie {
+        padding: 2.5rem 1rem 1rem;
+    }
+
+    .pie__contenedor {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+    }
+
+    .pie__inferior {
+        margin-top: 1.5rem;
+    }
+}
+
+/* ------------------- RESPONSIVE <= 500px ------------------- */
+
+@media (max-width: 500px) {
+    .pie__logo {
+        font-size: 1.1rem;
+    }
+
+    .pie__descripcion,
+    .pie__enlace {
+        font-size: 0.92rem;
+    }
+
+    .pie__copyright {
+        font-size: 0.8rem;
+    }
+}
