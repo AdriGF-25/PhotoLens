@@ -1,0 +1,47 @@
+--------------------------------------------------------------
+INICIO DEL PROYECTO EN UN NUEVO DISPOSITIVO
+--------------------------------------------------------------
+git pull
+cd .\backend\
+pip install -r PipRequirements.txt
+
+
+--------------------------------------------------------------
+ACTUALIZAR EL PROYECTO AL DIA
+--------------------------------------------------------------
+git pull
+cd .\backend\
+pip install -r PipRequirements.txt
+
+
+--------------------------------------------------------------
+RESET DE LA BASE DE DATOS
+--------------------------------------------------------------
+del db.sqlite3
+python manage.py migrate
+python manage.py createsuperuser
+
+
+--------------------------------------------------------------
+TODO DENTRO DE BACKEND
+--------------------------------------------------------------
+ENCENDER SERVIDOR
+python manage.py runserver
+
+CREAR O ACTUALIZAR REQUIREMENTS.TXT
+pip freeze > PipRequirements.txt
+
+VACIAR DATOS SIN BORRAR LA ESTRUCTURA
+python manage.py flush
+
+PARA SALIRSE DEL ENTORNO
+deactivate
+
+PARA ENTRAR AL ENTORNO
+.venv/Scripts/activate
+
+DESHACER UN COMMIT NO PUSHEADO (en local)
+git reset --soft HEAD~1
+
+DESHACER UN COMMIT YA PUSHEADO 
+git reset HEAD~1
