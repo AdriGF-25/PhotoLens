@@ -39,3 +39,37 @@ CAMBIO DE PROYECTO - 1:56 17/04/2026
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Resumen para memoria — 17 abr 2026
+Primera página del front-end: novedades con sistema de temas visuales (claro/tarde/oscuro/noche) mediante variables CSS controladas por JS, grid responsive de tarjetas y filtro de categorías sin frameworks externos.
+
+
+Resumen para memoria - 17/04/2026
+
+En esta parte del proyecto se reorganizó el front-end para que la cabecera, el pie de página y los temas visuales estuviesen separados en archivos propios. La idea principal fue evitar repetir el mismo código en cada página y dejar una estructura más limpia y reutilizable.
+
+También se preparó un sistema común para cargar estos componentes desde JavaScript, de forma que las páginas solo tengan su contenido propio y compartan automáticamente los elementos generales de la web. Además, se mejoró el comportamiento de la cabecera, añadiendo navegación responsive para móvil y un selector de tema con varias opciones visuales.
+
+Esta reorganización facilita el mantenimiento del proyecto, hace más clara la arquitectura del front-end y deja una base mejor preparada para integrar más adelante la parte dinámica con Django y Django REST Framework.
+
+
+
+Resumen para memoria - 17/04/2026
+
+Se actualizó la documentación auxiliar del proyecto y el script encargado de generar el árbol de archivos. En concreto, se revisó `tr.ps1` para mantener sincronizada la estructura del repositorio con el estado real del trabajo, se regeneró `structure.txt` y se organizaron los archivos de apoyo de `ArchivosExtra` para facilitar la consulta de comandos, la explicación de la estructura y la redacción de la memoria.
+
+Este ajuste no afecta a la funcionalidad principal de la aplicación, pero sí mejora la organización general del proyecto y ayuda a mantener un control más claro de los archivos, algo importante para la entrega y para la defensa del TFC.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////

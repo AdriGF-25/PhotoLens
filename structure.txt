@@ -1,0 +1,188 @@
+﻿.
+|-- ArchivosExtra
+|   |-- Comentarios_MEMORIA.txt
+|   |-- guiaTreeEspecifico.txt
+|   -- listadoComandos.txt
+|-- back-end
+|   -- media
+|       |-- Manga
+|       |   -- Chainsaw Man
+|       |       |-- Vol 1_Chap 1_ Un perro y una motosierra
+|       |       |-- Vol 1_Chap 2_ El paradero de Pochita
+|       |       |-- Vol 1_Chap 3_ Llegada a Tokio
+|       |       |-- Vol 1_Chap 4_ Power
+|       |       |-- Vol 1_Chap 5_ Cómo sobar tetas
+|       |       |-- Vol 1_Chap 6_ Esclavitud
+|       |       |-- Vol 1_Chap 7.5_ Extra volumen 1
+|       |       |-- Vol 1_Chap 7_ El paradero de Gatito
+|       |       |-- Vol 10_Chap 80_ Vida de perros
+|       |       |-- Vol 10_Chap 81_ La patita
+|       |       |-- Vol 10_Chap 82_ Un desayuno como es debido
+|       |       |-- Vol 10_Chap 83_ Muerte, resurrección, Motosierra
+|       |       |-- Vol 10_Chap 84_ El héroe del Infierno
+|       |       |-- Vol 10_Chap 85_ Éxtasis visceral
+|       |       |-- Vol 10_Chap 86_ Cita con Motosierra
+|       |       |-- Vol 10_Chap 87_ Chainsaw Man vs. Las terroríficas armas humanas
+|       |       |-- Vol 10_Chap 88_ Star Chainsaw
+|       |       |-- Vol 11_Chap 227_ Sabor a gambas y sangre
+|       |       |-- Vol 11_Chap 89_ ¡Tú puedes, Chainsaw Man!
+|       |       |-- Vol 11_Chap 90_ MegaPower
+|       |       |-- Vol 11_Chap 91_ Power, Power, Power
+|       |       |-- Vol 11_Chap 92_ Vanilla Sky
+|       |       |-- Vol 11_Chap 93_ Una peli malísima contigo
+|       |       |-- Vol 11_Chap 94_ Chainsaw Man vs. las armas humanas
+|       |       |-- Vol 11_Chap 95_ Chainsaw Man vs. el Demonio del Control
+|       |       |-- Vol 11_Chap 96_ Este sabor
+|       |       |-- Vol 11_Chap 97_ I Love Chainsaw
+|       |       |-- Vol 18_Chap 182_ Carita mona
+|       |       |-- Vol 18_Chap 183_ Regurgitación, cara, excitación
+|       |       |-- Vol 18_Chap 184_ Corre, Denji
+|       |       |-- Vol 18_Chap 185_ Un estómago de otro mundo
+|       |       |-- Vol 2_Chap 10_ Kon
+|       |       |-- Vol 2_Chap 11_ Compromiso
+|       |       |-- Vol 2_Chap 12_ Tocamiento
+|       |       |-- Vol 2_Chap 13_ El Demonio Pistola
+|       |       |-- Vol 2_Chap 14_ Beso con lengua
+|       |       |-- Vol 2_Chap 15_ La eterna octava planta
+|       |       |-- Vol 2_Chap 16.5_ Extras volumen 2
+|       |       |-- Vol 2_Chap 16_ Un sabor desconocido
+|       |       |-- Vol 2_Chap 8_ Motosierra contra Murciélago
+|       |       |-- Vol 2_Chap 9_ Rescate
+|       |       |-- Vol 20_Chap 178_ La estatua de la pistola
+|       |       |-- Vol 20_Chap 179_ Bramburbreba
+|       |       |-- Vol 20_Chap 180_ El mundo de la senectud
+|       |       |-- Vol 20_Chap 181_ Árboles extraños
+|       |       |-- Vol 20_Chap 186_ Ploch, chuof, ziiin
+|       |       |-- Vol 20_Chap 187_ ¡A vomitar!
+|       |       |-- Vol 20_Chap 188_ ​Pulpo, guerra, motosierra
+|       |       |-- Vol 20_Chap 189_ Heart pass, octo pass
+|       |       |-- Vol 21_Chap 190_ A nuestros respectivos mundos
+|       |       |-- Vol 21_Chap 191_ Por algo soy un demonio
+|       |       |-- Vol 21_Chap 192_ Cómo disfrutan los demonios
+|       |       |-- Vol 21_Chap 193_ Burning KISS
+|       |       |-- Vol 21_Chap 194_ El esperado festival cultural
+|       |       |-- Vol 21_Chap 195_ Lágrimas de kill me
+|       |       |-- Vol 21_Chap 196_ ¡Ha llegado Chainsaw Man!
+|       |       |-- Vol 21_Chap 197_ Tres segundos
+|       |       |-- Vol 21_Chap 198_ ¡Soy Kiga!
+|       |       |-- Vol 21_Chap 201_ ¡El miedo es esto!
+|       |       |-- Vol 22_Chap 199_ Un manjar delicioso
+|       |       |-- Vol 22_Chap 200_ Dos personas perjudiciales
+|       |       |-- Vol 22_Chap 202_ Fusión demoniaca
+|       |       |-- Vol 22_Chap 203_ Escudo humano
+|       |       |-- Vol 22_Chap 204_ Con una sola vida
+|       |       |-- Vol 22_Chap 205_ ¿Quién_
+|       |       |-- Vol 22_Chap 206_ Tetas, mujer, disculpa
+|       |       |-- Vol 22_Chap 207_ ¡Bam, bam, bam, bam, bam, bam, bam, bam, bam!
+|       |       |-- Vol 22_Chap 209_ Armas aterradoras
+|       |       |-- Vol 22_Chap 210_ Paz
+|       |       |-- Vol 22_Chap 215_ Declaración de guerra
+|       |       |-- Vol 23_Chap 211_ Guerra, braguitas, motosierra
+|       |       |-- Vol 23_Chap 212_ Una chica estupenda
+|       |       |-- Vol 23_Chap 213_ Misión
+|       |       |-- Vol 23_Chap 214_ Fuoooh, ñic, puerta
+|       |       |-- Vol 23_Chap 216_ La anhelada
+|       |       |-- Vol 23_Chap 217_ Dos buenas personas
+|       |       |-- Vol 23_Chap 218_ Devórame
+|       |       |-- Vol 23_Chap 219_ Los que se han ido
+|       |       |-- Vol 23_Chap 220_ Vínculos y Míchigan
+|       |       |-- Vol 23_Chap 221_ Batalla segura
+|       |       |-- Vol 23_Chap 222_ Denji Man
+|       |       |-- Vol 23_Chap 223_ La armadura más resistente
+|       |       |-- Vol 23_Chap 224_ Luna, estocada, lanza
+|       |       |-- Vol 23_Chap 225_ Vómito, moto, infierno
+|       |       |-- Vol 23_Chap 226_ Nido de langostas
+|       |       |-- Vol 23_Chap 228_ Paloma
+|       |       |-- Vol 23_Chap 229_ El chotacabras jotaka y Asa
+|       |       |-- Vol 23_Chap 230_ Sexo y selección natural
+|       |       |-- Vol 23_Chap 231_ Adiós, Pochita
+|       |       |-- Vol 23_Chap 232_ Gracias, Chainsaw Man
+|       |       |-- Vol 3_Chap 17_ Matad a Denji
+|       |       |-- Vol 3_Chap 18_ Motosierra contra Eternidad
+|       |       |-- Vol 3_Chap 19_ Premio Nobel
+|       |       |-- Vol 3_Chap 20_ De copas
+|       |       |-- Vol 3_Chap 21_ El sabor de un beso
+|       |       |-- Vol 3_Chap 22_ Chupachups con sabor a cola
+|       |       |-- Vol 3_Chap 23_ Disparos
+|       |       |-- Vol 3_Chap 24_ Maldición
+|       |       |-- Vol 3_Chap 25.5_ Extras Volumen 3
+|       |       |-- Vol 3_Chap 25_ Fantasma, Serpiente y Motosierra
+|       |       |-- Vol 4_Chap 26_ El poder de las armas
+|       |       |-- Vol 4_Chap 27_ Desde Kioto
+|       |       |-- Vol 4_Chap 28_ Secretos y mentiras
+|       |       |-- Vol 4_Chap 29_
+|       |       |-- Vol 4_Chap 30_ Aún más en la mierda
+|       |       |-- Vol 4_Chap 31_
+|       |       |-- Vol 4_Chap 32_ Una y otra vez
+|       |       |-- Vol 4_Chap 33_ Empieza la guerra
+|       |       |-- Vol 4_Chap 34_ Todos reunidos
+|       |       |-- Vol 5_Chap 35_ Menor de edad
+|       |       |-- Vol 5_Chap 36_ Katana contra Motosierra
+|       |       |-- Vol 5_Chap 37_ Tren, cabeza, motosierra
+|       |       |-- Vol 5_Chap 38_ ¡Véngate a gusto!
+|       |       |-- Vol 5_Chap 39_ Seguro que lloraré
+|       |       |-- Vol 5_Chap 40_ Amor, flor, motosierra
+|       |       |-- Vol 5_Chap 41_ Antes de la tormenta
+|       |       |-- Vol 5_Chap 42_ Enséñame a nadar
+|       |       |-- Vol 5_Chap 43.5_ Extras tomo 5
+|       |       |-- Vol 5_Chap 43_ Jean durmió en la iglesia
+|       |       |-- Vol 6_Chap 44_ Bum, bum, bum
+|       |       |-- Vol 6_Chap 45_ Pronóstico_ explosiones
+|       |       |-- Vol 6_Chap 46_ Melodía de una masacre
+|       |       |-- Vol 6_Chap 47_ Afortunado con las mujeres
+|       |       |-- Vol 6_Chap 48_ Bom, bom ,bom
+|       |       |-- Vol 6_Chap 49_ Tornado de tiburones
+|       |       |-- Vol 6_Chap 50_ Sharknado
+|       |       |-- Vol 6_Chap 51_ Buceo profundo
+|       |       |-- Vol 6_Chap 52_ Desamor, flores , motosierra
+|       |       |-- Vol 7_Chap 53_ Dentro de un sueño
+|       |       |-- Vol 7_Chap 55_ ¡Vamos allá!
+|       |       |-- Vol 7_Chap 56_ Una maldición y una primera vez
+|       |       |-- Vol 7_Chap 57_ Repentino
+|       |       |-- Vol 7_Chap 58_ Yûtarô Kurose
+|       |       |-- Vol 7_Chap 59_ Destrozos
+|       |       |-- Vol 7_Chap 60_ Quanxi y sus poseídas matan a 49 hombres
+|       |       |-- Vol 7_Chap 61.5_ Extras Tomo 7
+|       |       |-- Vol 7_Chap 61_ La presentadora de noticias
+|       |       |-- Vol 8_Chap 62_ Aún más destrozos
+|       |       |-- Vol 8_Chap 63_ Un viaje al infierno
+|       |       |-- Vol 8_Chap 64_ Welcome to the Hell
+|       |       |-- Vol 8_Chap 65_ El Demonio de la Oscuridad
+|       |       |-- Vol 8_Chap 66_ ¡Guau!
+|       |       |-- Vol 8_Chap 67_ La primera Devil Hunter
+|       |       |-- Vol 8_Chap 68_ El poder de la oscuridad
+|       |       |-- Vol 8_Chap 69_ El poder de la luz
+|       |       |-- Vol 8_Chap 70.5_ Extras Tomo 8
+|       |       |-- Vol 8_Chap 70_ Rebanar
+|       |       |-- Vol 9_Chap 71_ Baño
+|       |       |-- Vol 9_Chap 72_ Todos juntos
+|       |       |-- Vol 9_Chap 73_ Fin de la normalidad
+|       |       |-- Vol 9_Chap 74_ Lo que cuentan las olas
+|       |       |-- Vol 9_Chap 75_ 12-S
+|       |       |-- Vol 9_Chap 76_ No abras
+|       |       |-- Vol 9_Chap 77_ Timbre, timbre, timbre
+|       |       |-- Vol 9_Chap 78_ Pelea de bolas de nieve
+|       |       -- Vol 9_Chap 79_ Jugar a pasarse la pelota
+|       -- Portadas
+|           -- Manga
+|               -- Chainsaw Man
+|                   -- info.json
+|-- front-end
+|   |-- components
+|   |   |-- footer
+|   |   |   |-- footer.css
+|   |   |   -- footer.html
+|   |   |-- header
+|   |   |   |-- header.css
+|   |   |   |-- header.html
+|   |   |   -- header.js
+|   |   |-- componentes.js
+|   |   -- temas.css
+|   -- pages
+|       -- novedades
+|           |-- novedades.css
+|           |-- novedades.html
+|           -- novedades.js
+|-- .gitignore
+|-- structure.txt
+-- tr.ps1

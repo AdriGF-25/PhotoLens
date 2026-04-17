@@ -45,3 +45,4 @@ git reset --soft HEAD~1
 
 DESHACER UN COMMIT YA PUSHEADO 
 git reset HEAD~1
+
