@@ -20,9 +20,12 @@ HEADERS = {
     "User-Agent": "animeNchill/1.0 (TFC DAW)"
 }
 
-
 # ------------------- OBTENER NOTICIAS RECIENTES -------------------
 def obtener_noticias_recientes(limite: int = 50) -> list:
+    """
+    Obtiene los últimos títulos (anime/manga) añadidos a ANN.
+    Usa el report id=155 que devuelve títulos ordenados por fecha.
+    """
     try:
         response = requests.get(
             REPORTS_URL,
@@ -37,18 +40,15 @@ def obtener_noticias_recientes(limite: int = 50) -> list:
         )
         response.raise_for_status()
 
-        root     = ET.fromstring(response.content)
+        root = ET.fromstring(response.content)
         noticias = []
 
-        for item in root.findall("item"):
-
-            ann_id = item.findtext("id", default="").strip()
+        for item in root.findall(".//item"):
+            ann_id = item.get("id", "") or item.findtext("id", default="").strip()
             titulo = item.findtext("name", default="Sin título").strip()
-            tipo   = item.findtext("type", default="TV").strip().lower()
+            tipo   = item.findtext("type", default="anime").strip().lower()
 
-            # Normalizar tipo al choices del modelo (anime/manga)
             tipo_normalizado = "manga" if "manga" in tipo else "anime"
-
             descripcion = f"Nuevo título añadido a Anime News Network: {titulo}"
             url_externa = f"https://www.animenewsnetwork.com/encyclopedia/anime.php?id={ann_id}"
 
@@ -69,70 +69,13 @@ def obtener_noticias_recientes(limite: int = 50) -> list:
     except ET.ParseError as e:
         print(f"[ANN] Error al parsear XML: {e}")
         return []
-    """
-    Obtiene los últimos títulos (anime/manga) añadidos a ANN.
-    Usa el report id=155 que devuelve títulos ordenados por fecha.
 
-    Devuelve lista de dicts con:
-      - ann_id, titulo, tipo, url_externa, descripcion
-    """
-    try:
-        response = requests.get(
-            REPORTS_URL,
-            headers=HEADERS,
-            params={
-                "id":    155,        # report de títulos recientes
-                "type":  "anime",    # "anime" o "manga" o quitarlo para ambos
-                "nlist": limite,
-                "nskip": 0,
-            },
-            timeout=15
-        )
-        response.raise_for_status()
-
-        # ---- Parsear XML ----
-        root = ET.fromstring(response.content)
-        noticias = []
-
-        for item in root.findall(".//item"):
-            ann_id = item.get("id", "")
-            titulo = item.findtext("name", default="Sin título")
-            tipo   = item.findtext("type", default="anime")
-            # ANN no tiene descripción en reports, usamos el título
-            descripcion = f"Nuevo título añadido a Anime News Network: {titulo}"
-            url_externa = f"https://www.animenewsnetwork.com/encyclopedia/anime.php?id={ann_id}"
-
-            if ann_id:
-                noticias.append({
-                    "ann_id":      ann_id,
-                    "titulo":      titulo,
-                    "tipo":        tipo,
-                    "descripcion": descripcion,
-                    "url_externa": url_externa,
-                })
-
-        return noticias
-
-    except requests.RequestException as e:
-        print(f"[ANN] Error al obtener noticias: {e}")
-        return []
-    except ET.ParseError as e:
-        print(f"[ANN] Error al parsear XML: {e}")
-        return []
-
-
-# ------------------- OBTENER DETALLES DE UN TÍTULO -------------------
+# ------------------- OBTENER DETALLES DE UN TÍTULO (CON IMAGEN) -------------------
 def obtener_detalle(ann_id: str, tipo: str = "title") -> dict | None:
     """
-    Obtiene la información detallada de un título concreto.
-
-    tipo puede ser: "anime", "manga" o "title" (si no sabes cuál es)
-
-    Devuelve dict con:
-      - ann_id, titulo, descripcion, generos, anio, url_externa
+    Obtiene la información detallada de un título, incluyendo la URL de la imagen.
     """
-    # Respeta el límite de 1 req/s
-    time.sleep(1)
+    time.sleep(1) # Respeta el límite de 1 req/s
 
     try:
         response = requests.get(
@@ -151,31 +94,34 @@ def obtener_detalle(ann_id: str, tipo: str = "title") -> dict | None:
 
         titulo      = anime.get("name", "Sin título")
         url_externa = f"https://www.animenewsnetwork.com/encyclopedia/anime.php?id={ann_id}"
-
-        # ---- Descripción (info type="Picture") ----
+        
         descripcion = ""
-        for info in anime.findall("info"):
-            if info.get("type") == "Plot Summary":
-                descripcion = info.text or ""
-                break
-
-        # ---- Géneros ----
         generos = []
-        for info in anime.findall("info"):
-            if info.get("type") == "Genres":
-                generos.append(info.text or "")
-
-        # ---- Año ----
         anio = None
+        imagen_url = ""
+
+        # Recorremos todos los nodos info
         for info in anime.findall("info"):
-            if info.get("type") == "Vintage":
-                texto = info.text or ""
-                # El texto puede ser "Apr 6, 2007 to Sep 25, 2008"
+            tipo_info = info.get("type")
+            
+            if tipo_info == "Plot Summary" and not descripcion:
+                descripcion = info.text or ""
+            
+            elif tipo_info == "Genres":
+                generos.append(info.text or "")
+                
+            elif tipo_info == "Vintage" and anio is None:
                 try:
-                    anio = int(texto[:4])
+                    anio = int((info.text or "")[:4])
                 except (ValueError, IndexError):
                     pass
-                break
+            
+            # --- LÓGICA DE EXTRACCIÓN DE IMAGEN ---
+            elif tipo_info == "Picture" and not imagen_url:
+                if "src" in info.attrib:
+                    imagen_url = info.get("src")
+                elif info.find("img") is not None:
+                    imagen_url = info.find("img").get("src", "")
 
         return {
             "ann_id":      ann_id,
@@ -183,6 +129,7 @@ def obtener_detalle(ann_id: str, tipo: str = "title") -> dict | None:
             "descripcion": descripcion,
             "generos":     generos,
             "anio":        anio,
+            "imagen_url":  imagen_url,
             "url_externa": url_externa,
         }
 
@@ -193,22 +140,16 @@ def obtener_detalle(ann_id: str, tipo: str = "title") -> dict | None:
         print(f"[ANN] Error al parsear XML del detalle: {e}")
         return None
 
-
-# ------------------- OBTENER DETALLES EN LOTE (hasta 50) -------------------
+# ------------------- OBTENER DETALLES EN LOTE (CON IMAGEN) -------------------
 def obtener_detalles_lote(ann_ids: list, tipo: str = "title") -> list:
     """
     Pide detalles de hasta 50 títulos en una sola petición.
-    ANN soporta IDs separados por / en la misma URL.
-
-    Ejemplo: api.xml?title=4658/4199/11608
     """
     if not ann_ids:
         return []
 
-    # Máximo 50 por lote según la documentación
     ids_str = "/".join(str(i) for i in ann_ids[:50])
-
-    time.sleep(1)  # Respeta límite 1 req/s
+    time.sleep(1)
 
     try:
         response = requests.get(
@@ -228,9 +169,11 @@ def obtener_detalles_lote(ann_ids: list, tipo: str = "title") -> list:
             descripcion = ""
             generos     = []
             anio        = None
+            imagen_url  = ""
 
             for info in elem.findall("info"):
                 tipo_info = info.get("type", "")
+                
                 if tipo_info == "Plot Summary" and not descripcion:
                     descripcion = info.text or ""
                 elif tipo_info == "Genres":
@@ -240,6 +183,12 @@ def obtener_detalles_lote(ann_ids: list, tipo: str = "title") -> list:
                         anio = int((info.text or "")[:4])
                     except (ValueError, IndexError):
                         pass
+                # --- LÓGICA DE EXTRACCIÓN DE IMAGEN ---
+                elif tipo_info == "Picture" and not imagen_url:
+                    if "src" in info.attrib:
+                        imagen_url = info.get("src")
+                    elif info.find("img") is not None:
+                        imagen_url = info.find("img").get("src", "")
 
             resultados.append({
                 "ann_id":      ann_id,
@@ -247,6 +196,7 @@ def obtener_detalles_lote(ann_ids: list, tipo: str = "title") -> list:
                 "descripcion": descripcion,
                 "generos":     generos,
                 "anio":        anio,
+                "imagen_url":  imagen_url,
                 "url_externa": f"https://www.animenewsnetwork.com/encyclopedia/anime.php?id={ann_id}",
             })
 
