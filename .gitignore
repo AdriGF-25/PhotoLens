@@ -3,3 +3,9 @@ __pycache__/
 *.pyc
 db.sqlite3
 .env
+ArchivosExtra/ExplicacionArchivos_Backend.md
+# Media (imágenes y archivos subidos)
+back-end/media/
+
+# Migraciones autogeneradas 
+# back-end/**/migrations/0002_*.py

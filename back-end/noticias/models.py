@@ -1,5 +1,6 @@
 """
-anime'n'chill — Modelo de noticias (fuente: AnimeNewsNetwork)
+anime'n'chill — Modelo de Noticias
+Fuente: Anime News Network Encyclopedia API
 """
 
 from django.db import models
@@ -8,28 +9,28 @@ from django.db import models
 # ------------------- NOTICIA -------------------
 class Noticia(models.Model):
     class Tipo(models.TextChoices):
-        NOTICIA     = "news",    "Noticia"
-        REVIEW      = "review",  "Review"
-        LANZAMIENTO = "release", "Lanzamiento"
-        EVENTO      = "event",   "Evento"
+        ANIME = "anime", "Anime"
+        MANGA = "manga", "Manga"
 
-    ann_id            = models.CharField(max_length=50, unique=True,
-                          blank=True, null=True,
-                          help_text="ID de AnimeNewsNetwork")
-    titulo            = models.CharField(max_length=500)
-    descripcion       = models.TextField(blank=True)
-    url_externa       = models.URLField(blank=True)
-    imagen_url        = models.URLField(blank=True)
-    tipo              = models.CharField(max_length=20, choices=Tipo.choices,
-                          default=Tipo.NOTICIA)
-    fecha_publicacion = models.DateTimeField(null=True, blank=True)
-    created_at        = models.DateTimeField(auto_now_add=True)
-    updated_at        = models.DateTimeField(auto_now=True)
+    # ann_id único para no duplicar al sincronizar
+    ann_id      = models.CharField(max_length=50, unique=True,
+                    help_text="ID del título en ANN")
+    titulo      = models.CharField(max_length=300)
+    tipo        = models.CharField(max_length=10, choices=Tipo.choices,
+                    default=Tipo.ANIME)
+    descripcion = models.TextField(blank=True)
+    imagen_url  = models.URLField(blank=True)
+    url_externa = models.URLField(
+                    help_text="Enlace a la Encyclopedia de ANN (obligatorio por sus ToS)")
+    fecha_ann   = models.CharField(max_length=20, blank=True,
+                    help_text="Año/temporada de emisión según ANN")
+    sincronizado_en = models.DateTimeField(auto_now=True)
+    created_at  = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering    = ["-fecha_publicacion"]
+        ordering    = ["-created_at"]
         verbose_name = "Noticia"
         verbose_name_plural = "Noticias"
 
     def __str__(self):
-        return self.titulo
+        return f"[{self.get_tipo_display()}] {self.titulo}"

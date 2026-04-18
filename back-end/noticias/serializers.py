@@ -1,16 +1,26 @@
+"""
+anime'n'chill — Serializers de la app noticias
+"""
+
 from rest_framework import serializers
 from .models import Noticia
 
 
-# ------------------- NOTICIA -------------------
+# ------------------- NOTICIA SERIALIZER -------------------
 class NoticiaSerializer(serializers.ModelSerializer):
+
     class Meta:
         model  = Noticia
         fields = [
-            "id", "ann_id", "titulo", "descripcion", "url_externa",
-            "imagen_url", "tipo", "fecha_publicacion", "created_at",
+            "id",
+            "ann_id",
+            "titulo",
+            "tipo",
+            "descripcion",
+            "imagen_url",
+            "url_externa",
+            "fecha_ann",
+            "sincronizado_en",
+            "created_at",
         ]
-        extra_kwargs = {
-            "created_at": {"read_only": True},
-            "ann_id":     {"read_only": True},
-        }
+        read_only_fields = ["id", "sincronizado_en", "created_at"]
