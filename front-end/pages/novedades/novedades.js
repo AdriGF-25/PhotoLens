@@ -2,6 +2,7 @@
 
 const API_NOTICIAS    = 'http://127.0.0.1:8000/api/noticias/noticias/';
 const API_SINCRONIZAR = 'http://127.0.0.1:8000/api/noticias/noticias/sincronizar/';
+const IMAGEN_PLACEHOLDER = '../../assets/img/placeholder-noticia.jpg';
 
 // Mapa de tipo ANN → categoría de filtro y etiqueta visual
 const TIPO_CATEGORIA = {
@@ -33,52 +34,63 @@ function formatearFecha(fechaISO) {
     return fecha.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+
 function obtenerImagenNoticia(noticia) {
-    if (noticia.imagen_url) return noticia.imagen_url;
-    // Fallback con seed del id para que cada noticia tenga imagen diferente
-    return `https://picsum.photos/seed/ann-${noticia.id}/600/340`;
+    if (noticia.imagen_url && noticia.imagen_url.trim() !== '') {
+        return noticia.imagen_url;
+    }
+
+    return IMAGEN_PLACEHOLDER;
 }
 
+function crearAtributoOnErrorImagen() {
+    return `this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}';`;
+}
 
 // ------------------- RENDER HERO ------------------- //
 
 function renderizarHero(noticia) {
     const cat = obtenerCategoria(noticia.tipo);
+    const heroImagen = document.querySelector('.hero__imagen');
+    const imagen = obtenerImagenNoticia(noticia);
 
-    document.querySelector('.hero__imagen').src          = obtenerImagenNoticia(noticia);
-    document.querySelector('.hero__imagen').alt          = noticia.titulo;
-    document.querySelector('.hero__titulo').textContent  = noticia.titulo;
+    heroImagen.src = imagen;
+    heroImagen.alt = noticia.titulo;
+    heroImagen.onerror = function() {
+        this.onerror = null;
+        this.src = IMAGEN_PLACEHOLDER;
+    };
+
+    document.querySelector('.hero__titulo').textContent = noticia.titulo;
     document.querySelector('.hero__descripcion').textContent = noticia.descripcion || '';
 
-    // Fecha
     const metaSpans = document.querySelectorAll('.hero__meta span');
-    if (metaSpans.length > 0) metaSpans[0].textContent = formatearFecha(noticia.fecha_ann || noticia.created_at);
+    if (metaSpans.length > 0) {
+        metaSpans[0].textContent = formatearFecha(noticia.fecha_ann || noticia.created_at);
+    }
 
-    // Etiqueta
     const etiquetaHero = document.querySelector('.hero .etiqueta');
-    etiquetaHero.textContent  = cat.etiqueta;
-    etiquetaHero.className    = `etiqueta ${cat.clase}`;
+    etiquetaHero.textContent = cat.etiqueta;
+    etiquetaHero.className = `etiqueta ${cat.clase}`;
 
-    // Enlace "Leer noticia"
     const enlaceHero = document.querySelector('.boton-primario');
     if (noticia.url_externa) {
-        enlaceHero.href   = noticia.url_externa;
+        enlaceHero.href = noticia.url_externa;
         enlaceHero.target = '_blank';
-        enlaceHero.rel    = 'noopener noreferrer';
+        enlaceHero.rel = 'noopener noreferrer';
     }
 }
-
 
 // ------------------- RENDER TARJETAS ------------------- //
 
 function crearTarjeta(noticia) {
-    const cat    = obtenerCategoria(noticia.tipo);
+    const cat = obtenerCategoria(noticia.tipo);
     const imagen = obtenerImagenNoticia(noticia);
-    const fecha  = formatearFecha(noticia.fecha_ann || noticia.created_at);
+    const fecha = formatearFecha(noticia.fecha_ann || noticia.created_at);
     const enlace = noticia.url_externa || '#';
 
     const article = document.createElement('article');
-    article.className         = 'tarjeta';
+    article.className = 'tarjeta';
     article.dataset.categoria = cat.filtro;
 
     article.innerHTML = `
@@ -90,6 +102,7 @@ function crearTarjeta(noticia) {
                 loading="lazy"
                 width="600"
                 height="210"
+                onerror="${crearAtributoOnErrorImagen()}"
             >
         </a>
         <div class="tarjeta__cuerpo">
@@ -152,12 +165,26 @@ function mostrarSkeleton() {
 
 function mostrarError(mensaje) {
     const cuadricula = document.querySelector('.cuadricula-noticias');
+    const conteo = document.querySelector('.conteo-resultados strong');
+    const zonaCargar = document.querySelector('.zona-cargar');
+
     cuadricula.innerHTML = `
         <div class="estado-vacio">
             <p class="estado-vacio__mensaje">⚠️ ${mensaje}</p>
             <button class="boton-secundario" id="btnReintentar">Reintentar</button>
         </div>
     `;
+
+    todasLasTarjetas = [];
+
+    if (conteo) {
+        conteo.textContent = '0';
+    }
+
+    if (zonaCargar) {
+        zonaCargar.style.display = 'none';
+    }
+
     document.getElementById('btnReintentar')?.addEventListener('click', cargarNoticias);
 }
 
