@@ -1,0 +1,425 @@
+# 📄 MEMORIA DEL PROYECTO
+
+---
+
+## 📅 01/04/2026
+
+**Trabajo realizado:**
+Se preparó un catálogo inicial completo de productos para el mercado de PhotoLens, usando los nombres, descripciones y archivos de imagen disponibles en la carpeta local del proyecto.
+
+**Resultado obtenido:**
+Cada producto quedó definido con datos listos para cargar en la base de datos Django, incluyendo URL directa de imagen, precio y categoría normalizada.
+
+**Observaciones técnicas:**
+Las imágenes deben guardarse como URL limpia servida desde el frontend local, y las categorías se mantienen simples para facilitar el filtrado posterior en la interfaz.
+
+---
+
+## 📅 01/04/2026
+
+**Trabajo realizado:**
+Se realizó commit de todos los cambios del backend Django, documentando la configuración completa de API REST con modelos, serializers, vistas y datos de prueba.
+
+**Resultado obtenido:**
+El proyecto queda en estado estable y versionado, listo para desarrollo frontend dinámico sin riesgo de pérdida de trabajo backend.
+
+**Observaciones técnicas:**
+Git permite rollback instantáneo a este punto si algo falla en el frontend; el mensaje de commit sirve como resumen técnico para la memoria del proyecto.
+
+**Siguiente paso:**
+Implementar fetch() en mercado/index.html para mostrar productos dinámicamente desde la API.
+
+<br><br>
+****
+<br><br>
+
+## 📅 01/04/2026 22:24
+
+Se completó backend Django con API `/productos/` (13 productos reales) y se preparó mercado dinámico modular (mercado.js + CSS simple + HTML limpio). El fetch da error de conexión (probable CORS Django-LiveServer) pero la estructura está lista para conexión frontend-backend completa del Tipo 2.
+
+<br><br>
+****
+<br><br>
+
+## 📅 02/04/2026 00:17
+
+Se dejó guardado el estado actual del proyecto con un commit y se continuó con la conexión entre el frontend y la API de Django. Como el endpoint `/productos/` ya devuelve JSON correctamente, el siguiente paso es configurar CORS para permitir que Live Server en el puerto 5500 pueda hacer peticiones al backend en el puerto 8000.
+
+<br><br>
+****
+<br><br>
+
+## 📅 07/04/2026 10:46
+
+Se preparó un texto de comandos organizado por procesos para usarlo como guía rápida del proyecto en otro dispositivo o en tareas de mantenimiento. El contenido se simplificó para dejar solo los comandos realmente usados, con títulos en una sola línea y sin explicaciones extra para que quede limpio y fácil de copiar.
+
+<br><br>
+<br><br>
+
+# 🚧 CAMBIO DE PROYECTO
+
+### 🕐 17/04/2026 - 1:56
+
+<br><br>
+<br><br>
+
+## 📅 17/04/2026
+
+Primera página del front-end: novedades con sistema de temas visuales (claro/tarde/oscuro/noche) mediante variables CSS controladas por JS, grid responsive de tarjetas y filtro de categorías sin frameworks externos.
+
+---
+
+## 📅 17/04/2026
+
+En esta parte del proyecto se reorganizó el front-end para que la cabecera, el pie de página y los temas visuales estuviesen separados en archivos propios. La idea principal fue evitar repetir el mismo código en cada página y dejar una estructura más limpia y reutilizable.
+
+También se preparó un sistema común para cargar estos componentes desde JavaScript, de forma que las páginas solo tengan su contenido propio y compartan automáticamente los elementos generales de la web. Además, se mejoró el comportamiento de la cabecera, añadiendo navegación responsive para móvil y un selector de tema con varias opciones visuales.
+
+Esta reorganización facilita el mantenimiento del proyecto, hace más clara la arquitectura del front-end y deja una base mejor preparada para integrar más adelante la parte dinámica con Django y Django REST Framework.
+
+---
+
+## 📅 17/04/2026
+
+Se actualizó la documentación auxiliar del proyecto y el script encargado de generar el árbol de archivos. En concreto, se revisó `tr.ps1` para mantener sincronizada la estructura del repositorio con el estado real del trabajo, se regeneró `structure.txt` y se organizaron los archivos de apoyo de `ArchivosExtra` para facilitar la consulta de comandos, la explicación de la estructura y la redacción de la memoria.
+
+Este ajuste no afecta a la funcionalidad principal de la aplicación, pero sí mejora la organización general del proyecto y ayuda a mantener un control más claro de los archivos, algo importante para la entrega y para la defensa del TFC.
+
+---
+
+## 📅 17/04/2026
+
+### 🧠 Estructura base del backend Django completada
+
+Se ha creado desde cero el backend de anime'n'chill usando Django 4.2 + Django REST Framework. El proyecto se organiza en tres apps (anime, noticias, usuarios) más la carpeta de configuración `config/`. Se han implementado todos los modelos con sus relaciones, los serializers con patrón mixto, los ViewSets con acciones personalizadas, los filtros avanzados y la autenticación JWT. Se han conectado las APIs externas de MangaDex y AnimeNewsNetwork en settings.
+
+<br><br>
+****
+<br><br>
+
+## 📅 18/04/2026 4:05
+
+# 🔌 Integración backend Django + API Anime News Network
+
+## 1. Descripción
+
+Se ha implementado la primera integración de una API externa en el backend de anime'n'chill. Se conecta la API pública de Anime News Network (ANN) para obtener títulos de anime/manga recientes y almacenarlos en la base de datos local, evitando depender de la API en cada petición del frontend.
+
+## 2. Temporalización
+
+* Sesión única — 18/04/2026 madrugada
+* Duración estimada: ~2 horas
+
+## 3. Implementación
+
+**App noticias completa:**
+
+* `models.py` → Modelo Noticia con 9 campos, `unique=True` en `ann_id`
+* `services/ann.py` → Comunicación con ANN
+* `serializers.py` → NoticiaSerializer
+* `views.py` → ViewSet con acciones
+* `admin.py` → Panel admin
+* `migrations/0002` → Cambios de estructura
+
+**Errores resueltos:**
+
+| Error           | Causa               | Solución             |
+| --------------- | ------------------- | -------------------- |
+| FieldError      | Campo inexistente   | Cambiar a created_at |
+| admin.E033/E108 | Campo inexistente   | Ajustar admin        |
+| admin.E031      | ordering mal        | Añadir coma          |
+| 503             | XML mal parseado    | Usar .findtext       |
+| 500 noticias    | Campo en serializer | Eliminar             |
+| 500 sincronizar | Migración           | migrate              |
+
+## 4. API utilizada
+
+* URL: https://www.animenewsnetwork.com/encyclopedia/reports.xml
+* Formato: XML
+* Sin autenticación
+* Límite: 1 req/s
+
+## 5. Endpoints
+
+```
+GET  /api/noticias/noticias/
+POST /api/noticias/noticias/sincronizar/
+GET  /api/noticias/{id}/detalle-ann/
+```
+
+---
+
+## Resumen para memoria — 18/04/2026
+
+**Conexión dinámica de la página Novedades con la API REST de Django**
+
+---
+
+## 1. Descripción
+
+Se ha conectado la página `novedades.html` con el backend Django para que las noticias dejen de ser contenido estático y se carguen en tiempo real desde la base de datos. El HTML pasa a ser una estructura vacía que JavaScript rellena al cargar la página.
+
+---
+
+## 2. Qué se ha implementado
+
+### 🔄 Carga automática
+
+Al entrar en la página, se hace:
+
+* `GET /api/noticias/noticias/`
+* Si la base de datos está vacía:
+
+  * `POST /api/noticias/noticias/sincronizar/`
+  * Se vuelve a solicitar la lista de noticias
+
+### ⭐ Hero dinámico
+
+La primera noticia devuelta por la API ocupa la sección destacada, actualizando:
+
+* Imagen
+* Título
+* Descripción
+* Fecha
+* Etiqueta
+* Enlace externo
+
+### 📰 Tarjetas dinámicas
+
+El resto de noticias se renderizan como tarjetas `<article>` construidas por JavaScript con `crearTarjeta()`.
+Incluyen:
+
+* Imagen
+* Etiqueta
+* Título
+* Resumen
+* Fecha
+* Fuente (ANN)
+
+### 📄 Paginación
+
+El botón **"Cargar más"**:
+
+* Llama a páginas sucesivas de la API
+* Añade nuevas tarjetas sin borrar las anteriores
+
+### 🎭 Estados de UI
+
+* Mientras se carga: se muestran **6 tarjetas skeleton** con animación *shimmer*
+* Si falla la petición: aparece un mensaje de error con botón de reintento
+
+### 🎯 Filtros adaptativos
+
+Los filtros de categoría:
+
+* Todo
+* Manga
+* Anime
+* Noticias
+* Lanzamientos
+
+Funcionan sobre el array `todasLasTarjetas` en memoria, sin nuevas llamadas a la API.
+
+### 🖼️ Fallback de imagen
+
+Si la noticia no tiene `imagen_url`:
+
+* Se usa `https://picsum.photos`
+* Con el ID de la noticia como *seed*
+* Garantizando imágenes distintas por noticia
+
+---
+
+## 3. Archivos modificados
+
+* `front-end/pages/novedades/novedades.js` → Reescrito completamente
+* `front-end/pages/novedades/novedades.html` → Eliminadas las 8 tarjetas hardcodeadas
+
+---
+
+## 4. Dependencias
+
+* Backend Django corriendo en: `http://127.0.0.1:8000`
+
+### Endpoints activos
+
+* `GET /api/noticias/noticias/`
+* `POST /api/noticias/noticias/sincronizar/`
+
+
+---
+
+# 🧠 Bloque para la memoria
+
+## Resumen para memoria — 18/04/2026
+
+**Implementación del scraper de novedades e integración inicial de imágenes desde Anime News Network**
+
+---
+
+## 📄 Descripción
+
+Se ha desarrollado un sistema de sincronización de novedades para la sección de noticias de *anime'n'chill*, consumiendo la API XML de Anime News Network para obtener títulos recientes, metadatos básicos e imagen asociada cuando está disponible.
+
+La lógica se ha separado en:
+
+* Un servicio específico (`ann.py`) para la comunicación con la API
+* Un comando de gestión de Django para la importación y actualización de datos en base de datos
+
+---
+
+## ⏱️ Temporalización
+
+Esta tarea se sitúa en la fase de:
+
+* Desarrollo backend
+* Conexión con fuentes externas
+
+Dentro del bloque de trabajo relacionado con:
+
+* Consumo de APIs
+* Persistencia de datos
+* Automatización de procesos del proyecto
+
+---
+
+## ✅ Requisitos
+
+La solución contribuye al cumplimiento de requisitos clave del módulo **DWES**, especialmente en:
+
+* Uso de servicios externos
+* Tratamiento de datos estructurados
+* Aplicación de lógica de negocio desacoplada del controlador principal
+
+Además, mejora la experiencia de usuario al dotar a la sección de novedades de contenido actualizado automáticamente.
+
+---
+
+## 🏗️ Arquitectura
+
+Se ha aplicado una separación clara de responsabilidades:
+
+* `services/ann.py` → Cliente de la fuente externa
+* Management command → Orquestación de:
+
+  * Sincronización
+  * Validación de duplicados
+  * Actualización de noticias
+
+Esta organización facilita:
+
+* Mantenimiento
+* Reutilización
+* Futuras ampliaciones
+
+Ejemplo de mejoras futuras:
+
+* Mejor tratamiento de imágenes
+* Nuevas estrategias de enriquecimiento visual
+
+---
+
+## 🗂️ Datos
+
+El modelo **Noticia**:
+
+* Almacena la URL remota de la imagen (`imagen_url`)
+* No descarga el archivo físicamente
+
+Ventajas:
+
+* Menor complejidad
+* Menor consumo de almacenamiento
+
+Además:
+
+* Se ha planteado un sistema de **fallback en frontend**
+* Se muestra una imagen *placeholder* cuando ANN no devuelve recurso gráfico
+
+Esto mantiene la coherencia visual en el listado de novedades.
+
+---
+
+# 🧠 Bloque para la memoria
+
+## Resumen para memoria — 18/04/2026
+
+**Unificación de la sincronización de noticias y mejora del tratamiento visual de imágenes en la página de novedades**
+
+---
+
+## 📄 Descripción
+
+Se ha refactorizado la funcionalidad de sincronización de noticias procedentes de Anime News Network para evitar duplicación entre el comando de gestión de Django y el endpoint personalizado de la API REST.
+
+Paralelamente, se ha mejorado la presentación visual de las imágenes en la página de novedades:
+
+* Eliminación de imágenes aleatorias
+* Implementación de placeholder automático en frontend cuando la fuente no devuelve imagen o esta falla al cargar
+
+---
+
+## ⏱️ Temporalización
+
+Esta mejora se realiza tras:
+
+* La integración inicial del scraper
+* La primera conexión entre backend y frontend de la sección de noticias
+
+Dentro de la fase de:
+
+* Estabilización
+* Mejora funcional del módulo de novedades
+
+---
+
+## ✅ Requisitos
+
+La solución refuerza requisitos importantes del módulo **DWES**, como:
+
+* Reutilización de lógica de negocio
+* Separación de responsabilidades
+* Implementación de acciones personalizadas en DRF para tareas específicas fuera de un CRUD estándar
+
+Además, mejora la experiencia de usuario al asegurar una visualización consistente de las noticias incluso cuando la fuente externa no proporciona imágenes válidas.
+
+---
+
+## 🏗️ Arquitectura
+
+Se ha introducido una capa de servicio compartida para la sincronización con ANN:
+
+* Utilizada tanto por:
+
+  * Management command
+  * Acción `@action` del ViewSet
+
+Esto evita comportamientos distintos según el punto de ejecución.
+
+En frontend:
+
+* La lógica de presentación se mantiene desacoplada de los datos persistidos
+* La base de datos solo almacena URLs reales
+* El placeholder se resuelve en la interfaz mediante JavaScript
+
+---
+
+## 🗂️ Datos
+
+La base de datos:
+
+* Conserva únicamente información real obtenida desde Anime News Network
+* No guarda imágenes de relleno ni URLs artificiales
+
+En frontend:
+
+* `novedades.js` implementa un fallback automático hacia una imagen local cuando `imagen_url` está vacía o falla la carga
+* `novedades.css` ajusta la representación con:
+
+  * `object-fit`
+  * `object-position`
+
+Objetivo:
+
+* Mejorar el encuadre
+* Evitar deformaciones de imagen

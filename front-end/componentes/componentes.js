@@ -30,16 +30,16 @@ async function cargarComponente(rutaArchivo, idContenedor) {
 }
 
 async function iniciarComponentes() {
-    cargarHojaEstilos("../../components/temas.css");
-    cargarHojaEstilos("../../components/header/header.css");
-    cargarHojaEstilos("../../components/footer/footer.css");
+    cargarHojaEstilos("../../componentes/temas.css");
+    cargarHojaEstilos("../../componentes/header/header.css");
+    cargarHojaEstilos("../../componentes/footer/footer.css");
 
-    await cargarComponente("../../components/header/header.html", "contenedor-header");
-    await cargarComponente("../../components/footer/footer.html", "contenedor-footer");
+    await cargarComponente("../../componentes/header/header.html", "contenedor-header");
+    await cargarComponente("../../componentes/footer/footer.html", "contenedor-footer");
 
     if (document.getElementById("botonMenu")) {
         const scriptCabecera = document.createElement("script");
-        scriptCabecera.src = "../../components/header/header.js";
+        scriptCabecera.src = "../../componentes/header/header.js";
         document.body.appendChild(scriptCabecera);
     }
 }
