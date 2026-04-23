@@ -1,0 +1,549 @@
+/* ------------------- RESET ------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+
+
+/* ------------------- HERO PARALLAX ------------------- */
+
+/*
+    El hero ocupa el 30% superior de la pantalla.
+    Es position: fixed para que quede detrás del contenido al hacer scroll.
+    El JS controla su opacidad según el scroll del usuario.
+*/
+.hero-detalle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 32vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-detalle__imagen {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    filter: saturate(1.05) contrast(1.03);
+    transition: opacity 0.1s linear;
+}
+
+/* Degradado que suaviza la transición entre el hero y el contenido */
+.hero-detalle__degradado {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.18) 0%,
+        var(--fondo) 100%
+    );
+}
+
+
+/* ------------------- CONTENIDO PRINCIPAL ------------------- */
+
+/*
+    El main tiene padding-top para que empiece justo debajo del hero.
+    position: relative y z-index: 1 para que quede por encima del hero fijo.
+*/
+.detalle-principal {
+    position: relative;
+    z-index: 1;
+    padding-top: 26vh;
+    min-height: 100vh;
+    background-color: var(--fondo);
+}
+
+/* Contenedor que centra y limita el ancho del layout */
+.detalle-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+
+/* ------------------- ARTÍCULO ------------------- */
+
+.detalle-articulo {
+    min-width: 0;
+}
+
+/* Cabecera: etiqueta + título + meta */
+.detalle-articulo__cabecera {
+    margin-bottom: 1.5rem;
+}
+
+.detalle-articulo__meta-superior {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+}
+
+.detalle-articulo__titulo {
+    font-size: 2rem;
+    line-height: 1.25;
+    margin-bottom: 0.85rem;
+    color: var(--texto);
+}
+
+.detalle-articulo__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--texto-muy-suave);
+}
+
+.detalle-articulo__separador {
+    opacity: 0.5;
+}
+
+/* Enlace de fuente (ANN) en la meta — siempre visible con color de acento */
+.detalle-articulo__enlace-fuente {
+    color: var(--acento);
+    transition: color 0.2s ease;
+}
+
+.detalle-articulo__enlace-fuente:hover {
+    color: var(--acento-hover);
+}
+
+
+/* ------------------- IMAGEN DEL ARTÍCULO ------------------- */
+
+.detalle-articulo__imagen-contenedor {
+    width: 100%;
+    max-height: 420px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 1.75rem;
+    background-color: var(--fondo-tarjeta);
+    border: 1px solid var(--borde);
+}
+
+.detalle-articulo__imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(1.02) contrast(1.03);
+}
+
+/* Si no hay imagen, el contenedor colapsa limpiamente */
+.detalle-articulo__imagen-contenedor:empty,
+.detalle-articulo__imagen-contenedor--oculto {
+    display: none;
+}
+
+
+/* ------------------- CUERPO DEL ARTÍCULO ------------------- */
+
+.detalle-articulo__cuerpo {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--texto-suave);
+}
+
+.detalle-articulo__cuerpo p {
+    margin-bottom: 1.25rem;
+}
+
+/*
+    Los enlaces externos dentro del cuerpo reciben clase 'enlace-externo'
+    desde el JS para destacarlos con el color de acento del tema activo.
+*/
+.detalle-articulo__cuerpo .enlace-externo {
+    color: var(--acento);
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 168, 56, 0.4);
+    text-underline-offset: 3px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.detalle-articulo__cuerpo .enlace-externo:hover {
+    color: var(--acento-hover);
+    text-decoration-color: var(--acento-hover);
+}
+
+
+/* ------------------- PIE DEL ARTÍCULO ------------------- */
+
+.detalle-articulo__pie {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--borde);
+}
+
+
+/* ------------------- BOTONES ------------------- */
+
+.boton-primario {
+    display: inline-block;
+    padding: 0.7rem 1.35rem;
+    border-radius: 8px;
+    background-color: var(--acento);
+    color: #111111;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
+}
+
+.boton-primario:hover {
+    background-color: var(--acento-hover);
+}
+
+.boton-secundario {
+    display: inline-block;
+    padding: 0.7rem 1.35rem;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    color: var(--texto);
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.boton-secundario:hover {
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+
+/* ------------------- ETIQUETAS ------------------- */
+
+.etiqueta {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.etiqueta--manga {
+    background-color: rgba(232, 168, 56, 0.14);
+    color: #f0bb55;
+}
+
+.etiqueta--anime {
+    background-color: rgba(85, 170, 255, 0.14);
+    color: #7db7ff;
+}
+
+.etiqueta--noticia {
+    background-color: rgba(154, 103, 255, 0.14);
+    color: #b38bff;
+}
+
+.etiqueta--lanzamiento {
+    background-color: rgba(88, 203, 135, 0.14);
+    color: #7fe0a0;
+}
+
+
+/* ------------------- COMENTARIOS STUB ------------------- */
+
+/* Oculto hasta que se implemente el feature de comentarios */
+.detalle-comentarios {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid var(--borde);
+    font-size: 0.8rem;
+    color: var(--texto-muy-suave);
+}
+
+
+/* ------------------- SIDEBAR ------------------- */
+
+.detalle-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Cada sección del sidebar */
+.sidebar-seccion {
+    background-color: var(--fondo-tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.sidebar-seccion__titulo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-muy-suave);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--borde);
+}
+
+
+/* ------------------- SIDEBAR: NOTICIAS RELACIONADAS ------------------- */
+
+.sidebar-relacionadas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+/* Cada noticia relacionada */
+.sidebar-noticia {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--borde);
+    transition: opacity 0.2s ease;
+}
+
+.sidebar-noticia:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.sidebar-noticia:hover {
+    opacity: 0.8;
+}
+
+.sidebar-noticia__imagen {
+    width: 72px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background-color: var(--fondo);
+}
+
+.sidebar-noticia__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-noticia__titulo {
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: var(--texto);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+}
+
+.sidebar-noticia__titulo:hover {
+    color: var(--acento);
+}
+
+.sidebar-noticia__fecha {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--texto-muy-suave);
+}
+
+
+/* ------------------- SIDEBAR: RECOMENDACIONES (MANGA Y ANIME) ------------------- */
+
+.sidebar-recomendaciones {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+/* Cada ítem de recomendación */
+.sidebar-recomendacion {
+    position: relative;
+}
+
+/*
+    El enlace ocupa todo el ancho.
+    Al hacer hover aparece la miniatura de portada a su derecha.
+*/
+.sidebar-recomendacion__enlace {
+    display: block;
+    padding: 0.55rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    color: var(--texto-suave);
+    transition: background-color 0.18s ease, color 0.18s ease;
+    /* Necesario para que el hover se quede centrado verticalmente */
+    position: relative;
+}
+
+.sidebar-recomendacion__enlace:hover {
+    background-color: var(--borde);
+    color: var(--texto);
+}
+
+/*
+    Miniatura de portada que aparece al hacer hover.
+    Posicionada a la izquierda del sidebar, fuera del flujo normal.
+    Por defecto oculta con opacity 0 y un pequeño desplazamiento.
+*/
+.sidebar-recomendacion__hover {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 0.75rem);
+    transform: translateY(-50%) scale(0.95);
+    width: 110px;
+    height: 155px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px var(--sombra);
+    border: 1px solid var(--borde);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+    background-color: var(--fondo-tarjeta);
+}
+
+.sidebar-recomendacion__enlace:hover .sidebar-recomendacion__hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+}
+
+.sidebar-recomendacion__portada {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Número del tomo visible en la miniatura (tomo en el que va el usuario) */
+.sidebar-recomendacion__tomo {
+    position: absolute;
+    bottom: 0.4rem;
+    left: 0.4rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+
+/* ------------------- UTILIDADES ------------------- */
+
+.oculto {
+    display: none !important;
+}
+
+
+/* ------------------- RESPONSIVE > 1100px ------------------- */
+/* Base ya aplicada */
+
+
+/* ------------------- RESPONSIVE 1100px - 701px ------------------- */
+
+@media (max-width: 1100px) {
+    .detalle-layout {
+        grid-template-columns: 1fr 280px;
+        gap: 2rem;
+    }
+
+    .detalle-articulo__titulo {
+        font-size: 1.75rem;
+    }
+
+    .hero-detalle {
+        height: 28vh;
+    }
+
+    .detalle-principal {
+        padding-top: 22vh;
+    }
+}
+
+
+/* ------------------- RESPONSIVE 700px - 501px ------------------- */
+
+@media (max-width: 700px) {
+    /* En móvil el sidebar baja debajo del artículo */
+    .detalle-layout {
+        grid-template-columns: 1fr;
+        padding: 1rem 1rem 3rem;
+    }
+
+    .detalle-articulo__titulo {
+        font-size: 1.45rem;
+    }
+
+    .hero-detalle {
+        height: 22vh;
+    }
+
+    .detalle-principal {
+        padding-top: 16vh;
+    }
+
+    /* La miniatura de portada aparece a la derecha en móvil (no sale de pantalla) */
+    .sidebar-recomendacion__hover {
+        right: auto;
+        left: calc(100% + 0.75rem);
+    }
+}
+
+
+/* ------------------- RESPONSIVE <= 500px ------------------- */
+
+@media (max-width: 500px) {
+    .detalle-articulo__titulo {
+        font-size: 1.25rem;
+    }
+
+    .detalle-articulo__cuerpo {
+        font-size: 0.97rem;
+    }
+
+    .hero-detalle {
+        height: 18vh;
+    }
+
+    .detalle-principal {
+        padding-top: 12vh;
+    }
+
+    .detalle-articulo__imagen-contenedor {
+        max-height: 240px;
+    }
+}
