@@ -392,3 +392,74 @@ button {
         font-size: 0.9rem;
     }
 }
+
+/* ------------------- ETIQUETA SUPERPUESTA EN TARJETA ------------------- */
+
+/* Contenedor posicionado sobre la imagen */
+.tarjeta__imagen-contenedor {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+    background-color: #1a1a1a;
+}
+
+/* Zona superior izquierda donde van la etiqueta y los comentarios */
+.tarjeta__imagen-meta {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* Contador de comentarios en tarjeta — oculto hasta implementar feature */
+.tarjeta__comentarios {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    font-size: 0.72rem;
+    color: #ffffff;
+    cursor: default;
+}
+
+
+/* ------------------- ETIQUETA SUPERPUESTA EN HERO ------------------- */
+
+.hero__etiqueta-contenedor {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Contador de comentarios en hero — oculto hasta implementar feature */
+.hero__comentarios {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    font-size: 0.8rem;
+    color: #ffffff;
+}
+
+
+/* ------------------- UTILIDAD ------------------- */
+
+/* Clase para ocultar elementos stub hasta que se implemente el feature */
+.oculto {
+    display: none !important;
+}

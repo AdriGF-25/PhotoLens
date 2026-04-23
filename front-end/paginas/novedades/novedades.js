@@ -84,17 +84,32 @@ function renderizarHero(noticia) {
 // ------------------- RENDER TARJETAS ------------------- //
 
 function crearTarjeta(noticia) {
-    const cat = obtenerCategoria(noticia.tipo);
+    const cat    = obtenerCategoria(noticia.tipo);
     const imagen = obtenerImagenNoticia(noticia);
-    const fecha = formatearFecha(noticia.fecha_ann || noticia.created_at);
-    const enlace = noticia.url_externa || '#';
+    const fecha  = formatearFecha(noticia.fecha_ann || noticia.created_at);
+
+    // Construimos el enlace a la página de detalle usando el slug
+    // Si no hay slug (no debería ocurrir), caemos al id como fallback
+    const enlaceDetalle = noticia.slug
+        ? `../detalle-noticia/detalle-noticia.html?slug=${noticia.slug}`
+        : `../detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
 
     const article = document.createElement('article');
     article.className = 'tarjeta';
     article.dataset.categoria = cat.filtro;
 
     article.innerHTML = `
-        <a href="${enlace}" class="tarjeta__enlace-imagen" target="_blank" rel="noopener noreferrer">
+        <!-- Imagen con etiqueta superpuesta -->
+        <a href="${enlaceDetalle}" class="tarjeta__imagen-contenedor">
+            <!-- Etiqueta y comentarios superpuestos sobre la imagen -->
+            <div class="tarjeta__imagen-meta">
+                <span class="etiqueta ${cat.clase}">${cat.etiqueta}</span>
+                <!-- STUB: comentarios — visible cuando se implemente el feature -->
+                <span class="tarjeta__comentarios oculto" aria-label="Comentarios">
+                    <span>💬</span>
+                    <span class="tarjeta__comentarios-numero">0</span>
+                </span>
+            </div>
             <img
                 class="tarjeta__imagen"
                 src="${imagen}"
@@ -106,9 +121,8 @@ function crearTarjeta(noticia) {
             >
         </a>
         <div class="tarjeta__cuerpo">
-            <span class="etiqueta ${cat.clase}">${cat.etiqueta}</span>
             <h2 class="tarjeta__titulo">
-                <a href="${enlace}" class="tarjeta__enlace" target="_blank" rel="noopener noreferrer">
+                <a href="${enlaceDetalle}" class="tarjeta__enlace">
                     ${noticia.titulo}
                 </a>
             </h2>
