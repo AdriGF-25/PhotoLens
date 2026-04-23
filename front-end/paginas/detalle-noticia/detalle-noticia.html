@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticia | anime'n'chill</title>
+
+    <link rel="stylesheet" href="detalle-noticia.css">
+</head>
+<body>
+
+    <!-- ------------------- CABEZERA/NAV ---------------- -->
+    <div id="contenedor-header"></div>
+
+    <!-- ------------------- HERO CON PARALLAX ---------------- -->
+    <!--
+        La imagen de fondo ocupa el 30% superior de la pantalla.
+        Al hacer scroll, el JS reduce su opacidad gradualmente hasta 0.
+        Usa la misma imagen_url que viene de la API (campo imagen_url del modelo Noticia).
+    -->
+    <div class="hero-detalle" id="heroDetalle" aria-hidden="true">
+        <div class="hero-detalle__imagen" id="heroImagen"></div>
+        <div class="hero-detalle__degradado"></div>
+    </div>
+
+    <!-- ------------------- CONTENIDO PRINCIPAL ---------------- -->
+    <main class="detalle-principal" id="detallePrincipal">
+
+        <div class="detalle-layout">
+
+            <!-- ------------------- COLUMNA ARTÍCULO ---------------- -->
+            <article class="detalle-articulo" id="detalleArticulo">
+
+                <!-- Cabecera del artículo: etiqueta + título + meta -->
+                <header class="detalle-articulo__cabecera">
+                    <!--
+                        STUB: contador de comentarios — oculto hasta implementar el feature.
+                        Cuando se implemente, quitar la clase 'oculto' y rellenar el número.
+                    -->
+                    <div class="detalle-articulo__meta-superior">
+                        <span class="etiqueta etiqueta--anime" id="detalleEtiqueta">Cargando...</span>
+                        <span class="detalle-comentarios oculto" id="detalleComentarios" aria-label="Número de comentarios">
+                            <span class="detalle-comentarios__icono">💬</span>
+                            <span class="detalle-comentarios__numero" id="detalleComentariosNumero">0</span>
+                            <span>comentarios</span>
+                        </span>
+                    </div>
+
+                    <h1 class="detalle-articulo__titulo" id="detalleTitulo">
+                        Cargando noticia...
+                    </h1>
+
+                    <!-- Fecha de publicación y fuente -->
+                    <div class="detalle-articulo__meta">
+                        <span class="detalle-articulo__fecha" id="detalleFecha"></span>
+                        <span class="detalle-articulo__separador">·</span>
+                        <span class="detalle-articulo__fuente">
+                            Fuente:
+                            <a
+                                href="#"
+                                id="detalleFuenteEnlace"
+                                class="detalle-articulo__enlace-fuente"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Anime News Network
+                            </a>
+                        </span>
+                    </div>
+                </header>
+
+                <!-- Imagen destacada del artículo -->
+                <div class="detalle-articulo__imagen-contenedor">
+                    <img
+                        class="detalle-articulo__imagen"
+                        id="detalleImagen"
+                        src=""
+                        alt=""
+                        loading="eager"
+                    >
+                </div>
+
+                <!-- Cuerpo del artículo -->
+                <!--
+                    El contenido se inserta dinámicamente desde el JS.
+                    Los enlaces externos dentro del cuerpo reciben la clase
+                    'enlace-externo' automáticamente para mostrarse con color de acento.
+                -->
+                <div class="detalle-articulo__cuerpo" id="detalleCuerpo">
+                    <!-- El JS insertará aquí la descripción de la noticia -->
+                </div>
+
+                <!-- Enlace a la fuente original — obligatorio por ToS de ANN -->
+                <footer class="detalle-articulo__pie">
+                    <a
+                        href="#"
+                        id="detalleEnlaceAnn"
+                        class="boton-secundario"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Ver en Anime News Network ↗
+                    </a>
+                </footer>
+
+            </article>
+
+            <!-- ------------------- SIDEBAR ---------------- -->
+            <aside class="detalle-sidebar" id="detalleSidebar">
+
+                <!-- ------------------- NOTICIAS RELACIONADAS ---------------- -->
+                <section class="sidebar-seccion" aria-label="Noticias relacionadas">
+                    <h2 class="sidebar-seccion__titulo">Relacionadas</h2>
+                    <!--
+                        El JS cargará entre 3 y 5 noticias del mismo tipo (anime/manga).
+                        Si no hay suficientes del mismo tipo, rellena con cualquier tipo.
+                    -->
+                    <div class="sidebar-relacionadas" id="sidebarRelacionadas">
+                        <!-- El JS insertará aquí las tarjetas de noticias relacionadas -->
+                    </div>
+                </section>
+
+                <!-- ------------------- RECOMENDACIÓN MANGAS ---------------- -->
+                <!--
+                    PREPARADO PARA SESIÓN:
+                    - Sin sesión → muestra portada del tomo 1 del manga al hacer hover
+                    - Con sesión → muestra portada del tomo en el que va el usuario
+                      (leer de Progreso → Capitulo.volumen del último capítulo leído)
+                    El JS detecta si hay JWT en localStorage para decidir qué portada mostrar.
+                -->
+                <section class="sidebar-seccion" aria-label="Mangas recomendados">
+                    <h2 class="sidebar-seccion__titulo">Mangas destacados</h2>
+                    <ul class="sidebar-recomendaciones" id="sidebarMangas">
+                        <!--
+                            El JS insertará aquí elementos <li> con la siguiente estructura:
+                            <li class="sidebar-recomendacion">
+                                <a href="../lector/lector.html?manga=ID" class="sidebar-recomendacion__enlace">
+                                    Título del manga
+                                    <div class="sidebar-recomendacion__hover">
+                                        <img src="portada.jpg" alt="Portada">
+                                    </div>
+                                </a>
+                            </li>
+                        -->
+                    </ul>
+                </section>
+
+                <!-- ------------------- RECOMENDACIÓN ANIMES ---------------- -->
+                <!--
+                    PREPARADO PARA IMPLEMENTACIÓN FUTURA:
+                    - Por ahora solo muestra la portada del anime al hacer hover.
+                    - Cuando se implemente el seguimiento de episodios, conectar aquí
+                      el progreso del usuario (modelo Episodio + progreso de visionado).
+                    - El enlace apuntará a la futura página de detalle de anime.
+                -->
+                <section class="sidebar-seccion" aria-label="Animes recomendados">
+                    <h2 class="sidebar-seccion__titulo">Animes destacados</h2>
+                    <ul class="sidebar-recomendaciones" id="sidebarAnimes">
+                        <!--
+                            Misma estructura que mangas.
+                            TODO: conectar con progreso de episodios cuando se implemente.
+                        -->
+                    </ul>
+                </section>
+
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- ------------------- FOOTER ---------------- -->
+    <div id="contenedor-footer"></div>
+
+    <script src="../../componentes/componentes.js"></script>
+    <script src="./detalle-noticia.js"></script>
+</body>
+</html>
