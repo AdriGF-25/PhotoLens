@@ -1,207 +1,161 @@
 """
-anime'n'chill — Servicio para la API de Anime News Network
-Documentación: https://www.animenewsnetwork.com/encyclopedia/api.php
+anime'n'chill — Servicio RSS de Anime News Network
+Fuente: https://www.animenewsnetwork.com/all/rss.xml
 
-TÉRMINOS DE USO OBLIGATORIOS:
-  - Acreditar Anime News Network como fuente
-  - Incluir enlace a la entrada de la enciclopedia en cada página que muestre datos
-  - Límite: 1 petición por segundo
+TÉRMINOS DE USO:
+  - Acreditar ANN como fuente en cada página que muestre datos
+  - Incluir enlace al artículo original
+  - No saturar el servidor (sleep entre peticiones)
 """
 
 import time
 import requests
 import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup
 
-# ------------------- URLs BASE -------------------
-REPORTS_URL = "https://www.animenewsnetwork.com/encyclopedia/reports.xml"
-DETAILS_URL = "https://cdn.animenewsnetwork.com/encyclopedia/api.xml"
+
+# ------------------- URLS -------------------
+
+RSS_URL = "https://www.animenewsnetwork.com/all/rss.xml?ann-edition=us"
 
 HEADERS = {
-    "User-Agent": "animeNchill/1.0 (TFC DAW)"
+    "User-Agent": "Mozilla/5.0 (compatible; animeNchill/1.0; TFC DAW)"
 }
 
-# ------------------- OBTENER NOTICIAS RECIENTES -------------------
-def obtener_noticias_recientes(limite: int = 50) -> list:
+
+# ------------------- OBTENER NOTICIAS DESDE RSS -------------------
+
+def obtener_noticias_recientes(limite: int = 30) -> list:
     """
-    Obtiene los últimos títulos (anime/manga) añadidos a ANN.
-    Usa el report id=155 que devuelve títulos ordenados por fecha.
+    Obtiene las últimas noticias reales del RSS de ANN.
+    Cada entrada incluye título, descripción, enlace, fecha y categoría.
     """
     try:
-        response = requests.get(
-            REPORTS_URL,
-            headers=HEADERS,
-            params={
-                "id":    155,
-                "type":  "anime",
-                "nlist": limite,
-                "nskip": 0,
-            },
-            timeout=15
-        )
+        response = requests.get(RSS_URL, headers=HEADERS, timeout=15)
         response.raise_for_status()
 
-        root = ET.fromstring(response.content)
+        root    = ET.fromstring(response.content)
+        channel = root.find("channel")
+
+        if channel is None:
+            print("[ANN RSS] No se encontró el canal RSS.")
+            return []
+
         noticias = []
 
-        for item in root.findall(".//item"):
-            ann_id = item.get("id", "") or item.findtext("id", default="").strip()
-            titulo = item.findtext("name", default="Sin título").strip()
-            tipo   = item.findtext("type", default="anime").strip().lower()
+        for item in channel.findall("item")[:limite]:
+            titulo      = (item.findtext("title") or "Sin título").strip()
+            descripcion = (item.findtext("description") or "").strip()
+            url_externa = (item.findtext("link") or "").strip()
+            pub_date    = (item.findtext("pubDate") or "").strip()
+            categoria   = (item.findtext("category") or "anime").strip().lower()
 
-            tipo_normalizado = "manga" if "manga" in tipo else "anime"
-            descripcion = f"Nuevo título añadido a Anime News Network: {titulo}"
-            url_externa = f"https://www.animenewsnetwork.com/encyclopedia/anime.php?id={ann_id}"
+            ann_id = _generar_id_desde_url(url_externa)
 
-            if ann_id:
-                noticias.append({
-                    "ann_id":      ann_id,
-                    "titulo":      titulo,
-                    "tipo":        tipo_normalizado,
-                    "descripcion": descripcion,
-                    "url_externa": url_externa,
-                })
+            if not ann_id or not titulo:
+                continue
+
+            tipo = _normalizar_tipo(categoria)
+
+            noticias.append({
+                "ann_id":      ann_id,
+                "titulo":      titulo,
+                "descripcion": descripcion,
+                "url_externa": url_externa,
+                "fecha_ann":   pub_date,
+                "tipo":        tipo,
+                "imagen_url":  "",
+                "contenido":   "",
+            })
 
         return noticias
 
     except requests.RequestException as e:
-        print(f"[ANN] Error al obtener noticias: {e}")
+        print(f"[ANN RSS] Error al obtener el feed: {e}")
         return []
     except ET.ParseError as e:
-        print(f"[ANN] Error al parsear XML: {e}")
+        print(f"[ANN RSS] Error al parsear XML: {e}")
         return []
 
-# ------------------- OBTENER DETALLES DE UN TÍTULO (CON IMAGEN) -------------------
-def obtener_detalle(ann_id: str, tipo: str = "title") -> dict | None:
+
+# ------------------- OBTENER IMAGEN Y CONTENIDO DEL ARTÍCULO -------------------
+
+def obtener_detalle_articulo(url: str) -> dict:
     """
-    Obtiene la información detallada de un título, incluyendo la URL de la imagen.
+    Visita la URL del artículo de ANN y extrae:
+      - og:image   → imagen principal del artículo
+      - div.meat   → cuerpo completo del artículo
+
+    Devuelve un dict con 'imagen_url' y 'contenido'.
+    Respeta el servidor con un sleep de 1 segundo entre peticiones.
     """
-    time.sleep(1) # Respeta el límite de 1 req/s
+    resultado = {"imagen_url": "", "contenido": ""}
 
-    try:
-        response = requests.get(
-            DETAILS_URL,
-            headers=HEADERS,
-            params={tipo: ann_id},
-            timeout=15
-        )
-        response.raise_for_status()
+    if not url:
+        return resultado
 
-        root  = ET.fromstring(response.content)
-        anime = root.find("anime") or root.find("manga")
-
-        if anime is None:
-            return None
-
-        titulo      = anime.get("name", "Sin título")
-        url_externa = f"https://www.animenewsnetwork.com/encyclopedia/anime.php?id={ann_id}"
-        
-        descripcion = ""
-        generos = []
-        anio = None
-        imagen_url = ""
-
-        # Recorremos todos los nodos info
-        for info in anime.findall("info"):
-            tipo_info = info.get("type")
-            
-            if tipo_info == "Plot Summary" and not descripcion:
-                descripcion = info.text or ""
-            
-            elif tipo_info == "Genres":
-                generos.append(info.text or "")
-                
-            elif tipo_info == "Vintage" and anio is None:
-                try:
-                    anio = int((info.text or "")[:4])
-                except (ValueError, IndexError):
-                    pass
-            
-            # --- LÓGICA DE EXTRACCIÓN DE IMAGEN ---
-            elif tipo_info == "Picture" and not imagen_url:
-                if "src" in info.attrib:
-                    imagen_url = info.get("src")
-                elif info.find("img") is not None:
-                    imagen_url = info.find("img").get("src", "")
-
-        return {
-            "ann_id":      ann_id,
-            "titulo":      titulo,
-            "descripcion": descripcion,
-            "generos":     generos,
-            "anio":        anio,
-            "imagen_url":  imagen_url,
-            "url_externa": url_externa,
-        }
-
-    except requests.RequestException as e:
-        print(f"[ANN] Error al obtener detalle {ann_id}: {e}")
-        return None
-    except ET.ParseError as e:
-        print(f"[ANN] Error al parsear XML del detalle: {e}")
-        return None
-
-# ------------------- OBTENER DETALLES EN LOTE (CON IMAGEN) -------------------
-def obtener_detalles_lote(ann_ids: list, tipo: str = "title") -> list:
-    """
-    Pide detalles de hasta 50 títulos en una sola petición.
-    """
-    if not ann_ids:
-        return []
-
-    ids_str = "/".join(str(i) for i in ann_ids[:50])
     time.sleep(1)
 
     try:
-        response = requests.get(
-            DETAILS_URL,
-            headers=HEADERS,
-            params={tipo: ids_str},
-            timeout=15
-        )
+        response = requests.get(url, headers=HEADERS, timeout=15)
         response.raise_for_status()
 
-        root       = ET.fromstring(response.content)
-        resultados = []
+        soup = BeautifulSoup(response.text, "lxml")
 
-        for elem in root:
-            ann_id      = elem.get("id", "")
-            titulo      = elem.get("name", "Sin título")
-            descripcion = ""
-            generos     = []
-            anio        = None
-            imagen_url  = ""
+        # ---- Imagen (og:image) ----
+        og_image = soup.find("meta", property="og:image")
+        if og_image and og_image.get("content"):
+            resultado["imagen_url"] = og_image["content"].strip()
+        else:
+            tw_image = soup.find("meta", attrs={"name": "twitter:image"})
+            if tw_image and tw_image.get("content"):
+                resultado["imagen_url"] = tw_image["content"].strip()
 
-            for info in elem.findall("info"):
-                tipo_info = info.get("type", "")
-                
-                if tipo_info == "Plot Summary" and not descripcion:
-                    descripcion = info.text or ""
-                elif tipo_info == "Genres":
-                    generos.append(info.text or "")
-                elif tipo_info == "Vintage" and anio is None:
-                    try:
-                        anio = int((info.text or "")[:4])
-                    except (ValueError, IndexError):
-                        pass
-                # --- LÓGICA DE EXTRACCIÓN DE IMAGEN ---
-                elif tipo_info == "Picture" and not imagen_url:
-                    if "src" in info.attrib:
-                        imagen_url = info.get("src")
-                    elif info.find("img") is not None:
-                        imagen_url = info.find("img").get("src", "")
+        # ---- Contenido del artículo (div.meat) ----
+        meat = soup.find("div", class_="meat")
+        if meat:
+            # Eliminamos scripts, estilos y elementos de navegación que pueda tener
+            for tag in meat.find_all(["script", "style", "nav", "aside"]):
+                tag.decompose()
 
-            resultados.append({
-                "ann_id":      ann_id,
-                "titulo":      titulo,
-                "descripcion": descripcion,
-                "generos":     generos,
-                "anio":        anio,
-                "imagen_url":  imagen_url,
-                "url_externa": f"https://www.animenewsnetwork.com/encyclopedia/anime.php?id={ann_id}",
-            })
+            # Extraemos el texto limpio párrafo a párrafo
+            parrafos = []
+            for elemento in meat.find_all(["p", "h2", "h3", "ul", "ol"]):
+                texto = elemento.get_text(separator=" ", strip=True)
+                if texto:
+                    parrafos.append(texto)
 
-        return resultados
+            resultado["contenido"] = "\n\n".join(parrafos)
 
-    except (requests.RequestException, ET.ParseError) as e:
-        print(f"[ANN] Error en lote: {e}")
-        return []
+        return resultado
+
+    except requests.RequestException as e:
+        print(f"[ANN RSS] Error al obtener artículo de {url}: {e}")
+        return resultado
+    except Exception as e:
+        print(f"[ANN RSS] Error inesperado al parsear {url}: {e}")
+        return resultado
+
+
+# ------------------- UTILIDADES PRIVADAS -------------------
+
+def _generar_id_desde_url(url: str) -> str:
+    """
+    Genera un ID único a partir de la URL del artículo.
+    Ejemplo:
+      https://www.animenewsnetwork.com/news/2026-04-27/chainsaw-man.nn12345
+      → news-2026-04-27-chainsaw-man-nn12345
+    """
+    if not url:
+        return ""
+    path = url.replace("https://www.animenewsnetwork.com/", "")
+    return path.replace("/", "-").replace(".", "-")[:150]
+
+
+def _normalizar_tipo(categoria: str) -> str:
+    """
+    Mapea las categorías del RSS al tipo del modelo Noticia.
+    """
+    if "manga" in categoria:
+        return "manga"
+    return "anime"

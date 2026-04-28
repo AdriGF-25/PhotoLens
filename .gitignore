@@ -10,4 +10,4 @@ back-end/media/
 # Migraciones autogeneradas 
 # back-end/**/migrations/0002_*.py
 
-.continue/
+.clinerules/

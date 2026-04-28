@@ -1,61 +1,69 @@
 """
-anime'n'chill — Lógica compartida de sincronización de noticias ANN
+anime'n'chill — Lógica de sincronización de noticias desde RSS de ANN
 """
 
 from noticias.models import Noticia
-from noticias.services import ann
+from noticias.services.ann import obtener_noticias_recientes, obtener_detalle_articulo
 
 
 # ------------------- SINCRONIZAR NOTICIAS ANN -------------------
-def sincronizar_noticias_ann(limite=15):
-    noticias_basicas = ann.obtener_noticias_recientes(limite=limite)
 
-    if not noticias_basicas:
+def sincronizar_noticias_ann(limite: int = 20) -> dict:
+    """
+    Descarga las últimas noticias del RSS de ANN y las guarda en la BD.
+    Por cada noticia nueva extrae imagen y contenido completo del artículo.
+    Las noticias ya existentes solo actualizan título, descripción y fecha.
+    """
+    noticias_rss = obtener_noticias_recientes(limite=limite)
+
+    if not noticias_rss:
         return {
-            "ok": False,
-            "error": "No se pudo obtener la lista inicial de ANN.",
-            "creadas": 0,
+            "ok":           False,
+            "error":        "No se pudo obtener el RSS de ANN.",
+            "creadas":      0,
             "actualizadas": 0,
-            "total": 0,
+            "total":        0,
         }
 
-    creadas = 0
+    creadas      = 0
     actualizadas = 0
 
-    for item in noticias_basicas:
+    for item in noticias_rss:
         ann_id = item.get("ann_id")
-
         if not ann_id:
             continue
 
         noticia_obj, creada = Noticia.objects.get_or_create(
             ann_id=ann_id,
             defaults={
-                "titulo": item.get("titulo"),
-                "tipo": item.get("tipo"),
-                "url_externa": item.get("url_externa"),
+                "titulo":      item.get("titulo"),
+                "tipo":        item.get("tipo"),
                 "descripcion": item.get("descripcion"),
+                "contenido":   "",
+                "url_externa": item.get("url_externa"),
+                "fecha_ann":   item.get("fecha_ann", ""),
+                "imagen_url":  "",
             }
         )
 
+        # Si ya existía actualizamos los campos que pueden cambiar
         if not creada:
-            noticia_obj.titulo = item.get("titulo")
-            noticia_obj.tipo = item.get("tipo")
-            noticia_obj.url_externa = item.get("url_externa")
+            noticia_obj.titulo      = item.get("titulo")
             noticia_obj.descripcion = item.get("descripcion")
+            noticia_obj.fecha_ann   = item.get("fecha_ann", "")
             noticia_obj.save()
 
-        if creada or not noticia_obj.imagen_url or not noticia_obj.fecha_ann:
-            detalle = ann.obtener_detalle(ann_id=ann_id)
+        # Obtenemos imagen y contenido solo si no los tiene ya
+        if not noticia_obj.imagen_url or not noticia_obj.contenido:
+            detalle = obtener_detalle_articulo(item.get("url_externa", ""))
 
-            if detalle:
-                noticia_obj.descripcion = detalle.get("descripcion") or noticia_obj.descripcion
-                noticia_obj.imagen_url = detalle.get("imagen_url", "") or noticia_obj.imagen_url
+            if detalle["imagen_url"] and not noticia_obj.imagen_url:
+                noticia_obj.imagen_url = detalle["imagen_url"]
 
-                if detalle.get("anio"):
-                    noticia_obj.fecha_ann = str(detalle.get("anio"))
+            if detalle["contenido"] and not noticia_obj.contenido:
+                noticia_obj.contenido = detalle["contenido"]
 
-                noticia_obj.save()
+            noticia_obj.save()
 
         if creada:
             creadas += 1
@@ -63,9 +71,9 @@ def sincronizar_noticias_ann(limite=15):
             actualizadas += 1
 
     return {
-        "ok": True,
-        "error": None,
-        "creadas": creadas,
+        "ok":           True,
+        "error":        None,
+        "creadas":      creadas,
         "actualizadas": actualizadas,
-        "total": creadas + actualizadas,
+        "total":        creadas + actualizadas,
     }

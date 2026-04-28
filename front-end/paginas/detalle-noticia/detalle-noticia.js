@@ -129,34 +129,45 @@ function renderizarNoticia(noticia) {
     }
 
     // ---- Cuerpo del artículo ----
-    const cuerpo = document.getElementById('detalleCuerpo');
+/*
+    Prioridad:
+    1. noticia.contenido → texto completo scrapeado del artículo de ANN
+    2. noticia.descripcion → intro corta del RSS (fallback)
+    3. Mensaje neutro si no hay ninguno de los dos
+*/
+const cuerpo = document.getElementById('detalleCuerpo');
+const textoFuente = noticia.contenido || noticia.descripcion || '';
 
-    if (noticia.descripcion) {
-        // Envolvemos cada párrafo en un <p> para que el CSS lo separe bien
-        const parrafos = noticia.descripcion
-            .split('\n')
-            .filter(function (linea) { return linea.trim() !== ''; })
-            .map(function (linea) { return `<p>${linea}</p>`; })
-            .join('');
+if (textoFuente) {
+    const parrafos = textoFuente
+        .split('\n')
+        .filter(function (linea) { return linea.trim() !== ''; })
+        .map(function (linea) { return `<p>${linea}</p>`; })
+        .join('');
 
-        cuerpo.innerHTML = parrafos || `<p>${noticia.descripcion}</p>`;
-    } else {
-        cuerpo.innerHTML = '<p>Sin descripción disponible.</p>';
-    }
-
-    /*
-        Buscamos todos los <a> dentro del cuerpo y les añadimos
-        la clase 'enlace-externo' para que el CSS los muestre
-        con el color de acento del tema activo.
-    */
-    cuerpo.querySelectorAll('a').forEach(function (enlace) {
-        enlace.classList.add('enlace-externo');
-        // Forzamos que abran en pestaña nueva si van a páginas externas
-        if (enlace.href && !enlace.href.includes(window.location.hostname)) {
-            enlace.target  = '_blank';
-            enlace.rel     = 'noopener noreferrer';
+    cuerpo.innerHTML = parrafos || `<p>${textoFuente}</p>`;
+} else {
+    cuerpo.innerHTML = `
+        <p>No hay descripción disponible para esta entrada.</p>
+        ${noticia.url_externa
+            ? `<p>Puedes leer el artículo completo en
+                <a href="${noticia.url_externa}"
+                   class="enlace-externo"
+                   target="_blank"
+                   rel="noopener noreferrer">Anime News Network</a>.
+               </p>`
+            : ''
         }
-    });
+    `;
+}
+
+cuerpo.querySelectorAll('a').forEach(function (enlace) {
+    enlace.classList.add('enlace-externo');
+    if (enlace.href && !enlace.href.includes(window.location.hostname)) {
+        enlace.target = '_blank';
+        enlace.rel    = 'noopener noreferrer';
+    }
+});
 
     // ---- Enlace ANN al pie del artículo ----
     const enlaceAnn = document.getElementById('detalleEnlaceAnn');

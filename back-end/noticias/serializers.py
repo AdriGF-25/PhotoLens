@@ -29,10 +29,10 @@ class NoticiaSerializer(serializers.ModelSerializer):
 
 
 # ------------------- NOTICIA DETALLE SERIALIZER -------------------
-# Serializer completo para la página de detalle individual
+# Serializer completo para la página de detalle — incluye contenido completo
 class NoticiaDetalleSerializer(serializers.ModelSerializer):
 
-    # tipo_display: devuelve el texto legible del tipo (ej: "Anime" en vez de "anime")
+    # tipo_display: devuelve el texto legible (ej: "Anime" en vez de "anime")
     tipo_display = serializers.CharField(source="get_tipo_display", read_only=True)
 
     class Meta:
@@ -45,6 +45,7 @@ class NoticiaDetalleSerializer(serializers.ModelSerializer):
             "tipo",
             "tipo_display",
             "descripcion",
+            "contenido",
             "imagen_url",
             "url_externa",
             "fecha_ann",
