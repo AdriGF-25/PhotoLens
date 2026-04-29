@@ -57,43 +57,11 @@ function estaLogueado() {
 }
 
 
-// ------------------- PARALLAX HERO ------------------- //
-
-/*
-    El hero está fijo en la parte superior de la pantalla.
-    Al hacer scroll, calculamos cuánto ha bajado el usuario respecto
-    a la altura del hero y reducimos la opacidad proporcionalmente.
-    Cuando el usuario ha scrollado más de la altura del hero, opacidad = 0.
-*/
-function iniciarParallax() {
-    const heroImagen = document.getElementById('heroImagen');
-    if (!heroImagen) return;
-
-    window.addEventListener('scroll', function () {
-        const alturaHero = document.querySelector('.hero-detalle')?.offsetHeight || 0;
-        const scroll     = window.scrollY;
-
-        // Calculamos opacidad: 1 cuando scroll=0, 0 cuando scroll >= alturaHero
-        const opacidad = Math.max(0, 1 - (scroll / (alturaHero * 0.85)));
-        heroImagen.style.opacity = opacidad;
-    }, { passive: true });
-}
-
-
 // ------------------- RENDER NOTICIA PRINCIPAL ------------------- //
 
 function renderizarNoticia(noticia) {
     // Actualizamos el título de la pestaña del navegador
     document.title = `${noticia.titulo} | anime'n'chill`;
-
-    // ---- Hero: imagen de fondo ----
-    const heroImagen = document.getElementById('heroImagen');
-    if (noticia.imagen_url) {
-        heroImagen.style.backgroundImage = `url('${noticia.imagen_url}')`;
-    } else {
-        // Sin imagen: ocultamos el hero limpiamente
-        document.querySelector('.hero-detalle')?.classList.add('oculto');
-    }
 
     // ---- Etiqueta de categoría ----
     const etiqueta = document.getElementById('detalleEtiqueta');
@@ -114,7 +82,7 @@ function renderizarNoticia(noticia) {
     }
 
     // ---- Imagen del artículo ----
-    const imagen    = document.getElementById('detalleImagen');
+    const imagen     = document.getElementById('detalleImagen');
     const contenedor = document.querySelector('.detalle-articulo__imagen-contenedor');
 
     if (noticia.imagen_url) {
@@ -129,53 +97,48 @@ function renderizarNoticia(noticia) {
     }
 
     // ---- Cuerpo del artículo ----
-/*
-    Prioridad:
-    1. noticia.contenido → texto completo scrapeado del artículo de ANN
-    2. noticia.descripcion → intro corta del RSS (fallback)
-    3. Mensaje neutro si no hay ninguno de los dos
-*/
-const cuerpo = document.getElementById('detalleCuerpo');
-const textoFuente = noticia.contenido || noticia.descripcion || '';
+    /*
+        Prioridad:
+        1. noticia.contenido → texto completo scrapeado del artículo de ANN
+        2. noticia.descripcion → intro corta del RSS (fallback)
+        3. Mensaje neutro si no hay ninguno de los dos
 
-if (textoFuente) {
-    const parrafos = textoFuente
-        .split('\n')
-        .filter(function (linea) { return linea.trim() !== ''; })
-        .map(function (linea) { return `<p>${linea}</p>`; })
-        .join('');
+        El texto se divide por saltos de línea y cada fragmento
+        se envuelve en un <p>. No se añaden iconos ni separadores.
+    */
+    const cuerpo     = document.getElementById('detalleCuerpo');
+    const textoFuente = noticia.contenido || noticia.descripcion || '';
 
-    cuerpo.innerHTML = parrafos || `<p>${textoFuente}</p>`;
-} else {
-    cuerpo.innerHTML = `
-        <p>No hay descripción disponible para esta entrada.</p>
-        ${noticia.url_externa
-            ? `<p>Puedes leer el artículo completo en
-                <a href="${noticia.url_externa}"
-                   class="enlace-externo"
-                   target="_blank"
-                   rel="noopener noreferrer">Anime News Network</a>.
-               </p>`
-            : ''
-        }
-    `;
-}
+    if (textoFuente) {
+        const parrafos = textoFuente
+            .split('\n')
+            .filter(function (linea) { return linea.trim() !== ''; })
+            .map(function (linea) { return `<p>${linea}</p>`; })
+            .join('');
 
-cuerpo.querySelectorAll('a').forEach(function (enlace) {
-    enlace.classList.add('enlace-externo');
-    if (enlace.href && !enlace.href.includes(window.location.hostname)) {
-        enlace.target = '_blank';
-        enlace.rel    = 'noopener noreferrer';
-    }
-});
-
-    // ---- Enlace ANN al pie del artículo ----
-    const enlaceAnn = document.getElementById('detalleEnlaceAnn');
-    if (noticia.url_externa) {
-        enlaceAnn.href = noticia.url_externa;
+        cuerpo.innerHTML = parrafos || `<p>${textoFuente}</p>`;
     } else {
-        enlaceAnn.style.display = 'none';
+        cuerpo.innerHTML = `
+            <p>No hay descripción disponible para esta entrada.</p>
+            ${noticia.url_externa
+                ? `<p>Puedes leer el artículo completo en
+                    <a href="${noticia.url_externa}"
+                       class="enlace-externo"
+                       target="_blank"
+                       rel="noopener noreferrer">Anime News Network</a>.
+                   </p>`
+                : ''
+            }
+        `;
     }
+
+    cuerpo.querySelectorAll('a').forEach(function (enlace) {
+        enlace.classList.add('enlace-externo');
+        if (enlace.href && !enlace.href.includes(window.location.hostname)) {
+            enlace.target = '_blank';
+            enlace.rel    = 'noopener noreferrer';
+        }
+    });
 }
 
 
@@ -194,12 +157,11 @@ function mostrarSkeleton() {
 function mostrarError(mensaje) {
     document.getElementById('detalleTitulo').textContent = 'No se pudo cargar la noticia';
     document.getElementById('detalleCuerpo').innerHTML   = `
-        <p style="color: var(--texto-suave);">⚠️ ${mensaje}</p>
+        <p style="color: var(--texto-suave);">Error: ${mensaje}</p>
         <a href="../novedades/novedades.html" class="boton-secundario" style="margin-top:1rem; display:inline-block;">
             ← Volver a novedades
         </a>
     `;
-    document.querySelector('.hero-detalle')?.classList.add('oculto');
 }
 
 
@@ -233,9 +195,7 @@ async function cargarDetalle() {
 
     try {
         const noticia = await obtenerNoticiaPorSlug(slug);
-
         renderizarNoticia(noticia);
-        iniciarParallax();
 
         // Cargamos el sidebar en paralelo sin bloquear el artículo
         cargarSidebar(noticia);
@@ -266,7 +226,7 @@ async function cargarRelacionadas(noticia) {
     if (!contenedor) return;
 
     try {
-        const respuesta  = await fetch(API_RELACIONADAS(noticia.id));
+        const respuesta    = await fetch(API_RELACIONADAS(noticia.id));
         const relacionadas = await respuesta.json();
 
         if (!relacionadas.length) {
@@ -316,7 +276,6 @@ async function cargarRecomendacionesMangas() {
     if (!contenedor) return;
 
     try {
-        // Pedimos los 5 mangas destacados
         const respuesta = await fetch(`${API_MANGAS}?destacado=true&page_size=5`);
         const datos     = await respuesta.json();
         const mangas    = datos.results || datos;
@@ -333,18 +292,11 @@ async function cargarRecomendacionesMangas() {
                 PREPARADO PARA SESIÓN:
                 - Sin sesión → portada del tomo 1 (campo portada del modelo Manga)
                 - Con sesión → TODO: llamar a /api/anime/mangas/{id}/mi-progreso/ cuando
-                  se implemente, y usar el campo volumen del último Progreso del usuario
-                  para mostrar la portada del tomo correspondiente.
-                  Por ahora, con sesión también mostramos portada general.
+                  se implemente, y usar el campo volumen del último Progreso del usuario.
             */
             const portada = manga.portada || IMAGEN_PLACEHOLDER;
             const enlace  = `../lector/lector.html?manga=${manga.id}`;
 
-            /*
-                El texto del tomo solo se muestra cuando hay sesión y hay progreso.
-                TODO: cuando se implemente el progreso, añadir aquí el número de tomo
-                y quitar la clase 'oculto' del elemento sidebar-recomendacion__tomo.
-            */
             const li = document.createElement('li');
             li.className = 'sidebar-recomendacion';
             li.innerHTML = `
@@ -369,16 +321,6 @@ async function cargarRecomendacionesMangas() {
             contenedor.appendChild(li);
         });
 
-        /*
-            PREPARADO PARA SESIÓN:
-            Si el usuario está logueado, aquí llamaríamos a la API de progreso
-            para actualizar cada tomo mostrado. Descomentar cuando se implemente.
-
-            if (estaLogueado()) {
-                actualizarTomosPorProgreso(mangas);
-            }
-        */
-
     } catch (error) {
         console.error('Error al cargar mangas recomendados:', error);
         contenedor.innerHTML = '<li style="font-size:0.85rem; color:var(--texto-muy-suave); padding:0.5rem;">No disponible.</li>';
@@ -393,7 +335,6 @@ async function cargarRecomendacionesAnimes() {
     if (!contenedor) return;
 
     try {
-        // Pedimos los 5 animes destacados
         const respuesta = await fetch(`${API_ANIMES}?destacado=true&page_size=5`);
         const datos     = await respuesta.json();
         const animes    = datos.results || datos;
@@ -408,17 +349,11 @@ async function cargarRecomendacionesAnimes() {
         animes.forEach(function (anime) {
             /*
                 PREPARADO PARA IMPLEMENTACIÓN FUTURA:
-                Por ahora solo mostramos la portada del anime al hacer hover.
-                TODO cuando se implemente seguimiento de episodios:
-                - Llamar a la API de progreso de episodios del usuario
-                - Mostrar en la miniatura el episodio en el que se encuentra
-                - Añadir barra de progreso visual si se desea
-                El enlace apuntará a la futura página de detalle de anime.
+                - Por ahora solo muestra la portada del anime al hacer hover.
+                - TODO: conectar con progreso de episodios cuando se implemente.
             */
             const portada = anime.portada || IMAGEN_PLACEHOLDER;
-
-            // TODO: cambiar este enlace cuando exista la página de detalle de anime
-            const enlace  = '#';
+            const enlace  = '#'; // TODO: cambiar cuando exista página de detalle de anime
 
             const li = document.createElement('li');
             li.className = 'sidebar-recomendacion';
@@ -433,10 +368,7 @@ async function cargarRecomendacionesAnimes() {
                             loading="lazy"
                             onerror="this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}';"
                         >
-                        <!--
-                            STUB episodio: visible cuando se implemente progreso de anime.
-                            TODO: quitar clase 'oculto' y rellenar con el episodio del usuario.
-                        -->
+                        <!-- STUB episodio: visible cuando se implemente progreso de anime -->
                         <span class="sidebar-recomendacion__tomo oculto" id="ep-anime-${anime.id}">
                             Ep. ?
                         </span>
