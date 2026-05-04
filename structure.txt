@@ -190,7 +190,9 @@
 |   |-- migrations
 |   |   |-- __init__.py
 |   |   |-- 0001_initial.py
-|   |   -- 0002_alter_noticia_options_and_more.py
+|   |   |-- 0002_alter_noticia_options_and_more.py
+|   |   |-- 0003_noticia_slug.py
+|   |   -- 0004_noticia_contenido_alter_noticia_ann_id_and_more.py
 |   |-- services
 |   |   |-- __init__.py
 |   |   |-- ann.py

@@ -12,16 +12,7 @@
     <!-- ------------------- CABEZERA/NAV ---------------- -->
     <div id="contenedor-header"></div>
 
-    <!-- ------------------- HERO CON PARALLAX ---------------- -->
-    <!--
-        La imagen de fondo ocupa el 30% superior de la pantalla.
-        Al hacer scroll, el JS reduce su opacidad gradualmente hasta 0.
-        Usa la misma imagen_url que viene de la API (campo imagen_url del modelo Noticia).
-    -->
-    <div class="hero-detalle" id="heroDetalle" aria-hidden="true">
-        <div class="hero-detalle__imagen" id="heroImagen"></div>
-        <div class="hero-detalle__degradado"></div>
-    </div>
+        <!-- HERO eliminado: se muestra solo la cabecera normal sin imagen de fondo -->
 
     <!-- ------------------- CONTENIDO PRINCIPAL ---------------- -->
     <main class="detalle-principal" id="detallePrincipal">
@@ -38,7 +29,8 @@
                         Cuando se implemente, quitar la clase 'oculto' y rellenar el número.
                     -->
                     <div class="detalle-articulo__meta-superior">
-                        <span class="etiqueta etiqueta--anime" id="detalleEtiqueta">Cargando...</span>
+                    <span class="etiqueta etiqueta--anime" id="detalleEtiqueta">Cargando...</span>
+                    <button id="toggleIdioma" class="boton-primario" style="margin-left: 0.5rem;">Español</button>
                         <span class="detalle-comentarios oculto" id="detalleComentarios" aria-label="Número de comentarios">
                             <span class="detalle-comentarios__icono">💬</span>
                             <span class="detalle-comentarios__numero" id="detalleComentariosNumero">0</span>
@@ -91,17 +83,7 @@
                 </div>
 
                 <!-- Enlace a la fuente original — obligatorio por ToS de ANN -->
-                <footer class="detalle-articulo__pie">
-                    <a
-                        href="#"
-                        id="detalleEnlaceAnn"
-                        class="boton-secundario"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Ver en Anime News Network ↗
-                    </a>
-                </footer>
+                <!-- Footer con enlace a ANN eliminado, ya no es necesario -->
 
             </article>
 

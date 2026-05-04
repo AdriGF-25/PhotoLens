@@ -87,12 +87,15 @@ function renderizarNoticia(noticia) {
     document.title = `${noticia.titulo} | anime'n'chill`;
 
     // ---- Hero: imagen de fondo ----
+    // El hero ha sido eliminado del HTML, pero mantenemos la lógica por si se vuelve a añadir.
     const heroImagen = document.getElementById('heroImagen');
-    if (noticia.imagen_url) {
-        heroImagen.style.backgroundImage = `url('${noticia.imagen_url}')`;
-    } else {
-        // Sin imagen: ocultamos el hero limpiamente
-        document.querySelector('.hero-detalle')?.classList.add('oculto');
+    if (heroImagen) {
+        if (noticia.imagen_url) {
+            heroImagen.style.backgroundImage = `url('${noticia.imagen_url}')`;
+        } else {
+            // Sin imagen: ocultamos el hero limpiamente
+            document.querySelector('.hero-detalle')?.classList.add('oculto');
+        }
     }
 
     // ---- Etiqueta de categoría ----
@@ -135,31 +138,34 @@ function renderizarNoticia(noticia) {
     2. noticia.descripcion → intro corta del RSS (fallback)
     3. Mensaje neutro si no hay ninguno de los dos
 */
-const cuerpo = document.getElementById('detalleCuerpo');
-const textoFuente = noticia.contenido || noticia.descripcion || '';
+    const cuerpo = document.getElementById('detalleCuerpo');
+    // Guardamos el contenido original (probablemente en idioma original) para poder alternar
+    const textoOriginal = noticia.contenido || noticia.descripcion || '';
+    // Por defecto mostramos la versión en español (asumimos que la descripción está en español)
+    // Usamos una variable sin caracteres especiales para evitar errores de sintaxis en JavaScript.
+    const textoEspanol = textoOriginal; // En este ejemplo, usamos el mismo texto como placeholder
 
-if (textoFuente) {
-    const parrafos = textoFuente
-        .split('\n')
-        .filter(function (linea) { return linea.trim() !== ''; })
-        .map(function (linea) { return `<p>${linea}</p>`; })
-        .join('');
+    // Almacenar el texto original en un atributo de datos para su uso posterior
+    cuerpo.dataset.original = textoOriginal;
+    cuerpo.dataset.espanol = textoEspanol;
+    // Estado inicial: español
+    cuerpo.dataset.mostrar = 'es';
 
-    cuerpo.innerHTML = parrafos || `<p>${textoFuente}</p>`;
-} else {
-    cuerpo.innerHTML = `
-        <p>No hay descripción disponible para esta entrada.</p>
-        ${noticia.url_externa
-            ? `<p>Puedes leer el artículo completo en
-                <a href="${noticia.url_externa}"
-                   class="enlace-externo"
-                   target="_blank"
-                   rel="noopener noreferrer">Anime News Network</a>.
-               </p>`
-            : ''
+    function renderizarTexto(texto) {
+        if (texto) {
+            const parrafos = texto
+                .split('\n')
+                .filter(function (linea) { return linea.trim() !== ''; })
+                .map(function (linea) { return `<p>${linea}</p>`; })
+                .join('');
+            cuerpo.innerHTML = parrafos || `<p>${texto}</p>`;
+        } else {
+            cuerpo.innerHTML = `<p>No hay descripción disponible para esta entrada.</p>`;
         }
-    `;
-}
+    }
+
+    // Renderizamos inicialmente en español
+    renderizarTexto(textoEspanol);
 
 cuerpo.querySelectorAll('a').forEach(function (enlace) {
     enlace.classList.add('enlace-externo');
@@ -170,11 +176,43 @@ cuerpo.querySelectorAll('a').forEach(function (enlace) {
 });
 
     // ---- Enlace ANN al pie del artículo ----
+    // El elemento con id "detalleEnlaceAnn" ya no está presente en el HTML (se eliminó el botón redundante).
+    // Por tanto, verificamos su existencia antes de intentar manipularlo para evitar errores.
     const enlaceAnn = document.getElementById('detalleEnlaceAnn');
-    if (noticia.url_externa) {
-        enlaceAnn.href = noticia.url_externa;
-    } else {
-        enlaceAnn.style.display = 'none';
+    if (enlaceAnn) {
+        if (noticia.url_externa) {
+            enlaceAnn.href = noticia.url_externa;
+        } else {
+            enlaceAnn.style.display = 'none';
+        }
+    }
+
+    // Configurar botón de toggle idioma
+    const btnToggle = document.getElementById('toggleIdioma');
+    if (btnToggle) {
+        btnToggle.addEventListener('click', function () {
+            const cuerpo = document.getElementById('detalleCuerpo');
+            const mostrar = cuerpo.dataset.mostrar;
+            if (mostrar === 'es') {
+                // Cambiar a original
+                cuerpo.dataset.mostrar = 'orig';
+                // Renderizamos el texto original (sin traducción)
+                cuerpo.innerHTML = cuerpo.dataset.original
+                    .split('\n')
+                    .filter(l => l.trim() !== '')
+                    .map(l => `<p>${l}</p>`).join('');
+                btnToggle.textContent = 'Español';
+            } else {
+                // Cambiar a español (usamos el mismo texto como placeholder)
+                cuerpo.dataset.mostrar = 'es';
+                cuerpo.innerHTML = cuerpo.dataset.espanol
+                    .split('\n')
+                    .filter(l => l.trim() !== '')
+                    .map(l => `<p>${l}</p>`).join('');
+                btnToggle.textContent = 'Original';
+            }
+        });
+
     }
 }
 
@@ -238,7 +276,8 @@ async function cargarDetalle() {
         iniciarParallax();
 
         // Cargamos el sidebar en paralelo sin bloquear el artículo
-        cargarSidebar(noticia);
+    cargarSidebar(noticia);
+
 
     } catch (error) {
         console.error('Error al cargar la noticia:', error);

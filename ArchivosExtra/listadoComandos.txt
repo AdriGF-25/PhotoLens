@@ -46,3 +46,5 @@ git reset --soft HEAD~1
 DESHACER UN COMMIT YA PUSHEADO 
 git reset HEAD~1
 
+ESCRAPEAR NOTICIAS
+python manage.py scrapear_noticias --limite X

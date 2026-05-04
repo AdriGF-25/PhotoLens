@@ -7,7 +7,12 @@ ArchivosExtra/ExplicacionArchivos_Backend.md
 # Media (imágenes y archivos subidos)
 back-end/media/
 
+# Carpeta de documentación interna que no se versiona
+documentacion/
+
 # Migraciones autogeneradas 
 # back-end/**/migrations/0002_*.py
 
 .clinerules/
+
+.obsidian/
