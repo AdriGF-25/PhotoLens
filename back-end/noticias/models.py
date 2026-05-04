@@ -24,6 +24,8 @@ class Noticia(models.Model):
                     help_text="Introducción del artículo (del RSS)")
     contenido   = models.TextField(blank=True,
                     help_text="Cuerpo completo del artículo extraído de ANN")
+    contenido_es = models.TextField(blank=True,
+                help_text="Cuerpo traducido al español por MyMemory")
     imagen_url  = models.URLField(blank=True)
     url_externa = models.URLField(
                     help_text="Enlace al artículo original de ANN (obligatorio por sus ToS)")

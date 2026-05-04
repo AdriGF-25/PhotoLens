@@ -423,7 +423,3 @@ Objetivo:
 
 * Mejorar el encuadre
 * Evitar deformaciones de imagen
-
-
----
-

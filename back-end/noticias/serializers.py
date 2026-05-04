@@ -46,6 +46,7 @@ class NoticiaDetalleSerializer(serializers.ModelSerializer):
             "tipo_display",
             "descripcion",
             "contenido",
+            "contenido_es",
             "imagen_url",
             "url_externa",
             "fecha_ann",

@@ -140,11 +140,9 @@ function renderizarNoticia(noticia) {
 */
     const cuerpo = document.getElementById('detalleCuerpo');
     // Guardamos el contenido original (probablemente en idioma original) para poder alternar
-    const textoOriginal = noticia.contenido || noticia.descripcion || '';
-    // Por defecto mostramos la versión en español (asumimos que la descripción está en español)
-    // Usamos una variable sin caracteres especiales para evitar errores de sintaxis en JavaScript.
-    const textoEspanol = textoOriginal; // En este ejemplo, usamos el mismo texto como placeholder
-
+    const textoOriginal = noticia.contenido  || noticia.descripcion || '';
+    // Por defecto mostramos la versión en español
+    const textoEspanol  = noticia.contenido_es || textoOriginal;
     // Almacenar el texto original en un atributo de datos para su uso posterior
     cuerpo.dataset.original = textoOriginal;
     cuerpo.dataset.espanol = textoEspanol;

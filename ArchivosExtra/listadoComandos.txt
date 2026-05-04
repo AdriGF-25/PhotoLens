@@ -48,3 +48,16 @@ git reset HEAD~1
 
 ESCRAPEAR NOTICIAS
 python manage.py scrapear_noticias --limite X
+
+
+
+
+--------------------------------------------------------------
+POSTMAN
+--------------------------------------------------------------
+
+Sincronización_noticias
+
+Metodo: GET
+url:http://127.0.0.1:8000/api/noticias/noticias/sincronizar/
+
