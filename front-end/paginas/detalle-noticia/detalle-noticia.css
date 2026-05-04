@@ -30,15 +30,13 @@ button {
     background: none;
 }
 
-
 /* HERO eliminado: se muestra solo la cabecera normal sin imagen de fondo */
-
 
 /* ------------------- CONTENIDO PRINCIPAL ------------------- */
 
 /*
-    El main tiene padding-top para que empiece justo debajo del hero.
-    position: relative y z-index: 1 para que quede por encima del hero fijo.
+    Sin hero: el main empieza justo debajo del nav.
+    padding-top mínimo para separar del header.
 */
 /* Ajuste de layout tras eliminar el hero */
 .detalle-principal {
@@ -163,15 +161,6 @@ button {
 .detalle-articulo__cuerpo .enlace-externo:hover {
     color: var(--acento-hover);
     text-decoration-color: var(--acento-hover);
-}
-
-
-/* ------------------- PIE DEL ARTÍCULO ------------------- */
-
-.detalle-articulo__pie {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--borde);
 }
 
 
@@ -371,7 +360,6 @@ button {
     font-size: 0.92rem;
     color: var(--texto-suave);
     transition: background-color 0.18s ease, color 0.18s ease;
-    /* Necesario para que el hover se quede centrado verticalmente */
     position: relative;
 }
 
@@ -383,7 +371,6 @@ button {
 /*
     Miniatura de portada que aparece al hacer hover.
     Posicionada a la izquierda del sidebar, fuera del flujo normal.
-    Por defecto oculta con opacity 0 y un pequeño desplazamiento.
 */
 .sidebar-recomendacion__hover {
     position: absolute;
@@ -450,14 +437,6 @@ button {
     .detalle-articulo__titulo {
         font-size: 1.75rem;
     }
-
-    .hero-detalle {
-        height: 28vh;
-    }
-
-    .detalle-principal {
-        padding-top: 22vh;
-    }
 }
 
 
@@ -472,14 +451,6 @@ button {
 
     .detalle-articulo__titulo {
         font-size: 1.45rem;
-    }
-
-    .hero-detalle {
-        height: 22vh;
-    }
-
-    .detalle-principal {
-        padding-top: 16vh;
     }
 
     /* La miniatura de portada aparece a la derecha en móvil (no sale de pantalla) */
@@ -499,14 +470,6 @@ button {
 
     .detalle-articulo__cuerpo {
         font-size: 0.97rem;
-    }
-
-    .hero-detalle {
-        height: 18vh;
-    }
-
-    .detalle-principal {
-        padding-top: 12vh;
     }
 
     .detalle-articulo__imagen-contenedor {

@@ -12,7 +12,7 @@
     <!-- ------------------- CABEZERA/NAV ---------------- -->
     <div id="contenedor-header"></div>
 
-        <!-- HERO eliminado: se muestra solo la cabecera normal sin imagen de fondo -->
+   
 
     <!-- ------------------- CONTENIDO PRINCIPAL ---------------- -->
     <main class="detalle-principal" id="detallePrincipal">
@@ -84,7 +84,6 @@
 
                 <!-- Enlace a la fuente original — obligatorio por ToS de ANN -->
                 <!-- Footer con enlace a ANN eliminado, ya no es necesario -->
-
             </article>
 
             <!-- ------------------- SIDEBAR ---------------- -->
@@ -107,42 +106,20 @@
                     PREPARADO PARA SESIÓN:
                     - Sin sesión → muestra portada del tomo 1 del manga al hacer hover
                     - Con sesión → muestra portada del tomo en el que va el usuario
-                      (leer de Progreso → Capitulo.volumen del último capítulo leído)
-                    El JS detecta si hay JWT en localStorage para decidir qué portada mostrar.
                 -->
                 <section class="sidebar-seccion" aria-label="Mangas recomendados">
                     <h2 class="sidebar-seccion__titulo">Mangas destacados</h2>
-                    <ul class="sidebar-recomendaciones" id="sidebarMangas">
-                        <!--
-                            El JS insertará aquí elementos <li> con la siguiente estructura:
-                            <li class="sidebar-recomendacion">
-                                <a href="../lector/lector.html?manga=ID" class="sidebar-recomendacion__enlace">
-                                    Título del manga
-                                    <div class="sidebar-recomendacion__hover">
-                                        <img src="portada.jpg" alt="Portada">
-                                    </div>
-                                </a>
-                            </li>
-                        -->
-                    </ul>
+                    <ul class="sidebar-recomendaciones" id="sidebarMangas"></ul>
                 </section>
 
                 <!-- ------------------- RECOMENDACIÓN ANIMES ---------------- -->
                 <!--
                     PREPARADO PARA IMPLEMENTACIÓN FUTURA:
                     - Por ahora solo muestra la portada del anime al hacer hover.
-                    - Cuando se implemente el seguimiento de episodios, conectar aquí
-                      el progreso del usuario (modelo Episodio + progreso de visionado).
-                    - El enlace apuntará a la futura página de detalle de anime.
                 -->
                 <section class="sidebar-seccion" aria-label="Animes recomendados">
                     <h2 class="sidebar-seccion__titulo">Animes destacados</h2>
-                    <ul class="sidebar-recomendaciones" id="sidebarAnimes">
-                        <!--
-                            Misma estructura que mangas.
-                            TODO: conectar con progreso de episodios cuando se implemente.
-                        -->
-                    </ul>
+                    <ul class="sidebar-recomendaciones" id="sidebarAnimes"></ul>
                 </section>
 
             </aside>
