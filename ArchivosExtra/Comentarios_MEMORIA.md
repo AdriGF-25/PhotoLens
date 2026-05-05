@@ -584,3 +584,18 @@ Esto garantiza que:
 - Traducción estable sin bloqueos por límite de API
     
 - Proceso de recuperación automática para noticias antiguas
+
+---
+## Resumen para memoria - 05/05/2026
+
+Corrección de error crítico en arranque del servidor Django.
+
+### 1. Descripción
+`python manage.py runserver` fallaba con `ModuleNotFoundError: No module named 'deep_translator'` porque el import de la librería estaba en la cabecera de `noticias/services/sincronizacion.py`, cargándose en el arranque de la app.
+
+### 2. Cambio realizado
+- Se movió `from deep_translator import GoogleTranslator, MyMemoryTranslator` al interior de la función `_traducir_fragmento`.
+- Se instruyó instalar `deep-translator==1.11.4` en el entorno activo.
+
+### 3. Archivos modificados
+- `noticias/services/sincronizacion.py`
