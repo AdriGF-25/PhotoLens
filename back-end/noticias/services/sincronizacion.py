@@ -4,7 +4,6 @@ anime'n'chill — Lógica de sincronización de noticias desde RSS de ANN
 
 import time
 import requests
-from deep_translator import GoogleTranslator, MyMemoryTranslator
 from noticias.models import Noticia
 from noticias.services.ann import obtener_noticias_recientes, obtener_detalle_articulo
 
@@ -23,6 +22,9 @@ def _traducir_fragmento(texto: str) -> str:
     Si falla, usa MyMemory como fallback.
     Si ambos fallan, devuelve el texto original.
     """
+    # ✅ Import local: solo se carga cuando realmente se traduce
+    from deep_translator import GoogleTranslator, MyMemoryTranslator
+
     texto = texto.strip()
     if not texto:
         return ""
@@ -40,7 +42,7 @@ def _traducir_fragmento(texto: str) -> str:
 
         except Exception as e2:
             print(f"[MyMemory] También falló: {e2} — conservando original.")
-            return texto  # Fallback final: texto original en inglés
+            return texto
 
 
 # ------------------- TROCEO INTELIGENTE -------------------

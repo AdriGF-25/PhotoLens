@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 db.sqlite3
 .env
-ArchivosExtra/ExplicacionArchivos_Backend.md
+ExplicacionArchivos_Backend.md
 # Media (imágenes y archivos subidos)
 back-end/media/
 
