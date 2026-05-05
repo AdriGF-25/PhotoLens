@@ -185,6 +185,7 @@
 |   |-- management
 |   |   |-- commands
 |   |   |   |-- __init__.py
+|   |   |   |-- retraducir_noticias.py
 |   |   |   -- scrapear_noticias.py
 |   |   -- __init__.py
 |   |-- migrations

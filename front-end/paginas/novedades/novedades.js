@@ -74,11 +74,13 @@ function renderizarHero(noticia) {
     etiquetaHero.className = `etiqueta ${cat.clase}`;
 
     const enlaceHero = document.querySelector('.boton-primario');
-    if (noticia.url_externa) {
-        enlaceHero.href = noticia.url_externa;
-        enlaceHero.target = '_blank';
-        enlaceHero.rel = 'noopener noreferrer';
-    }
+    const slugHero   = noticia.slug
+        ? `/front-end/paginas/detalle-noticia/detalle-noticia.html?slug=${noticia.slug}`
+        : `/front-end/paginas/detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
+
+    enlaceHero.href   = slugHero;
+    enlaceHero.target = '_self';
+    enlaceHero.removeAttribute('rel');
 }
 
 // ------------------- RENDER TARJETAS ------------------- //

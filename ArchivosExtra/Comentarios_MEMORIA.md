@@ -462,3 +462,125 @@ Componentes inyectados via `fetch()` en `contenedor-header` y `contenedor-f
 ## 5. Datos
 
 No aplica — cambio exclusivamente de rutas y lógica de navegación.
+
+---
+# 📄 Resumen para memoria — 05/05/2026
+
+## 1. Descripción
+
+Se corrige el sistema completo de scraping y traducción automática de noticias de Anime News Network.
+
+El sistema fallaba por dos motivos independientes:
+
+- El cliente **MyMemory** tenía un límite aproximado de ~5.000 caracteres/día por IP, lo que provocaba que se agotase rápidamente y dejase el campo `contenido_es` vacío.
+    
+- El RSS de ANN incluía fichas de enciclopedia (`/encyclopedia/`) que no son artículos reales, por lo que nunca generan contenido traducible y terminaban contaminando la base de datos con registros vacíos.
+    
+
+---
+
+## 2. Temporalización
+
+- Corrección aplicada en una única sesión.
+    
+- No se requieren migraciones.
+    
+- Las noticias existentes con contenido pero sin `contenido_es` se retraducen mediante el nuevo comando:
+    
+
+```bash
+python manage.py retraducir_noticias
+```
+
+---
+
+## 3. Requisitos
+
+Dependencias necesarias:
+
+```txt
+deep-translator==1.11.4
+requests
+```
+
+Otros requisitos:
+
+- Acceso a internet (Google Translate + MyMemory)
+    
+
+---
+
+## 4. Arquitectura
+
+### 📌 ann.py
+
+Se añade filtro para evitar entradas inválidas:
+
+```python
+if "/encyclopedia/" in url_externa:
+    continue
+```
+
+---
+
+### 📌 sincronizacion.py
+
+Cambios principales:
+
+- Sustitución de `_traducir_con_mymemory`
+    
+- Nuevo método `_traducir_texto` con:
+    
+    - `GoogleTranslator` como principal
+        
+    - `MyMemoryTranslator` como fallback
+        
+- Reescritura de `_trocear_texto`
+    
+
+---
+
+### 📌 management command
+
+Ruta:
+
+```
+noticias/management/commands/retraducir_noticias.py
+```
+
+Función:
+
+- Retraduce noticias pendientes automáticamente
+    
+
+---
+
+## 5. Datos
+
+- El modelo **Noticia** no sufre cambios.
+    
+- Eliminación manual de fichas de enciclopedia desde shell.
+    
+
+Condición clave del sistema:
+
+```python
+if not noticia_obj.contenido_es:
+```
+
+Esto garantiza que:
+
+- Solo se procesan noticias no traducidas
+    
+- No se sobrescriben traducciones existentes
+    
+
+---
+
+## ✅ Resultado
+
+- Sistema de scraping limpio (sin entradas basura)
+    
+- Traducción estable sin bloqueos por límite de API
+    
+- Proceso de recuperación automática para noticias antiguas
