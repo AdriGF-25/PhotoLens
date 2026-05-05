@@ -2,69 +2,108 @@
 anime'n'chill — Lógica de sincronización de noticias desde RSS de ANN
 """
 
+import time
 import requests
+from deep_translator import GoogleTranslator, MyMemoryTranslator
 from noticias.models import Noticia
 from noticias.services.ann import obtener_noticias_recientes, obtener_detalle_articulo
 
 
-# ------------------- CLIENTE MYMEMORY -------------------
+# ------------------- CONSTANTES -------------------
 
-def _peticion_mymemory(texto: str) -> str:
+LIMITE_GOOGLE  = 4500   # Google acepta hasta ~5000 chars por petición
+PAUSA_TRADUCTOR = 1     # Segundos entre peticiones para no saturar el servicio
+
+
+# ------------------- TRADUCCIÓN DE FRAGMENTO -------------------
+
+def _traducir_fragmento(texto: str) -> str:
+    """
+    Intenta traducir con Google Translate.
+    Si falla, usa MyMemory como fallback.
+    Si ambos fallan, devuelve el texto original.
+    """
+    texto = texto.strip()
+    if not texto:
+        return ""
+
+    time.sleep(PAUSA_TRADUCTOR)
+
     try:
-        respuesta = requests.get(
-            "https://api.mymemory.translated.net/get",
-            params={
-                "q":        texto,
-                "langpair": "en|es",
-            },
-            timeout=10,
-        )
-        datos      = respuesta.json()
-        traduccion = datos.get("responseData", {}).get("translatedText", "")
-
-        # MyMemory devuelve este mensaje como "traducción" cuando supera el límite
-        if not traduccion or "QUERY LENGTH LIMIT" in traduccion.upper():
-            print(f"[MyMemory] Fragmento rechazado ({len(texto)} chars): {traduccion}")
-            return ""
-
-        return traduccion
+        return GoogleTranslator(source="en", target="es").translate(texto)
 
     except Exception as e:
-        print(f"[MyMemory] Error al traducir: {e}")
-        return ""
+        print(f"[Google] Fallo ({len(texto)} chars): {e} — intentando MyMemory...")
 
-def _traducir_con_mymemory(texto: str) -> str:
+        try:
+            return MyMemoryTranslator(source="en-US", target="es-ES").translate(texto)
+
+        except Exception as e2:
+            print(f"[MyMemory] También falló: {e2} — conservando original.")
+            return texto  # Fallback final: texto original en inglés
+
+
+# ------------------- TROCEO INTELIGENTE -------------------
+
+def _trocear_texto(texto: str, limite: int = LIMITE_GOOGLE) -> list:
     """
-    Traduce inglés → español con MyMemory.
-    Trocea el texto en fragmentos de 4500 chars para no superar el límite.
-    No requiere API key ni registro.
+    Divide el texto en fragmentos que no superen el límite de caracteres.
+    Respeta los saltos de párrafo (\n\n) y subdivide párrafos largos
+    por punto si es necesario.
     """
-    if not texto.strip():
-        return ""
-
-    LIMITE = 450
-
-    if len(texto) <= LIMITE:
-        return _peticion_mymemory(texto)
-
-    # Troceamos por párrafos
-    parrafos   = texto.split('\n')
+    parrafos   = [p.strip() for p in texto.split("\n\n") if p.strip()]
     fragmentos = []
     fragmento  = ""
 
     for parrafo in parrafos:
-        if len(fragmento) + len(parrafo) + 1 <= LIMITE:
-            fragmento += parrafo + '\n'
+
+        # El párrafo cabe en el fragmento actual → lo acumulamos
+        if len(fragmento) + len(parrafo) + 2 <= limite:
+            fragmento = (fragmento + "\n\n" + parrafo).strip()
+
+        # No cabe pero el párrafo solo sí cabe → cerramos el fragmento actual
+        elif len(parrafo) <= limite:
+            if fragmento:
+                fragmentos.append(fragmento)
+            fragmento = parrafo
+
+        # El párrafo supera el límite por sí solo → trocemos por oraciones
         else:
             if fragmento:
-                fragmentos.append(fragmento.strip())
-            fragmento = parrafo + '\n'
+                fragmentos.append(fragmento)
+                fragmento = ""
+
+            oraciones = parrafo.replace(". ", ".|").split("|")
+            sub = ""
+            for oracion in oraciones:
+                if len(sub) + len(oracion) + 1 <= limite:
+                    sub = (sub + " " + oracion).strip()
+                else:
+                    if sub:
+                        fragmentos.append(sub)
+                    sub = oracion[:limite]  # Corte duro si la oración es enorme
+            if sub:
+                fragmentos.append(sub)
 
     if fragmento:
-        fragmentos.append(fragmento.strip())
+        fragmentos.append(fragmento)
 
-    traducidos = [_peticion_mymemory(f) for f in fragmentos if f]
-    return '\n'.join(traducidos)
+    return fragmentos
+
+
+# ------------------- TRADUCCIÓN PRINCIPAL -------------------
+
+def _traducir_texto(texto: str) -> str:
+    """
+    Traduce inglés → español usando Google Translate con MyMemory como fallback.
+    Trocea el texto inteligentemente si supera el límite por petición.
+    """
+    if not texto.strip():
+        return ""
+
+    fragmentos = _trocear_texto(texto)
+    traducidos = [_traducir_fragmento(f) for f in fragmentos]
+    return "\n\n".join(traducidos)
 
 
 # ------------------- SINCRONIZAR NOTICIAS ANN -------------------
@@ -129,7 +168,7 @@ def sincronizar_noticias_ann(limite: int = 20) -> dict:
 
         # Traducimos solo si hay contenido y aún no hay traducción
         if noticia_obj.contenido and not noticia_obj.contenido_es:
-            traduccion = _traducir_con_mymemory(noticia_obj.contenido)
+            traduccion = _traducir_texto(noticia_obj.contenido)
             if traduccion:
                 noticia_obj.contenido_es = traduccion
                 noticia_obj.save()

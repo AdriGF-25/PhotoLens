@@ -7,7 +7,6 @@ from .models import Noticia
 
 
 # ------------------- NOTICIA LIST SERIALIZER -------------------
-# Serializer ligero para el listado de novedades
 class NoticiaSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -29,11 +28,15 @@ class NoticiaSerializer(serializers.ModelSerializer):
 
 
 # ------------------- NOTICIA DETALLE SERIALIZER -------------------
-# Serializer completo para la página de detalle — incluye contenido completo
 class NoticiaDetalleSerializer(serializers.ModelSerializer):
 
-    # tipo_display: devuelve el texto legible (ej: "Anime" en vez de "anime")
-    tipo_display = serializers.CharField(source="get_tipo_display", read_only=True)
+    tipo_display     = serializers.CharField(source="get_tipo_display", read_only=True)
+
+    # Si contenido_es está vacío → devuelve contenido (inglés) como fallback
+    contenido_mostrar = serializers.SerializerMethodField()
+
+    def get_contenido_mostrar(self, obj):
+        return obj.contenido_es if obj.contenido_es.strip() else obj.contenido
 
     class Meta:
         model  = Noticia
@@ -47,6 +50,7 @@ class NoticiaDetalleSerializer(serializers.ModelSerializer):
             "descripcion",
             "contenido",
             "contenido_es",
+            "contenido_mostrar",   # ← campo inteligente para el frontend
             "imagen_url",
             "url_externa",
             "fecha_ann",

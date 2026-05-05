@@ -28,6 +28,7 @@ HEADERS = {
 def obtener_noticias_recientes(limite: int = 30) -> list:
     """
     Obtiene las últimas noticias reales del RSS de ANN.
+    Excluye fichas de enciclopedia (/encyclopedia/) ya que no tienen artículo.
     Cada entrada incluye título, descripción, enlace, fecha y categoría.
     """
     try:
@@ -49,6 +50,10 @@ def obtener_noticias_recientes(limite: int = 30) -> list:
             url_externa = (item.findtext("link") or "").strip()
             pub_date    = (item.findtext("pubDate") or "").strip()
             categoria   = (item.findtext("category") or "anime").strip().lower()
+
+            # Ignorar fichas de enciclopedia — no son artículos, no tienen contenido
+            if "/encyclopedia/" in url_externa:
+                continue
 
             ann_id = _generar_id_desde_url(url_externa)
 
@@ -114,11 +119,9 @@ def obtener_detalle_articulo(url: str) -> dict:
         # ---- Contenido del artículo (div.meat) ----
         meat = soup.find("div", class_="meat")
         if meat:
-            # Eliminamos scripts, estilos y elementos de navegación que pueda tener
             for tag in meat.find_all(["script", "style", "nav", "aside"]):
                 tag.decompose()
 
-            # Extraemos el texto limpio párrafo a párrafo
             parrafos = []
             for elemento in meat.find_all(["p", "h2", "h3", "ul", "ol"]):
                 texto = elemento.get_text(separator=" ", strip=True)
