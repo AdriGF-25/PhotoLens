@@ -1,5 +1,26 @@
 /* ------------------- CABECERA/NAV ---------------- */
 
+
+function marcarEnlaceActivo() {
+    // Obtenemos el nombre del archivo HTML de la URL actual
+    // Ejemplo: ".../paginas/novedades/novedades.html" → "novedades"
+    const ruta = window.location.pathname;
+    const nombreArchivo = ruta.split('/').pop().replace('.html', '');
+
+    const enlaces = document.querySelectorAll('.cabecera__enlace[data-pagina]');
+
+    enlaces.forEach(function (enlace) {
+        const paginaEnlace = enlace.getAttribute('data-pagina');
+
+        if (nombreArchivo.includes(paginaEnlace)) {
+            enlace.classList.add('cabecera__enlace--activo');
+        } else {
+            enlace.classList.remove('cabecera__enlace--activo');
+        }
+    });
+}
+
+
 function iniciarCabecera() {
     const botonMenu = document.getElementById("botonMenu");
     const navegacionPrincipal = document.getElementById("navegacionPrincipal");
@@ -61,6 +82,10 @@ function iniciarCabecera() {
             navegacionPrincipal.classList.remove("cabecera__nav--visible");
         }
     });
+
+    /* ---- NUEVO: marcar enlace activo según la página actual ---- */
+    marcarEnlaceActivo();
 }
+
 
 iniciarCabecera();

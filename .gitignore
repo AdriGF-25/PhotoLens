@@ -14,5 +14,5 @@ documentacion/
 # back-end/**/migrations/0002_*.py
 
 .clinerules/
-
+.continue/
 .obsidian/

@@ -91,8 +91,8 @@ function crearTarjeta(noticia) {
     // Construimos el enlace a la página de detalle usando el slug
     // Si no hay slug (no debería ocurrir), caemos al id como fallback
     const enlaceDetalle = noticia.slug
-        ? `../detalle-noticia/detalle-noticia.html?slug=${noticia.slug}`
-        : `../detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
+    ? `/front-end/paginas/detalle-noticia/detalle-noticia.html?slug=${noticia.slug}`
+    : `/front-end/paginas/detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
 
     const article = document.createElement('article');
     article.className = 'tarjeta';

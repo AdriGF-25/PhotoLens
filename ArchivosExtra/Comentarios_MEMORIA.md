@@ -423,3 +423,42 @@ Objetivo:
 
 * Mejorar el encuadre
 * Evitar deformaciones de imagen
+
+---
+## 📅 05/05/2026 — Corrección del sistema de navegación entre páginas
+
+## 1. Descripción
+
+El header y el footer son componentes compartidos cargados dinámicamente con `fetch()` desde `componentes.js`. Los `href` usaban rutas relativas que se resolvían desde la página cargadora, no desde el componente, duplicando segmentos de ruta (`/paginas/paginas/...`). Se corrigió usando rutas absolutas desde la raíz del servidor en `header.html`, `footer.html` y `novedades.js`. Adicionalmente se implementó marcado dinámico del enlace activo del nav mediante la función `marcarEnlaceActivo()` en `header.js`.
+
+## 2. Temporalización
+
+Sesión única — 05/05/2026.
+
+## 3. Requisitos
+
+- Servidor activo (Live Server / Django) para que las rutas absolutas funcionen correctamente.
+    
+- Estructura: `front-end/componentes/` + `front-end/paginas/`.
+    
+
+## 4. Arquitectura
+
+Componentes inyectados via `fetch()` en `contenedor-header` y `contenedor-footer`. `header.js` se carga dinámicamente tras inyectar el componente. Páginas existentes en el momento de la corrección: `novedades`, `detalle-noticia`.
+
+**Archivos modificados:**
+
+|Archivo|Cambio|
+|---|---|
+|`header.html`|Rutas relativas → absolutas `/front-end/paginas/...`|
+|`header.html`|Clase `cabecera__enlace--activo` eliminada del HTML|
+|`header.html`|Atributo `data-pagina` añadido a cada enlace del nav|
+|`footer.html`|Rutas relativas → absolutas donde existe página|
+|`header.js`|Añadida `marcarEnlaceActivo()` para enlace activo dinámico|
+|`novedades.js`|Enlace a `detalle-noticia` cambiado a ruta absoluta|
+
+> **Regla aprendida:** en componentes inyectados con `fetch()`, siempre usar rutas absolutas desde la raíz del servidor. Las rutas relativas se resuelven desde la página que carga el componente, no desde el componente mismo.
+
+## 5. Datos
+
+No aplica — cambio exclusivamente de rutas y lógica de navegación.
