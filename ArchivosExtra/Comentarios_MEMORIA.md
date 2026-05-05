@@ -586,7 +586,7 @@ Esto garantiza que:
 - Proceso de recuperación automática para noticias antiguas
 
 ---
-## Resumen para memoria - 05/05/2026
+## 📅 Resumen para memoria - 05/05/2026
 
 Corrección de error crítico en arranque del servidor Django.
 
@@ -599,3 +599,77 @@ Corrección de error crítico en arranque del servidor Django.
 
 ### 3. Archivos modificados
 - `noticias/services/sincronizacion.py`
+
+---
+# 📅 Resumen para memoria — 05/05/2026
+
+## 🔐 Página de login — Fases 1 y 2 completadas
+
+### 1. Descripción
+
+Creación de la página de inicio de sesión de anime'n'chill.  
+Página aislada sin header/footer con diseño glassmorphism sobre fondo fotográfico.
+
+Implementa los elementos visuales completos y la lógica de UI,  
+con stubs documentados para las integraciones pendientes  
+(Google OAuth, localStorage, JWT).
+
+---
+
+### 2. Temporalización
+
+**Sesión única — 05/05/2026**
+
+---
+
+### 3. Requisitos cubiertos
+
+- HTML semántico con `<main>`, `<header>`, `<form>`, `<footer>`
+    
+- CSS sin framework, colores directos, fuente Inter
+    
+- Responsive en 4 breakpoints:
+    
+    - `> 1100px` → base
+        
+    - `1100px – 701px` → caja más estrecha
+        
+    - `700px – 501px` → layout en columna, padding reducido
+        
+    - `≤ 500px` → tamaños de fuente y padding mínimos
+        
+- JS vanilla sin librerías:
+    
+    - Toggle de contraseña con accesibilidad (`aria-pressed`)
+        
+    - Validación mínima de campos vacíos
+        
+    - Manejo de estado del botón submit (disabled + texto "Entrando...")
+        
+
+---
+
+### 4. Arquitectura
+
+Archivos propios en `front-end/paginas/login/`:
+
+```text
+login/  
+├── login.html  
+├── login.css  
+└── login.js
+```
+
+CSS independiente que no afecta al resto del proyecto.  
+JS sin efectos secundarios sobre otras páginas.
+
+---
+
+### 5. Fases pendientes
+
+|Fase|Descripción|Estado|
+|---|---|---|
+|Fase 3|Google OAuth — Client ID ya configurado en Google Cloud Console|🔲 Stub listo|
+|Fase 4|`localStorage` (recordar=true) / `sessionStorage` (recordar=false)|🔲 Stub listo|
+|Fase 5|Conexión con `POST /api/token/` — Django REST Framework + SimpleJWT|🔲 Stub listo|
+|Final|Errores inline por campo (validación detallada en cliente)|⚠️ Pendiente anotado|
