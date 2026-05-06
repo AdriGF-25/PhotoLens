@@ -673,3 +673,76 @@ JS sin efectos secundarios sobre otras páginas.
 |Fase 4|`localStorage` (recordar=true) / `sessionStorage` (recordar=false)|🔲 Stub listo|
 |Fase 5|Conexión con `POST /api/token/` — Django REST Framework + SimpleJWT|🔲 Stub listo|
 |Final|Errores inline por campo (validación detallada en cliente)|⚠️ Pendiente anotado|
+
+---
+#   📄 Resumen para memoria — 06/05/2026
+
+## Implementación del sistema de login — anime'n'chill
+
+---
+
+## 1. Descripción
+
+Se implementó el sistema de login completo partiendo de cero. Se diseñó el formulario visual, se intentó integrar Google OAuth y finalmente se optó por autenticación clásica con JWT al ser la solución viable en entorno local.
+
+---
+
+## 2. Temporalización
+
+Sesión completa del 06/05/2026. Fases:
+
+- Diseño HTML/CSS
+    
+- JS básico
+    
+- Intento Google OAuth (FedCM → popup → redirección)
+    
+- Descarte Google
+    
+- JWT funcional
+    
+
+---
+
+## 3. Requisitos cubiertos
+
+- Autenticación de usuarios con email y contraseña
+    
+- Tokens JWT (access 60 min + refresh 7 días) con SimpleJWT
+    
+- Persistencia de sesión con localStorage o sessionStorage según "Recuérdame"
+    
+- Validación de formulario con feedback visual al usuario
+    
+- CORS configurado con orígenes específicos
+    
+
+---
+
+## 4. Arquitectura
+
+```
+login.html → login.js
+                 ↓
+        POST /api/token/  (Django SimpleJWT)
+                 ↓
+        { access, refresh }
+                 ↓
+        localStorage / sessionStorage
+                 ↓
+        Redirección a novedades.html
+```
+
+---
+
+## 5. Datos
+
+- Endpoint login: POST [http://127.0.0.1:8000/api/token/](http://127.0.0.1:8000/api/token/)
+    
+- Endpoint refresh: POST [http://127.0.0.1:8000/api/token/refresh/](http://127.0.0.1:8000/api/token/refresh/)
+    
+- Access token: 60 minutos
+    
+- Refresh token: 7 días con rotación activada
+    
+- Google OAuth descartado: Chrome bloquea FedCM en localhost sin HTTPS
