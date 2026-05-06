@@ -17,7 +17,7 @@ from .serializers import UsuarioSerializer, PerfilSerializer, RegistroSerializer
 # ------------------- REGISTRO (público) -------------------
 class RegistroView(CreateAPIView):
     """POST /api/usuarios/registro/"""
-    serializer_class  = RegistroSerializer
+    serializer_class   = RegistroSerializer
     permission_classes = [AllowAny]
 
 
@@ -27,7 +27,7 @@ class UsuarioViewSet(
     mixins.UpdateModelMixin,
     GenericViewSet
 ):
-    serializer_class  = UsuarioSerializer
+    serializer_class   = UsuarioSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):

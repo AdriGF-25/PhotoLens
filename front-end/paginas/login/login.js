@@ -3,7 +3,6 @@
 const FORMULARIO         = document.getElementById("formularioLogin");
 const INPUT_PASS         = document.getElementById("loginPassword");
 const BOTON_OJO          = document.getElementById("botonOjo");
-const BOTON_GOOGLE       = document.getElementById("botonGoogle");
 const ERROR_GLOBAL       = document.getElementById("errorGlobal");
 const ERROR_GLOBAL_TEXTO = document.getElementById("errorGlobalTexto");
 
@@ -20,46 +19,43 @@ function togglePassword() {
     document.querySelector(".ojo-icono--abierto").classList.toggle("oculto", !estaOculta);
 }
 
-/* ------------------- SESIÓN (STUBS) ------------------- */
+/* ------------------- SESIÓN ------------------- */
 
-/**
- * STUB FASE 4 — localStorage / sessionStorage según "Recuérdame"
- * recordar=true  → localStorage  (persiste al cerrar navegador)
- * recordar=false → sessionStorage (se borra al cerrar pestaña)
- */
 function guardarSesion(accessToken, refreshToken, recordar) {
-    // TODO Fase 4:
-    // const storage = recordar ? localStorage : sessionStorage;
-    // storage.setItem("access_token", accessToken);
-    // storage.setItem("refresh_token", refreshToken);
+    const storage = recordar ? localStorage : sessionStorage;
+    storage.setItem("access_token",  accessToken);
+    storage.setItem("refresh_token", refreshToken);
 }
 
-/**
- * STUB FASE 5 — Llamada a POST /api/token/ con JWT
- */
-async function iniciarSesion(email, password, recordar) {
-    // TODO Fase 5:
-    // const res = await fetch("/api/token/", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ username: email, password })
-    // });
-    // const datos = await res.json();
-    // if (!res.ok) throw new Error(datos.detail || "Credenciales incorrectas.");
-    // guardarSesion(datos.access, datos.refresh, recordar);
-    // window.location.href = "/front-end/paginas/novedades/novedades.html";
-}
-
-/**
- * Disponible globalmente para cerrar sesión desde cualquier página
- */
 function cerrarSesion() {
-    // TODO Fase 5:
-    // localStorage.removeItem("access_token");
-    // localStorage.removeItem("refresh_token");
-    // sessionStorage.removeItem("access_token");
-    // sessionStorage.removeItem("refresh_token");
-    // window.location.href = "/front-end/paginas/novedades/novedades.html";
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("refresh_token");
+}
+
+/* ------------------- LOGIN ------------------- */
+
+async function iniciarSesion(email, password, recordar) {
+    /*
+     * SimpleJWT espera "username" — enviamos el email como username.
+     * El backend busca por username, así que el usuario debe haberse
+     * registrado con su email como username (lo hace RegistroSerializer).
+     */
+    const res = await fetch("http://127.0.0.1:8000/api/token/", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ username: email, password })
+    });
+
+    const datos = await res.json();
+
+    if (!res.ok) {
+        throw new Error(datos.detail || "Credenciales incorrectas.");
+    }
+
+    guardarSesion(datos.access, datos.refresh, recordar);
+    window.location.href = "/front-end/paginas/novedades/novedades.html";
 }
 
 /* ------------------- SUBMIT ------------------- */
@@ -74,7 +70,6 @@ async function manejarSubmit(evento) {
 
     ERROR_GLOBAL.classList.add("oculto");
 
-    // Validación mínima — errores detallados por campo: TODO al finalizar el proyecto
     if (!email || !pass) {
         ERROR_GLOBAL_TEXTO.textContent = "Por favor, rellena todos los campos.";
         ERROR_GLOBAL.classList.remove("oculto");
@@ -95,26 +90,7 @@ async function manejarSubmit(evento) {
     }
 }
 
-/* ------------------- GOOGLE OAUTH (STUB FASE 3) ------------------- */
-
-/**
- * STUB FASE 3 — Client ID ya configurado en Google Cloud Console
- * Pasos pendientes:
- * 1. Añadir <script src="https://accounts.google.com/gsi/client"> al head
- * 2. Llamar a google.accounts.id.initialize({ client_id: "TU_ID", callback: onGoogleLogin })
- * 3. Llamar a google.accounts.id.prompt()
- */
-function manejarGoogle() {
-    // TODO Fase 3
-    alert("Inicio con Google disponible muy pronto.");
-}
-
-function onGoogleLogin(response) {
-    // TODO Fase 3: enviar response.credential al backend para verificar
-}
-
 /* ------------------- EVENTOS ------------------- */
 
 BOTON_OJO.addEventListener("click", togglePassword);
 FORMULARIO.addEventListener("submit", manejarSubmit);
-BOTON_GOOGLE.addEventListener("click", manejarGoogle);

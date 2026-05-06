@@ -59,11 +59,11 @@ GET /api/noticias/{slug}/
 
 **Añade sobre el anterior:**
 
-|Campo|Qué es|
-|---|---|
-|`contenido`|Texto completo del artículo en inglés|
-|`contenido_es`|Texto completo traducido al español|
-|`tipo_display`|Texto legible del tipo ("Anime" en vez de "anime")|
+| Campo          | Qué es                                             |
+| -------------- | -------------------------------------------------- |
+| `contenido`    | Texto completo del artículo en inglés              |
+| `contenido_es` | Texto completo traducido al español                |
+| `tipo_display` | Texto legible del tipo ("Anime" en vez de "anime") |
 
 ---
 

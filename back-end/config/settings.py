@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 
 # ------------------- MIDDLEWARE -------------------
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",  # CORS siempre el primero
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -96,7 +96,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ------------------- CORS -------------------
-CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+]
 
 # ------------------- DJANGO REST FRAMEWORK -------------------
 REST_FRAMEWORK = {
@@ -114,12 +117,12 @@ REST_FRAMEWORK = {
 
 # ------------------- JWT -------------------
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ACCESS_TOKEN_LIFETIME":  timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS": True,
+    "ROTATE_REFRESH_TOKENS":  True,
 }
 
 # ------------------- APIs EXTERNAS -------------------
 MANGADEX_API_URL = "https://api.mangadex.org"
-ANN_API_URL = "https://www.animenewsnetwork.com/encyclopedia/api.php"
-MANGAPI_KEY = ""  # Rellenar con key de RapidAPI cuando toque
+ANN_API_URL      = "https://www.animenewsnetwork.com/encyclopedia/api.php"
+MANGAPI_KEY      = ""
