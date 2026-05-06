@@ -746,3 +746,15 @@ login.html → login.js
 - Refresh token: 7 días con rotación activada
     
 - Google OAuth descartado: Chrome bloquea FedCM en localhost sin HTTPS
+  
+
+---
+Resumen para memoria - 07/05/2026
+
+README.md creado para anime'n'chill.
+
+1. Descripción: plataforma manga + noticiero anime, TFC DAW 2025/2026
+2. Temporalización: creado en fase de primera entrega parcial (viernes 08/05)
+3. Requisitos: badges de stack, tabla de estado, comandos de instalación y gestión
+4. Arquitectura: estructura de carpetas documentada, endpoints principales listados
+5. Datos: sin variables de entorno sensibles expuestas, SECRET_KEY marcada como insegura en dev
