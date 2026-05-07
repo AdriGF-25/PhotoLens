@@ -2,17 +2,14 @@
 __pycache__/
 *.pyc
 db.sqlite3
-.env
-ExplicacionArchivos_Backend.md
+
 # Media (imágenes y archivos subidos)
 back-end/media/
 
-# Carpeta de documentación interna que no se versiona
-documentacion/
+#Variables de entorno
+back-end\.env
 
-# Migraciones autogeneradas 
-# back-end/**/migrations/0002_*.py
-
+#extras
 .clinerules/
 .continue/
 .obsidian/
