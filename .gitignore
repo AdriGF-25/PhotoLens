@@ -1,12 +1,9 @@
 .venv/
 __pycache__/
 *.pyc
-db.sqlite 
+back-end/db.sqlite3
 
 .env
-Diagrama_Gantt.jpeg
-Diagrama_Pert.jpeg
-MEMORIA.md
 # Media (imágenes y archivos subidos)
 back-end/media/
 

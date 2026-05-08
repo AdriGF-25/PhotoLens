@@ -758,3 +758,18 @@ README.md creado para anime'n'chill.
 3. Requisitos: badges de stack, tabla de estado, comandos de instalación y gestión
 4. Arquitectura: estructura de carpetas documentada, endpoints principales listados
 5. Datos: sin variables de entorno sensibles expuestas, SECRET_KEY marcada como insegura en dev
+
+---
+## Resumen para memoria — 07/05/2026
+
+#### Primera entrega parcial del TFC — anime'n'chill.
+
+Descripción: redacción del punto 1 (descripción del proyecto y ámbito de implantación) y punto 2 (temporalización y fases del desarrollo) de la memoria oficial del TFC
+
+Temporalización: sesión del 07/05/2026, día previo a la entrega parcial del viernes 09/05
+
+Requisitos: memoria con los dos puntos obligatorios para la primera entrega según el enunciado del proyecto intermodular DAW
+
+Arquitectura: 1raEntrega/MEMORIA.md como versión de entrega + Diagrama_Gant_anime'n'chill.drawio.svg con el diagrama de Gantt
+
+Datos: sin datos sensibles — documentación pura del proyecto
