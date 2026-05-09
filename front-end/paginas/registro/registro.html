@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta | anime'n'chill</title>
+
+    <!-- ------------------- FUENTE ------------------- -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ------------------- ESTILOS ------------------- -->
+    <link rel="stylesheet" href="../../componentes/temas.css">
+    <link rel="stylesheet" href="./registro.css">
+</head>
+<body>
+
+    <!-- ------------------- FONDO ------------------- -->
+    <div class="registro-fondo" aria-hidden="true">
+        <img
+            class="registro-fondo__imagen"
+            src="https://picsum.photos/seed/animenchill-registro/1920/1080"
+            alt=""
+        >
+        <div class="registro-fondo__overlay"></div>
+    </div>
+
+    <!-- ------------------- PÁGINA ------------------- -->
+    <main class="registro-pagina">
+
+        <!-- ------------------- CAJA ------------------- -->
+        <div class="registro-caja">
+
+            <!-- ------------------- CABECERA ------------------- -->
+            <header class="registro-caja__cabecera">
+                <h1 class="registro-caja__titulo">Crea tu cuenta</h1>
+                <p class="registro-caja__subtitulo">Es gratis y solo tarda un momento</p>
+            </header>
+
+            <!-- ------------------- FORMULARIO ------------------- -->
+            <form class="registro-formulario" id="formularioRegistro" novalidate>
+
+                <!-- Fila: Nombre + Apellido -->
+                <div class="registro-fila">
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="registroNombre">Nombre</label>
+                        <input
+                            class="campo__input"
+                            type="text"
+                            id="registroNombre"
+                            name="first_name"
+                            autocomplete="given-name"
+                            placeholder="Tu nombre"
+                        >
+                    </div>
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="registroApellido">Apellido</label>
+                        <input
+                            class="campo__input"
+                            type="text"
+                            id="registroApellido"
+                            name="last_name"
+                            autocomplete="family-name"
+                            placeholder="Tu apellido"
+                        >
+                    </div>
+                </div>
+
+                <!-- Usuario -->
+                <div class="campo">
+                    <label class="campo__etiqueta" for="registroUsername">Nombre de usuario</label>
+                    <input
+                        class="campo__input"
+                        type="text"
+                        id="registroUsername"
+                        name="username"
+                        autocomplete="username"
+                        placeholder="1234"
+                        required
+                    >
+                </div>
+
+                <!-- Email -->
+                <div class="campo">
+                    <label class="campo__etiqueta" for="registroEmail">Correo electrónico</label>
+                    <input
+                        class="campo__input"
+                        type="email"
+                        id="registroEmail"
+                        name="email"
+                        autocomplete="email"
+                        placeholder="tucorreo@ejemplo.com"
+                        required
+                    >
+                </div>
+
+                <!-- Contraseña -->
+                <div class="campo">
+                    <label class="campo__etiqueta" for="registroPassword">Contraseña</label>
+                    <div class="campo__input-contenedor">
+                        <input
+                            class="campo__input"
+                            type="password"
+                            id="registroPassword"
+                            name="password"
+                            autocomplete="new-password"
+                            placeholder="Mínimo 6 caracteres"
+                            required
+                        >
+                        <button type="button" class="campo__boton-ojo" id="botonOjo1" aria-label="Mostrar contraseña" aria-pressed="false">
+                            <svg class="ojo-icono ojo-icono--cerrado" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                                <line x1="1" y1="1" x2="23" y2="23"/>
+                            </svg>
+                            <svg class="ojo-icono ojo-icono--abierto oculto" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirmar Contraseña -->
+                <div class="campo">
+                    <label class="campo__etiqueta" for="registroPassword2">Confirmar contraseña</label>
+                    <div class="campo__input-contenedor">
+                        <input
+                            class="campo__input"
+                            type="password"
+                            id="registroPassword2"
+                            name="password2"
+                            autocomplete="new-password"
+                            placeholder="Repite tu contraseña"
+                            required
+                        >
+                        <button type="button" class="campo__boton-ojo" id="botonOjo2" aria-label="Mostrar confirmación" aria-pressed="false">
+                            <svg class="ojo-icono ojo-icono--cerrado" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                                <line x1="1" y1="1" x2="23" y2="23"/>
+                            </svg>
+                            <svg class="ojo-icono ojo-icono--abierto oculto" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ------------------- ERROR GLOBAL ------------------- -->
+                <div class="registro-error-global oculto" id="errorGlobal" role="alert">
+                    <span id="errorGlobalTexto"></span>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="boton-registro" id="botonRegistro">
+                    Crear cuenta
+                </button>
+
+            </form>
+
+            <!-- ------------------- PIE ------------------- -->
+            <footer class="registro-caja__pie">
+                <p class="registro-caja__pie-texto">
+                    ¿Ya tienes cuenta?
+                    <a href="../login/login.html" class="registro-caja__enlace">Inicia sesión</a>
+                </p>
+            </footer>
+
+        </div>
+
+    </main>
+
+    <script src="./registro.js"></script>
+</body>
+</html>

@@ -773,3 +773,21 @@ Requisitos: memoria con los dos puntos obligatorios para la primera entrega seg�
 Arquitectura: 1raEntrega/MEMORIA.md como versión de entrega + Diagrama_Gant_anime'n'chill.drawio.svg con el diagrama de Gantt
 
 Datos: sin datos sensibles — documentación pura del proyecto
+
+
+---
+## Resumen para memoria — 09/05/2026
+
+### Página de Registro
+
+#### Descripción
+Se ha creado la página `registro/` con tres archivos (HTML, CSS, JS). El formulario llama a `POST /api/usuarios/registro/` con los campos `username`, `email`, `first_name`, `last_name`, `password` y `password2`. Tras un `201 Created` redirige al login con el parámetro `?registro=ok`.
+
+## Requisitos
+Backend `RegistroView` + `RegistroSerializer` ya existentes. Ninguna dependencia nueva.
+
+## Arquitectura
+Mismo patrón visual que el login: fondo con imagen + overlay, caja sólida (`opacity: 0.96`), sin logo. Fila de dos columnas para nombre/apellido, colapsable a una columna en `≤500px`.
+
+## Datos
+Validación doble: cliente (campos vacíos, mínimo 6 caracteres, passwords coinciden) y servidor (respuesta de error extraída del primer campo del JSON de error de DRF).

@@ -8,9 +8,6 @@
 |   |-- appearance.json
 |   |-- core-plugins.json
 |   -- workspace.json
-|-- 1raEntrega
-|   |-- Diagrama_Gant_anime'n'chill.drawio.svg
-|   -- MEMORIA.md
 |-- archivosExtra
 |   |-- .notas_rapidas.md
 |   |-- 01_ajustes_detalle_noticia.md
@@ -253,7 +250,9 @@
 |   -- PipRequirements.txt
 |-- front-end
 |   |-- assets
-|   |   -- img
+|   |   |-- img
+|   |   |-- Diagrama_Gantt.jpeg
+|   |   -- Diagrama_Pert.jpeg
 |   |-- componentes
 |   |   |-- footer
 |   |   |   |-- footer.css
@@ -282,8 +281,6 @@
 |           |-- recuperar-contrasena.html
 |           -- recuperar-contrasena.js
 |-- .gitignore
-|-- Diagrama_Gantt.jpeg
-|-- Diagrama_Pert.jpeg
 |-- MEMORIA.md
 |-- README.md
 |-- structure.txt
