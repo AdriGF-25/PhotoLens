@@ -36,6 +36,7 @@ class RegistroSerializer(serializers.ModelSerializer):
     password  = serializers.CharField(write_only=True, min_length=6)
     password2 = serializers.CharField(write_only=True,
                   label="Confirmar contraseña")
+    email = serializers.EmailField(required=True)
 
     class Meta:
         model  = User
@@ -57,3 +58,8 @@ class RegistroSerializer(serializers.ModelSerializer):
         user.save()
         Perfil.objects.create(usuario=user)
         return user
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Este correo ya está registrado.")
+        return value

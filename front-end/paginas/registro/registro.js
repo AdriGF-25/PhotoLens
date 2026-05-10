@@ -116,26 +116,3 @@ BOTON_OJO2.addEventListener("click", () => togglePassword(INPUT_PASS2, BOTON_OJO
 FORMULARIO.addEventListener("submit", manejarSubmit);
 
 
-/* ------------------- BANNER REGISTRO EXITOSO ------------------- */
-
-function mostrarBannerRegistro() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("registro") !== "ok") return;
-
-    document.getElementById("bannerExito").classList.remove("oculto");
-}
-
-mostrarBannerRegistro();
-
-/* ------------------- REDIRECCIÓN SI YA ESTÁ LOGUEADO ------------------- */
-
-function redirigirSiLogueado() {
-    const token = localStorage.getItem("access_token")
-                ?? sessionStorage.getItem("access_token");
-
-    if (token) {
-        window.location.href = "/front-end/paginas/novedades/novedades.html";
-    }
-}
-
-redirigirSiLogueado();

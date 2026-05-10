@@ -92,32 +92,6 @@ body {
     line-height: 1.25;
 }
 
-/* ------------------- BOTÓN GOOGLE ------------------- */
-
-.boton-google {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.65rem;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.75rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #e8e8e8;
-    font-size: 0.92rem;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.boton-google:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.28);
-}
-
 /* ------------------- SEPARADOR ------------------- */
 
 .login-separador {
@@ -208,6 +182,24 @@ body {
 .campo__input:focus {
     border-color: #e8a838;
     box-shadow: 0 0 0 3px rgba(232, 168, 56, 0.14);
+}
+
+/* ------------------- AUTOCOMPLETE FIX ------------------- */
+
+.campo__input:-webkit-autofill,
+.campo__input:-webkit-autofill:hover,
+.campo__input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #e8e8e8;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(18, 18, 18, 0.95) inset;
+    box-shadow: 0 0 0px 1000px rgba(18, 18, 18, 0.95) inset;
+    border-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.campo__input:-webkit-autofill:focus {
+    border-color: #e8a838;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(18, 18, 18, 0.95) inset,
+                        0 0 0 3px rgba(232, 168, 56, 0.14);
 }
 
 /* Espacio interior derecho para el botón ojo */

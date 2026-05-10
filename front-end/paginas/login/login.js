@@ -6,6 +6,20 @@ const BOTON_OJO          = document.getElementById("botonOjo");
 const ERROR_GLOBAL       = document.getElementById("errorGlobal");
 const ERROR_GLOBAL_TEXTO = document.getElementById("errorGlobalTexto");
 
+/* ------------------- REDIRECCIÓN SI YA ESTÁ LOGUEADO ------------------- */
+
+function redirigirSiLogueado() {
+    const token = localStorage.getItem("access_token")
+                ?? sessionStorage.getItem("access_token");
+
+    if (token) {
+        window.location.href = "../novedades/novedades.html";
+    }
+}
+
+// Se ejecuta PRIMERO — si hay token, no se monta nada más
+redirigirSiLogueado();
+
 /* ------------------- OJO CONTRASEÑA ------------------- */
 
 function togglePassword() {
@@ -36,16 +50,11 @@ function cerrarSesion() {
 
 /* ------------------- LOGIN ------------------- */
 
-async function iniciarSesion(email, password, recordar) {
-    /*
-     * SimpleJWT espera "username" — enviamos el email como username.
-     * El backend busca por username, así que el usuario debe haberse
-     * registrado con su email como username (lo hace RegistroSerializer).
-     */
+async function iniciarSesion(username, password, recordar) {
     const res = await fetch("http://127.0.0.1:8000/api/token/", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ username: email, password })
+        body:    JSON.stringify({ username, password })
     });
 
     const datos = await res.json();
@@ -55,7 +64,7 @@ async function iniciarSesion(email, password, recordar) {
     }
 
     guardarSesion(datos.access, datos.refresh, recordar);
-    window.location.href = "/front-end/paginas/novedades/novedades.html";
+    window.location.href = "../novedades/novedades.html";
 }
 
 /* ------------------- SUBMIT ------------------- */
@@ -63,14 +72,14 @@ async function iniciarSesion(email, password, recordar) {
 async function manejarSubmit(evento) {
     evento.preventDefault();
 
-    const email    = document.getElementById("loginEmail").value.trim();
+    const username = document.getElementById("loginEmail").value.trim();
     const pass     = INPUT_PASS.value;
     const recordar = document.getElementById("loginRecordar").checked;
     const boton    = document.getElementById("botonLogin");
 
     ERROR_GLOBAL.classList.add("oculto");
 
-    if (!email || !pass) {
+    if (!username || !pass) {
         ERROR_GLOBAL_TEXTO.textContent = "Por favor, rellena todos los campos.";
         ERROR_GLOBAL.classList.remove("oculto");
         return;
@@ -80,7 +89,7 @@ async function manejarSubmit(evento) {
     boton.textContent = "Entrando...";
 
     try {
-        await iniciarSesion(email, pass, recordar);
+        await iniciarSesion(username, pass, recordar);
     } catch (error) {
         ERROR_GLOBAL_TEXTO.textContent = error.message || "Algo salió mal. Inténtalo de nuevo.";
         ERROR_GLOBAL.classList.remove("oculto");
@@ -94,3 +103,15 @@ async function manejarSubmit(evento) {
 
 BOTON_OJO.addEventListener("click", togglePassword);
 FORMULARIO.addEventListener("submit", manejarSubmit);
+
+/* ------------------- BANNER REGISTRO EXITOSO ------------------- */
+
+function mostrarBannerRegistro() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("registro") !== "ok") return;
+
+    const banner = document.getElementById("bannerExito");
+    if (banner) banner.classList.remove("oculto");
+}
+
+mostrarBannerRegistro();

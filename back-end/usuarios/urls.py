@@ -6,6 +6,6 @@ router = DefaultRouter()
 router.register(r"usuarios", UsuarioViewSet, basename="usuario")
 
 urlpatterns = [
-    path("usuarios/registro/", RegistroView.as_view(), name="registro"),
+    path("registro/", RegistroView.as_view(), name="registro"),
     path("", include(router.urls)),
 ]
