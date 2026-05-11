@@ -791,3 +791,135 @@ Mismo patrón visual que el login: fondo con imagen + overlay, caja sólida (`op
 
 ## Datos
 Validación doble: cliente (campos vacíos, mínimo 6 caracteres, passwords coinciden) y servidor (respuesta de error extraída del primer campo del JSON de error de DRF).
+
+
+---
+
+## Resumen para memoria — 11/05/2026
+
+---
+
+## `login.js` — Cambios
+
+**Función del archivo:** Gestiona toda la lógica del formulario de inicio de sesión: validación de campos, comunicación con la API JWT, almacenamiento de tokens y redirección según estado de sesión.
+
+---
+
+## Funciones eliminadas / modificadas
+
+|Función|Qué cambió|Por qué|
+|---|---|---|
+|`redirigirSiLogueado()`|Movida al **principio** del archivo|Antes se ejecutaba al final, después de montar eventos. Ahora corta la ejecución inmediatamente si hay token, evitando montar listeners innecesarios|
+|`mostrarBannerRegistro()`|Ahora usa `document.getElementById("bannerExito")` en vez de crear un `div` nuevo|El HTML ya tenía el elemento `#bannerExito`. Crear uno nuevo duplicaba el banner y generaba inconsistencias visuales|
+|`iniciarSesion()`|Parámetro `email` renombrado a `username`|El campo del formulario es nombre de usuario, no email. Se corrige la coherencia semántica|
+
+## Funciones añadidas
+
+Ninguna nueva. Solo correcciones sobre las existentes.
+
+---
+
+## `registro.js` — Cambios
+
+**Función del archivo:** Gestiona el formulario de creación de cuenta: validación en cliente, envío a la API de registro, manejo de errores del servidor y redirección al login tras registro exitoso.
+
+---
+
+## Funciones añadidas
+
+|Función|Qué hace|Por qué|
+|---|---|---|
+|`redirigirSiLogueado()` (IIFE)|Comprueba si existe `access_token` en localStorage o sessionStorage. Si existe, redirige a novedades|Sin esta guarda, un usuario logueado podía acceder a `/registro.html` escribiendo la URL directamente, lo cual no tiene sentido funcionalmente|
+
+---
+
+## Flujo completo de autenticación (resultado final)
+
+text
+
+`Usuario no logueado     │    ├─ Entra en login.html      → ve el formulario    ├─ Entra en registro.html   → ve el formulario    │ Usuario logueado     │    ├─ Entra en login.html      → redirige a novedades (redirigirSiLogueado)    ├─ Entra en registro.html   → redirige a novedades (redirigirSiLogueado)    │ Registro exitoso     │    └─ registro.js → redirige a login.html?registro=ok                          │                          └─ login.js mostrarBannerRegistro()                                │                                └─ muestra #bannerExito del HTML`
+
+---
+
+## Decisiones técnicas relevantes
+
+**¿Por qué `sessionStorage` por defecto y no `localStorage`?**  
+Por seguridad. Si el usuario no marca "Recuérdame", los tokens se borran al cerrar el navegador. Así se evita que una sesión quede abierta en un dispositivo compartido.
+
+**¿Por qué `??` en vez de `||` para leer el token?**
+
+js
+
+`const token = localStorage.getItem("access_token")             ?? sessionStorage.getItem("access_token");`
+
+El operador `??` (nullish coalescing) solo evalúa el lado derecho si el izquierdo es `null` o `undefined`, no si es `""` (cadena vacía). Es más preciso que `||` para este caso.
+
+
+
+---
+
+# Resumen para memoria - 11/05/2026
+
+Refactorización completa del componente `header` y homogeneización visual
+del componente `detalle-noticia` dentro del proyecto **anime'n'chill**.
+
+---
+
+## 1. Descripción
+
+Se han aplicado dos tipos de cambios sobre el front-end del proyecto:
+
+### Correcciones sobre lo existente (header)
+
+- Eliminado el ítem de navegación "Anime" del menú principal (`header.html`)
+- El botón de selección de tema pasa de texto plano a **icono SVG dinámico**
+  que cambia según el tema activo:
+  - ☀️ Claro → icono sol
+  - 🌙 Oscuro → icono luna
+  - 🌅 Tarde → icono atardecer
+  - ✨ Noche → icono estrella
+- El desplegable de temas ahora se activa con **hover** (no con clic),
+  manteniendo el clic como fallback en dispositivos táctiles (`header.js`)
+
+### Nuevo diseño — estética más agresiva (header + detalle-noticia)
+
+- `border-radius` reducido en todos los componentes:
+  contenedores `4px`, botones `3px`, etiquetas/badges `2px`
+- Botones con `text-transform: uppercase`, `letter-spacing: 0.07em`
+  y `font-size: 0.82rem` para mayor contundencia tipográfica
+- Logo con `letter-spacing: -0.03em` — más compacto y estructurado
+
+---
+
+## 2. Temporalización
+
+| Tarea | Fecha |
+|---|---|
+| Análisis y planificación de cambios | 11/05/2026 |
+| Corrección header (HTML + JS + CSS) | 11/05/2026 |
+| Refactorización detalle-noticia.css | 11/05/2026 |
+| Commit y documentación | 11/05/2026 |
+
+---
+
+## 3. Requisitos
+
+- Coherencia visual entre componentes del front-end
+- Mantenimiento del sistema de temas (oscuro / claro / tarde / noche)
+- Responsive obligatorio: >1100px / 1100–701px / 700–501px / ≤500px
+- Accesibilidad: `aria-label` en todos los botones icono
+
+---
+
+## 4. Arquitectura
+
+```text
+front-end/
+├── componentes/
+│   ├── header/
+│   │   ├── header.html ← eliminado ítem Anime, SVG en botón tema
+│   │   ├── header.css ← border-radius reducido, hover en desplegable
+│   │   └── header.js ← trigger hover + cambio icono dinámico
+├── paginas/
+│   └── detalle-noticia/
+│       └── detalle-noticia.css ← border-radius, tipografía, comentarios

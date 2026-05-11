@@ -1,10 +1,12 @@
 /* ------------------- RESET ------------------- */
 
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 
 body {
     font-family: Arial, sans-serif;
@@ -13,15 +15,18 @@ body {
     line-height: 1.6;
 }
 
+
 img {
     display: block;
     width: 100%;
 }
 
+
 a {
     color: inherit;
     text-decoration: none;
 }
+
 
 button {
     font: inherit;
@@ -30,25 +35,22 @@ button {
     background: none;
 }
 
-/* HERO eliminado: se muestra solo la cabecera normal sin imagen de fondo */
 
 /* ------------------- CONTENIDO PRINCIPAL ------------------- */
 
-/*
-    Sin hero: el main empieza justo debajo del nav.
-    padding-top mínimo para separar del header.
-*/
-/* Ajuste de layout tras eliminar el hero */
+
 .detalle-principal {
     position: relative;
     z-index: 1;
-    padding-top: 5vh; /* Reduce el espacio superior ahora que no hay hero */
+    padding-top: 5vh;
     min-height: 100vh;
     background-color: var(--fondo);
 }
 
 
-/* Contenedor que centra y limita el ancho del layout */
+/* ------------------- LAYOUT ------------------- */
+
+
 .detalle-layout {
     display: grid;
     grid-template-columns: 1fr 320px;
@@ -61,14 +63,16 @@ button {
 
 /* ------------------- ARTÍCULO ------------------- */
 
+
 .detalle-articulo {
     min-width: 0;
 }
 
-/* Cabecera: etiqueta + título + meta */
+
 .detalle-articulo__cabecera {
     margin-bottom: 1.5rem;
 }
+
 
 .detalle-articulo__meta-superior {
     display: flex;
@@ -77,30 +81,39 @@ button {
     margin-bottom: 0.85rem;
 }
 
+
 .detalle-articulo__titulo {
     font-size: 2rem;
-    line-height: 1.25;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     margin-bottom: 0.85rem;
     color: var(--texto);
 }
+
 
 .detalle-articulo__meta {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--texto-muy-suave);
 }
+
 
 .detalle-articulo__separador {
     opacity: 0.5;
 }
 
-/* Enlace de fuente (ANN) en la meta — siempre visible con color de acento */
+
 .detalle-articulo__enlace-fuente {
     color: var(--acento);
-    transition: color 0.2s ease;
+    transition: color 0.15s ease;
 }
+
 
 .detalle-articulo__enlace-fuente:hover {
     color: var(--acento-hover);
@@ -109,15 +122,17 @@ button {
 
 /* ------------------- IMAGEN DEL ARTÍCULO ------------------- */
 
+
 .detalle-articulo__imagen-contenedor {
     width: 100%;
     max-height: 420px;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 4px;
     margin-bottom: 1.75rem;
     background-color: var(--fondo-tarjeta);
     border: 1px solid var(--borde);
 }
+
 
 .detalle-articulo__imagen {
     width: 100%;
@@ -127,7 +142,7 @@ button {
     filter: saturate(1.02) contrast(1.03);
 }
 
-/* Si no hay imagen, el contenedor colapsa limpiamente */
+
 .detalle-articulo__imagen-contenedor:empty,
 .detalle-articulo__imagen-contenedor--oculto {
     display: none;
@@ -136,27 +151,27 @@ button {
 
 /* ------------------- CUERPO DEL ARTÍCULO ------------------- */
 
+
 .detalle-articulo__cuerpo {
     font-size: 1.05rem;
     line-height: 1.8;
     color: var(--texto-suave);
 }
 
+
 .detalle-articulo__cuerpo p {
     margin-bottom: 1.25rem;
 }
 
-/*
-    Los enlaces externos dentro del cuerpo reciben clase 'enlace-externo'
-    desde el JS para destacarlos con el color de acento del tema activo.
-*/
+
 .detalle-articulo__cuerpo .enlace-externo {
     color: var(--acento);
     text-decoration: underline;
     text-decoration-color: rgba(232, 168, 56, 0.4);
     text-underline-offset: 3px;
-    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
+
 
 .detalle-articulo__cuerpo .enlace-externo:hover {
     color: var(--acento-hover);
@@ -166,28 +181,40 @@ button {
 
 /* ------------------- BOTONES ------------------- */
 
+
 .boton-primario {
     display: inline-block;
-    padding: 0.7rem 1.35rem;
-    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    border-radius: 3px;
     background-color: var(--acento);
     color: #111111;
-    font-weight: 700;
-    transition: background-color 0.2s ease;
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
+
 
 .boton-primario:hover {
     background-color: var(--acento-hover);
+    transform: translateY(-1px);
 }
+
 
 .boton-secundario {
     display: inline-block;
-    padding: 0.7rem 1.35rem;
+    padding: 0.7rem 1.5rem;
     border: 1px solid var(--borde);
-    border-radius: 8px;
+    border-radius: 3px;
     color: var(--texto);
-    transition: border-color 0.2s ease, color 0.2s ease;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    transition: border-color 0.15s ease, color 0.15s ease;
 }
+
 
 .boton-secundario:hover {
     border-color: var(--acento);
@@ -197,53 +224,62 @@ button {
 
 /* ------------------- ETIQUETAS ------------------- */
 
+
 .etiqueta {
     display: inline-block;
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
 }
 
+
 .etiqueta--manga {
-    background-color: rgba(232, 168, 56, 0.14);
+    background-color: rgba(232, 168, 56, 0.18);
     color: #f0bb55;
 }
 
+
 .etiqueta--anime {
-    background-color: rgba(85, 170, 255, 0.14);
+    background-color: rgba(85, 170, 255, 0.18);
     color: #7db7ff;
 }
 
+
 .etiqueta--noticia {
-    background-color: rgba(154, 103, 255, 0.14);
+    background-color: rgba(154, 103, 255, 0.18);
     color: #b38bff;
 }
 
+
 .etiqueta--lanzamiento {
-    background-color: rgba(88, 203, 135, 0.14);
+    background-color: rgba(88, 203, 135, 0.18);
     color: #7fe0a0;
 }
 
 
 /* ------------------- COMENTARIOS STUB ------------------- */
 
-/* Oculto hasta que se implemente el feature de comentarios */
+
 .detalle-comentarios {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
     border: 1px solid var(--borde);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--texto-muy-suave);
 }
 
 
 /* ------------------- SIDEBAR ------------------- */
+
 
 .detalle-sidebar {
     display: flex;
@@ -251,18 +287,19 @@ button {
     gap: 2rem;
 }
 
-/* Cada sección del sidebar */
+
 .sidebar-seccion {
     background-color: var(--fondo-tarjeta);
     border: 1px solid var(--borde);
-    border-radius: 12px;
+    border-radius: 4px;
     padding: 1.25rem;
 }
 
+
 .sidebar-seccion__titulo {
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--texto-muy-suave);
     margin-bottom: 1rem;
@@ -273,69 +310,82 @@ button {
 
 /* ------------------- SIDEBAR: NOTICIAS RELACIONADAS ------------------- */
 
+
 .sidebar-relacionadas {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
 }
 
-/* Cada noticia relacionada */
+
 .sidebar-noticia {
     display: flex;
     gap: 0.75rem;
     align-items: flex-start;
     padding-bottom: 0.85rem;
     border-bottom: 1px solid var(--borde);
-    transition: opacity 0.2s ease;
+    transition: opacity 0.15s ease;
 }
+
 
 .sidebar-noticia:last-child {
     border-bottom: none;
     padding-bottom: 0;
 }
 
+
 .sidebar-noticia:hover {
-    opacity: 0.8;
+    opacity: 0.75;
 }
+
 
 .sidebar-noticia__imagen {
     width: 72px;
     height: 52px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 3px;
     flex-shrink: 0;
     background-color: var(--fondo);
 }
+
 
 .sidebar-noticia__info {
     flex: 1;
     min-width: 0;
 }
 
+
 .sidebar-noticia__titulo {
     font-size: 0.88rem;
+    font-weight: 700;
     line-height: 1.35;
     color: var(--texto);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    transition: color 0.2s ease;
+    transition: color 0.15s ease;
 }
+
 
 .sidebar-noticia__titulo:hover {
     color: var(--acento);
 }
 
+
 .sidebar-noticia__fecha {
     display: block;
     margin-top: 0.3rem;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--texto-muy-suave);
 }
 
 
-/* ------------------- SIDEBAR: RECOMENDACIONES (MANGA Y ANIME) ------------------- */
+/* ------------------- SIDEBAR: RECOMENDACIONES ------------------- */
+
 
 .sidebar-recomendaciones {
     list-style: none;
@@ -344,34 +394,30 @@ button {
     gap: 0.1rem;
 }
 
-/* Cada ítem de recomendación */
+
 .sidebar-recomendacion {
     position: relative;
 }
 
-/*
-    El enlace ocupa todo el ancho.
-    Al hacer hover aparece la miniatura de portada a su derecha.
-*/
+
 .sidebar-recomendacion__enlace {
     display: block;
     padding: 0.55rem 0.5rem;
-    border-radius: 8px;
-    font-size: 0.92rem;
+    border-radius: 3px;
+    font-size: 0.88rem;
+    font-weight: 600;
     color: var(--texto-suave);
-    transition: background-color 0.18s ease, color 0.18s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
     position: relative;
 }
+
 
 .sidebar-recomendacion__enlace:hover {
     background-color: var(--borde);
     color: var(--texto);
 }
 
-/*
-    Miniatura de portada que aparece al hacer hover.
-    Posicionada a la izquierda del sidebar, fuera del flujo normal.
-*/
+
 .sidebar-recomendacion__hover {
     position: absolute;
     top: 50%;
@@ -379,21 +425,23 @@ button {
     transform: translateY(-50%) scale(0.95);
     width: 110px;
     height: 155px;
-    border-radius: 8px;
+    border-radius: 3px;
     overflow: hidden;
     box-shadow: 0 8px 24px var(--sombra);
     border: 1px solid var(--borde);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.15s ease, transform 0.15s ease;
     z-index: 10;
     background-color: var(--fondo-tarjeta);
 }
+
 
 .sidebar-recomendacion__enlace:hover .sidebar-recomendacion__hover {
     opacity: 1;
     transform: translateY(-50%) scale(1);
 }
+
 
 .sidebar-recomendacion__portada {
     width: 100%;
@@ -401,7 +449,7 @@ button {
     object-fit: cover;
 }
 
-/* Número del tomo visible en la miniatura (tomo en el que va el usuario) */
+
 .sidebar-recomendacion__tomo {
     position: absolute;
     bottom: 0.4rem;
@@ -410,23 +458,23 @@ button {
     color: #ffffff;
     font-size: 0.68rem;
     font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     padding: 0.15rem 0.4rem;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 
 /* ------------------- UTILIDADES ------------------- */
+
 
 .oculto {
     display: none !important;
 }
 
 
-/* ------------------- RESPONSIVE > 1100px ------------------- */
-/* Base ya aplicada */
-
-
 /* ------------------- RESPONSIVE 1100px - 701px ------------------- */
+
 
 @media (max-width: 1100px) {
     .detalle-layout {
@@ -442,8 +490,8 @@ button {
 
 /* ------------------- RESPONSIVE 700px - 501px ------------------- */
 
+
 @media (max-width: 700px) {
-    /* En móvil el sidebar baja debajo del artículo */
     .detalle-layout {
         grid-template-columns: 1fr;
         padding: 1rem 1rem 3rem;
@@ -453,7 +501,6 @@ button {
         font-size: 1.45rem;
     }
 
-    /* La miniatura de portada aparece a la derecha en móvil (no sale de pantalla) */
     .sidebar-recomendacion__hover {
         right: auto;
         left: calc(100% + 0.75rem);
@@ -462,6 +509,7 @@ button {
 
 
 /* ------------------- RESPONSIVE <= 500px ------------------- */
+
 
 @media (max-width: 500px) {
     .detalle-articulo__titulo {
