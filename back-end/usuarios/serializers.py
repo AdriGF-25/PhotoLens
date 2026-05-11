@@ -15,9 +15,9 @@ class PerfilSerializer(serializers.ModelSerializer):
         extra_kwargs = {"updated_at": {"read_only": True}}
 
 
-# ------------------- USUARIO (lectura) -------------------
+# ------------------- USUARIO (lectura completa) -------------------
 class UsuarioSerializer(serializers.ModelSerializer):
-    """Patrón mixto 1:1 — perfil_detalle es solo lectura."""
+    """Solo lectura — devuelve todos los datos del usuario + perfil anidado."""
     perfil_detalle = PerfilSerializer(source="perfil", read_only=True)
 
     class Meta:
@@ -30,13 +30,35 @@ class UsuarioSerializer(serializers.ModelSerializer):
         }
 
 
+# ------------------- USUARIO EDITAR (escritura parcial) -------------------
+class UsuarioEditarSerializer(serializers.ModelSerializer):
+    """
+    Permite editar username, email, first_name y last_name.
+    Valida que email y username no estén en uso por otro usuario.
+    """
+    class Meta:
+        model  = User
+        fields = ["username", "email", "first_name", "last_name"]
+
+    def validate_email(self, value):
+        usuario_actual = self.context["request"].user
+        if User.objects.filter(email=value).exclude(pk=usuario_actual.pk).exists():
+            raise serializers.ValidationError("Este correo ya está en uso por otra cuenta.")
+        return value
+
+    def validate_username(self, value):
+        usuario_actual = self.context["request"].user
+        if User.objects.filter(username=value).exclude(pk=usuario_actual.pk).exists():
+            raise serializers.ValidationError("Este nombre de usuario ya está en uso.")
+        return value
+
+
 # ------------------- REGISTRO -------------------
 class RegistroSerializer(serializers.ModelSerializer):
     """Crea usuario + perfil en un solo paso."""
     password  = serializers.CharField(write_only=True, min_length=6)
-    password2 = serializers.CharField(write_only=True,
-                  label="Confirmar contraseña")
-    email = serializers.EmailField(required=True)
+    password2 = serializers.CharField(write_only=True, label="Confirmar contraseña")
+    email     = serializers.EmailField(required=True)
 
     class Meta:
         model  = User

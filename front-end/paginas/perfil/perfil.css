@@ -1,0 +1,803 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+
+.oculto {
+    display: none !important;
+}
+
+.contenido-principal {
+    min-height: 100vh;
+}
+
+
+/* ------------------- BOTONES ------------------- */
+
+.boton-primario {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    border-radius: 3px;
+    background-color: var(--acento);
+    color: #111111;
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.boton-primario:hover {
+    background-color: var(--acento-hover);
+    transform: translateY(-1px);
+}
+
+.boton-secundario {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.boton-secundario:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #fff;
+}
+
+.boton-secundario--danger {
+    border-color: rgba(220, 80, 80, 0.4);
+    color: rgba(220, 80, 80, 0.85);
+}
+
+.boton-secundario--danger:hover {
+    border-color: rgba(220, 80, 80, 0.9);
+    color: #dc5050;
+}
+
+.boton-refrescar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--borde);
+    border-radius: 3px;
+    color: var(--texto-suave);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: border-color 0.15s ease, color 0.15s ease;
+    flex-shrink: 0;
+}
+
+.boton-refrescar:hover {
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+
+/* ------------------- BANNER DE PERFIL ------------------- */
+
+.perfil-banner {
+    position: relative;
+    width: 100%;
+    background-color: var(--fondo-tarjeta);
+    border-bottom: 1px solid var(--borde);
+    overflow: hidden;
+}
+
+.perfil-banner__fondo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(232, 168, 56, 0.06) 0%,
+        transparent 60%
+    );
+    pointer-events: none;
+}
+
+.perfil-banner__interior {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+}
+
+
+/* ------------------- AVATAR ------------------- */
+
+.perfil-avatar-contenedor {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.perfil-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--acento);
+    filter: contrast(1.04) saturate(1.05);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.perfil-avatar:hover {
+    transform: scale(1.04);
+    border-color: var(--acento-hover);
+}
+
+.perfil-avatar__badge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--acento);
+    color: #111;
+    font-size: 0.6rem;
+    font-weight: 900;
+    border: 2px solid var(--fondo-tarjeta);
+}
+
+
+/* ------------------- INFO BANNER ------------------- */
+
+.perfil-banner__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.perfil-nombre {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.perfil-email {
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.02em;
+}
+
+.perfil-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.perfil-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.perfil-stat__numero {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--acento);
+    line-height: 1;
+}
+
+.perfil-stat__etiqueta {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-muy-suave);
+    margin-top: 0.2rem;
+}
+
+
+/* ------------------- ACCIONES BANNER ------------------- */
+
+.perfil-banner__acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex-shrink: 0;
+    align-items: flex-end;
+}
+
+
+/* ------------------- SECCIONES ------------------- */
+
+.seccion-perfil {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.seccion-perfil__cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--borde);
+}
+
+.seccion-perfil__cabecera-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.seccion-perfil__titulo {
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+}
+
+.seccion-perfil__subtitulo {
+    font-size: 0.76rem;
+    color: var(--texto-muy-suave);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.conteo-resultados {
+    color: var(--texto-muy-suave);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+
+/* ------------------- CUADRÍCULA MANGAS ------------------- */
+
+.cuadricula-recientes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background-color: var(--borde);
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+
+/* ------------------- TARJETA MANGA ------------------- */
+
+.tarjeta-manga {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--fondo-tarjeta);
+    overflow: hidden;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.tarjeta-manga:hover {
+    background-color: var(--fondo-tarjeta-hover, var(--fondo-tarjeta));
+}
+
+.tarjeta-manga__imagen-contenedor {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background-color: #0e0e0e;
+}
+
+.tarjeta-manga__imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.02) contrast(1.03);
+    transition: transform 0.4s ease;
+}
+
+.tarjeta-manga:hover .tarjeta-manga__imagen {
+    transform: scale(1.05);
+}
+
+.tarjeta-manga__progreso-badge {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(4px);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--acento);
+    text-transform: uppercase;
+}
+
+.tarjeta-manga__etiqueta-nueva {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    background-color: var(--acento);
+    color: #111;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.tarjeta-manga__cuerpo {
+    padding: 0.75rem 0.8rem;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s ease;
+    flex-grow: 1;
+}
+
+.tarjeta-manga:hover .tarjeta-manga__cuerpo {
+    border-left-color: var(--acento);
+}
+
+.tarjeta-manga__titulo {
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tarjeta-manga__ultimo {
+    font-size: 0.72rem;
+    color: var(--texto-suave);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* ------------------- ESTADO VACÍO ------------------- */
+
+.estado-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 3.5rem 1rem;
+    text-align: center;
+}
+
+.estado-vacio__mensaje {
+    color: var(--texto-muy-suave);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+
+/* ------------------- MODAL ------------------- */
+
+.modal-fondo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-fondo--visible {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: var(--fondo-tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    box-shadow: 0 24px 64px var(--sombra);
+}
+
+.modal__cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 0;
+    margin-bottom: 1.25rem;
+}
+
+.modal__titulo {
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+}
+
+.modal__cerrar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.modal__cerrar:hover {
+    background-color: var(--borde);
+    color: var(--texto);
+}
+
+
+/* ------------------- FORMULARIO ------------------- */
+
+.modal__formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.campo__etiqueta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+}
+
+.campo__input {
+    padding: 0.65rem 0.9rem;
+    border-radius: 3px;
+    border: 1px solid var(--borde);
+    background-color: var(--fondo);
+    color: var(--texto);
+    font: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    outline: none;
+}
+
+.campo__input:focus {
+    border-color: var(--acento);
+    box-shadow: 0 0 0 3px rgba(232, 168, 56, 0.12);
+}
+
+.campo__input--deshabilitado {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.campo__input--error {
+    border-color: #dc5050;
+    box-shadow: 0 0 0 3px rgba(220, 80, 80, 0.12);
+}
+
+.campo__input--file {
+    display: none;
+}
+
+.campo__error {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #dc5050;
+    min-height: 1rem;
+    letter-spacing: 0.02em;
+}
+
+.campo__ayuda {
+    font-size: 0.76rem;
+    color: var(--texto-muy-suave);
+    letter-spacing: 0.01em;
+}
+
+
+/* ------------------- CAMPO AVATAR UPLOAD ------------------- */
+
+.campo-avatar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.campo-avatar__preview {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--borde);
+    flex-shrink: 0;
+    transition: border-color 0.2s ease;
+}
+
+.campo-avatar__preview--actualizado {
+    border-color: var(--acento);
+}
+
+.campo-avatar__acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.boton-upload {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    border: 1px solid var(--borde);
+    color: var(--texto-suave);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.boton-upload:hover {
+    border-color: var(--acento);
+    color: var(--texto);
+}
+
+.campo-avatar__info {
+    font-size: 0.7rem;
+    color: var(--texto-muy-suave);
+    letter-spacing: 0.02em;
+}
+
+
+/* ------------------- BADGES ------------------- */
+
+.campo__badge {
+    display: inline-block;
+    padding: 0.1rem 0.45rem;
+    border-radius: 2px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--texto-muy-suave);
+}
+
+.campo__badge--pendiente {
+    background-color: rgba(232, 168, 56, 0.12);
+    color: var(--acento);
+}
+
+
+/* ------------------- ENLACE CAMBIO CONTRASEÑA ------------------- */
+
+.campo-enlace-password {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0.9rem;
+    border-radius: 3px;
+    border: 1px solid var(--borde);
+    background-color: var(--fondo);
+}
+
+.campo-enlace-password__texto {
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+}
+
+.campo-enlace-password__enlace {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--acento);
+    transition: color 0.15s ease;
+    white-space: nowrap;
+}
+
+.campo-enlace-password__enlace:hover {
+    color: var(--acento-hover);
+}
+
+
+/* ------------------- FEEDBACK MODAL ------------------- */
+
+.modal__feedback {
+    padding: 0.7rem 0.9rem;
+    border-radius: 3px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.modal__feedback--exito {
+    background-color: rgba(88, 203, 135, 0.12);
+    border: 1px solid rgba(88, 203, 135, 0.3);
+    color: #7fe0a0;
+}
+
+.modal__feedback--error {
+    background-color: rgba(220, 80, 80, 0.1);
+    border: 1px solid rgba(220, 80, 80, 0.3);
+    color: #dc5050;
+}
+
+.modal__pie {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--borde);
+    margin-top: 0.25rem;
+}
+
+
+/* ------------------- RESPONSIVE > 1100px ------------------- */
+
+@media (max-width: 1100px) {
+    .cuadricula-recientes {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .perfil-nombre {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* ------------------- RESPONSIVE 1100–701px ------------------- */
+
+@media (max-width: 900px) {
+    .perfil-banner__interior {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .perfil-banner__acciones {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .cuadricula-recientes {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/* ------------------- RESPONSIVE 700–501px ------------------- */
+
+@media (max-width: 700px) {
+    .perfil-banner__interior {
+        padding: 1.5rem 1rem;
+    }
+
+    .perfil-stats {
+        gap: 1.25rem;
+    }
+
+    .perfil-nombre {
+        font-size: 1.3rem;
+    }
+
+    .seccion-perfil {
+        padding: 1.5rem 1rem 2.5rem;
+    }
+
+    .seccion-perfil--gris .seccion-perfil__interior {
+        padding: 1.5rem 1rem 2.5rem;
+    }
+
+    .cuadricula-recientes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .modal {
+        max-height: 95vh;
+    }
+
+    .campo-enlace-password {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+
+/* ------------------- RESPONSIVE ≤500px ------------------- */
+
+@media (max-width: 500px) {
+    .perfil-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .perfil-nombre {
+        font-size: 1.1rem;
+    }
+
+    .perfil-stat__numero {
+        font-size: 1.2rem;
+    }
+
+    .perfil-stats {
+        gap: 1rem;
+    }
+
+    .perfil-banner__acciones {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cuadricula-recientes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .modal__cabecera {
+        padding: 1.1rem 1.1rem 0;
+    }
+
+    .modal__formulario {
+        padding: 0 1.1rem 1.1rem;
+    }
+
+    .campo-avatar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -911,15 +911,47 @@ Se han aplicado dos tipos de cambios sobre el front-end del proyecto:
 
 ---
 
+## Resumen para memoria — 12/05/2026
+
+**Página de perfil de usuario creada (`front-end/paginas/perfil/`)**
+
+## 1. Descripción
+
+Se ha implementado la página de perfil completa del proyecto **anime'n'chill**. Permite al usuario autenticado consultar sus datos, ver su historial de lectura, descubrir mangas recomendados y editar su información personal desde un modal.
+
+## 2. Temporalización
+
+Desarrollada en una sesión el **11–12 de mayo de 2026**, como parte del bloque de front-end tras tener operativas las páginas de novedades, detalle de noticia, login y registro.
+
+## 3. Requisitos implementados
+
+- Visualización de datos del usuario (nombre, email, avatar, estadísticas)
+    
+- Historial de lectura reciente leído desde `localStorage` (`anc_recientes`)
+    
+- Sección de recomendados filtrada contra el historial, con botón de refresco
+    
+- Modal de edición con: subida de avatar por archivo (PNG/JPG/WEBP, máx. 2 MB), cambio de nombre de usuario, confirmación con contraseña actual y enlace a cambio de contraseña
+    
+- Campo de email deshabilitado con badge **"Verificación pendiente"** (funcionalidad futura)
+    
+- Cierre de sesión con limpieza de `localStorage` y redirección al login
+    
+- Protección de ruta: si no hay `access_token`, redirige automáticamente al login
+    
+
 ## 4. Arquitectura
 
-```text
-front-end/
-├── componentes/
-│   ├── header/
-│   │   ├── header.html ← eliminado ítem Anime, SVG en botón tema
-│   │   ├── header.css ← border-radius reducido, hover en desplegable
-│   │   └── header.js ← trigger hover + cambio icono dinámico
-├── paginas/
-│   └── detalle-noticia/
-│       └── detalle-noticia.css ← border-radius, tipografía, comentarios
+|Archivo|Responsabilidad|
+|---|---|
+|`perfil.html`|Estructura semántica: banner, recientes, recomendados, modal|
+|`perfil.css`|Estilos con variables CSS de temas, responsive en 4 breakpoints|
+|`perfil.js`|Lógica: fetch JWT, render, localStorage, FormData, validación|
+
+## 5. Pendiente
+
+- **Backend**: los endpoints `GET /api/usuarios/perfil/` y `PATCH /api/usuarios/perfil/editar/` aún no están verificados — la carga de datos iniciales y el guardado del modal no funcionan hasta revisar `usuarios/views.py` y `usuarios/urls.py`
+    
+- **Verificación de email**: flujo completo pendiente de implementar
+    
+- Los **recomendados** son actualmente mangas de la API filtrados por historial; en el futuro se puede sustituir por un endpoint dedicado

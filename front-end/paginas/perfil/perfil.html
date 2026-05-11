@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil | anime'n'chill</title>
+
+    <link rel="stylesheet" href="perfil.css">
+</head>
+<body>
+
+    <!-- ------------------- CABEZERA/NAV ---------------- -->
+    <div id="contenedor-header"></div>
+
+    <main class="contenido-principal">
+
+        <!-- ------------------- BANNER DE PERFIL ------------------- -->
+        <section class="perfil-banner" aria-label="Banner de perfil">
+            <div class="perfil-banner__fondo"></div>
+            <div class="perfil-banner__interior">
+                <div class="perfil-avatar-contenedor">
+                    <img
+                        class="perfil-avatar"
+                        src="https://picsum.photos/seed/perfil-user/120/120"
+                        alt="Avatar de usuario"
+                        id="avatarImagen"
+                    >
+                    <span class="perfil-avatar__badge" aria-hidden="true">✦</span>
+                </div>
+                <div class="perfil-banner__info">
+                    <h1 class="perfil-nombre" id="perfilNombre">nombre_usuario</h1>
+                    <p class="perfil-email" id="perfilEmail">usuario@email.com</p>
+                    <div class="perfil-stats">
+                        <div class="perfil-stat">
+                            <span class="perfil-stat__numero" id="statCapitulos">0</span>
+                            <span class="perfil-stat__etiqueta">Capítulos leídos</span>
+                        </div>
+                        <div class="perfil-stat">
+                            <span class="perfil-stat__numero" id="statMangas">0</span>
+                            <span class="perfil-stat__etiqueta">Mangas</span>
+                        </div>
+                        <div class="perfil-stat">
+                            <span class="perfil-stat__numero" id="statDias">0</span>
+                            <span class="perfil-stat__etiqueta">Días activo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="perfil-banner__acciones">
+                    <button class="boton-primario" id="btnEditarPerfil">Editar perfil</button>
+                    <button class="boton-secundario boton-secundario--danger" id="btnCerrarSesion">Cerrar sesión</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------- SECCIÓN RECIENTES ------------------- -->
+        <section class="seccion-perfil" aria-label="Mangas leídos recientemente">
+            <div class="seccion-perfil__interior">
+                <div class="seccion-perfil__cabecera">
+                    <h2 class="seccion-perfil__titulo">Leídos recientemente</h2>
+                    <span class="conteo-resultados">
+                        <strong id="conteoRecientes">0</strong> mangas
+                    </span>
+                </div>
+
+                <div class="cuadricula-recientes" id="cuadriculaRecientes">
+                    <!-- Las tarjetas de manga reciente se generan desde JS -->
+                </div>
+
+                <div class="estado-vacio" id="estadoVacioRecientes">
+                    <p class="estado-vacio__mensaje">Aún no has leído ningún manga.</p>
+                    <a href="/front-end/paginas/novedades/novedades.html" class="boton-primario">
+                        Explorar mangas
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------- SECCIÓN RECOMENDADOS ------------------- -->
+        <section class="seccion-perfil" aria-label="Mangas recomendados">
+            <div class="seccion-perfil__interior">
+                <div class="seccion-perfil__cabecera">
+                    <div class="seccion-perfil__cabecera-grupo">
+                        <h2 class="seccion-perfil__titulo">Recomendados para ti</h2>
+                        <span class="seccion-perfil__subtitulo">Basado en tu historial de lectura</span>
+                    </div>
+                    <button class="boton-refrescar" id="btnRefrescarRecomendados" aria-label="Refrescar recomendaciones">
+                        ↻ Actualizar
+                    </button>
+                </div>
+
+                <div class="cuadricula-recientes" id="cuadriculaRecomendados">
+                    <!-- Las tarjetas de recomendados se generan desde JS -->
+                </div>
+
+                <div class="estado-vacio oculto" id="estadoVacioRecomendados">
+                    <p class="estado-vacio__mensaje">Lee algún manga para obtener recomendaciones.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------- MODAL: EDITAR PERFIL ------------------- -->
+        <div class="modal-fondo" id="modalFondo" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+
+                <div class="modal__cabecera">
+                    <h2 class="modal__titulo" id="modalTitulo">Editar perfil</h2>
+                    <button class="modal__cerrar" id="btnCerrarModal" aria-label="Cerrar modal">✕</button>
+                </div>
+
+                <form class="modal__formulario" id="formEditarPerfil" novalidate>
+
+                    <!-- Avatar -->
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="inputAvatar">Foto de perfil</label>
+                        <div class="campo-avatar">
+                            <img
+                                class="campo-avatar__preview"
+                                id="avatarPreview"
+                                src="https://picsum.photos/seed/perfil-user/120/120"
+                                alt="Preview avatar"
+                            >
+                            <div class="campo-avatar__acciones">
+                                <label class="boton-upload" for="inputAvatar">
+                                    Seleccionar imagen
+                                </label>
+                                <input
+                                    class="campo__input--file"
+                                    type="file"
+                                    id="inputAvatar"
+                                    name="avatar"
+                                    accept="image/png, image/jpeg, image/webp"
+                                >
+                                <span class="campo-avatar__info">PNG, JPG o WEBP · Máx. 2 MB</span>
+                            </div>
+                        </div>
+                        <span class="campo__error" id="errorAvatar"></span>
+                    </div>
+
+                    <!-- Nombre de usuario -->
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="inputNombre">Nombre de usuario</label>
+                        <input
+                            class="campo__input"
+                            type="text"
+                            id="inputNombre"
+                            name="username"
+                            placeholder="Tu nombre de usuario"
+                            autocomplete="username"
+                        >
+                        <span class="campo__error" id="errorNombre"></span>
+                    </div>
+
+                    <!-- Email (pendiente de verificación) -->
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="inputEmail">
+                            Email
+                            <span class="campo__badge campo__badge--pendiente">Verificación pendiente</span>
+                        </label>
+                        <input
+                            class="campo__input campo__input--deshabilitado"
+                            type="email"
+                            id="inputEmail"
+                            name="email"
+                            placeholder="tu@email.com"
+                            autocomplete="email"
+                            disabled
+                        >
+                        <span class="campo__ayuda">El cambio de email requiere verificación. Disponible próximamente.</span>
+                    </div>
+
+                    <!-- Contraseña actual -->
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="inputPasswordActual">Contraseña actual</label>
+                        <input
+                            class="campo__input"
+                            type="password"
+                            id="inputPasswordActual"
+                            name="password_actual"
+                            placeholder="Requerida para guardar cambios"
+                            autocomplete="current-password"
+                        >
+                        <span class="campo__error" id="errorPasswordActual"></span>
+                    </div>
+
+                    <!-- Cambio de contraseña -->
+                    <div class="campo-enlace-password">
+                        <span class="campo-enlace-password__texto">¿Quieres cambiar tu contraseña?</span>
+                        <a
+                            href="/front-end/paginas/recuperar_contrasena/recuperar-contrasena.html"
+                            class="campo-enlace-password__enlace"
+                        >
+                            Ir a cambiar contraseña →
+                        </a>
+                    </div>
+
+                    <!-- Feedback global -->
+                    <div class="modal__feedback oculto" id="modalFeedback" role="alert"></div>
+
+                    <div class="modal__pie">
+                        <button type="button" class="boton-secundario" id="btnCancelarModal">Cancelar</button>
+                        <button type="submit" class="boton-primario" id="btnGuardarCambios">Guardar cambios</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ------------------- FOOTER ---------------- -->
+    <div id="contenedor-footer"></div>
+
+    <script src="../../componentes/componentes.js"></script>
+    <script src="./perfil.js"></script>
+</body>
+</html>
