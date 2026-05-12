@@ -3,6 +3,7 @@ anime'n'chill — Serializers de usuarios
 """
 
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 from .models import Perfil
 
@@ -17,40 +18,90 @@ class PerfilSerializer(serializers.ModelSerializer):
 
 # ------------------- USUARIO (lectura completa) -------------------
 class UsuarioSerializer(serializers.ModelSerializer):
-    """Solo lectura — devuelve todos los datos del usuario + perfil anidado."""
-    perfil_detalle = PerfilSerializer(source="perfil", read_only=True)
+    """Solo lectura — devuelve todos los datos del usuario + campos de perfil aplanados."""
+
+    avatar          = serializers.SerializerMethodField()
+    capitulos_leidos = serializers.SerializerMethodField()
+    mangas_leidos    = serializers.SerializerMethodField()
 
     class Meta:
         model  = User
-        fields = ["id", "username", "email", "first_name",
-                  "last_name", "date_joined", "perfil_detalle"]
+        fields = [
+            "id", "username", "email", "first_name",
+            "last_name", "date_joined",
+            "avatar", "capitulos_leidos", "mangas_leidos",
+        ]
         extra_kwargs = {
             "date_joined": {"read_only": True},
-            "email":       {"required": True},
         }
+
+    def get_avatar(self, obj):
+        request = self.context.get("request")
+        try:
+            avatar = obj.perfil.avatar
+            if avatar and request:
+                return request.build_absolute_uri(avatar.url)
+            if avatar:
+                return avatar.url
+        except Perfil.DoesNotExist:
+            pass
+        return None
+
+    def get_capitulos_leidos(self, obj):
+        # Reservado para implementación futura con modelo de progreso
+        return 0
+
+    def get_mangas_leidos(self, obj):
+        # Reservado para implementación futura con modelo de progreso
+        return 0
 
 
 # ------------------- USUARIO EDITAR (escritura parcial) -------------------
 class UsuarioEditarSerializer(serializers.ModelSerializer):
     """
-    Permite editar username, email, first_name y last_name.
-    Valida que email y username no estén en uso por otro usuario.
+    Edita username y avatar.
+    Requiere password_actual para confirmar los cambios.
     """
+    password_actual = serializers.CharField(write_only=True, required=True)
+    avatar          = serializers.ImageField(write_only=True, required=False)
+
     class Meta:
         model  = User
-        fields = ["username", "email", "first_name", "last_name"]
-
-    def validate_email(self, value):
-        usuario_actual = self.context["request"].user
-        if User.objects.filter(email=value).exclude(pk=usuario_actual.pk).exists():
-            raise serializers.ValidationError("Este correo ya está en uso por otra cuenta.")
-        return value
+        fields = ["username", "password_actual", "avatar"]
 
     def validate_username(self, value):
         usuario_actual = self.context["request"].user
         if User.objects.filter(username=value).exclude(pk=usuario_actual.pk).exists():
             raise serializers.ValidationError("Este nombre de usuario ya está en uso.")
         return value
+
+    def validate(self, data):
+        usuario  = self.context["request"].user
+        password = data.pop("password_actual")
+        autenticado = authenticate(
+            username=usuario.username,
+            password=password
+        )
+        if not autenticado:
+            raise serializers.ValidationError(
+                {"password_actual": "La contraseña actual no es correcta."}
+            )
+        return data
+
+    def update(self, instance, validated_data):
+        avatar = validated_data.pop("avatar", None)
+
+        # Actualiza username si viene
+        instance.username = validated_data.get("username", instance.username)
+        instance.save()
+
+        # Actualiza avatar en el perfil
+        if avatar:
+            perfil, _ = Perfil.objects.get_or_create(usuario=instance)
+            perfil.avatar = avatar
+            perfil.save()
+
+        return instance
 
 
 # ------------------- REGISTRO -------------------

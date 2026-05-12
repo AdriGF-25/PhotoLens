@@ -11,7 +11,10 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, mixins
 
 from .models import Perfil
-from .serializers import UsuarioSerializer, PerfilSerializer, RegistroSerializer, UsuarioEditarSerializer
+from .serializers import (
+    UsuarioSerializer, PerfilSerializer,
+    RegistroSerializer, UsuarioEditarSerializer
+)
 
 
 # ------------------- REGISTRO (público) -------------------
@@ -36,25 +39,28 @@ class UsuarioViewSet(
     # ─────────── GET /api/usuarios/perfil/ ───────────
     @action(detail=False, methods=["get"], url_path="perfil")
     def perfil(self, request):
-        """GET /api/usuarios/perfil/"""
-        return Response(UsuarioSerializer(request.user).data)
+        serializer = UsuarioSerializer(request.user, context={"request": request})
+        return Response(serializer.data)
 
     # ─────────── PATCH /api/usuarios/perfil/editar/ ───────────
-    @action(detail=False, methods=["patch"], url_path="perfil/editar")
+    @action(detail=False, methods=["patch"], url_path="perfil/editar",
+            parser_classes=[__import__('rest_framework.parsers', fromlist=['MultiPartParser']).MultiPartParser,
+                            __import__('rest_framework.parsers', fromlist=['FormParser']).FormParser])
     def editar_usuario(self, request):
-        """PATCH /api/usuarios/perfil/editar/ — edita username, email, first_name, last_name"""
         serializer = UsuarioEditarSerializer(
             request.user, data=request.data, partial=True,
             context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(UsuarioSerializer(request.user).data)
+        # Devolvemos el perfil actualizado completo
+        return Response(
+            UsuarioSerializer(request.user, context={"request": request}).data
+        )
 
     # ─────────── PATCH /api/usuarios/perfil/editar/extra/ ───────────
     @action(detail=False, methods=["patch"], url_path="perfil/editar/extra")
     def editar_perfil(self, request):
-        """PATCH /api/usuarios/perfil/editar/extra/ — edita avatar, bio, pais, fecha_nacimiento"""
         perfil, _ = Perfil.objects.get_or_create(usuario=request.user)
         serializer = PerfilSerializer(perfil, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -64,7 +70,6 @@ class UsuarioViewSet(
     # ─────────── GET /api/usuarios/mis-favoritos/ ───────────
     @action(detail=False, methods=["get"], url_path="mis-favoritos")
     def mis_favoritos(self, request):
-        """GET /api/usuarios/mis-favoritos/"""
         from anime.models import Favorito
         from anime.serializers import FavoritoSerializer
         favoritos  = Favorito.objects.filter(usuario=request.user).order_by("-fecha_guardado")[:10]

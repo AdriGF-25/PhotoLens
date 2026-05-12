@@ -14,7 +14,8 @@ const MAX_RECOMENDADOS = 5;
 // ------------------- UTILIDADES ------------------- //
 
 function obtenerToken() {
-    return localStorage.getItem('access_token');
+    return localStorage.getItem('access_token')
+        ?? sessionStorage.getItem('access_token');
 }
 
 function redirigirLogin() {
@@ -71,6 +72,7 @@ function renderizarPerfil(datos) {
     if (nombre) nombre.textContent = datos.username || 'Usuario';
     if (email)  email.textContent  = datos.email    || '';
     if (avatar) {
+        // ✅ avatar ya viene en la raíz gracias al SerializerMethodField
         avatar.src = datos.avatar || AVATAR_PLACEHOLDER;
         avatar.onerror = function() {
             this.onerror = null;
@@ -87,8 +89,8 @@ function renderizarPerfil(datos) {
     if (statDias)      statDias.textContent      = calcularDiasActivo(datos.date_joined);
 
     // Precargamos el formulario
-    const inputNombre  = document.getElementById('inputNombre');
-    const inputEmail   = document.getElementById('inputEmail');
+    const inputNombre   = document.getElementById('inputNombre');
+    const inputEmail    = document.getElementById('inputEmail');
     const avatarPreview = document.getElementById('avatarPreview');
 
     if (inputNombre)   inputNombre.value = datos.username || '';
@@ -148,10 +150,10 @@ function obtenerRecientes() {
 }
 
 function renderizarRecientes() {
-    const recientes       = obtenerRecientes();
-    const cuadricula      = document.getElementById('cuadriculaRecientes');
-    const estadoVacio     = document.getElementById('estadoVacioRecientes');
-    const conteo          = document.getElementById('conteoRecientes');
+    const recientes   = obtenerRecientes();
+    const cuadricula  = document.getElementById('cuadriculaRecientes');
+    const estadoVacio = document.getElementById('estadoVacioRecientes');
+    const conteo      = document.getElementById('conteoRecientes');
 
     if (!cuadricula) return;
 
@@ -181,9 +183,8 @@ async function cargarRecomendados() {
 
     if (!cuadricula) return;
 
-    // Obtenemos los títulos que ya ha leído para no repetirlos
-    const recientes      = obtenerRecientes();
-    const titulosLeidos  = recientes.map(function(m) {
+    const recientes     = obtenerRecientes();
+    const titulosLeidos = recientes.map(function(m) {
         return m.titulo?.toLowerCase().trim();
     });
 
@@ -192,10 +193,9 @@ async function cargarRecomendados() {
 
         if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
 
-        const datos   = await respuesta.json();
-        const mangas  = datos.results || datos;
+        const datos  = await respuesta.json();
+        const mangas = datos.results || datos;
 
-        // Filtramos los ya leídos y limitamos a MAX_RECOMENDADOS
         const candidatos = mangas.filter(function(m) {
             return !titulosLeidos.includes(m.titulo?.toLowerCase().trim());
         }).slice(0, MAX_RECOMENDADOS);
@@ -342,7 +342,6 @@ async function guardarCambios(e) {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                // Sin Content-Type: el navegador lo añade automáticamente con el boundary
             },
             body: formData,
         });
@@ -350,9 +349,10 @@ async function guardarCambios(e) {
         const datos = await respuesta.json();
 
         if (!respuesta.ok) {
-            const mensajeError = datos.detail
-                || datos.password_actual
+            const mensajeError = datos.password_actual
+                || datos.non_field_errors
                 || datos.username
+                || datos.detail
                 || 'Error al guardar los cambios.';
             mostrarFeedbackModal(
                 Array.isArray(mensajeError) ? mensajeError[0] : mensajeError,
@@ -384,6 +384,8 @@ function cerrarSesion() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('anc_recientes');
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('refresh_token');
     redirigirLogin();
 }
 

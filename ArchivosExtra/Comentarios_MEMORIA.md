@@ -955,3 +955,44 @@ Desarrollada en una sesión el **11–12 de mayo de 2026**, como parte del bloq
 - **Verificación de email**: flujo completo pendiente de implementar
     
 - Los **recomendados** son actualmente mangas de la API filtrados por historial; en el futuro se puede sustituir por un endpoint dedicado
+  
+  
+  
+  ---
+
+## Resumen para memoria — 12/05/2026
+### Corrección y funcionalidad completa de la página de perfil
+
+#### 1. Descripción
+Se desarrolla y corrige la página de perfil de usuario (`/paginas/perfil/`).
+Los problemas encontrados y resueltos fueron:
+- `redirigirLogin()` estaba comentada, rompiendo el flujo de autenticación.
+- `obtenerToken()` solo miraba `localStorage`, ignorando `sessionStorage`.
+- `cerrarSesion()` no borraba tokens de `sessionStorage`.
+- `UsuarioSerializer` no exponía `avatar`, `capitulos_leidos` ni `mangas_leidos`
+  en la raíz del JSON — el JS los buscaba donde no estaban.
+- El router de DRF duplicaba el prefijo `/api/usuarios/usuarios/perfil/` en lugar
+  de generar `/api/usuarios/perfil/`.
+- `UsuarioEditarSerializer` no validaba `password_actual`.
+
+#### 2. Temporalización
+Sprint perfil — sesiones 1 y 2 (11–12 mayo 2026)
+
+#### 3. Requisitos
+- JWT activo (SimpleJWT)
+- Backend corriendo en `http://127.0.0.1:8000`
+- Frontend servido desde Live Server (`127.0.0.1:5500` o `:5501`)
+
+#### 4. Arquitectura
+- `UsuarioSerializer` usa `SerializerMethodField` para aplanar `avatar`,
+  `capitulos_leidos` y `mangas_leidos` a la raíz del JSON.
+- `UsuarioEditarSerializer` incluye `password_actual` con validación mediante
+  `django.contrib.auth.authenticate()`.
+- `usuarios/urls.py` registra el ViewSet con prefijo vacío `""` para evitar
+  la duplicación del segmento en la URL.
+- `perfil.js` usa el operador `??` para buscar el token en ambos storages.
+
+#### 5. Datos
+- `capitulos_leidos` y `mangas_leidos` devuelven `0` como placeholder hasta
+  implementar el modelo de progreso de lectura.
+- El avatar se sirve como URL absoluta construida con `request.build_absolute_uri()`.
