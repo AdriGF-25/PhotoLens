@@ -653,6 +653,28 @@ button {
     color: var(--acento-hover);
 }
 
+/* ------------------- CAMPO READONLY ------------------- */
+
+.campo__input--readonly {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ------------------- ENLACE CAMBIAR PASSWORD ------------------- */
+
+.campo__enlace-password {
+    font-size: 0.82rem;
+    color: #e8a838;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.campo__enlace-password:hover {
+    color: #f0bb55;
+}
+
 
 /* ------------------- FEEDBACK MODAL ------------------- */
 

@@ -13,9 +13,70 @@ const MAX_RECOMENDADOS = 5;
 
 // ------------------- UTILIDADES ------------------- //
 
+// ------------------- UTILIDADES ------------------- //
+
+
 function obtenerToken() {
     return localStorage.getItem('access_token')
         ?? sessionStorage.getItem('access_token');
+}
+
+
+function obtenerRefreshToken() {
+    return localStorage.getItem('refresh_token')
+        ?? sessionStorage.getItem('refresh_token');
+}
+
+
+function guardarNuevoToken(accessToken) {
+    if (localStorage.getItem('refresh_token')) {
+        localStorage.setItem('access_token', accessToken);
+    } else {
+        sessionStorage.setItem('access_token', accessToken);
+    }
+}
+
+
+async function renovarToken() {
+    const refresh = obtenerRefreshToken();
+    if (!refresh) return null;
+
+    try {
+        const respuesta = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ refresh })
+        });
+
+        if (!respuesta.ok) return null;
+
+        const datos = await respuesta.json();
+        guardarNuevoToken(datos.access);
+        return datos.access;
+
+    } catch {
+        return null;
+    }
+}
+
+
+async function obtenerTokenValido() {
+    const token = obtenerToken();
+    if (!token) return null;
+
+    // Comprobamos si el token ha caducado leyendo el payload JWT
+    try {
+        const payload   = JSON.parse(atob(token.split('.')[1]));
+        const caducado  = payload.exp * 1000 < Date.now();
+
+        if (!caducado) return token;
+
+        // Caducado → intentamos renovar
+        return await renovarToken();
+
+    } catch {
+        return await renovarToken();
+    }
 }
 
 function redirigirLogin() {
@@ -107,8 +168,9 @@ function renderizarPerfil(datos) {
 
 // ------------------- CARGAR PERFIL ------------------- //
 
+
 async function cargarPerfil() {
-    const token = obtenerToken();
+    const token = await obtenerTokenValido();
 
     if (!token) {
         redirigirLogin();
@@ -117,9 +179,7 @@ async function cargarPerfil() {
 
     try {
         const respuesta = await fetch(API_PERFIL, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         });
 
         if (respuesta.status === 401) {
@@ -313,12 +373,13 @@ function validarFormulario() {
 
 // ------------------- GUARDAR CAMBIOS ------------------- //
 
+
 async function guardarCambios(e) {
     e.preventDefault();
 
     if (!validarFormulario()) return;
 
-    const token = obtenerToken();
+    const token = await obtenerTokenValido();
     if (!token) {
         redirigirLogin();
         return;
@@ -339,11 +400,9 @@ async function guardarCambios(e) {
 
     try {
         const respuesta = await fetch(API_EDITAR, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-            body: formData,
+            method:  'PATCH',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body:    formData,
         });
 
         const datos = await respuesta.json();
@@ -452,3 +511,19 @@ document.addEventListener('DOMContentLoaded', function() {
     renderizarRecientes();
     cargarRecomendados();
 });
+
+
+/* ------------------- IR A CAMBIAR CONTRASEÑA ------------------- */
+
+function irACambiarPassword() {
+    const email = document.getElementById('inputEmail')?.value.trim();
+    const emailEncoded = email ? encodeURIComponent(email) : '';
+    window.location.href =
+        `/front-end/paginas/recuperar_contrasena/recuperar-contrasena.html?modo=logueado&email=${emailEncoded}`;
+}
+
+document.getElementById('enlaceCambiarPassword')
+    ?.addEventListener('click', function(e) {
+        e.preventDefault();
+        irACambiarPassword();
+    });

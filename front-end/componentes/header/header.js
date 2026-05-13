@@ -23,7 +23,25 @@ const ICONOS_TEMA = {
 };
 
 
-// ------------------- UTILIDADES ------------------- //
+// ------------------- RUTAS RELATIVAS ------------------- //
+
+
+function resolverRuta(nombrePagina) {
+    // Todas las páginas están en: /front-end/paginas/NOMBRE/NOMBRE.html
+    // Desde cualquiera de ellas, subir un nivel lleva a /front-end/paginas/
+    const ruta = window.location.pathname;
+    const estaEnPaginas = ruta.includes('/paginas/');
+
+    if (estaEnPaginas) {
+        return `../${nombrePagina}/${nombrePagina}.html`;
+    }
+
+    // Fallback: desde raíz o rutas desconocidas
+    return `front-end/paginas/${nombrePagina}/${nombrePagina}.html`;
+}
+
+
+// ------------------- UTILIDADES TEMA ------------------- //
 
 
 function obtenerTemaActual() {
@@ -51,14 +69,12 @@ function aplicarTema(tema) {
 
 
 function marcarEnlaceActivo() {
-    const ruta = window.location.pathname;
-    const nombreArchivo = ruta.split('/').pop().replace('.html', '');
-
-    const enlaces = document.querySelectorAll('.cabecera__enlace[data-pagina]');
+    const ruta           = window.location.pathname;
+    const nombreArchivo  = ruta.split('/').pop().replace('.html', '');
+    const enlaces        = document.querySelectorAll('.cabecera__enlace[data-pagina]');
 
     enlaces.forEach(function(enlace) {
         const paginaEnlace = enlace.getAttribute('data-pagina');
-
         if (nombreArchivo.includes(paginaEnlace)) {
             enlace.classList.add('cabecera__enlace--activo');
         } else {
@@ -68,19 +84,32 @@ function marcarEnlaceActivo() {
 }
 
 
+// ------------------- CONFIGURAR ENLACES DINÁMICOS ------------------- //
+
+
+function configurarEnlaces() {
+    const enlaceLogo      = document.getElementById('enlaceLogo');
+    const enlaceNovedades = document.getElementById('enlaceNovedades');
+    const enlacePerfil    = document.getElementById('enlacePerfil');
+
+    if (enlaceLogo)      enlaceLogo.href      = resolverRuta('novedades');
+    if (enlaceNovedades) enlaceNovedades.href  = resolverRuta('novedades');
+    if (enlacePerfil)    enlacePerfil.href     = resolverRuta('perfil');
+}
+
+
 // ------------------- INICIAR CABECERA ------------------- //
 
 
 function iniciarCabecera() {
-    const botonMenu          = document.getElementById('botonMenu');
+    const botonMenu           = document.getElementById('botonMenu');
     const navegacionPrincipal = document.getElementById('navegacionPrincipal');
-    const enlacesNavegacion  = document.querySelectorAll('.cabecera__enlace');
-    const botonTema          = document.getElementById('botonTema');
-    const menuTema           = document.getElementById('menuTema');
-    const opcionesTema       = document.querySelectorAll('.selector-tema__opcion');
-    const selectorTema       = document.querySelector('.selector-tema');
+    const enlacesNavegacion   = document.querySelectorAll('.cabecera__enlace');
+    const botonTema           = document.getElementById('botonTema');
+    const menuTema            = document.getElementById('menuTema');
+    const opcionesTema        = document.querySelectorAll('.selector-tema__opcion');
+    const selectorTema        = document.querySelector('.selector-tema');
 
-    // Estado: si el usuario ha fijado el menú con clic
     let menuFijado  = false;
     let timerCierre = null;
 
@@ -112,33 +141,25 @@ function iniciarCabecera() {
     // ---- Selector de tema: hover + clic combinados ---- //
     if (selectorTema && botonTema && menuTema) {
 
-        // HOVER ENTRA en la zona .selector-tema (botón + menú)
         selectorTema.addEventListener('mouseenter', function() {
             clearTimeout(timerCierre);
             menuTema.classList.add('selector-tema__menu--visible');
         });
 
-        // HOVER SALE de la zona .selector-tema
         selectorTema.addEventListener('mouseleave', function() {
-            // Solo cerramos si no está fijado
             if (!menuFijado) {
-                // Delay de 200ms para no cerrar accidentalmente
                 timerCierre = setTimeout(function() {
                     menuTema.classList.remove('selector-tema__menu--visible');
                 }, 200);
             }
         });
 
-        // CLIC en el botón → fijar/desfijar el menú
         botonTema.addEventListener('click', function(evento) {
             evento.stopPropagation();
-
             if (menuFijado) {
-                // Desfijar y cerrar
                 menuFijado = false;
                 menuTema.classList.remove('selector-tema__menu--visible');
             } else {
-                // Fijar abierto
                 menuFijado = true;
                 menuTema.classList.add('selector-tema__menu--visible');
             }
@@ -152,8 +173,6 @@ function iniciarCabecera() {
             opcion.addEventListener('click', function() {
                 const temaSeleccionado = opcion.getAttribute('data-tema');
                 aplicarTema(temaSeleccionado);
-
-                // Al seleccionar tema, desfijamos y cerramos
                 menuFijado = false;
                 if (menuTema) {
                     menuTema.classList.remove('selector-tema__menu--visible');
@@ -188,8 +207,9 @@ function iniciarCabecera() {
     });
 
 
-    // ---- Enlace activo ---- //
+    // ---- Enlace activo + rutas dinámicas ---- //
     marcarEnlaceActivo();
+    configurarEnlaces();
 }
 
 
