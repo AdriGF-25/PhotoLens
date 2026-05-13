@@ -13,7 +13,8 @@ from rest_framework.viewsets import GenericViewSet, mixins
 from .models import Perfil
 from .serializers import (
     UsuarioSerializer, PerfilSerializer,
-    RegistroSerializer, UsuarioEditarSerializer
+    RegistroSerializer, UsuarioEditarSerializer,
+    CambiarPasswordSerializer
 )
 
 
@@ -53,7 +54,6 @@ class UsuarioViewSet(
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        # Devolvemos el perfil actualizado completo
         return Response(
             UsuarioSerializer(request.user, context={"request": request}).data
         )
@@ -66,6 +66,33 @@ class UsuarioViewSet(
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+    # ─────────── POST /api/usuarios/cambiar-password/ ───────────
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="cambiar-password",
+        permission_classes=[AllowAny]   # Funciona con y sin token
+    )
+    def cambiar_password(self, request):
+        serializer = CambiarPasswordSerializer(
+            data=request.data,
+            context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+
+        usuario = serializer.validated_data["_usuario"]
+        usuario.set_password(serializer.validated_data["nueva_password"])
+        usuario.save()
+
+        # TODO: invalidar tokens existentes del usuario (extra de seguridad)
+        # from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
+        # OutstandingToken.objects.filter(user=usuario).delete()
+
+        return Response(
+            {"detail": "Contraseña actualizada correctamente."},
+            status=status.HTTP_200_OK
+        )
 
     # ─────────── GET /api/usuarios/mis-favoritos/ ───────────
     @action(detail=False, methods=["get"], url_path="mis-favoritos")

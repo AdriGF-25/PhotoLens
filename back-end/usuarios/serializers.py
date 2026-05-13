@@ -136,3 +136,54 @@ class RegistroSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("Este correo ya está registrado.")
         return value
+    
+# ------------------- CAMBIAR CONTRASEÑA -------------------
+class CambiarPasswordSerializer(serializers.Serializer):
+    """
+    Cambia la contraseña del usuario.
+    Funciona en dos modos:
+      - logueado:    requiere password_actual + nueva_password + nueva_password2
+      - no logueado: requiere email + password_actual + nueva_password + nueva_password2
+    """
+    email            = serializers.EmailField(required=False)
+    password_actual  = serializers.CharField(write_only=True)
+    nueva_password   = serializers.CharField(write_only=True, min_length=6)
+    nueva_password2  = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        # Confirmación de nueva contraseña
+        if data["nueva_password"] != data["nueva_password2"]:
+            raise serializers.ValidationError(
+                {"nueva_password2": "Las contraseñas nuevas no coinciden."}
+            )
+
+        # Obtener el usuario — logueado o por email
+        request = self.context.get("request")
+        if request and request.user.is_authenticated:
+            usuario = request.user
+        else:
+            email = data.get("email")
+            if not email:
+                raise serializers.ValidationError(
+                    {"email": "El email es obligatorio si no estás logueado."}
+                )
+            try:
+                usuario = User.objects.get(email=email)
+            except User.DoesNotExist:
+                raise serializers.ValidationError(
+                    {"email": "No existe ninguna cuenta con ese email."}
+                )
+
+        # Verificar contraseña actual
+        autenticado = authenticate(
+            username=usuario.username,
+            password=data["password_actual"]
+        )
+        if not autenticado:
+            raise serializers.ValidationError(
+                {"password_actual": "La contraseña actual no es correcta."}
+            )
+
+        # Guardamos el usuario en los datos validados para usarlo en la vista
+        data["_usuario"] = usuario
+        return data
