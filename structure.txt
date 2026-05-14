@@ -1,803 +1,2037 @@
 ﻿.
-|-- .obsidian
-|   |-- themes
-|   |   -- AnuPpuccin
-|   |       |-- manifest.json
-|   |       -- theme.css
-|   |-- app.json
-|   |-- appearance.json
-|   |-- core-plugins.json
-|   -- workspace.json
-|-- archivosExtra
-|   |-- .notas_rapidas.md
-|   |-- 01_ajustes_detalle_noticia.md
-|   |-- 02_toggle_idioma.md
-|   |-- 03_documentacion_proyecto.md
-|   |-- Comentarios_MEMORIA.md
-|   |-- Corrección de navegación entre páginas — header, footer y tarjetas.md
-|   |-- Explicacion_tr.ps1.md
-|   |-- fix(noticias) traducción y filtrado de noticias ANN.md
-|   |-- guiaTreeEspecifico.txt
-|   |-- Las migraciones.md
-|   |-- listadoComandos.txt
-|   |-- Login y registro.md
-|   |-- Los Serializers.md
-|   -- Perfil.md
-|-- back-end
-|   |-- anime
-|   |   |-- migrations
-|   |   |   |-- __init__.py
-|   |   |   -- 0001_initial.py
+|-- anime
+|   |-- migrations
 |   |   |-- __init__.py
-|   |   |-- admin.py
-|   |   |-- apps.py
-|   |   |-- filters.py
-|   |   |-- models.py
-|   |   |-- serializers.py
-|   |   |-- tests.py
-|   |   |-- urls.py
-|   |   -- views.py
-|   |-- config
-|   |   |-- __init__.py
-|   |   |-- asgi.py
-|   |   |-- settings.py
-|   |   |-- urls.py
-|   |   -- wsgi.py
-|   |-- media
-|   |   |-- avatares
-|   |   |   -- Captura_de_pantalla_2026-03-09_174219.png
-|   |   |-- Manga
-|   |   |   |-- Berserk
-|   |   |   |   |-- Vol 1_Chap 0.01_ El guerrero negro
-|   |   |   |   |-- Vol 1_Chap 0.02_ El estigma
-|   |   |   |   |-- Vol 1_Chap 0.03_ Guardianes de la codicia (1)
-|   |   |   |   |-- Vol 10_Chap 48_ Chispas en el filo
-|   |   |   |   |-- Vol 10_Chap 49_ Entrando en Wyndham (1)
-|   |   |   |   |-- Vol 10_Chap 50_ Entrando en Wyndham (2)
-|   |   |   |   |-- Vol 10_Chap 51_ Víspera festiva (1)
-|   |   |   |   |-- Vol 10_Chap 52_ Víspera festiva (2)
-|   |   |   |   |-- Vol 10_Chap 53_ Mil años de encierro
-|   |   |   |   |-- Vol 10_Chap 54_ Reencuentro en el abismo
-|   |   |   |   |-- Vol 10_Chap 55_ Senda de sangre
-|   |   |   |   |-- Vol 10_Chap 56_ Los Bakiraka (1)
-|   |   |   |   |-- Vol 10_Chap 57_ Los Bakiraka (2)
-|   |   |   |   |-- Vol 10_Chap 58_ Flores en el Castillo de Piedra
-|   |   |   |   |-- Vol 11_Chap 59_ El Perro Demoníaco (1)
-|   |   |   |   |-- Vol 11_Chap 60_ El Perro Demoníaco (2)
-|   |   |   |   |-- Vol 11_Chap 61_ El Perro Demoníaco (3)
-|   |   |   |   |-- Vol 11_Chap 62_ El Perro Demoníaco (4)
-|   |   |   |   |-- Vol 11_Chap 63_ El Rugido de la Bestia Enloquecida
-|   |   |   |   |-- Vol 11_Chap 64_ El Bosque de las Atrocidades
-|   |   |   |   |-- Vol 11_Chap 65_ Lucha a Muerte (1)
-|   |   |   |   |-- Vol 11_Chap 66_ Lucha a Muerte (2)
-|   |   |   |   |-- Vol 11_Chap 67_ Con la Armadura en el Corazón
-|   |   |   |   |-- Vol 11_Chap 68_ Desde los Cielos
-|   |   |   |   |-- Vol 11_Chap 69_ El Regreso del Inmortal
-|   |   |   |   |-- Vol 12_Chap 70_ El Réquiem del Viento
-|   |   |   |   |-- Vol 12_Chap 71_ El Ocaso de Los Guerreros
-|   |   |   |   |-- Vol 12_Chap 72_ El Chico del Callejón
-|   |   |   |   |-- Vol 12_Chap 73_ Eclipse
-|   |   |   |   |-- Vol 12_Chap 74_ El Momento Prometido
-|   |   |   |   |-- Vol 12_Chap 75_ Advenimiento
-|   |   |   |   |-- Vol 12_Chap 76_ Entes Sobrenaturales
-|   |   |   |   |-- Vol 12_Chap 77_ El Castillo
-|   |   |   |   |-- Vol 12_Chap 78_ Despedida
-|   |   |   |   |-- Vol 12_Chap 79_ El Banquete
-|   |   |   |   |-- Vol 13_Chap 80_ Tempestad de Muerte (1)
-|   |   |   |   |-- Vol 13_Chap 81_ Tempestad de Muerte (2)
-|   |   |   |   |-- Vol 13_Chap 82_ El Dios del Abismo
-|   |   |   |   |-- Vol 13_Chap 83_ Sangre Fresca
-|   |   |   |   |-- Vol 13_Chap 84_ Movimientos Fetales
-|   |   |   |   |-- Vol 13_Chap 85_ Eclosión
-|   |   |   |   |-- Vol 13_Chap 86_ Grabado en la Retina del Ojo Derecho
-|   |   |   |   |-- Vol 13_Chap 87_ Escape
-|   |   |   |   |-- Vol 13_Chap 88_ Despertar en Una Pesadilla
-|   |   |   |   |-- Vol 13_Chap 89_ A la Carrera
-|   |   |   |   |-- Vol 13_Chap 90_ Declaración de Intenciones
-|   |   |   |   |-- Vol 13_Chap 91_ Engendro Maléfico
-|   |   |   |   |-- Vol 14_Chap 92_ Armamento
-|   |   |   |   |-- Vol 14_Chap 93_ Aquel Que Caza Dragones
-|   |   |   |   |-- Vol 14_Chap 94_ El Guerrero Negro, de Nuevo
-|   |   |   |   |-- Vol 14_Chap 95_ Los Elfos del Valle de la Niebla
-|   |   |   |   |-- Vol 14_Chap 96_ Jill
-|   |   |   |   |-- Vol 14_Chap 97_ Llegan Volando
-|   |   |   |   |-- Vol 14_Chap 98_ Larvas
-|   |   |   |   |-- Vol 14_Chap 99.5_ Berserk - The Prototype
-|   |   |   |   |-- Vol 14_Chap 99_ La Reina
-|   |   |   |   |-- Vol 15_Chap 100_ Fuegos Fatuos
-|   |   |   |   |-- Vol 15_Chap 101_ Pirkaf de Los Ojos Rojos
-|   |   |   |   |-- Vol 15_Chap 102_ La Niña de Los Recuerdos
-|   |   |   |   |-- Vol 15_Chap 103_ El Mundo de Los Alados
-|   |   |   |   |-- Vol 15_Chap 104_ Guardianes (1)
-|   |   |   |   |-- Vol 15_Chap 105_ Guardianes (2)
-|   |   |   |   |-- Vol 15_Chap 107_ El Valle de la Niebla (1)
-|   |   |   |   |-- Vol 15_Chap 108_ El Valle de la Niebla (2)
-|   |   |   |   |-- Vol 15_Chap 109_ Las Crisálidas
-|   |   |   |   |-- Vol 15_Chap 110_ Monstruo
-|   |   |   |   |-- Vol 16_Chap 111_ El Demonio Volador
-|   |   |   |   |-- Vol 16_Chap 112_ Sangrienta Noche Estrellada
-|   |   |   |   |-- Vol 16_Chap 113_ La Fina Línea Entre Demonio y Humano
-|   |   |   |   |-- Vol 16_Chap 114_ Luciérnaga
-|   |   |   |   |-- Vol 16_Chap 115_ Camino a Casa
-|   |   |   |   |-- Vol 16_Chap 116_ El Elfo en El Cielo
-|   |   |   |   |-- Vol 16_Chap 117_ La Bestia Negra
-|   |   |   |   |-- Vol 16_Chap 118_ Los Caballeros de la Santa Cadena de Hierro (1)
-|   |   |   |   |-- Vol 16_Chap 119_ Los Caballeros de la Santa Cadena de Hierro (2)
-|   |   |   |   |-- Vol 16_Chap 120_ Ídolos Vacíos
-|   |   |   |   |-- Vol 16_Chap 121_ Ojos Que No Ven
-|   |   |   |   |-- Vol 17_Chap 122_ Noche de Milagros
-|   |   |   |   |-- Vol 17_Chap 123_ Idas y Venidas
-|   |   |   |   |-- Vol 17_Chap 124_ La Mañana de la Verdad
-|   |   |   |   |-- Vol 17_Chap 125_ Revelación (1)
-|   |   |   |   |-- Vol 17_Chap 126_ Revelación (2)
-|   |   |   |   |-- Vol 17_Chap 127_ Revelación (3)
-|   |   |   |   |-- Vol 17_Chap 128_ Filo Resquebrajado
-|   |   |   |   |-- Vol 17_Chap 129_ Rescoldos
-|   |   |   |   |-- Vol 17_Chap 130_ Hacia Tierra Sagrada (1)
-|   |   |   |   |-- Vol 17_Chap 131_ Hacia Tierra Sagrada (2)
-|   |   |   |   |-- Vol 17_Chap 132_ Patrulla Kushana (1)
-|   |   |   |   |-- Vol 18_Chap 133_ Patrulla Kushana (2)
-|   |   |   |   |-- Vol 18_Chap 134_ La Sombra de la Torre (1)
-|   |   |   |   |-- Vol 18_Chap 135_ La Sombra de la Torre (2)
-|   |   |   |   |-- Vol 18_Chap 136_ Hijos de Las Sombras
-|   |   |   |   |-- Vol 18_Chap 137_ Fanático
-|   |   |   |   |-- Vol 18_Chap 138_ Las Entrañas de la Tierra Sagrada
-|   |   |   |   |-- Vol 18_Chap 139_ La Bruja
-|   |   |   |   |-- Vol 18_Chap 140_ Camino de Monstruos (1)
-|   |   |   |   |-- Vol 18_Chap 141_ Camino de Monstruos (2)
-|   |   |   |   |-- Vol 18_Chap 142_ Columnas de Fuego
-|   |   |   |   |-- Vol 18_Chap 143_ El Guerrero Negro en Tierra Sagrada
-|   |   |   |   |-- Vol 19_Chap 144_ Sin Rumbo
-|   |   |   |   |-- Vol 19_Chap 145_ Joven Ambicioso
-|   |   |   |   |-- Vol 19_Chap 146_ Gruta Demoníaca
-|   |   |   |   |-- Vol 19_Chap 147_ Reencuentro
-|   |   |   |   |-- Vol 19_Chap 148_ Emboscada
-|   |   |   |   |-- Vol 19_Chap 149_ El Precipicio
-|   |   |   |   |-- Vol 19_Chap 150_ Prisioneras
-|   |   |   |   |-- Vol 19_Chap 151_ Doncella de Hierro
-|   |   |   |   |-- Vol 19_Chap 152_ La Sangre de Los Muertos (1)
-|   |   |   |   |-- Vol 19_Chap 153_ La Sangre de Los Muertos (2)
-|   |   |   |   |-- Vol 19_Chap 154_ Hilo de Araña
-|   |   |   |   |-- Vol 2_Chap 0.04_ Guardianes de la codicia (2)
-|   |   |   |   |-- Vol 2_Chap 0.05_ Guardianes de la codicia (3)
-|   |   |   |   |-- Vol 20_Chap 155_ Aquellos Que Danzan en Las Alturas y Aquellos Que Reptan Por El Suelo
-|   |   |   |   |-- Vol 20_Chap 156_ Hell's Angels
-|   |   |   |   |-- Vol 20_Chap 157_ Aquel del Fondo Que Carece de Fondo
-|   |   |   |   |-- Vol 20_Chap 158_ Temerosos
-|   |   |   |   |-- Vol 20_Chap 159_ Presagios
-|   |   |   |   |-- Vol 20_Chap 160_ Mártires
-|   |   |   |   |-- Vol 20_Chap 161_ Derrumbe
-|   |   |   |   |-- Vol 20_Chap 162_ Siluetas de Ideas (1)
-|   |   |   |   |-- Vol 20_Chap 163_ Siluetas de Ideas (2)
-|   |   |   |   |-- Vol 20_Chap 164_ Siluetas de Ideas (3)
-|   |   |   |   |-- Vol 20_Chap 165_ Pez Volador
-|   |   |   |   |-- Vol 21_Chap 166_ Sacerdote Monstruoso (1)
-|   |   |   |   |-- Vol 21_Chap 167_ Sacerdote Monstruoso (2)
-|   |   |   |   |-- Vol 21_Chap 168_ El Que Se Aferra y El Que Pugna
-|   |   |   |   |-- Vol 21_Chap 169_ Tsunami Tenebroso (1)
-|   |   |   |   |-- Vol 21_Chap 170_ Tsunami Tenebroso (2)
-|   |   |   |   |-- Vol 21_Chap 171_ Reverberación
-|   |   |   |   |-- Vol 21_Chap 172_ El Descenso
-|   |   |   |   |-- Vol 21_Chap 173_ Amanecer
-|   |   |   |   |-- Vol 21_Chap 174_ Aparición
-|   |   |   |   |-- Vol 21_Chap 175_ Decisiones y Partidas
-|   |   |   |   |-- Vol 21_Chap 176_ El Mundo Se Desmorona
-|   |   |   |   |-- Vol 22_Chap 177_ Reencuentro en la Colina de Las Espadas
-|   |   |   |   |-- Vol 22_Chap 178_ Guerrero Bestial Contra Guerrero Negro
-|   |   |   |   |-- Vol 22_Chap 179_ Invariable
-|   |   |   |   |-- Vol 22_Chap 180_ El Prólogo de la Crónica de Guerra
-|   |   |   |   |-- Vol 22_Chap 181_ Kushan Ataca
-|   |   |   |   |-- Vol 22_Chap 182_ Grito de Guerra del Viento (1)
-|   |   |   |   |-- Vol 22_Chap 183_ Grito de Guerra del Viento (2)
-|   |   |   |   |-- Vol 22_Chap 184_ Nieve y Llamas _ Primera Parte
-|   |   |   |   |-- Vol 22_Chap 185_ Nieve y Llamas _ Segunda Parte
-|   |   |   |   |-- Vol 22_Chap 186_ Travesía Invernal (1)
-|   |   |   |   |-- Vol 23_Chap 187_ Travesía Invernal (2)
-|   |   |   |   |-- Vol 23_Chap 188_ Tiempo Desperdiciado
-|   |   |   |   |-- Vol 23_Chap 189_ Colmillos
-|   |   |   |   |-- Vol 23_Chap 190_ Reencuentro en la Estepa
-|   |   |   |   |-- Vol 23_Chap 191_ Bestias de Guerra
-|   |   |   |   |-- Vol 23_Chap 192_ El Estandarte de la Espada Alada
-|   |   |   |   |-- Vol 23_Chap 193_ Alas de Luz y Tinieblas
-|   |   |   |   |-- Vol 23_Chap 194_ Noche de Estrellas Fugaces
-|   |   |   |   |-- Vol 23_Chap 195_ Como Un Bebé
-|   |   |   |   |-- Vol 23_Chap 196_ El Trol
-|   |   |   |   |-- Vol 24_Chap 197_ La Bruja
-|   |   |   |   |-- Vol 24_Chap 198_ La Mansión del Bosque Encantado (1)
-|   |   |   |   |-- Vol 24_Chap 199_ La Mansión del Bosque Encantado (2)
-|   |   |   |   |-- Vol 24_Chap 200_ El Mundo Fantasmagórico
-|   |   |   |   |-- Vol 24_Chap 201_ Piedra Demoníaca
-|   |   |   |   |-- Vol 24_Chap 202_ Los Elementales
-|   |   |   |   |-- Vol 24_Chap 203_ La Aldea de Enoch
-|   |   |   |   |-- Vol 24_Chap 204_ Ambición y Recuerdos
-|   |   |   |   |-- Vol 24_Chap 205_ Ataque Trol
-|   |   |   |   |-- Vol 24_Chap 206_ La Espada Mágica
-|   |   |   |   |-- Vol 25_Chap 207_ El Espejo de la Culpa
-|   |   |   |   |-- Vol 25_Chap 208_ Magia
-|   |   |   |   |-- Vol 25_Chap 209_ El Secreto del Rezo
-|   |   |   |   |-- Vol 25_Chap 210_ Horda Diabólica (1)
-|   |   |   |   |-- Vol 25_Chap 211_ Horda Diabólica (2)
-|   |   |   |   |-- Vol 25_Chap 212_ Fuerte Riada
-|   |   |   |   |-- Vol 25_Chap 213_ Chamán
-|   |   |   |   |-- Vol 25_Chap 214_ Enclave Tenebroso (Qlifot)
-|   |   |   |   |-- Vol 25_Chap 215_ Contaminación
-|   |   |   |   |-- Vol 25_Chap 216_ De la Guerra Santa Demoníaca
-|   |   |   |   |-- Vol 26_Chap 217_ Castigo
-|   |   |   |   |-- Vol 26_Chap 218_ Redención
-|   |   |   |   |-- Vol 26_Chap 219_ Las Fronteras del Ultramundo
-|   |   |   |   |-- Vol 26_Chap 220_ La Cortesana de Los Mares Fetales
-|   |   |   |   |-- Vol 26_Chap 221_ Compañeros de Ruta
-|   |   |   |   |-- Vol 26_Chap 222_ Arañazos
-|   |   |   |   |-- Vol 26_Chap 223_ En El Corazón de Las Llamas (1)
-|   |   |   |   |-- Vol 26_Chap 224_ En El Corazón de De Las Llamas (2)
-|   |   |   |   |-- Vol 26_Chap 225_ La Armadura de Berserk (1)
-|   |   |   |   |-- Vol 26_Chap 226_ La Armadura de Berserk (2)
-|   |   |   |   |-- Vol 27_Chap 227_ El Dragón de Fuego
-|   |   |   |   |-- Vol 27_Chap 228_ Las Profundidades del Infierno
-|   |   |   |   |-- Vol 27_Chap 229_ La Despedida de la Llama
-|   |   |   |   |-- Vol 27_Chap 230_ La Ciudad Demoníaca
-|   |   |   |   |-- Vol 27_Chap 231_ El Emperador del Terror
-|   |   |   |   |-- Vol 27_Chap 232_ Los Daka
-|   |   |   |   |-- Vol 27_Chap 233_ La Caballería Demoníaca
-|   |   |   |   |-- Vol 27_Chap 234_ El Dios Demoníaco
-|   |   |   |   |-- Vol 27_Chap 235_ El Despertar de la Princesa Durmiente
-|   |   |   |   |-- Vol 27_Chap 236_ El Sonido del Mar
-|   |   |   |   |-- Vol 28_Chap 237_ La Profecía
-|   |   |   |   |-- Vol 28_Chap 238_ El Chico Bajo la Luna
-|   |   |   |   |-- Vol 28_Chap 239_ Los Criados Demoníacos
-|   |   |   |   |-- Vol 28_Chap 240_ La Niebla Monstruosa
-|   |   |   |   |-- Vol 28_Chap 241_ Makara, El Monstruo Marino
-|   |   |   |   |-- Vol 28_Chap 242_ El Rugido de Las Olas
-|   |   |   |   |-- Vol 28_Chap 243_ Sobrehumano
-|   |   |   |   |-- Vol 28_Chap 244_ El Puerto Almirante
-|   |   |   |   |-- Vol 28_Chap 245_ La Ciudad de Los Hombres
-|   |   |   |   |-- Vol 28_Chap 246_ El Milano y la Lechuza Sobre El Puente
-|   |   |   |   |-- Vol 29_Chap 247_ Derramamiento de Sangre
-|   |   |   |   |-- Vol 29_Chap 248_ El Guerrero
-|   |   |   |   |-- Vol 29_Chap 249_ Una Cena Muy Modesta
-|   |   |   |   |-- Vol 29_Chap 250_ De Vuelta Al Hogar
-|   |   |   |   |-- Vol 29_Chap 251_ Los Vandimion
-|   |   |   |   |-- Vol 29_Chap 252_ En El Jardín
-|   |   |   |   |-- Vol 29_Chap 253_ Un Lirio Blanco en Medio del Campo
-|   |   |   |   |-- Vol 29_Chap 254_ Madre
-|   |   |   |   |-- Vol 29_Chap 255_ El Baile
-|   |   |   |   |-- Vol 29_Chap 256_ La Cámara de Las Columnas
-|   |   |   |   |-- Vol 3_Chap 0.06_ Guardianes de la codicia (4)
-|   |   |   |   |-- Vol 3_Chap 0.07_ Guardianes de la codicia (5)
-|   |   |   |   |-- Vol 3_Chap 0.08_ Guardianes de la codicia (6)
-|   |   |   |   |-- Vol 3_Chap 0.09_ La Edad de Oro (1)
-|   |   |   |   |-- Vol 30_Chap 257_ Duelo
-|   |   |   |   |-- Vol 30_Chap 258_ Los Pilares de la Santa Alianza
-|   |   |   |   |-- Vol 30_Chap 259_ Un Tigre Monstruoso
-|   |   |   |   |-- Vol 30_Chap 260_ Incursión
-|   |   |   |   |-- Vol 30_Chap 261_ La Jaula Oxidada
-|   |   |   |   |-- Vol 30_Chap 262_ Declaración de Guerra
-|   |   |   |   |-- Vol 30_Chap 263_ El Ataque de Los Sirvientes
-|   |   |   |   |-- Vol 30_Chap 264_ Revelación Divina
-|   |   |   |   |-- Vol 30_Chap 265_ La Ciudad de Los Monstruos (1)
-|   |   |   |   |-- Vol 30_Chap 266_ La Ciudad de Los Monstruos (2)
-|   |   |   |   |-- Vol 31_Chap 267_ El Puerto Ardiente
-|   |   |   |   |-- Vol 31_Chap 268_ Rueda Flameante
-|   |   |   |   |-- Vol 31_Chap 269_ La Espada Bestial
-|   |   |   |   |-- Vol 31_Chap 270_ El General Ermitaño
-|   |   |   |   |-- Vol 31_Chap 271_ El Hechicero Oriental
-|   |   |   |   |-- Vol 31_Chap 272_ Creador de Vortices
-|   |   |   |   |-- Vol 31_Chap 273_ Estallido
-|   |   |   |   |-- Vol 31_Chap 274_ El Emperador del Relámpago
-|   |   |   |   |-- Vol 31_Chap 275_ Ataca El Ejército Demoníaco
-|   |   |   |   |-- Vol 31_Chap 276_ Nubarrones
-|   |   |   |   |-- Vol 32_Chap 277_ La Bala en la Recámara
-|   |   |   |   |-- Vol 32_Chap 278_ Levando Anclas
-|   |   |   |   |-- Vol 32_Chap 279_ La Gran Invasión (1)
-|   |   |   |   |-- Vol 32_Chap 280_ La Gran Invasión (2)
-|   |   |   |   |-- Vol 32_Chap 281_ El Vuelo
-|   |   |   |   |-- Vol 32_Chap 282_ Desgarro en El Campo de Batalla
-|   |   |   |   |-- Vol 32_Chap 283_ Vendaval
-|   |   |   |   |-- Vol 32_Chap 284_ El Ejército Regular de Midland
-|   |   |   |   |-- Vol 32_Chap 285_ El Héroe
-|   |   |   |   |-- Vol 32_Chap 286_ A Bordo
-|   |   |   |   |-- Vol 33_Chap 287_ En Vano
-|   |   |   |   |-- Vol 33_Chap 288_ Batalla Naval (1)
-|   |   |   |   |-- Vol 33_Chap 289_ Batalla Naval (2)
-|   |   |   |   |-- Vol 33_Chap 290_ Rugidos Desde Las Tinieblas
-|   |   |   |   |-- Vol 33_Chap 291_ Sueño Premonitorio
-|   |   |   |   |-- Vol 33_Chap 292_ Niebla Mortal
-|   |   |   |   |-- Vol 33_Chap 293_ Tinieblas Mudas
-|   |   |   |   |-- Vol 33_Chap 294_ Éxodo
-|   |   |   |   |-- Vol 33_Chap 295_ El Dios del Fin del Mundo
-|   |   |   |   |-- Vol 33_Chap 296_ Rugidos en El Cielo
-|   |   |   |   |-- Vol 34_Chap 297_ El dios ciego
-|   |   |   |   |-- Vol 34_Chap 298_ Demonios fuera
-|   |   |   |   |-- Vol 34_Chap 299_ Batalla inhumana
-|   |   |   |   |-- Vol 34_Chap 300_ La sacerdotista del Halcón
-|   |   |   |   |-- Vol 34_Chap 301_ Caos
-|   |   |   |   |-- Vol 34_Chap 302_ Vuelo
-|   |   |   |   |-- Vol 34_Chap 303_ Deslumbrado
-|   |   |   |   |-- Vol 34_Chap 304_ Grieta
-|   |   |   |   |-- Vol 34_Chap 305_ El inicio del mundo
-|   |   |   |   |-- Vol 34_Chap 306_ Fantasía
-|   |   |   |   |-- Vol 35_Chap 307_ Falconia
-|   |   |   |   |-- Vol 35_Chap 308_ El Barco Fantasma (1)
-|   |   |   |   |-- Vol 35_Chap 309_ El Barco Fantasma (2)
-|   |   |   |   |-- Vol 35_Chap 310_ El Barco Fantasma (3)
-|   |   |   |   |-- Vol 35_Chap 311_ La Isla Solitaria
-|   |   |   |   |-- Vol 35_Chap 312_ La Chica del Acantilado
-|   |   |   |   |-- Vol 35_Chap 313_ Moradores de Un Mar Aciago
-|   |   |   |   |-- Vol 35_Chap 314_ Tentáculos Humanos
-|   |   |   |   |-- Vol 35_Chap 315_ Barco Tentáculo
-|   |   |   |   |-- Vol 36_Chap 316_ Luna Llena (1)
-|   |   |   |   |-- Vol 36_Chap 317_ Luna Llena (2)
-|   |   |   |   |-- Vol 36_Chap 318_ Guerrero Bestial
-|   |   |   |   |-- Vol 36_Chap 319_ El Dios Marino (1)
-|   |   |   |   |-- Vol 36_Chap 320_ El Dios Marino (2)
-|   |   |   |   |-- Vol 36_Chap 321_ El Dios Marino (3)
-|   |   |   |   |-- Vol 36_Chap 322_ Corazón Desbocado
-|   |   |   |   |-- Vol 36_Chap 323_ La Voz Que Llama Desde Lo Más Profundo
-|   |   |   |   |-- Vol 36_Chap 324_ Merrow (Sirena)
-|   |   |   |   |-- Vol 4_Chap 0.1_ La Edad de Oro (2)
-|   |   |   |   |-- Vol 4_Chap 0.11_ La Edad de Oro (3)
-|   |   |   |   |-- Vol 4_Chap 0.12_ La Edad de Oro (4)
-|   |   |   |   |-- Vol 4_Chap 0.13_ La Edad de Oro (5)
-|   |   |   |   |-- Vol 4_Chap 0.14_ La Edad de Oro (6)
-|   |   |   |   |-- Vol 4_Chap 0.15_ La Edad de Oro (7)
-|   |   |   |   |-- Vol 41_Chap 364_ Lágrima como el rocío de la mañana
-|   |   |   |   |-- Vol 42_Chap 372_ El ser absoluto que todo lo tiñe
-|   |   |   |   |-- Vol 5_Chap 0.16_ La Edad de Oro (8)
-|   |   |   |   |-- Vol 5_Chap 1_ Ráfaga de espada
-|   |   |   |   |-- Vol 5_Chap 2_ Nosferatu Zodd (1)
-|   |   |   |   |-- Vol 5_Chap 3_ Nosferatu Zodd (2)
-|   |   |   |   |-- Vol 5_Chap 4_ Nosferatu Zodd (3)
-|   |   |   |   |-- Vol 5_Chap 5_ Nosferatu Zodd (4)
-|   |   |   |   |-- Vol 5_Chap 6_ El dueño de la espada (1)
-|   |   |   |   |-- Vol 6_Chap 10_ El asesino (3)
-|   |   |   |   |-- Vol 6_Chap 11_ El asesino (4)
-|   |   |   |   |-- Vol 6_Chap 12_ Aquello que nos importa
-|   |   |   |   |-- Vol 6_Chap 13_ A la guerra
-|   |   |   |   |-- Vol 6_Chap 14_ Batalla
-|   |   |   |   |-- Vol 6_Chap 15_ Kasca (1)
-|   |   |   |   |-- Vol 6_Chap 16_ Kasca (2)
-|   |   |   |   |-- Vol 6_Chap 7_ El dueño de la espada (2)
-|   |   |   |   |-- Vol 6_Chap 8_ El asesino (1)
-|   |   |   |   |-- Vol 6_Chap 9_ El asesino (2)
-|   |   |   |   |-- Vol 7_Chap 17_ Kasca (3)
-|   |   |   |   |-- Vol 7_Chap 18_ Dispuestos a morir (1)
-|   |   |   |   |-- Vol 7_Chap 19_ Dispuestos a morir (2)
-|   |   |   |   |-- Vol 7_Chap 20_ Dispuestos a morir (3)
-|   |   |   |   |-- Vol 7_Chap 21_ El regreso
-|   |   |   |   |-- Vol 7_Chap 22_ Hogueras de sueños
-|   |   |   |   |-- Vol 7_Chap 23_ La batalla de Doldrey (1)
-|   |   |   |   |-- Vol 7_Chap 24_ La batalla de Doldrey (2)
-|   |   |   |   |-- Vol 7_Chap 25_ La batalla de Doldrey (3)
-|   |   |   |   |-- Vol 7_Chap 26_ La batalla de Doldrey (4)
-|   |   |   |   |-- Vol 8_Chap 27_ La batalla de Doldrey (5)
-|   |   |   |   |-- Vol 8_Chap 28_ La batalla de Doldrey (6)
-|   |   |   |   |-- Vol 8_Chap 29_ Retorno Triunfante
-|   |   |   |   |-- Vol 8_Chap 30_ Instante Glorioso
-|   |   |   |   |-- Vol 8_Chap 31_ Lápida de fuego (1)
-|   |   |   |   |-- Vol 8_Chap 32_ Lápida de fuego (2)
-|   |   |   |   |-- Vol 8_Chap 33_ Una noche de nieve
-|   |   |   |   |-- Vol 8_Chap 34_ La mañana de la partida (1)
-|   |   |   |   |-- Vol 8_Chap 35_ La mañana de la partida (2)
-|   |   |   |   |-- Vol 8_Chap 36_ La mañana de la partida (3)
-|   |   |   |   |-- Vol 9_Chap 37_ Caballero de la calavera
-|   |   |   |   |-- Vol 9_Chap 38_ El principio de una noche interminable
-|   |   |   |   |-- Vol 9_Chap 39_ Halcón derribado
-|   |   |   |   |-- Vol 9_Chap 40_ El fin del sueño
-|   |   |   |   |-- Vol 9_Chap 41_ El torneo
-|   |   |   |   |-- Vol 9_Chap 42_ Fugitivos
-|   |   |   |   |-- Vol 9_Chap 43_ El luchador
-|   |   |   |   |-- Vol 9_Chap 44_ Compañeros de armas
-|   |   |   |   |-- Vol 9_Chap 45_ Confesión
-|   |   |   |   |-- Vol 9_Chap 46_ Cicatrices (1)
-|   |   |   |   -- Vol 9_Chap 47_ Cicatrices (2)
-|   |   |   |-- Chainsaw Man
-|   |   |   |   |-- Vol 1_Chap 1_ Un perro y una motosierra
-|   |   |   |   |-- Vol 1_Chap 2_ El paradero de Pochita
-|   |   |   |   |-- Vol 1_Chap 3_ Llegada a Tokio
-|   |   |   |   |-- Vol 1_Chap 4_ Power
-|   |   |   |   |-- Vol 1_Chap 5_ Cómo sobar tetas
-|   |   |   |   |-- Vol 1_Chap 6_ Esclavitud
-|   |   |   |   |-- Vol 1_Chap 7.5_ Extra volumen 1
-|   |   |   |   |-- Vol 1_Chap 7_ El paradero de Gatito
-|   |   |   |   |-- Vol 10_Chap 80_ Vida de perros
-|   |   |   |   |-- Vol 10_Chap 81_ La patita
-|   |   |   |   |-- Vol 10_Chap 82_ Un desayuno como es debido
-|   |   |   |   |-- Vol 10_Chap 83_ Muerte, resurrección, Motosierra
-|   |   |   |   |-- Vol 10_Chap 84_ El héroe del Infierno
-|   |   |   |   |-- Vol 10_Chap 85_ Éxtasis visceral
-|   |   |   |   |-- Vol 10_Chap 86_ Cita con Motosierra
-|   |   |   |   |-- Vol 10_Chap 87_ Chainsaw Man vs. Las terroríficas armas humanas
-|   |   |   |   |-- Vol 10_Chap 88_ Star Chainsaw
-|   |   |   |   |-- Vol 11_Chap 227_ Sabor a gambas y sangre
-|   |   |   |   |-- Vol 11_Chap 89_ ¡Tú puedes, Chainsaw Man!
-|   |   |   |   |-- Vol 11_Chap 90_ MegaPower
-|   |   |   |   |-- Vol 11_Chap 91_ Power, Power, Power
-|   |   |   |   |-- Vol 11_Chap 92_ Vanilla Sky
-|   |   |   |   |-- Vol 11_Chap 93_ Una peli malísima contigo
-|   |   |   |   |-- Vol 11_Chap 94_ Chainsaw Man vs. las armas humanas
-|   |   |   |   |-- Vol 11_Chap 95_ Chainsaw Man vs. el Demonio del Control
-|   |   |   |   |-- Vol 11_Chap 96_ Este sabor
-|   |   |   |   |-- Vol 11_Chap 97_ I Love Chainsaw
-|   |   |   |   |-- Vol 18_Chap 182_ Carita mona
-|   |   |   |   |-- Vol 18_Chap 183_ Regurgitación, cara, excitación
-|   |   |   |   |-- Vol 18_Chap 184_ Corre, Denji
-|   |   |   |   |-- Vol 18_Chap 185_ Un estómago de otro mundo
-|   |   |   |   |-- Vol 2_Chap 10_ Kon
-|   |   |   |   |-- Vol 2_Chap 11_ Compromiso
-|   |   |   |   |-- Vol 2_Chap 12_ Tocamiento
-|   |   |   |   |-- Vol 2_Chap 13_ El Demonio Pistola
-|   |   |   |   |-- Vol 2_Chap 14_ Beso con lengua
-|   |   |   |   |-- Vol 2_Chap 15_ La eterna octava planta
-|   |   |   |   |-- Vol 2_Chap 16.5_ Extras volumen 2
-|   |   |   |   |-- Vol 2_Chap 16_ Un sabor desconocido
-|   |   |   |   |-- Vol 2_Chap 8_ Motosierra contra Murciélago
-|   |   |   |   |-- Vol 2_Chap 9_ Rescate
-|   |   |   |   |-- Vol 20_Chap 178_ La estatua de la pistola
-|   |   |   |   |-- Vol 20_Chap 179_ Bramburbreba
-|   |   |   |   |-- Vol 20_Chap 180_ El mundo de la senectud
-|   |   |   |   |-- Vol 20_Chap 181_ Árboles extraños
-|   |   |   |   |-- Vol 20_Chap 186_ Ploch, chuof, ziiin
-|   |   |   |   |-- Vol 20_Chap 187_ ¡A vomitar!
-|   |   |   |   |-- Vol 20_Chap 188_ ​Pulpo, guerra, motosierra
-|   |   |   |   |-- Vol 20_Chap 189_ Heart pass, octo pass
-|   |   |   |   |-- Vol 21_Chap 190_ A nuestros respectivos mundos
-|   |   |   |   |-- Vol 21_Chap 191_ Por algo soy un demonio
-|   |   |   |   |-- Vol 21_Chap 192_ Cómo disfrutan los demonios
-|   |   |   |   |-- Vol 21_Chap 193_ Burning KISS
-|   |   |   |   |-- Vol 21_Chap 194_ El esperado festival cultural
-|   |   |   |   |-- Vol 21_Chap 195_ Lágrimas de kill me
-|   |   |   |   |-- Vol 21_Chap 196_ ¡Ha llegado Chainsaw Man!
-|   |   |   |   |-- Vol 21_Chap 197_ Tres segundos
-|   |   |   |   |-- Vol 21_Chap 198_ ¡Soy Kiga!
-|   |   |   |   |-- Vol 21_Chap 201_ ¡El miedo es esto!
-|   |   |   |   |-- Vol 22_Chap 199_ Un manjar delicioso
-|   |   |   |   |-- Vol 22_Chap 200_ Dos personas perjudiciales
-|   |   |   |   |-- Vol 22_Chap 202_ Fusión demoniaca
-|   |   |   |   |-- Vol 22_Chap 203_ Escudo humano
-|   |   |   |   |-- Vol 22_Chap 204_ Con una sola vida
-|   |   |   |   |-- Vol 22_Chap 205_ ¿Quién_
-|   |   |   |   |-- Vol 22_Chap 206_ Tetas, mujer, disculpa
-|   |   |   |   |-- Vol 22_Chap 207_ ¡Bam, bam, bam, bam, bam, bam, bam, bam, bam!
-|   |   |   |   |-- Vol 22_Chap 209_ Armas aterradoras
-|   |   |   |   |-- Vol 22_Chap 210_ Paz
-|   |   |   |   |-- Vol 22_Chap 215_ Declaración de guerra
-|   |   |   |   |-- Vol 23_Chap 211_ Guerra, braguitas, motosierra
-|   |   |   |   |-- Vol 23_Chap 212_ Una chica estupenda
-|   |   |   |   |-- Vol 23_Chap 213_ Misión
-|   |   |   |   |-- Vol 23_Chap 214_ Fuoooh, ñic, puerta
-|   |   |   |   |-- Vol 23_Chap 216_ La anhelada
-|   |   |   |   |-- Vol 23_Chap 217_ Dos buenas personas
-|   |   |   |   |-- Vol 23_Chap 218_ Devórame
-|   |   |   |   |-- Vol 23_Chap 219_ Los que se han ido
-|   |   |   |   |-- Vol 23_Chap 220_ Vínculos y Míchigan
-|   |   |   |   |-- Vol 23_Chap 221_ Batalla segura
-|   |   |   |   |-- Vol 23_Chap 222_ Denji Man
-|   |   |   |   |-- Vol 23_Chap 223_ La armadura más resistente
-|   |   |   |   |-- Vol 23_Chap 224_ Luna, estocada, lanza
-|   |   |   |   |-- Vol 23_Chap 225_ Vómito, moto, infierno
-|   |   |   |   |-- Vol 23_Chap 226_ Nido de langostas
-|   |   |   |   |-- Vol 23_Chap 228_ Paloma
-|   |   |   |   |-- Vol 23_Chap 229_ El chotacabras jotaka y Asa
-|   |   |   |   |-- Vol 23_Chap 230_ Sexo y selección natural
-|   |   |   |   |-- Vol 23_Chap 231_ Adiós, Pochita
-|   |   |   |   |-- Vol 23_Chap 232_ Gracias, Chainsaw Man
-|   |   |   |   |-- Vol 3_Chap 17_ Matad a Denji
-|   |   |   |   |-- Vol 3_Chap 18_ Motosierra contra Eternidad
-|   |   |   |   |-- Vol 3_Chap 19_ Premio Nobel
-|   |   |   |   |-- Vol 3_Chap 20_ De copas
-|   |   |   |   |-- Vol 3_Chap 21_ El sabor de un beso
-|   |   |   |   |-- Vol 3_Chap 22_ Chupachups con sabor a cola
-|   |   |   |   |-- Vol 3_Chap 23_ Disparos
-|   |   |   |   |-- Vol 3_Chap 24_ Maldición
-|   |   |   |   |-- Vol 3_Chap 25.5_ Extras Volumen 3
-|   |   |   |   |-- Vol 3_Chap 25_ Fantasma, Serpiente y Motosierra
-|   |   |   |   |-- Vol 4_Chap 26_ El poder de las armas
-|   |   |   |   |-- Vol 4_Chap 27_ Desde Kioto
-|   |   |   |   |-- Vol 4_Chap 28_ Secretos y mentiras
-|   |   |   |   |-- Vol 4_Chap 29_
-|   |   |   |   |-- Vol 4_Chap 30_ Aún más en la mierda
-|   |   |   |   |-- Vol 4_Chap 31_
-|   |   |   |   |-- Vol 4_Chap 32_ Una y otra vez
-|   |   |   |   |-- Vol 4_Chap 33_ Empieza la guerra
-|   |   |   |   |-- Vol 4_Chap 34_ Todos reunidos
-|   |   |   |   |-- Vol 5_Chap 35_ Menor de edad
-|   |   |   |   |-- Vol 5_Chap 36_ Katana contra Motosierra
-|   |   |   |   |-- Vol 5_Chap 37_ Tren, cabeza, motosierra
-|   |   |   |   |-- Vol 5_Chap 38_ ¡Véngate a gusto!
-|   |   |   |   |-- Vol 5_Chap 39_ Seguro que lloraré
-|   |   |   |   |-- Vol 5_Chap 40_ Amor, flor, motosierra
-|   |   |   |   |-- Vol 5_Chap 41_ Antes de la tormenta
-|   |   |   |   |-- Vol 5_Chap 42_ Enséñame a nadar
-|   |   |   |   |-- Vol 5_Chap 43.5_ Extras tomo 5
-|   |   |   |   |-- Vol 5_Chap 43_ Jean durmió en la iglesia
-|   |   |   |   |-- Vol 6_Chap 44_ Bum, bum, bum
-|   |   |   |   |-- Vol 6_Chap 45_ Pronóstico_ explosiones
-|   |   |   |   |-- Vol 6_Chap 46_ Melodía de una masacre
-|   |   |   |   |-- Vol 6_Chap 47_ Afortunado con las mujeres
-|   |   |   |   |-- Vol 6_Chap 48_ Bom, bom ,bom
-|   |   |   |   |-- Vol 6_Chap 49_ Tornado de tiburones
-|   |   |   |   |-- Vol 6_Chap 50_ Sharknado
-|   |   |   |   |-- Vol 6_Chap 51_ Buceo profundo
-|   |   |   |   |-- Vol 6_Chap 52_ Desamor, flores , motosierra
-|   |   |   |   |-- Vol 7_Chap 53_ Dentro de un sueño
-|   |   |   |   |-- Vol 7_Chap 55_ ¡Vamos allá!
-|   |   |   |   |-- Vol 7_Chap 56_ Una maldición y una primera vez
-|   |   |   |   |-- Vol 7_Chap 57_ Repentino
-|   |   |   |   |-- Vol 7_Chap 58_ Yûtarô Kurose
-|   |   |   |   |-- Vol 7_Chap 59_ Destrozos
-|   |   |   |   |-- Vol 7_Chap 60_ Quanxi y sus poseídas matan a 49 hombres
-|   |   |   |   |-- Vol 7_Chap 61.5_ Extras Tomo 7
-|   |   |   |   |-- Vol 7_Chap 61_ La presentadora de noticias
-|   |   |   |   |-- Vol 8_Chap 62_ Aún más destrozos
-|   |   |   |   |-- Vol 8_Chap 63_ Un viaje al infierno
-|   |   |   |   |-- Vol 8_Chap 64_ Welcome to the Hell
-|   |   |   |   |-- Vol 8_Chap 65_ El Demonio de la Oscuridad
-|   |   |   |   |-- Vol 8_Chap 66_ ¡Guau!
-|   |   |   |   |-- Vol 8_Chap 67_ La primera Devil Hunter
-|   |   |   |   |-- Vol 8_Chap 68_ El poder de la oscuridad
-|   |   |   |   |-- Vol 8_Chap 69_ El poder de la luz
-|   |   |   |   |-- Vol 8_Chap 70.5_ Extras Tomo 8
-|   |   |   |   |-- Vol 8_Chap 70_ Rebanar
-|   |   |   |   |-- Vol 9_Chap 71_ Baño
-|   |   |   |   |-- Vol 9_Chap 72_ Todos juntos
-|   |   |   |   |-- Vol 9_Chap 73_ Fin de la normalidad
-|   |   |   |   |-- Vol 9_Chap 74_ Lo que cuentan las olas
-|   |   |   |   |-- Vol 9_Chap 75_ 12-S
-|   |   |   |   |-- Vol 9_Chap 76_ No abras
-|   |   |   |   |-- Vol 9_Chap 77_ Timbre, timbre, timbre
-|   |   |   |   |-- Vol 9_Chap 78_ Pelea de bolas de nieve
-|   |   |   |   -- Vol 9_Chap 79_ Jugar a pasarse la pelota
-|   |   |   -- SPY x FAMILY
-|   |   |       |-- Vol 1_Chap 0_
-|   |   |       |-- Vol 1_Chap 1_
-|   |   |       |-- Vol 1_Chap 118_
-|   |   |       |-- Vol 1_Chap 2_
-|   |   |       |-- Vol 1_Chap 3_
-|   |   |       |-- Vol 1_Chap 4_
-|   |   |       |-- Vol 1_Chap 5_
-|   |   |       |-- Vol 10_Chap 62.5_
-|   |   |       |-- Vol 10_Chap 62.6_
-|   |   |       |-- Vol 10_Chap 62.7_
-|   |   |       |-- Vol 10_Chap 62_
-|   |   |       |-- Vol 10_Chap 63_
-|   |   |       |-- Vol 10_Chap 64.5_
-|   |   |       |-- Vol 10_Chap 64_
-|   |   |       |-- Vol 10_Chap 65_
-|   |   |       |-- Vol 10_Chap 66_
-|   |   |       |-- Vol 11_Chap 67.2_
-|   |   |       |-- Vol 11_Chap 67_
-|   |   |       |-- Vol 11_Chap 68.5_
-|   |   |       |-- Vol 11_Chap 68_
-|   |   |       |-- Vol 11_Chap 69_
-|   |   |       |-- Vol 11_Chap 70_
-|   |   |       |-- Vol 11_Chap 71.5_
-|   |   |       |-- Vol 11_Chap 71_
-|   |   |       |-- Vol 11_Chap 72_
-|   |   |       |-- Vol 11_Chap 73_
-|   |   |       |-- Vol 11_Chap 74_
-|   |   |       |-- Vol 11_Chap 75_
-|   |   |       |-- Vol 12_Chap 76_
-|   |   |       |-- Vol 12_Chap 77_
-|   |   |       |-- Vol 12_Chap 78.5_
-|   |   |       |-- Vol 12_Chap 78_
-|   |   |       |-- Vol 12_Chap 79_
-|   |   |       |-- Vol 12_Chap 80_
-|   |   |       |-- Vol 12_Chap 81_
-|   |   |       |-- Vol 12_Chap 82_
-|   |   |       |-- Vol 12_Chap 83_
-|   |   |       |-- Vol 12_Chap 84_
-|   |   |       |-- Vol 13_Chap 85_
-|   |   |       |-- Vol 13_Chap 86_
-|   |   |       |-- Vol 13_Chap 87_
-|   |   |       |-- Vol 13_Chap 88_
-|   |   |       |-- Vol 13_Chap 89_
-|   |   |       |-- Vol 13_Chap 90.5_
-|   |   |       |-- Vol 13_Chap 90_
-|   |   |       |-- Vol 13_Chap 91_
-|   |   |       |-- Vol 13_Chap 92_
-|   |   |       |-- Vol 14_Chap 105.5_
-|   |   |       |-- Vol 14_Chap 106_
-|   |   |       |-- Vol 14_Chap 107_
-|   |   |       |-- Vol 14_Chap 108_
-|   |   |       |-- Vol 14_Chap 109_
-|   |   |       |-- Vol 14_Chap 110_
-|   |   |       |-- Vol 14_Chap 111_
-|   |   |       |-- Vol 14_Chap 112.2_
-|   |   |       |-- Vol 14_Chap 113_
-|   |   |       |-- Vol 14_Chap 114.5_
-|   |   |       |-- Vol 14_Chap 115_
-|   |   |       |-- Vol 14_Chap 116.5_
-|   |   |       |-- Vol 14_Chap 117_
-|   |   |       |-- Vol 14_Chap 119_
-|   |   |       |-- Vol 14_Chap 120.5_
-|   |   |       |-- Vol 14_Chap 121_
-|   |   |       |-- Vol 14_Chap 122_
-|   |   |       |-- Vol 14_Chap 123.1_
-|   |   |       |-- Vol 14_Chap 123.2_
-|   |   |       |-- Vol 14_Chap 123.5_
-|   |   |       |-- Vol 14_Chap 124_
-|   |   |       |-- Vol 14_Chap 125_
-|   |   |       |-- Vol 14_Chap 126_
-|   |   |       |-- Vol 14_Chap 127.1_
-|   |   |       |-- Vol 14_Chap 127.2_
-|   |   |       |-- Vol 14_Chap 127.5_
-|   |   |       |-- Vol 14_Chap 128_
-|   |   |       |-- Vol 14_Chap 129_
-|   |   |       |-- Vol 14_Chap 130_
-|   |   |       |-- Vol 14_Chap 131_
-|   |   |       |-- Vol 14_Chap 132_
-|   |   |       |-- Vol 14_Chap 133_
-|   |   |       |-- Vol 14_Chap 134_
-|   |   |       |-- Vol 14_Chap 93_
-|   |   |       |-- Vol 14_Chap 94_
-|   |   |       |-- Vol 14_Chap 95_
-|   |   |       |-- Vol 14_Chap 96.5_
-|   |   |       |-- Vol 14_Chap 96.6_
-|   |   |       |-- Vol 14_Chap 96_
-|   |   |       |-- Vol 14_Chap 97_
-|   |   |       |-- Vol 14_Chap 98.5_
-|   |   |       |-- Vol 14_Chap 98_
-|   |   |       |-- Vol 14_Chap 99_
-|   |   |       |-- Vol 2_Chap 10_
-|   |   |       |-- Vol 2_Chap 11_
-|   |   |       |-- Vol 2_Chap 6_
-|   |   |       |-- Vol 2_Chap 7_
-|   |   |       |-- Vol 2_Chap 8.5_
-|   |   |       |-- Vol 2_Chap 8_
-|   |   |       |-- Vol 2_Chap 9_
-|   |   |       |-- Vol 3_Chap 12_
-|   |   |       |-- Vol 3_Chap 13_
-|   |   |       |-- Vol 3_Chap 14_
-|   |   |       |-- Vol 3_Chap 15.5_
-|   |   |       |-- Vol 3_Chap 15.6_
-|   |   |       |-- Vol 3_Chap 15_
-|   |   |       |-- Vol 3_Chap 16_
-|   |   |       |-- Vol 3_Chap 17_
-|   |   |       |-- Vol 4_Chap 18.5_
-|   |   |       |-- Vol 4_Chap 18_
-|   |   |       |-- Vol 4_Chap 19_
-|   |   |       |-- Vol 4_Chap 20_
-|   |   |       |-- Vol 4_Chap 21_
-|   |   |       |-- Vol 4_Chap 22_
-|   |   |       |-- Vol 4_Chap 23_
-|   |   |       |-- Vol 5_Chap 24.5_
-|   |   |       |-- Vol 5_Chap 24_
-|   |   |       |-- Vol 5_Chap 25_
-|   |   |       |-- Vol 5_Chap 26_
-|   |   |       |-- Vol 5_Chap 27.5_
-|   |   |       |-- Vol 5_Chap 27_
-|   |   |       |-- Vol 5_Chap 28_
-|   |   |       |-- Vol 5_Chap 29.5_
-|   |   |       |-- Vol 5_Chap 29_
-|   |   |       |-- Vol 5_Chap 30_
-|   |   |       |-- Vol 6_Chap 31_
-|   |   |       |-- Vol 6_Chap 32_
-|   |   |       |-- Vol 6_Chap 33_
-|   |   |       |-- Vol 6_Chap 34_
-|   |   |       |-- Vol 6_Chap 35_
-|   |   |       |-- Vol 6_Chap 36.5_
-|   |   |       |-- Vol 6_Chap 36_
-|   |   |       |-- Vol 6_Chap 37.5_
-|   |   |       |-- Vol 6_Chap 37_
-|   |   |       |-- Vol 7_Chap 38_
-|   |   |       |-- Vol 7_Chap 39_
-|   |   |       |-- Vol 7_Chap 40.5_
-|   |   |       |-- Vol 7_Chap 40_
-|   |   |       |-- Vol 7_Chap 41_
-|   |   |       |-- Vol 7_Chap 42_
-|   |   |       |-- Vol 7_Chap 43.5_
-|   |   |       |-- Vol 7_Chap 43_
-|   |   |       |-- Vol 7_Chap 44_
-|   |   |       |-- Vol 8_Chap 45_
-|   |   |       |-- Vol 8_Chap 46_
-|   |   |       |-- Vol 8_Chap 47_
-|   |   |       |-- Vol 8_Chap 48_
-|   |   |       |-- Vol 8_Chap 49_
-|   |   |       |-- Vol 8_Chap 50_
-|   |   |       |-- Vol 8_Chap 51.5_
-|   |   |       |-- Vol 8_Chap 51_
-|   |   |       |-- Vol 8_Chap 52_
-|   |   |       |-- Vol 8_Chap 53.5_
-|   |   |       |-- Vol 8_Chap 53_
-|   |   |       |-- Vol 9_Chap 54_
-|   |   |       |-- Vol 9_Chap 55_
-|   |   |       |-- Vol 9_Chap 56_
-|   |   |       |-- Vol 9_Chap 57_
-|   |   |       |-- Vol 9_Chap 58.5_
-|   |   |       |-- Vol 9_Chap 58.6_
-|   |   |       |-- Vol 9_Chap 58_
-|   |   |       |-- Vol 9_Chap 59_
-|   |   |       |-- Vol 9_Chap 60_
-|   |   |       -- Vol 9_Chap 61_
-|   |   -- Portadas
-|   |       -- Manga
-|   |           -- Chainsaw Man
-|   |               -- info.json
-|   |-- noticias
-|   |   |-- management
-|   |   |   |-- commands
-|   |   |   |   |-- __init__.py
-|   |   |   |   |-- retraducir_noticias.py
-|   |   |   |   -- scrapear_noticias.py
-|   |   |   -- __init__.py
-|   |   |-- migrations
+|   |   -- 0001_initial.py
+|   |-- __init__.py
+|   |-- admin.py
+|   |-- apps.py
+|   |-- filters.py
+|   |-- models.py
+|   |-- serializers.py
+|   |-- tests.py
+|   |-- urls.py
+|   -- views.py
+|-- config
+|   |-- __init__.py
+|   |-- asgi.py
+|   |-- settings.py
+|   |-- urls.py
+|   -- wsgi.py
+|-- media
+|   |-- avatares
+|   |-- Manga
+|   |   |-- BLAME!
+|   |   |   |-- Vol 1_Chap 1_
+|   |   |   |-- Vol 1_Chap 2_
+|   |   |   |-- Vol 1_Chap 3_
+|   |   |   |-- Vol 1_Chap 4_
+|   |   |   |-- Vol 1_Chap 5_
+|   |   |   |-- Vol 1_Chap 6_
+|   |   |   |-- Vol 1_Chap 7_
+|   |   |   |-- Vol 1_Chap 9_
+|   |   |   |-- Vol 2_Chap 10_
+|   |   |   |-- Vol 2_Chap 11_
+|   |   |   |-- Vol 3_Chap 12_
+|   |   |   |-- Vol 3_Chap 13_
+|   |   |   |-- Vol 3_Chap 14_
+|   |   |   |-- Vol 3_Chap 15_
+|   |   |   |-- Vol 3_Chap 16_
+|   |   |   |-- Vol 3_Chap 17_
+|   |   |   |-- Vol 3_Chap 18_
+|   |   |   |-- Vol 3_Chap 19_
+|   |   |   -- Vol 3_Chap 20_
+|   |   |-- Chainsaw Man
+|   |   |   |-- Vol 1_Chap 1_ Un perro y una motosierra
+|   |   |   |-- Vol 1_Chap 2_ El paradero de Pochita
+|   |   |   |-- Vol 1_Chap 3_ Llegada a Tokio
+|   |   |   |-- Vol 1_Chap 4_ Power
+|   |   |   |-- Vol 1_Chap 5_ Cómo sobar tetas
+|   |   |   |-- Vol 1_Chap 6_ Esclavitud
+|   |   |   |-- Vol 1_Chap 7.5_ Extra volumen 1
+|   |   |   |-- Vol 1_Chap 7_ El paradero de Gatito
+|   |   |   |-- Vol 10_Chap 80_ Vida de perros
+|   |   |   |-- Vol 10_Chap 81_ La patita
+|   |   |   |-- Vol 10_Chap 82_ Un desayuno como es debido
+|   |   |   |-- Vol 10_Chap 83_ Muerte, resurrección, Motosierra
+|   |   |   |-- Vol 10_Chap 84_ El héroe del Infierno
+|   |   |   |-- Vol 10_Chap 85_ Éxtasis visceral
+|   |   |   |-- Vol 10_Chap 86_ Cita con Motosierra
+|   |   |   |-- Vol 10_Chap 87_ Chainsaw Man vs. Las terroríficas armas humanas
+|   |   |   |-- Vol 10_Chap 88_ Star Chainsaw
+|   |   |   |-- Vol 11_Chap 227_ Sabor a gambas y sangre
+|   |   |   |-- Vol 11_Chap 89_ ¡Tú puedes, Chainsaw Man!
+|   |   |   |-- Vol 11_Chap 90_ MegaPower
+|   |   |   |-- Vol 11_Chap 91_ Power, Power, Power
+|   |   |   |-- Vol 11_Chap 92_ Vanilla Sky
+|   |   |   |-- Vol 11_Chap 93_ Una peli malísima contigo
+|   |   |   |-- Vol 11_Chap 94_ Chainsaw Man vs. las armas humanas
+|   |   |   |-- Vol 11_Chap 95_ Chainsaw Man vs. el Demonio del Control
+|   |   |   |-- Vol 11_Chap 96_ Este sabor
+|   |   |   |-- Vol 11_Chap 97_ I Love Chainsaw
+|   |   |   |-- Vol 18_Chap 182_ Carita mona
+|   |   |   |-- Vol 18_Chap 183_ Regurgitación, cara, excitación
+|   |   |   |-- Vol 18_Chap 184_ Corre, Denji
+|   |   |   |-- Vol 18_Chap 185_ Un estómago de otro mundo
+|   |   |   |-- Vol 2_Chap 10_ Kon
+|   |   |   |-- Vol 2_Chap 11_ Compromiso
+|   |   |   |-- Vol 2_Chap 12_ Tocamiento
+|   |   |   |-- Vol 2_Chap 13_ El Demonio Pistola
+|   |   |   |-- Vol 2_Chap 14_ Beso con lengua
+|   |   |   |-- Vol 2_Chap 15_ La eterna octava planta
+|   |   |   |-- Vol 2_Chap 16.5_ Extras volumen 2
+|   |   |   |-- Vol 2_Chap 16_ Un sabor desconocido
+|   |   |   |-- Vol 2_Chap 8_ Motosierra contra Murciélago
+|   |   |   |-- Vol 2_Chap 9_ Rescate
+|   |   |   |-- Vol 20_Chap 178_ La estatua de la pistola
+|   |   |   |-- Vol 20_Chap 179_ Bramburbreba
+|   |   |   |-- Vol 20_Chap 180_ El mundo de la senectud
+|   |   |   |-- Vol 20_Chap 181_ Árboles extraños
+|   |   |   |-- Vol 20_Chap 186_ Ploch, chuof, ziiin
+|   |   |   |-- Vol 20_Chap 187_ ¡A vomitar!
+|   |   |   |-- Vol 20_Chap 188_ ​Pulpo, guerra, motosierra
+|   |   |   |-- Vol 20_Chap 189_ Heart pass, octo pass
+|   |   |   |-- Vol 21_Chap 190_ A nuestros respectivos mundos
+|   |   |   |-- Vol 21_Chap 191_ Por algo soy un demonio
+|   |   |   |-- Vol 21_Chap 192_ Cómo disfrutan los demonios
+|   |   |   |-- Vol 21_Chap 193_ Burning KISS
+|   |   |   |-- Vol 21_Chap 194_ El esperado festival cultural
+|   |   |   |-- Vol 21_Chap 195_ Lágrimas de kill me
+|   |   |   |-- Vol 21_Chap 196_ ¡Ha llegado Chainsaw Man!
+|   |   |   |-- Vol 21_Chap 197_ Tres segundos
+|   |   |   |-- Vol 21_Chap 198_ ¡Soy Kiga!
+|   |   |   |-- Vol 21_Chap 201_ ¡El miedo es esto!
+|   |   |   |-- Vol 22_Chap 199_ Un manjar delicioso
+|   |   |   |-- Vol 22_Chap 200_ Dos personas perjudiciales
+|   |   |   |-- Vol 22_Chap 202_ Fusión demoniaca
+|   |   |   |-- Vol 22_Chap 203_ Escudo humano
+|   |   |   |-- Vol 22_Chap 204_ Con una sola vida
+|   |   |   |-- Vol 22_Chap 205_ ¿Quién_
+|   |   |   |-- Vol 22_Chap 206_ Tetas, mujer, disculpa
+|   |   |   |-- Vol 22_Chap 207_ ¡Bam, bam, bam, bam, bam, bam, bam, bam, bam!
+|   |   |   |-- Vol 22_Chap 208_ No quiero hacerlo
+|   |   |   |-- Vol 22_Chap 209_ Armas aterradoras
+|   |   |   |-- Vol 22_Chap 210_ Paz
+|   |   |   |-- Vol 22_Chap 215_ Declaración de guerra
+|   |   |   |-- Vol 23_Chap 211_ Guerra, braguitas, motosierra
+|   |   |   |-- Vol 23_Chap 212_ Una chica estupenda
+|   |   |   |-- Vol 23_Chap 213_ Misión
+|   |   |   |-- Vol 23_Chap 214_ Fuoooh, ñic, puerta
+|   |   |   |-- Vol 23_Chap 216_ La anhelada
+|   |   |   |-- Vol 23_Chap 217_ Dos buenas personas
+|   |   |   |-- Vol 23_Chap 218_ Devórame
+|   |   |   |-- Vol 23_Chap 219_ Los que se han ido
+|   |   |   |-- Vol 23_Chap 220_ Vínculos y Míchigan
+|   |   |   |-- Vol 23_Chap 221_ Batalla segura
+|   |   |   |-- Vol 23_Chap 222_ Denji Man
+|   |   |   |-- Vol 23_Chap 223_ La armadura más resistente
+|   |   |   |-- Vol 23_Chap 224_ Luna, estocada, lanza
+|   |   |   |-- Vol 23_Chap 225_ Vómito, moto, infierno
+|   |   |   |-- Vol 23_Chap 226_ Nido de langostas
+|   |   |   |-- Vol 23_Chap 228_ Paloma
+|   |   |   |-- Vol 23_Chap 229_ El chotacabras jotaka y Asa
+|   |   |   |-- Vol 23_Chap 230_ Sexo y selección natural
+|   |   |   |-- Vol 23_Chap 231_ Adiós, Pochita
+|   |   |   |-- Vol 23_Chap 232_ Gracias, Chainsaw Man
+|   |   |   |-- Vol 3_Chap 17_ Matad a Denji
+|   |   |   |-- Vol 3_Chap 18_ Motosierra contra Eternidad
+|   |   |   |-- Vol 3_Chap 19_ Premio Nobel
+|   |   |   |-- Vol 3_Chap 20_ De copas
+|   |   |   |-- Vol 3_Chap 21_ El sabor de un beso
+|   |   |   |-- Vol 3_Chap 22_ Chupachups con sabor a cola
+|   |   |   |-- Vol 3_Chap 23_ Disparos
+|   |   |   |-- Vol 3_Chap 24_ Maldición
+|   |   |   |-- Vol 3_Chap 25.5_ Extras Volumen 3
+|   |   |   |-- Vol 3_Chap 25_ Fantasma, Serpiente y Motosierra
+|   |   |   |-- Vol 4_Chap 26_ El poder de las armas
+|   |   |   |-- Vol 4_Chap 27_ Desde Kioto
+|   |   |   |-- Vol 4_Chap 28_ Secretos y mentiras
+|   |   |   |-- Vol 4_Chap 29_
+|   |   |   |-- Vol 4_Chap 30_ Aún más en la mierda
+|   |   |   |-- Vol 4_Chap 31_
+|   |   |   |-- Vol 4_Chap 32_ Una y otra vez
+|   |   |   |-- Vol 4_Chap 33_ Empieza la guerra
+|   |   |   |-- Vol 4_Chap 34_ Todos reunidos
+|   |   |   |-- Vol 5_Chap 35_ Menor de edad
+|   |   |   |-- Vol 5_Chap 36_ Katana contra Motosierra
+|   |   |   |-- Vol 5_Chap 37_ Tren, cabeza, motosierra
+|   |   |   |-- Vol 5_Chap 38_ ¡Véngate a gusto!
+|   |   |   |-- Vol 5_Chap 39_ Seguro que lloraré
+|   |   |   |-- Vol 5_Chap 40_ Amor, flor, motosierra
+|   |   |   |-- Vol 5_Chap 41_ Antes de la tormenta
+|   |   |   |-- Vol 5_Chap 42_ Enséñame a nadar
+|   |   |   |-- Vol 5_Chap 43.5_ Extras tomo 5
+|   |   |   |-- Vol 5_Chap 43_ Jean durmió en la iglesia
+|   |   |   |-- Vol 6_Chap 44_ Bum, bum, bum
+|   |   |   |-- Vol 6_Chap 45_ Pronóstico_ explosiones
+|   |   |   |-- Vol 6_Chap 46_ Melodía de una masacre
+|   |   |   |-- Vol 6_Chap 47_ Afortunado con las mujeres
+|   |   |   |-- Vol 6_Chap 48_ Bom, bom ,bom
+|   |   |   |-- Vol 6_Chap 49_ Tornado de tiburones
+|   |   |   |-- Vol 6_Chap 50_ Sharknado
+|   |   |   |-- Vol 6_Chap 51_ Buceo profundo
+|   |   |   |-- Vol 6_Chap 52_ Desamor, flores , motosierra
+|   |   |   |-- Vol 7_Chap 53_ Dentro de un sueño
+|   |   |   |-- Vol 7_Chap 54_ Para ir a Enoshima
+|   |   |   |-- Vol 7_Chap 55_ ¡Vamos allá!
+|   |   |   |-- Vol 7_Chap 56_ Una maldición y una primera vez
+|   |   |   |-- Vol 7_Chap 57_ Repentino
+|   |   |   |-- Vol 7_Chap 58_ Yûtarô Kurose
+|   |   |   |-- Vol 7_Chap 59_ Destrozos
+|   |   |   |-- Vol 7_Chap 60_ Quanxi y sus poseídas matan a 49 hombres
+|   |   |   |-- Vol 7_Chap 61.5_ Extras Tomo 7
+|   |   |   |-- Vol 7_Chap 61_ La presentadora de noticias
+|   |   |   |-- Vol 8_Chap 62_ Aún más destrozos
+|   |   |   |-- Vol 8_Chap 63_ Un viaje al infierno
+|   |   |   |-- Vol 8_Chap 64_ Welcome to the Hell
+|   |   |   |-- Vol 8_Chap 65_ El Demonio de la Oscuridad
+|   |   |   |-- Vol 8_Chap 66_ ¡Guau!
+|   |   |   |-- Vol 8_Chap 67_ La primera Devil Hunter
+|   |   |   |-- Vol 8_Chap 68_ El poder de la oscuridad
+|   |   |   |-- Vol 8_Chap 69_ El poder de la luz
+|   |   |   |-- Vol 8_Chap 70.5_ Extras Tomo 8
+|   |   |   |-- Vol 8_Chap 70_ Rebanar
+|   |   |   |-- Vol 9_Chap 71_ Baño
+|   |   |   |-- Vol 9_Chap 72_ Todos juntos
+|   |   |   |-- Vol 9_Chap 73_ Fin de la normalidad
+|   |   |   |-- Vol 9_Chap 74_ Lo que cuentan las olas
+|   |   |   |-- Vol 9_Chap 75_ 12-S
+|   |   |   |-- Vol 9_Chap 76_ No abras
+|   |   |   |-- Vol 9_Chap 77_ Timbre, timbre, timbre
+|   |   |   |-- Vol 9_Chap 78_ Pelea de bolas de nieve
+|   |   |   -- Vol 9_Chap 79_ Jugar a pasarse la pelota
+|   |   |-- Fire Force
+|   |   |   |-- Vol 1_Chap 0_ Shinda Kusakabe Entra En Accion
+|   |   |   |-- Vol 1_Chap 1_ Debut
+|   |   |   |-- Vol 1_Chap 2_ El Demonio, El Caballero Y La Bruja
+|   |   |   |-- Vol 1_Chap 3_ El Corazon Del Soldado De Fuego
+|   |   |   |-- Vol 1_Chap 4_ El Blasfemio Sospechoso
+|   |   |   |-- Vol 1_Chap 5_ El Torneo De Los Soldados De Fuego Novatos
+|   |   |   |-- Vol 10_Chap 79_ Antes De La Lucha A Muerte
+|   |   |   |-- Vol 10_Chap 80_ La Habilidad De Shou
+|   |   |   |-- Vol 10_Chap 81_ La Fuerza De Voluntad Del Hermano
+|   |   |   |-- Vol 10_Chap 82_ La Proteccion Divina Del Conversor
+|   |   |   |-- Vol 10_Chap 83_ Cuarta Generacion
+|   |   |   |-- Vol 10_Chap 84_ Recuerdos De Hermanos
+|   |   |   |-- Vol 10_Chap 85_ Conspiracion Declarada
+|   |   |   |-- Vol 10_Chap 86_ Recuperacion
+|   |   |   |-- Vol 10_Chap 87_ Doctora Y Llama
+|   |   |   |-- Vol 11_Chap 88_ El Pasado Y El Presente
+|   |   |   |-- Vol 11_Chap 89_ Pasado En Llamas
+|   |   |   |-- Vol 11_Chap 90_ El Final De La Tragedia
+|   |   |   |-- Vol 11_Chap 91_ La Lucha De Los Hombres
+|   |   |   |-- Vol 11_Chap 92_ Remodelacion Del Jefe De Compañia
+|   |   |   |-- Vol 11_Chap 93_ Cuarto Batallon
+|   |   |   |-- Vol 11_Chap 94_ Souichirou Arg
+|   |   |   |-- Vol 11_Chap 95_ Llamas De Furia
+|   |   |   |-- Vol 11_Chap 96_ Colegas Reunidos
+|   |   |   |-- Vol 12_Chap 100_ El Aroma De Las Llamas
+|   |   |   |-- Vol 12_Chap 101_ Tragedia En Llamas
+|   |   |   |-- Vol 12_Chap 102_ Puño Salvaje
+|   |   |   |-- Vol 12_Chap 103_ Tanteando Las Llamas
+|   |   |   |-- Vol 12_Chap 104_ Lazos De Fuego
+|   |   |   |-- Vol 12_Chap 105_ Conclusion
+|   |   |   |-- Vol 12_Chap 97_ El Motivo Del Caballero Rey
+|   |   |   |-- Vol 12_Chap 98_ Shinra vs Arthur
+|   |   |   |-- Vol 12_Chap 99_ Una Nueva Leña
+|   |   |   |-- Vol 13_Chap 106_ Segunda Generacion
+|   |   |   |-- Vol 13_Chap 107_ Sello De Cuernos
+|   |   |   |-- Vol 13_Chap 108_ El Plan Secreto De Licht
+|   |   |   |-- Vol 13_Chap 109_ Momento Critico
+|   |   |   |-- Vol 13_Chap 110_ El Momento De La Eleccion
+|   |   |   |-- Vol 13_Chap 111_ El Proximo Paso
+|   |   |   |-- Vol 13_Chap 112_ Rumbo A Lo Desconocido
+|   |   |   |-- Vol 13_Chap 113_ El Mundo De Fuera
+|   |   |   |-- Vol 13_Chap 114_ Camino Hacia El Oasis
+|   |   |   |-- Vol 14_Chap 115_ Oasis
+|   |   |   |-- Vol 14_Chap 116_ Tierra Sagrada
+|   |   |   |-- Vol 14_Chap 117_ Mal Escondido En Las Llamas
+|   |   |   |-- Vol 14_Chap 118_ Lider
+|   |   |   |-- Vol 14_Chap 119_ El Misterio De Dios
+|   |   |   |-- Vol 14_Chap 120_ Nucleo
+|   |   |   |-- Vol 14_Chap 121_ Un Segundo - 250 Años
+|   |   |   |-- Vol 14_Chap 122_ Mujer Oscura
+|   |   |   |-- Vol 14_Chap 123_ Una Sombra Aparece
+|   |   |   |-- Vol 15_Chap 124_ Heroe Oscuro
+|   |   |   |-- Vol 15_Chap 125_ La Luz Que Nace De La Oscuridad
+|   |   |   |-- Vol 15_Chap 126_ En La Sombra Del Sol
+|   |   |   |-- Vol 15_Chap 127_ Ignicion Frontal
+|   |   |   |-- Vol 15_Chap 128_ Grupal E Individual
+|   |   |   |-- Vol 15_Chap 129_ Los Tuertos Se Enfrentan
+|   |   |   |-- Vol 15_Chap 130_ La Verdad Oculta
+|   |   |   |-- Vol 2_Chap 10_ Una Persona En Llamas Con Conciencia
+|   |   |   |-- Vol 2_Chap 11_ El Heroe Y La Princesa
+|   |   |   |-- Vol 2_Chap 12_ Brigada 5 Y Brigada 8
+|   |   |   |-- Vol 2_Chap 13_ En Espera
+|   |   |   |-- Vol 2_Chap 14_ La Determinacion De La Sagrada Doncella
+|   |   |   |-- Vol 2_Chap 15_ La Guerra Comienza
+|   |   |   |-- Vol 2_Chap 6_ Malicia Para Conocer La Verdad
+|   |   |   |-- Vol 2_Chap 7_ El Diablo Y El Joker
+|   |   |   |-- Vol 2_Chap 8_ Buscando La Verdad
+|   |   |   |-- Vol 2_Chap 9_ Las Preocupaciones De La 8va Division
+|   |   |   |-- Vol 3_Chap 16_ La Locura Del Caballero
+|   |   |   |-- Vol 3_Chap 17_ Shinra Vs Hibana
+|   |   |   |-- Vol 3_Chap 18_ Choque
+|   |   |   |-- Vol 3_Chap 19_ La Promesa De Hibana
+|   |   |   |-- Vol 3_Chap 20_ El Lugar Donde Nacen Las Llamas
+|   |   |   |-- Vol 3_Chap 21_ Inicia La Investigacion
+|   |   |   |-- Vol 3_Chap 22_ Plan De Infiltracion En El Primer Batallon
+|   |   |   |-- Vol 3_Chap 23_ Los Usuarios Del Primer Batallon
+|   |   |   |-- Vol 3_Chap 24_ Shinra Vs Burns
+|   |   |   |-- Vol 3_Chap 25_ Perseguir Al Enemigo
+|   |   |   |-- Vol 4_Chap 26_ Insecto De Las Llamas
+|   |   |   |-- Vol 4_Chap 27_ El Mal Imperdonable
+|   |   |   |-- Vol 4_Chap 28_ Confrontacion
+|   |   |   |-- Vol 4_Chap 29_ Pelea
+|   |   |   |-- Vol 4_Chap 30_ El Hombre Que Esta Detras
+|   |   |   |-- Vol 4_Chap 31_ El Mal Que Se Expande Como Las Llamas
+|   |   |   |-- Vol 4_Chap 32_ Un Nuevo Enemigo
+|   |   |   |-- Vol 4_Chap 33_ Los Heroes Se Reunen
+|   |   |   |-- Vol 4_Chap 34_ Joven Caballero
+|   |   |   |-- Vol 5_Chap 35_ El Hermano Esta Vivo
+|   |   |   |-- Vol 5_Chap 36_ La Formacion De La Octava Brigada
+|   |   |   |-- Vol 5_Chap 37_ Formacion De La Octava Brigada 2da Parte
+|   |   |   |-- Vol 5_Chap 38_ Donde Estan Los Que Visten De Blanco
+|   |   |   |-- Vol 5_Chap 39_ El Extintor Mas Potente
+|   |   |   |-- Vol 5_Chap 40_ La Noche Antes De La Guerra De Asakusa
+|   |   |   |-- Vol 5_Chap 41_ La Alianza De Los Bomberos Del Odio
+|   |   |   |-- Vol 5_Chap 42_ Oubi vs Benimaru
+|   |   |   |-- Vol 6_Chap 43_ El Motivo De La Lucha
+|   |   |   |-- Vol 6_Chap 44_ El séptimo batallón nace
+|   |   |   |-- Vol 6_Chap 45_ La Trampa Planeada
+|   |   |   |-- Vol 6_Chap 46_ Presa o Cazador
+|   |   |   |-- Vol 6_Chap 47_ Lucha De Dos Contra Dos
+|   |   |   |-- Vol 6_Chap 48_ El Orgullo De Asakusa
+|   |   |   |-- Vol 6_Chap 49_ Festival De Peleas
+|   |   |   |-- Vol 6_Chap 50_ ¿Llamas Para Que
+|   |   |   |-- Vol 6_Chap 51_ Copas
+|   |   |   |-- Vol 7_Chap 52_ El Mundo De Las Llamas
+|   |   |   |-- Vol 7_Chap 53_ El Dios De La Forja
+|   |   |   |-- Vol 7_Chap 54_ Aquellos Con Manniobras Secretas
+|   |   |   |-- Vol 7_Chap 55_ Sueño Del Ingeniero
+|   |   |   |-- Vol 7_Chap 56_ El Rey Caballero Cabalgando
+|   |   |   |-- Vol 7_Chap 57_ Dilema
+|   |   |   |-- Vol 7_Chap 58_ Nosotros Somos Familia
+|   |   |   |-- Vol 7_Chap 59_ Llegada
+|   |   |   |-- Vol 7_Chap 60_ Negro, Blanco Y Gris
+|   |   |   |-- Vol 8_Chap 61_ Espada Sagrada
+|   |   |   |-- Vol 8_Chap 62_ Promesa
+|   |   |   |-- Vol 8_Chap 63_ Amigo
+|   |   |   |-- Vol 8_Chap 64_ El Lugar De Entrenamiento
+|   |   |   |-- Vol 8_Chap 65_ Punto De Ignicion
+|   |   |   |-- Vol 8_Chap 66_ Los Resultados De Cada Uno
+|   |   |   |-- Vol 8_Chap 67_ Yendo Al Nether
+|   |   |   |-- Vol 8_Chap 68_ Perdidos En La Oscuridad
+|   |   |   |-- Vol 8_Chap 69_ Maki vs Flail
+|   |   |   |-- Vol 9_Chap 70_ A Quien Proteger
+|   |   |   |-- Vol 9_Chap 71_ Tamaki vs Assault
+|   |   |   |-- Vol 9_Chap 72_ Donde Va La Bala
+|   |   |   |-- Vol 9_Chap 73_ Se Orgulloso
+|   |   |   |-- Vol 9_Chap 74_ La Espada Larga De Relampago
+|   |   |   |-- Vol 9_Chap 75_ Orgullo De La Brigada De Incendio
+|   |   |   |-- Vol 9_Chap 76_ Deseo Perforante
+|   |   |   |-- Vol 9_Chap 77_ Aquel Que Se Conecta
+|   |   |   -- Vol 9_Chap 78_ Hermanos
+|   |   |-- Gachiakuta
+|   |   |   |-- Ch.0088 - אני רוצה לאכול עוגה (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0089 - מציאת מידע (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0090 - השלמה ומטרות (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0091 - קניות מרובות (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0092 - היום החופשי של טאמז'י  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0093 - סוחר המידע קורו (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0094 - ...למקומות (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0095 - שלום, שלום (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0096 - קרב משולש, פחות או יותר (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0097 - שתי ידיים (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0098 - מאבקו של הטינופת  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0099 - אז ככה אתם הולכים לשחק (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0100 - טורי הג'ונגל של הארץ המופקרת  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0101 (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0102 - גם אני מנקה (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0103 - הקופסה  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0104 - ה-קופסה (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0105 - ראו מה הוא מכיל (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0106 - האורבים  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0107 - המבוגר  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0108 - אני רציני, אל תעמדו בדרכנו  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0109 - ...מקום הימצאה של אמו, ו (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0109 - מקום הימצאה של אמו  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0110 -  מעשיו של (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0111 - פנים כוזבות (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0112 - הסחורה  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0113 - זהות מעורפלת  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0114 - נפנופים  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0115 - המנקים (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0116 - רודו סורברק המנקה (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0117 - גיבור הסיפור  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0118 - מוצף (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0119 - משימה ראשונה  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0120 - שקיעת השמש (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0121 - החשיכה יורדת (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0122 - פיצוץ (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0123 - הפנים האמיתיות  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0124 - גם אני (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0125 - גורלו של ההמון חסר הפנים (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0126 - שאל את נשמתך  (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0127 - הפיצוץ סיבוב חוזר (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0128 - ההופעה החוזרת של פולו (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0129 - הצטרפות לצוות (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0130 - הכנה (he) [AnimeIL-TV - אנימה אייאל טיוי]
+|   |   |   |-- Ch.0132 - El festival de las muñecas  (es-la) [Ukogi Fansub]
+|   |   |   |-- Ch.0132 - Le festival des poupées (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0132 - O Festival de Bonecas (pt-br) [Sirius Scanlator]
+|   |   |   |-- Ch.0133 - Too Lily (es-la) [Ukogi Fansub]
+|   |   |   |-- Ch.0133 - Too Lily (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0133 - Too Lily (pt-br) [Sirius Scanlator]
+|   |   |   |-- Ch.0134 - ¡Que comience el espectáculo! (es-la) [Ukogi Fansub]
+|   |   |   |-- Ch.0134 - Hora do Show!! (pt-br) [Sirius Scanlator]
+|   |   |   |-- Ch.0134 - Spectacle !! (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0135 - Encuentro y saludo (es-la) [Ukogi Fansub]
+|   |   |   |-- Ch.0135 - Meet and Greet (pt-br) [Sirius Scanlator]
+|   |   |   |-- Ch.0135 - Rencontre et salutations  (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0136 - Entrega especial (es-la) [Ukogi Fansub]
+|   |   |   |-- Ch.0136 - Entrega Especial (pt-br) [Sirius Scanlator]
+|   |   |   |-- Ch.0136 - Livraison spéciale (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0137 - Le vrai festival de poupées (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0138 - Suprême  (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0139 - Mymo le dirigeant  (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0140 - Faiblesse (Partie 1) (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0140.2 - Faiblesse (Partie 2) (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0141 - Mains (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0142 - Points d’expérience  (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0143 - Danger (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0144 - Simple (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0145 - Skadoosh (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0146 - C’est de la balle (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0147 - Faiblesse (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0148 - Connexion (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0149 - Jinki Connect (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0150 - Attends-moi (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0151 - Quelque chose d’inhumain  (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0152 - Croisement de regards avec cette chose étrange (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0153 - Flamme (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0154 - Ce que tu peux faire (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0155 - La source du pouvoir  (fr) [Hikeshi Scans]
+|   |   |   |-- Ch.0156 - Les anciens souverains  (fr) [Kiseki FR]
+|   |   |   |-- Ch.0157 - La raison de ma confiance (fr) [Kiseki FR]
+|   |   |   |-- Ch.0158 - Le doux et gentil vengeur  (fr) [Kiseki FR]
+|   |   |   |-- Ch.0159 - Intérim  (fr) [Kiseki FR]
+|   |   |   |-- Ch.0160 - Ouverture (fr) [Kiseki FR]
+|   |   |   |-- Ch.0161 - Abertura (pt-br) [Sirius Scanlator]
+|   |   |   |-- Ch.0161 - Ouverture  (fr) [Kiseki FR]
+|   |   |   |-- Ch.0162 - Papy !!  (fr) [Kiseki FR]
+|   |   |   |-- Ch.0162 - Vovô!! (pt-br) [Sirius Scanlator]
+|   |   |   |-- Ch.0162.2 - Représailles (fr) [Kiseki FR]
+|   |   |   |-- Ch.0163 - Sixième sens (fr) [Kiseki FR]
+|   |   |   |-- Ch.0164 - El Sexto... (es-la) [Uchuujin 宇宙人]
+|   |   |   |-- Ch.0164 - Le sixième (fr) [Kiseki FR]
+|   |   |   |-- Ch.0165 - Un nom (fr) [Kiseki FR]
+|   |   |   |-- Ch.0165 - Un Nombre (es-la) [Uchuujin 宇宙人]
+|   |   |   |-- Ch.0166 - Obsesión (es-la) [Varhutt]
+|   |   |   |-- Ch.0166 - OBSESSION (fr) [Kiseki FR]
+|   |   |   |-- Ch.0166 (pt-br)
+|   |   |   -- Vol.09 Ch.0068 - No Subestimes a los Niños (es)
+|   |   |-- Horimiya
+|   |   |   |-- Last Heaven Fansub_Vol.1 Ch.1
+|   |   |   |-- Last Heaven Fansub_Vol.1 Ch.2
+|   |   |   |-- Last Heaven Fansub_Vol.1 Ch.3
+|   |   |   |-- Last Heaven Fansub_Vol.1 Ch.4
+|   |   |   |-- Last Heaven Fansub_Vol.1 Ch.5
+|   |   |   |-- Last Heaven Fansub_Vol.1 Ch.6
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.64
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.65
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.66
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.67
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.68
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.69
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.70
+|   |   |   |-- Last Heaven Fansub_Vol.10 Ch.71
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.72
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.73
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.74
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.75
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.76
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.77
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.78
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.79
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.80
+|   |   |   |-- Last Heaven Fansub_Vol.11 Ch.81
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.82
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.83
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.84
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.85
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.86
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.87
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.88
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.89
+|   |   |   |-- Last Heaven Fansub_Vol.12 Ch.90
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.91
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.92
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.93
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.94
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.95
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.96
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.97
+|   |   |   |-- Last Heaven Fansub_Vol.13 Ch.98
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.10
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.11
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.12
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.13
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.13.5
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.7
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.8
+|   |   |   |-- Last Heaven Fansub_Vol.2 Ch.9
+|   |   |   |-- Last Heaven Fansub_Vol.3 Ch.14
+|   |   |   |-- Last Heaven Fansub_Vol.3 Ch.15
+|   |   |   |-- Last Heaven Fansub_Vol.3 Ch.16
+|   |   |   |-- Last Heaven Fansub_Vol.3 Ch.17
+|   |   |   |-- Last Heaven Fansub_Vol.3 Ch.18
+|   |   |   |-- Last Heaven Fansub_Vol.3 Ch.19
+|   |   |   |-- Last Heaven Fansub_Vol.3 Ch.20
+|   |   |   |-- Last Heaven Fansub_Vol.4 Ch.21
+|   |   |   |-- Last Heaven Fansub_Vol.4 Ch.22
+|   |   |   |-- Last Heaven Fansub_Vol.4 Ch.23
+|   |   |   |-- Last Heaven Fansub_Vol.4 Ch.24
+|   |   |   |-- Last Heaven Fansub_Vol.4 Ch.25
+|   |   |   |-- Last Heaven Fansub_Vol.4 Ch.26
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.27
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.28
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.29
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.30
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.31
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.32
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.33
+|   |   |   |-- Last Heaven Fansub_Vol.5 Ch.34
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.35
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.36
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.37
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.38
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.39
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.40
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.41
+|   |   |   |-- Last Heaven Fansub_Vol.6 Ch.42
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.43
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.44
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.45
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.46
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.47
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.48
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.49
+|   |   |   |-- Last Heaven Fansub_Vol.7 Ch.50
+|   |   |   |-- Last Heaven Fansub_Vol.8 Ch.51
+|   |   |   |-- Last Heaven Fansub_Vol.8 Ch.52
+|   |   |   |-- Last Heaven Fansub_Vol.8 Ch.53
+|   |   |   |-- Last Heaven Fansub_Vol.8 Ch.54
+|   |   |   |-- Last Heaven Fansub_Vol.8 Ch.55
+|   |   |   |-- Last Heaven Fansub_Vol.8 Ch.56
+|   |   |   |-- Last Heaven Fansub_Vol.9 Ch.57
+|   |   |   |-- Last Heaven Fansub_Vol.9 Ch.58
+|   |   |   |-- Last Heaven Fansub_Vol.9 Ch.59
+|   |   |   |-- Last Heaven Fansub_Vol.9 Ch.60
+|   |   |   |-- Last Heaven Fansub_Vol.9 Ch.61
+|   |   |   |-- Last Heaven Fansub_Vol.9 Ch.62
+|   |   |   -- Last Heaven Fansub_Vol.9 Ch.63
+|   |   |-- Kimetsu no Yaiba Rengoku Kyojuro Gaiden
+|   |   |   -- 1                      Parte 1
+|   |   |-- Misuto's Anatomy Records
+|   |   |   -- Capítulo 1 OneShot
+|   |   |-- One Piece
+|   |   |   |-- Vol 1_Chap 1_ Romance Dawn - Amanecer de la aventura
+|   |   |   |-- Vol 1_Chap 2_ El hombre del sombrero de paja, Luffy
+|   |   |   |-- Vol 1_Chap 3_ Zoro, el cazador de piratas
+|   |   |   |-- Vol 1_Chap 4_ El Capitan Morgan, _El del brazo de hacha_
+|   |   |   |-- Vol 1_Chap 5_ El rey de los piratas
+|   |   |   |-- Vol 1_Chap 6_ El primero
+|   |   |   |-- Vol 1_Chap 7_ Amigos
+|   |   |   |-- Vol 1_Chap 8_ Aparece Nami
+|   |   |   |-- Vol 10_Chap 82_ OK, Let's STAND UP!
+|   |   |   |-- Vol 10_Chap 83_ Luffy de negro
+|   |   |   |-- Vol 10_Chap 84_ Zombi
+|   |   |   |-- Vol 10_Chap 85_ Estilo de 3 espadas vs. estilo de 6 espadas
+|   |   |   |-- Vol 10_Chap 86_ Caballerosidad vs. Gyojin karate
+|   |   |   |-- Vol 10_Chap 87_ !!Se acabo!!
+|   |   |   |-- Vol 10_Chap 88_ !!!Muere!!!
+|   |   |   |-- Vol 10_Chap 89_ Cambio
+|   |   |   |-- Vol 10_Chap 90_ _Que puedes hacer_
+|   |   |   |-- Vol 11_Chap 91_ DARTS
+|   |   |   |-- Vol 11_Chap 92_ Felicidad
+|   |   |   |-- Vol 11_Chap 93_ En picado
+|   |   |   |-- Vol 11_Chap 94_ La segunda persona
+|   |   |   |-- Vol 11_Chap 95_ Gira, molinillo
+|   |   |   |-- Vol 11_Chap 96_ Los mas malos del Este
+|   |   |   |-- Vol 11_Chap 97_ El tercer Kitetsu
+|   |   |   |-- Vol 11_Chap 98_ Nubes negras
+|   |   |   |-- Vol 11_Chap 99_ Luffy muere
+|   |   |   |-- Vol 111_Chap 1127_ Aventura en un  país misterioso
+|   |   |   |-- Vol 112_Chap 1128_ RPG
+|   |   |   |-- Vol 112_Chap 1129_ Liv Doll
+|   |   |   |-- Vol 112_Chap 1130_ El príncipe maldito
+|   |   |   |-- Vol 112_Chap 1131_ Loki del inframundo
+|   |   |   |-- Vol 112_Chap 1132_ Aventura en Elbaph
+|   |   |   |-- Vol 112_Chap 1133_ Quiero que me elogies
+|   |   |   |-- Vol 112_Chap 1134_ La biblioteca del búho
+|   |   |   |-- Vol 112_Chap 1135_ Copa de la amistad
+|   |   |   |-- Vol 112_Chap 1136_ El país que espera al sol
+|   |   |   |-- Vol 112_Chap 1137_ Shamrock entra en escena
+|   |   |   |-- Vol 113_Chap 1138_ Haley
+|   |   |   |-- Vol 113_Chap 1139_ El devoramontañas
+|   |   |   |-- Vol 113_Chap 1140_ Scopper Gaban
+|   |   |   |-- Vol 113_Chap 1141_ La mujer mayor
+|   |   |   |-- Vol 113_Chap 1142_ Lo que me asusta
+|   |   |   |-- Vol 113_Chap 1143_ Los Caballeros de Dios
+|   |   |   |-- Vol 113_Chap 1144_ Tiempo de guerreros
+|   |   |   |-- Vol 113_Chap 1145_ Incendio en el segundo barrio del octavo distrito del camino de árboles
+|   |   |   |-- Vol 113_Chap 1146_ Hay movimiento en la quietud
+|   |   |   |-- Vol 113_Chap 1147_ Lo que nos asusta
+|   |   |   |-- Vol 113_Chap 1148_ Ronja
+|   |   |   |-- Vol 114_Chap 1149_ Un segundo
+|   |   |   |-- Vol 114_Chap 1150_ Domi Reversi
+|   |   |   |-- Vol 114_Chap 1151_ ¡¡Ya basta, lo he entendido!!
+|   |   |   |-- Vol 114_Chap 1152_ Un día muy cruel
+|   |   |   |-- Vol 114_Chap 1153_ El nacimiento de Loki
+|   |   |   |-- Vol 114_Chap 1154_ Ni siquiera me puedo morir
+|   |   |   |-- Vol 114_Chap 1155_ La banda de piratas de Rocks
+|   |   |   |-- Vol 114_Chap 1156_ Idol
+|   |   |   |-- Vol 114_Chap 1157_ El bar legendario
+|   |   |   |-- Vol 114_Chap 1158_ Rocks vs. Harald
+|   |   |   |-- Vol 114_Chap 1159_ La isla del destino
+|   |   |   |-- Vol 115_Chap 1160_ El incidente de God Valley
+|   |   |   |-- Vol 115_Chap 1161_ La canción de amor que soporta la lluvia de flechas
+|   |   |   |-- Vol 115_Chap 1162_ BCGV (Batalla Campal en God Valley)
+|   |   |   |-- Vol 115_Chap 1163_ Promesa
+|   |   |   |-- Vol 115_Chap 1164_ La sangre de Davy
+|   |   |   |-- Vol 115_Chap 1165_ Reverberación
+|   |   |   |-- Vol 115_Chap 1166_ Una nueva historia
+|   |   |   |-- Vol 115_Chap 1167_ El hijo de Ida
+|   |   |   |-- Vol 115_Chap 1168_ La nieve de Elbaph
+|   |   |   |-- Vol 115_Chap 1169_ Tengo que morir cuanto antes
+|   |   |   |-- Vol 115_Chap 1170_ Opuesto
+|   |   |   |-- Vol 116_Chap 1171_ Ragnir
+|   |   |   |-- Vol 116_Chap 1172_ La Elbaph que yo admiraba
+|   |   |   |-- Vol 116_Chap 1173_ La generación de los guerreros
+|   |   |   |-- Vol 116_Chap 1174_ El más fuerte del mundo
+|   |   |   |-- Vol 116_Chap 1175_ Nidhogg
+|   |   |   |-- Vol 116_Chap 1176_ Con orgullo
+|   |   |   |-- Vol 116_Chap 1177_ Furia
+|   |   |   |-- Vol 116_Chap 1178_ Despertando de la Pesdilla
+|   |   |   |-- Vol 116_Chap 1179_ El descenso de Nerona Imu
+|   |   |   |-- Vol 116_Chap 1180_ Presagio
+|   |   |   |-- Vol 116_Chap 1181_ Dios y el diablo
+|   |   |   |-- Vol 117_Chap 1182_ Zaza
+|   |   |   |-- Vol 12_Chap 100_ La leyenda ha comenzado
+|   |   |   |-- Vol 12_Chap 101_ Reverse Mountain
+|   |   |   |-- Vol 12_Chap 102_ Y ahora, Grand Line
+|   |   |   |-- Vol 12_Chap 103_ La Ballena
+|   |   |   |-- Vol 12_Chap 104_ La promesa del cabo
+|   |   |   |-- Vol 12_Chap 105_ Log Pose
+|   |   |   |-- Vol 12_Chap 106_ El pueblo de las celebraciones
+|   |   |   |-- Vol 12_Chap 107_ Luz de luna y lapidas
+|   |   |   |-- Vol 12_Chap 108_ 100 Cazarrecompensas
+|   |   |   |-- Vol 13_Chap 109_ Un problema de responsabilidad
+|   |   |   |-- Vol 13_Chap 110_ No termina la noche
+|   |   |   |-- Vol 13_Chap 111_ Organizacion criminal secreta
+|   |   |   |-- Vol 13_Chap 112_ Luffy vs. Zoro
+|   |   |   |-- Vol 13_Chap 113_ !!!Esta bien!!!
+|   |   |   |-- Vol 13_Chap 114_ Ruta
+|   |   |   |-- Vol 13_Chap 115_ Aventura en Little Garden
+|   |   |   |-- Vol 13_Chap 116_ Gigantesco
+|   |   |   |-- Vol 13_Chap 117_ Dorry y Brogy
+|   |   |   |-- Vol 14_Chap 118_ Hay alguien
+|   |   |   |-- Vol 14_Chap 119_ Provisional
+|   |   |   |-- Vol 14_Chap 120_ El ogro rojo ha llorado
+|   |   |   |-- Vol 14_Chap 121_ Ya lo sabia
+|   |   |   |-- Vol 14_Chap 122_ Los muertos no sirven de ayuda
+|   |   |   |-- Vol 14_Chap 123_ Luffy contra Mr. 3
+|   |   |   |-- Vol 14_Chap 124_ !Que bueno esta el te!
+|   |   |   |-- Vol 14_Chap 125_ Candle Champion
+|   |   |   |-- Vol 14_Chap 126_ Instinto
+|   |   |   |-- Vol 15_Chap 127_ Den Den Mushi
+|   |   |   |-- Vol 15_Chap 128_ Orgullo de Pirata
+|   |   |   |-- Vol 15_Chap 129_ !!!Todo recto!!!
+|   |   |   |-- Vol 15_Chap 130_ Velocidad maxima
+|   |   |   |-- Vol 15_Chap 131_ Wapol el Bliking
+|   |   |   |-- Vol 15_Chap 132_ _Ves_
+|   |   |   |-- Vol 15_Chap 133_ Aventura en el pais sin nombre
+|   |   |   |-- Vol 15_Chap 134_ Dra. Kureha
+|   |   |   |-- Vol 15_Chap 135_ Lapahn
+|   |   |   |-- Vol 15_Chap 136_ Un hombre llamado Dalton
+|   |   |   |-- Vol 16_Chap 137_ Avalancha
+|   |   |   |-- Vol 16_Chap 138_ Cumbre
+|   |   |   |-- Vol 16_Chap 139_ Aparece Tony Tony Chopper
+|   |   |   |-- Vol 16_Chap 140_ Castillo en la nieve
+|   |   |   |-- Vol 16_Chap 141_ Curandero
+|   |   |   |-- Vol 16_Chap 142_ Calaveras y cerezos
+|   |   |   |-- Vol 16_Chap 143_ Inexperto
+|   |   |   |-- Vol 16_Chap 144_ Historia de nieve
+|   |   |   |-- Vol 16_Chap 145_ Voluntad heredada
+|   |   |   |-- Vol 17_Chap 146_ Batalla de defensa del reino
+|   |   |   |-- Vol 17_Chap 147_ Fraude
+|   |   |   |-- Vol 17_Chap 148_ Indestrozable
+|   |   |   |-- Vol 17_Chap 149_ !!RUMBLE!!
+|   |   |   |-- Vol 17_Chap 150_ Royal Drum Crown 7-Shot Bliking Cannon
+|   |   |   |-- Vol 17_Chap 151_ Cielos de Drum
+|   |   |   |-- Vol 17_Chap 152_ Luna llena
+|   |   |   |-- Vol 17_Chap 153_ Los cerezos de Hiruluk
+|   |   |   |-- Vol 17_Chap 154_ A Arabasta
+|   |   |   |-- Vol 17_Chap 155_ Sir Crocodile, el pirata
+|   |   |   |-- Vol 18_Chap 156_ El tiempo de Okama
+|   |   |   |-- Vol 18_Chap 157_ Aparece Ace
+|   |   |   |-- Vol 18_Chap 158_ Desembarco en Arabasta
+|   |   |   |-- Vol 18_Chap 159_ Ven
+|   |   |   |-- Vol 18_Chap 160_ Spiders Cafe, a las 8 en punto
+|   |   |   |-- Vol 18_Chap 161_ La ciudad verde, Erumalu
+|   |   |   |-- Vol 18_Chap 162_ Aventura en el Reino de Arena
+|   |   |   |-- Vol 18_Chap 163_ Yuba, el pueblo rebelde
+|   |   |   |-- Vol 18_Chap 164_ Amo mi pais
+|   |   |   |-- Vol 18_Chap 165_ Operacion Utopia
+|   |   |   |-- Vol 18_Chap 166_ Luffy vs. Vivi
+|   |   |   |-- Vol 19_Chap 167_ El frente de batalla
+|   |   |   |-- Vol 19_Chap 168_ Rainbase, la cuidad de los suenos
+|   |   |   |-- Vol 19_Chap 169_ El guerrero mas fuerte del reino
+|   |   |   |-- Vol 19_Chap 170_ Empezando
+|   |   |   |-- Vol 19_Chap 171_ Kohza, lider de los rebeldes
+|   |   |   |-- Vol 19_Chap 172_ Rebelion
+|   |   |   |-- Vol 19_Chap 173_ Bananawani
+|   |   |   |-- Vol 19_Chap 174_ Mr. Prince
+|   |   |   |-- Vol 19_Chap 175_ Liberacion
+|   |   |   |-- Vol 19_Chap 176_ !!Rush!!
+|   |   |   |-- Vol 2_Chap 10_ Un suceso en el mar
+|   |   |   |-- Vol 2_Chap 11_ La Huida
+|   |   |   |-- Vol 2_Chap 12_ El Perro
+|   |   |   |-- Vol 2_Chap 13_ El Tesoro
+|   |   |   |-- Vol 2_Chap 14_ !Temeridad!
+|   |   |   |-- Vol 2_Chap 15_ Gong
+|   |   |   |-- Vol 2_Chap 16_ Versus!! Los Piratas de Buggy
+|   |   |   |-- Vol 2_Chap 17_ Nivel
+|   |   |   |-- Vol 2_Chap 9_ Mujer peligrosa
+|   |   |   |-- Vol 20_Chap 177_ 30 Millones vs. 81 Millones
+|   |   |   |-- Vol 20_Chap 178_ Nivel G.L
+|   |   |   |-- Vol 20_Chap 179_ Batalla decisiva en Alubarna
+|   |   |   |-- Vol 20_Chap 180_ Arabasta reino animal
+|   |   |   |-- Vol 20_Chap 181_ Concurso del superpato mandado
+|   |   |   |-- Vol 20_Chap 182_ Rugido
+|   |   |   |-- Vol 20_Chap 183_ Capitan Carue
+|   |   |   |-- Vol 20_Chap 184_ Calle Montetopo numero 4
+|   |   |   |-- Vol 20_Chap 185_ Genial
+|   |   |   |-- Vol 20_Chap 186_ 4
+|   |   |   |-- Vol 21_Chap 187_ Igualdad
+|   |   |   |-- Vol 21_Chap 188_ Kenpo Okama
+|   |   |   |-- Vol 21_Chap 189_ 2
+|   |   |   |-- Vol 21_Chap 190_ Clima Tact
+|   |   |   |-- Vol 21_Chap 191_ La mujer que controla el clima
+|   |   |   |-- Vol 21_Chap 192_ Se avecina un tornado
+|   |   |   |-- Vol 21_Chap 193_ Utopia
+|   |   |   |-- Vol 21_Chap 194_ Cortando el acero
+|   |   |   |-- Vol 21_Chap 195_ Mr. Bushido
+|   |   |   |-- Vol 22_Chap 196_ 1
+|   |   |   |-- Vol 22_Chap 197_ Los lideres
+|   |   |   |-- Vol 22_Chap 198_ 0.677083333333333
+|   |   |   |-- Vol 22_Chap 199_ !!Esperanza!!
+|   |   |   |-- Vol 22_Chap 200_ Luffy de agua
+|   |   |   |-- Vol 22_Chap 201_ Nico Robin
+|   |   |   |-- Vol 22_Chap 202_ La cripta real
+|   |   |   |-- Vol 22_Chap 203_ Crocodriloso
+|   |   |   |-- Vol 22_Chap 204_ Rojo
+|   |   |   |-- Vol 22_Chap 205_ La base secreta del clan Suna Suna
+|   |   |   |-- Vol 23_Chap 206_ Ignicion
+|   |   |   |-- Vol 23_Chap 207_ Pesadilla
+|   |   |   |-- Vol 23_Chap 208_ Espiritu guardian
+|   |   |   |-- Vol 23_Chap 209_ Superarte
+|   |   |   |-- Vol 23_Chap 210_ 0
+|   |   |   |-- Vol 23_Chap 211_ Rey
+|   |   |   |-- Vol 23_Chap 212_ Un poco de justicia
+|   |   |   |-- Vol 23_Chap 213_ VIP
+|   |   |   |-- Vol 23_Chap 214_ Plan para escapar del Reino de Arena
+|   |   |   |-- Vol 23_Chap 215_ El ultimo vals
+|   |   |   |-- Vol 23_Chap 216_ La aventura de Vivi
+|   |   |   |-- Vol 24_Chap 217_ Polizon
+|   |   |   |-- Vol 24_Chap 218_ El Log pose esferico
+|   |   |   |-- Vol 24_Chap 219_ Masira, el rey de salvamento
+|   |   |   |-- Vol 24_Chap 220_ Paseando en el fondo marino
+|   |   |   |-- Vol 24_Chap 221_ Monstruos
+|   |   |   |-- Vol 24_Chap 222_ Grandes novatos
+|   |   |   |-- Vol 24_Chap 223_ Prometo no pelear en este pueblo
+|   |   |   |-- Vol 24_Chap 224_ Sin suenos
+|   |   |   |-- Vol 24_Chap 225_ El sueno de un hombre
+|   |   |   |-- Vol 24_Chap 226_ Sh_j_, rey de busquedas bajo el mar
+|   |   |   |-- Vol 25_Chap 227_ El mentiroso Norland
+|   |   |   |-- Vol 25_Chap 228_ Lider de la Alianza Saruyama, Cricket Montblanc
+|   |   |   |-- Vol 25_Chap 229_ Comamos
+|   |   |   |-- Vol 25_Chap 230_ !!Tras el Southbird!!
+|   |   |   |-- Vol 25_Chap 231_ Bellamy la Hiena
+|   |   |   |-- Vol 25_Chap 232_ El hombre de los cien millones
+|   |   |   |-- Vol 25_Chap 233_ La mayor autoridad en el mundo
+|   |   |   |-- Vol 25_Chap 234_ Como confiar en su memoria
+|   |   |   |-- Vol 25_Chap 235_ Knock Up Stream
+|   |   |   |-- Vol 25_Chap 236_ El barco va hacia el cielo
+|   |   |   |-- Vol 26_Chap 237_ En el cielo
+|   |   |   |-- Vol 26_Chap 238_ Puerta del paraiso
+|   |   |   |-- Vol 26_Chap 239_ Angel Beach
+|   |   |   |-- Vol 26_Chap 240_ Dial energy
+|   |   |   |-- Vol 26_Chap 241_ El juicio del cielo
+|   |   |   |-- Vol 26_Chap 242_ Criminales clase 2
+|   |   |   |-- Vol 26_Chap 243_ Pruebas
+|   |   |   |-- Vol 26_Chap 244_ SOS
+|   |   |   |-- Vol 26_Chap 245_ Aventura en la isla de Dios
+|   |   |   |-- Vol 26_Chap 246_ Satori, sacerdote del Bosque Maya
+|   |   |   |-- Vol 27_Chap 247_ Prueba de las esferas
+|   |   |   |-- Vol 27_Chap 248_ Dios original vs. sacerdote
+|   |   |   |-- Vol 27_Chap 249_ La villa oculta entre las nubes
+|   |   |   |-- Vol 27_Chap 250_ Dragon de esferas
+|   |   |   |-- Vol 27_Chap 251_ Overture
+|   |   |   |-- Vol 27_Chap 252_ Junction
+|   |   |   |-- Vol 27_Chap 253_ Verse
+|   |   |   |-- Vol 27_Chap 254_ Aubade
+|   |   |   |-- Vol 27_Chap 255_ El anaconda y el equipo de la busqueda
+|   |   |   |-- Vol 28_Chap 256_ Wiper el Demonio de la Guerra
+|   |   |   |-- Vol 28_Chap 257_ Dial Battle
+|   |   |   |-- Vol 28_Chap 258_ De varias formas al sur
+|   |   |   |-- Vol 28_Chap 259_ El pirata Zoro vs. el guerrero Braham
+|   |   |   |-- Vol 28_Chap 260_ El pirata Luffy vs. Wiper el Demonio de la Guerra
+|   |   |   |-- Vol 28_Chap 261_ El guerrero Genbou vs. Yama el Lider de la Guardia Divina
+|   |   |   |-- Vol 28_Chap 262_ El pirata Chopper vs. el Sacerdote Gedatsu
+|   |   |   |-- Vol 28_Chap 263_ La pirata Nami y el Caballero errante vs. Guardianes Divinos Hotori y Kotori
+|   |   |   |-- Vol 28_Chap 264_ El guerrero Kamakiri vs. God Enel
+|   |   |   |-- Vol 29_Chap 265_ La pirata Robin vs. Yama el Lider de la Guardia Divina
+|   |   |   |-- Vol 29_Chap 266_ El pirata Chopper vs. el Sacerdote Aum
+|   |   |   |-- Vol 29_Chap 267_ March
+|   |   |   |-- Vol 29_Chap 268_ Suite
+|   |   |   |-- Vol 29_Chap 269_ Concerto
+|   |   |   |-- Vol 29_Chap 270_ Serenade
+|   |   |   |-- Vol 29_Chap 271_ El pirata Zoro vs. el Sacerdote Ohm
+|   |   |   |-- Vol 29_Chap 272_ Play
+|   |   |   |-- Vol 29_Chap 273_ Quintet
+|   |   |   |-- Vol 29_Chap 274_ Oratorio
+|   |   |   |-- Vol 29_Chap 275_ Divina Comedia
+|   |   |   |-- Vol 3_Chap 18_ El pirata, Buggy el payaso
+|   |   |   |-- Vol 3_Chap 19_ Akuma no Mi
+|   |   |   |-- Vol 3_Chap 20_ La senda del ladron
+|   |   |   |-- Vol 3_Chap 21_ La Ciudad
+|   |   |   |-- Vol 3_Chap 22_ Animales exoticos
+|   |   |   |-- Vol 3_Chap 23_ Aparece el Capitan Usuff
+|   |   |   |-- Vol 3_Chap 24_ Evidencia
+|   |   |   |-- Vol 3_Chap 25_ Mentiras a granel
+|   |   |   |-- Vol 3_Chap 26_ El plan del Capitan Kuro
+|   |   |   |-- Vol 30_Chap 276_ Shandia Rhythm
+|   |   |   |-- Vol 30_Chap 277_ Maxim
+|   |   |   |-- Vol 30_Chap 278_ Conis
+|   |   |   |-- Vol 30_Chap 279_ El pirata Luffy vs. God Enel
+|   |   |   |-- Vol 30_Chap 280_ Emergencia
+|   |   |   |-- Vol 30_Chap 281_ Despiea
+|   |   |   |-- Vol 30_Chap 282_ Deseo
+|   |   |   |-- Vol 30_Chap 283_ Frente del rescate del amor
+|   |   |   |-- Vol 30_Chap 284_ Gracias
+|   |   |   |-- Vol 30_Chap 285_ Capriccio
+|   |   |   |-- Vol 31_Chap 286_ El monstruo de Shandora
+|   |   |   |-- Vol 31_Chap 287_ Asesino de Dios
+|   |   |   |-- Vol 31_Chap 288_ Maldicion
+|   |   |   |-- Vol 31_Chap 289_ Luna llena
+|   |   |   |-- Vol 31_Chap 290_ La luz de Shandora
+|   |   |   |-- Vol 31_Chap 291_ Estoy aqui
+|   |   |   |-- Vol 31_Chap 292_ Encontrar la luna rota a traves de las nubes
+|   |   |   |-- Vol 31_Chap 293_ Bolero
+|   |   |   |-- Vol 31_Chap 294_ Raigoh
+|   |   |   |-- Vol 31_Chap 295_ Giant Jack
+|   |   |   |-- Vol 32_Chap 296_ Situacion de altos vuelos
+|   |   |   |-- Vol 32_Chap 297_ Rezar por la tierra
+|   |   |   |-- Vol 32_Chap 298_ Love song
+|   |   |   |-- Vol 32_Chap 299_ Fantasia
+|   |   |   |-- Vol 32_Chap 300_ Sinfonia
+|   |   |   |-- Vol 32_Chap 301_ Estuve aqui
+|   |   |   |-- Vol 32_Chap 302_ Finale
+|   |   |   |-- Vol 32_Chap 303_ Los piratas super ricos
+|   |   |   |-- Vol 32_Chap 304_ Adventura en Long Island
+|   |   |   |-- Vol 32_Chap 305_ Foxy el Zorro Platedo
+|   |   |   |-- Vol 33_Chap 306_ Donut Race!!
+|   |   |   |-- Vol 33_Chap 307_ Read~y, Donut!!
+|   |   |   |-- Vol 33_Chap 308_ El magnifico plan de interferencia
+|   |   |   |-- Vol 33_Chap 309_ Groggy Monsters
+|   |   |   |-- Vol 33_Chap 310_ Groggy Ring!!
+|   |   |   |-- Vol 33_Chap 311_ Rough Game
+|   |   |   |-- Vol 33_Chap 312_ Goal!!
+|   |   |   |-- Vol 33_Chap 313_ Main Event
+|   |   |   |-- Vol 33_Chap 314_ Combat!!!
+|   |   |   |-- Vol 33_Chap 315_ La habitacion secreta
+|   |   |   |-- Vol 33_Chap 316_ Brother Soul
+|   |   |   |-- Vol 34_Chap 317_ K.O
+|   |   |   |-- Vol 34_Chap 318_ Conclusion
+|   |   |   |-- Vol 34_Chap 319_ Almirante del cuartel general de la marina, Aokiji
+|   |   |   |-- Vol 34_Chap 320_ La mayor fuerza militar
+|   |   |   |-- Vol 34_Chap 321_ Mano a mano
+|   |   |   |-- Vol 34_Chap 322_ Puffing Tom
+|   |   |   |-- Vol 34_Chap 323_ La Capital de Agua, Water Seven
+|   |   |   |-- Vol 34_Chap 324_ Aventura en la ciudad de agua
+|   |   |   |-- Vol 34_Chap 325_ La Franky Family
+|   |   |   |-- Vol 34_Chap 326_ Iceberg-san
+|   |   |   |-- Vol 34_Chap 327_ Zousenjima, astillero muelle #1
+|   |   |   |-- Vol 35_Chap 328_ La crisis del secuestro del pirata
+|   |   |   |-- Vol 35_Chap 329_ Mi nombre es _Franky_
+|   |   |   |-- Vol 35_Chap 330_ La decision
+|   |   |   |-- Vol 35_Chap 331_ La gran pelea
+|   |   |   |-- Vol 35_Chap 332_ Luffy vs. Usopp
+|   |   |   |-- Vol 35_Chap 333_ Captain
+|   |   |   |-- Vol 35_Chap 334_ El incidente de la habitacion cerrada
+|   |   |   |-- Vol 35_Chap 335_ Warning
+|   |   |   |-- Vol 35_Chap 336_ Luffy vs. Franky
+|   |   |   |-- Vol 36_Chap 337_ Los guardianes de la Capital de Agua
+|   |   |   |-- Vol 36_Chap 338_ Coup de vent
+|   |   |   |-- Vol 36_Chap 339_ Rumores
+|   |   |   |-- Vol 36_Chap 340_ La mujer que conlleva oscuridad
+|   |   |   |-- Vol 36_Chap 341_ Diablo
+|   |   |   |-- Vol 36_Chap 342_ Mensajeros de la oscuridad
+|   |   |   |-- Vol 36_Chap 343_ Cipher Pol No.9
+|   |   |   |-- Vol 36_Chap 344_ Poder oponente
+|   |   |   |-- Vol 36_Chap 345_ Ocultados
+|   |   |   |-- Vol 36_Chap 346_ Novena justicia
+|   |   |   |-- Vol 37_Chap 347_ Rokushiki
+|   |   |   |-- Vol 37_Chap 348_ Poder de combate
+|   |   |   |-- Vol 37_Chap 349_ Ciudadano ordinario
+|   |   |   |-- Vol 37_Chap 350_ El almacen bajo el puente
+|   |   |   |-- Vol 37_Chap 351_ Klabautermann
+|   |   |   |-- Vol 37_Chap 352_ Tom's Workers
+|   |   |   |-- Vol 37_Chap 353_ El legendario carpintero
+|   |   |   |-- Vol 37_Chap 354_ Umi Ressha
+|   |   |   |-- Vol 37_Chap 355_ Spandam
+|   |   |   |-- Vol 37_Chap 356_ Tom-san
+|   |   |   |-- Vol 37_Chap 357_ Cutty Flam
+|   |   |   |-- Vol 38_Chap 358_ Resurreccion
+|   |   |   |-- Vol 38_Chap 359_ Bingo
+|   |   |   |-- Vol 38_Chap 360_ Pronto partiremos
+|   |   |   |-- Vol 38_Chap 361_ PD
+|   |   |   |-- Vol 38_Chap 362_ Marea alta
+|   |   |   |-- Vol 38_Chap 363_ Aqua Laguna
+|   |   |   |-- Vol 38_Chap 364_ Kokoro
+|   |   |   |-- Vol 38_Chap 365_ !!Rocket Man!!
+|   |   |   |-- Vol 38_Chap 366_ !!Partida!!
+|   |   |   |-- Vol 38_Chap 367_ SogeKing
+|   |   |   |-- Vol 39_Chap 368_ Umi Ressha Battle Game
+|   |   |   |-- Vol 39_Chap 369_ Ramen Kenpo
+|   |   |   |-- Vol 39_Chap 370_ No estas sola
+|   |   |   |-- Vol 39_Chap 371_ El admirable capitan T-Bone
+|   |   |   |-- Vol 39_Chap 372_ Parage
+|   |   |   |-- Vol 39_Chap 373_ Un mal necesario
+|   |   |   |-- Vol 39_Chap 374_ Lucha
+|   |   |   |-- Vol 39_Chap 375_ Los superhombres de Enies Lobby
+|   |   |   |-- Vol 39_Chap 376_ !!!Entendido!!!
+|   |   |   |-- Vol 39_Chap 377_ !!Gran batalla en la isla judicial!!
+|   |   |   |-- Vol 4_Chap 27_ Papel
+|   |   |   |-- Vol 4_Chap 28_ Luna de tres dias
+|   |   |   |-- Vol 4_Chap 29_ La cuesta
+|   |   |   |-- Vol 4_Chap 30_ Great!
+|   |   |   |-- Vol 4_Chap 31_ La verdad
+|   |   |   |-- Vol 4_Chap 32_ Lo peor
+|   |   |   |-- Vol 4_Chap 33_ El hombre silencioso
+|   |   |   |-- Vol 4_Chap 34_ El mayordomo Crajador
+|   |   |   |-- Vol 4_Chap 35_ Otra cuesta
+|   |   |   |-- Vol 40_Chap 378_ Reporte de danos
+|   |   |   |-- Vol 40_Chap 379_ Doriki
+|   |   |   |-- Vol 40_Chap 380_ Expreso a la isla principal de Enies Lobby
+|   |   |   |-- Vol 40_Chap 381_ Despedidos
+|   |   |   |-- Vol 40_Chap 382_ El escondite del demonio
+|   |   |   |-- Vol 40_Chap 383_ Luffy vs. Blueno
+|   |   |   |-- Vol 40_Chap 384_ Lancemos un contraataque
+|   |   |   |-- Vol 40_Chap 385_ Hay un camino
+|   |   |   |-- Vol 40_Chap 386_ Sin precedentes
+|   |   |   |-- Vol 40_Chap 387_ Gear
+|   |   |   |-- Vol 40_Chap 388_ Gear Second
+|   |   |   |-- Vol 41_Chap 389_ Respuesta
+|   |   |   |-- Vol 41_Chap 390_ Aceptamos el reto
+|   |   |   |-- Vol 41_Chap 391_ La nina que fue llamada demonio
+|   |   |   |-- Vol 41_Chap 392_ Dereshi
+|   |   |   |-- Vol 41_Chap 393_ Olvia
+|   |   |   |-- Vol 41_Chap 394_ Los demonios de Ohara
+|   |   |   |-- Vol 41_Chap 395_ Ohara vs. Gobierno Mundial
+|   |   |   |-- Vol 41_Chap 396_ Saul
+|   |   |   |-- Vol 41_Chap 397_ Para alcanzar el futuro
+|   |   |   |-- Vol 41_Chap 398_ Declaracion de guerra
+|   |   |   |-- Vol 41_Chap 399_ !!Saltar a las cataratas!!
+|   |   |   |-- Vol 42_Chap 400_ La llave a la libertad
+|   |   |   |-- Vol 42_Chap 401_ Piratas vs. CP9
+|   |   |   |-- Vol 42_Chap 402_ Las esposas numero 2
+|   |   |   |-- Vol 42_Chap 403_ Mr. Caballerosidad
+|   |   |   |-- Vol 42_Chap 404_ Franky vs. Fukurou
+|   |   |   |-- Vol 42_Chap 405_ Power
+|   |   |   |-- Vol 42_Chap 406_ Seimei Kikan
+|   |   |   |-- Vol 42_Chap 407_ Monster
+|   |   |   |-- Vol 42_Chap 408_ Monster vs. Kumadori
+|   |   |   |-- Vol 42_Chap 409_ Transmision de emergencia de malas noticias
+|   |   |   |-- Vol 43_Chap 410_ Nami se vuelve enorme
+|   |   |   |-- Vol 43_Chap 411_ Nami vs. Califa
+|   |   |   |-- Vol 43_Chap 412_ Se acabo vuestra oportunidad
+|   |   |   |-- Vol 43_Chap 413_ Cazador
+|   |   |   |-- Vol 43_Chap 414_ Sanji vs. Jabra
+|   |   |   |-- Vol 43_Chap 415_ Heat Up
+|   |   |   |-- Vol 43_Chap 416_ Zoro vs. Kaku
+|   |   |   |-- Vol 43_Chap 417_ Ashura
+|   |   |   |-- Vol 43_Chap 418_ Luffy vs. Rob Rucchi
+|   |   |   |-- Vol 43_Chap 419_ La leyenda del heroe
+|   |   |   |-- Vol 44_Chap 420_ Buster Call
+|   |   |   |-- Vol 44_Chap 421_ Gear Third
+|   |   |   |-- Vol 44_Chap 422_ Rob Rucchi
+|   |   |   |-- Vol 44_Chap 423_ La legenda de la Sirena
+|   |   |   |-- Vol 44_Chap 424_ Barco de huida
+|   |   |   |-- Vol 44_Chap 425_ Lucha a muerte en el puente
+|   |   |   |-- Vol 44_Chap 426_ Un barco a la espera del viento
+|   |   |   |-- Vol 44_Chap 427_ Ni que este fuese el infierno
+|   |   |   |-- Vol 44_Chap 428_ Regresemos
+|   |   |   |-- Vol 44_Chap 429_ Derrota total
+|   |   |   |-- Vol 44_Chap 430_ La suave nevada de la reminiscencia
+|   |   |   |-- Vol 45_Chap 431_ Puno de amor
+|   |   |   |-- Vol 45_Chap 432_ Los 2 nuevos miembros
+|   |   |   |-- Vol 45_Chap 433_ El nombre del mar
+|   |   |   |-- Vol 45_Chap 434_ Shirohige y Akagami
+|   |   |   |-- Vol 45_Chap 435_ Comprendemos como os sentis
+|   |   |   |-- Vol 45_Chap 436_ Pants from Frankyhouse
+|   |   |   |-- Vol 45_Chap 437_ En pelotas
+|   |   |   |-- Vol 45_Chap 438_ Orgullo
+|   |   |   |-- Vol 45_Chap 439_ La tercera persona y la septima persona
+|   |   |   |-- Vol 45_Chap 440_ Hiken vs. Kurohige
+|   |   |   |-- Vol 46_Chap 441_ El duelo de Isla Banaro
+|   |   |   |-- Vol 46_Chap 442_ Aventura en el Mar del Espiritu Maligno
+|   |   |   |-- Vol 46_Chap 443_ Thriller Bark
+|   |   |   |-- Vol 46_Chap 444_ Aventura en Ghost Island
+|   |   |   |-- Vol 46_Chap 445_ The Zombie
+|   |   |   |-- Vol 46_Chap 446_ Doctor Hogback
+|   |   |   |-- Vol 46_Chap 447_ Sorpresa Zombie
+|   |   |   |-- Vol 46_Chap 448_ Moria
+|   |   |   |-- Vol 46_Chap 449_ Las cuatro personas misteriosas de Thriller Bark
+|   |   |   |-- Vol 47_Chap 450_ General Zombie Night
+|   |   |   |-- Vol 47_Chap 451_ El Wonder Garden de Pellona
+|   |   |   |-- Vol 47_Chap 452_ Zigorou del Viento
+|   |   |   |-- Vol 47_Chap 453_ Nublado con algun hueso
+|   |   |   |-- Vol 47_Chap 454_ Hanauta
+|   |   |   |-- Vol 47_Chap 455_ Ouka Shichibukai Gecko Moria
+|   |   |   |-- Vol 47_Chap 456_ El demonio del pais del hielo
+|   |   |   |-- Vol 47_Chap 457_ !!!Carne~~!!!
+|   |   |   |-- Vol 47_Chap 458_ El afro no
+|   |   |   |-- Vol 47_Chap 459_ No puedo clamar, que la muerte sea una disculpa
+|   |   |   |-- Vol 48_Chap 460_ Recuperadlas, antes del Amanecer
+|   |   |   |-- Vol 48_Chap 461_ Ghost Buster
+|   |   |   |-- Vol 48_Chap 462_ La Aventura de Oars
+|   |   |   |-- Vol 48_Chap 463_ El pirata Sanji vs. la Persona Misteriosa Absalom
+|   |   |   |-- Vol 48_Chap 464_ El Sueno de Sanji
+|   |   |   |-- Vol 48_Chap 465_ El pirata Usopp vs. Princess Pellona
+|   |   |   |-- Vol 48_Chap 466_ Conclusion
+|   |   |   |-- Vol 48_Chap 467_ El pirata Zoro vs. el samurai Ryuma
+|   |   |   |-- Vol 48_Chap 468_ El Pirata Chopper vs. la Persona Misteriosa Hogback
+|   |   |   |-- Vol 48_Chap 469_ !!!Dad la cara, banda de Sombreros de Paja!!!
+|   |   |   |-- Vol 48_Chap 470_ Oars vs. La banda de Sombrero de Paja
+|   |   |   |-- Vol 49_Chap 471_ My Friend
+|   |   |   |-- Vol 49_Chap 472_ Down
+|   |   |   |-- Vol 49_Chap 473_ Aparece el Ouka Shichibukai Bartholomew Kuma
+|   |   |   |-- Vol 49_Chap 474_ !!!No se puede ayudar!!!
+|   |   |   |-- Vol 49_Chap 475_ Los piratas del bosque
+|   |   |   |-- Vol 49_Chap 476_ Nightmare Luffy
+|   |   |   |-- Vol 49_Chap 477_ 43167
+|   |   |   |-- Vol 49_Chap 478_ Luffy vs. Luffy
+|   |   |   |-- Vol 49_Chap 479_ El guerrero de la esperanza
+|   |   |   |-- Vol 49_Chap 480_ Ataque emboscada
+|   |   |   |-- Vol 49_Chap 481_ Shadow's Asgard
+|   |   |   |-- Vol 5_Chap 36_ Persecuccion
+|   |   |   |-- Vol 5_Chap 37_ Kuro de los mil planes
+|   |   |   |-- Vol 5_Chap 38_ La tripulacion pirata
+|   |   |   |-- Vol 5_Chap 39_ _Por quien tocan las campanas_
+|   |   |   |-- Vol 5_Chap 40_ La banda pirata de Usuff
+|   |   |   |-- Vol 5_Chap 41_ Al mar
+|   |   |   |-- Vol 5_Chap 42_ Yosaku y Johnny
+|   |   |   |-- Vol 5_Chap 43_ Aparicion de Sanji
+|   |   |   |-- Vol 5_Chap 44_ Tres cocineros
+|   |   |   |-- Vol 50_Chap 482_ Llega la manana
+|   |   |   |-- Vol 50_Chap 483_ Fin del sueno
+|   |   |   |-- Vol 50_Chap 484_ Puni
+|   |   |   |-- Vol 50_Chap 485_ Banda de Sombrero de Paja; el Cazador De Piratas Zoro
+|   |   |   |-- Vol 50_Chap 486_ Piano
+|   |   |   |-- Vol 50_Chap 487_ Aquella cancion
+|   |   |   |-- Vol 50_Chap 488_ Cancion de vida
+|   |   |   |-- Vol 50_Chap 489_ La octava persona
+|   |   |   |-- Vol 50_Chap 490_ Alcanzarlo una vez mas
+|   |   |   |-- Vol 50_Chap 491_ Tobiuo Riders
+|   |   |   |-- Vol 51_Chap 492_ Duval de la mascara de hierro
+|   |   |   |-- Vol 51_Chap 493_ Me conoces
+|   |   |   |-- Vol 51_Chap 494_ La tragedia de Duval
+|   |   |   |-- Vol 51_Chap 495_ Canon Gaon
+|   |   |   |-- Vol 51_Chap 496_ Yarukiman Mangrove
+|   |   |   |-- Vol 51_Chap 497_ Aventura en el archipielago del jabon danzante
+|   |   |   |-- Vol 51_Chap 498_ Los 11 supernovas
+|   |   |   |-- Vol 51_Chap 499_ Sabaody Park
+|   |   |   |-- Vol 51_Chap 500_ Las brasas de la historia
+|   |   |   |-- Vol 51_Chap 501_ El mundo comienza a embravecerse
+|   |   |   |-- Vol 51_Chap 502_ El incidente del Tenry_bito
+|   |   |   |-- Vol 52_Chap 503_ La isla empeora
+|   |   |   |-- Vol 52_Chap 504_ !!La vanguardia de los piratas se moviliza!!
+|   |   |   |-- Vol 52_Chap 505_ Kuma
+|   |   |   |-- Vol 52_Chap 506_ Roger y Rayleigh
+|   |   |   |-- Vol 52_Chap 507_ Kizaru desembarca
+|   |   |   |-- Vol 52_Chap 508_ La isla de la masacre
+|   |   |   |-- Vol 52_Chap 509_ Kizaru vs 4 capitanes
+|   |   |   |-- Vol 52_Chap 510_ La banda de Sombrero de Paja vs el arma de combate
+|   |   |   |-- Vol 52_Chap 511_ Sent_maru con el hacha de guerra al hombro
+|   |   |   |-- Vol 52_Chap 512_ Sin noticias de Zoro
+|   |   |   |-- Vol 53_Chap 513_ !!!No puedo salvarles!!!
+|   |   |   |-- Vol 53_Chap 514_ El hongo que hace crecer hongos en tu cuerpo
+|   |   |   |-- Vol 53_Chap 515_ Aventura en la isla de las mujeres
+|   |   |   |-- Vol 53_Chap 516_ La Emperatriz Pirata Boa Hancock
+|   |   |   |-- Vol 53_Chap 517_ El bano
+|   |   |   |-- Vol 53_Chap 518_ Arena de combate
+|   |   |   |-- Vol 53_Chap 519_ Aptitud de rey
+|   |   |   |-- Vol 53_Chap 520_ Los ojos de la gorgona
+|   |   |   |-- Vol 53_Chap 521_ La marca del dragon galopante
+|   |   |   |-- Vol 53_Chap 522_ Una enfermedad fatal
+|   |   |   |-- Vol 54_Chap 523_ Infierno
+|   |   |   |-- Vol 54_Chap 524_ Ya nadie puede detener esto
+|   |   |   |-- Vol 54_Chap 525_ La prision submarina Impel Down
+|   |   |   |-- Vol 54_Chap 526_ Aventura en la gran prision
+|   |   |   |-- Vol 54_Chap 527_ Nivel 1
+|   |   |   |-- Vol 54_Chap 528_ Jimb_, el gran caballero del mar
+|   |   |   |-- Vol 54_Chap 529_ Nivel 2
+|   |   |   |-- Vol 54_Chap 530_ Al infierno, al infierno
+|   |   |   |-- Vol 54_Chap 531_ Nivel 3
+|   |   |   |-- Vol 54_Chap 532_ El Guardian Bestia Minotauro
+|   |   |   |-- Vol 55_Chap 533_ Nivel 4
+|   |   |   |-- Vol 55_Chap 534_ Jefe de prision Magellan vs pirata Luffy
+|   |   |   |-- Vol 55_Chap 535_ Amigos
+|   |   |   |-- Vol 55_Chap 536_ Nivel 5
+|   |   |   |-- Vol 55_Chap 537_ Okama en el infierno
+|   |   |   |-- Vol 55_Chap 538_ Level 5.5
+|   |   |   |-- Vol 55_Chap 539_ Emporio Tension Hormon
+|   |   |   |-- Vol 55_Chap 540_ Nivel 6
+|   |   |   |-- Vol 55_Chap 541_ Algo impensable
+|   |   |   |-- Vol 56_Chap 542_ Otro incidente por contar
+|   |   |   |-- Vol 56_Chap 543_ Sombrero de paja y barba negra
+|   |   |   |-- Vol 56_Chap 544_ Incluso la tapa del infierno se abrira
+|   |   |   |-- Vol 56_Chap 545_ Hacia el mundo exterior, donde el sol brilla
+|   |   |   |-- Vol 56_Chap 546_ El Shichibukai Jinbe, Capitan de los piratas Gyojin
+|   |   |   |-- Vol 56_Chap 547_ La gran huida
+|   |   |   |-- Vol 56_Chap 548_ Gracias
+|   |   |   |-- Vol 56_Chap 549_ El barco avanza a toda vela
+|   |   |   |-- Vol 56_Chap 550_ Cuartel General de la Marina
+|   |   |   |-- Vol 56_Chap 551_ Yonk_ Barbablanca
+|   |   |   |-- Vol 57_Chap 552_ Ace y Barbablanca
+|   |   |   |-- Vol 57_Chap 553_ Batalla decisiva en la cumbre
+|   |   |   |-- Vol 57_Chap 554_ El Almirante Akainu
+|   |   |   |-- Vol 57_Chap 555_ Oars jr. y sombrero de bambu
+|   |   |   |-- Vol 57_Chap 556_ !!La justicia prevalecera!!
+|   |   |   |-- Vol 57_Chap 557_ Luffy y Barbablanca
+|   |   |   |-- Vol 57_Chap 558_ Hermano menor
+|   |   |   |-- Vol 57_Chap 559_ Destino
+|   |   |   |-- Vol 57_Chap 560_ Los prisioneros de Impel Down
+|   |   |   |-- Vol 57_Chap 561_ Luffy vs Mihawk
+|   |   |   |-- Vol 57_Chap 562_ El pirata gran tornado arana Squardo
+|   |   |   |-- Vol 58_Chap 563_ Un hombre, un corazon
+|   |   |   |-- Vol 58_Chap 564_ El hombre que hace temblar el mundo
+|   |   |   |-- Vol 58_Chap 565_ El camino de Oars
+|   |   |   |-- Vol 58_Chap 566_ Ataque feroz
+|   |   |   |-- Vol 58_Chap 567_ La plaza Oris en el cuartel general de la marina Marineford
+|   |   |   |-- Vol 58_Chap 568_ Hazlo a tu manera
+|   |   |   |-- Vol 58_Chap 569_ Monstruo blanco
+|   |   |   |-- Vol 58_Chap 570_ El puente de la vida
+|   |   |   |-- Vol 58_Chap 571_ Patibulo
+|   |   |   |-- Vol 58_Chap 572_ Los tiempos estan cambiando -La era cambia-
+|   |   |   |-- Vol 58_Chap 573_ El nombre de esta era es _Barbablanca_
+|   |   |   |-- Vol 59_Chap 574_ Portgas D. Ace muere
+|   |   |   |-- Vol 59_Chap 575_ Furia silenciosa
+|   |   |   |-- Vol 59_Chap 576_ El gran pirata Edward Newgate
+|   |   |   |-- Vol 59_Chap 577_ Un gran acontecimiento tras otro
+|   |   |   |-- Vol 59_Chap 578_ Un presente para la nueva era
+|   |   |   |-- Vol 59_Chap 579_ Segundos de valor
+|   |   |   |-- Vol 59_Chap 580_ El fin de la guerra
+|   |   |   |-- Vol 59_Chap 581_ El futuro comienza sigilosamente
+|   |   |   |-- Vol 59_Chap 582_ Luffy y Ace
+|   |   |   |-- Vol 59_Chap 583_ La terminal Grey, destino final de incertidumbre
+|   |   |   |-- Vol 59_Chap 584_ El incidente de Porschemi
+|   |   |   |-- Vol 6_Chap 45_ Antes de la tormenta
+|   |   |   |-- Vol 6_Chap 46_ Un cliente inesperado
+|   |   |   |-- Vol 6_Chap 47_ Almirante de la armada pirata Don Krieg
+|   |   |   |-- Vol 6_Chap 48_ Abandona ese camino
+|   |   |   |-- Vol 6_Chap 49_ La tormenta
+|   |   |   |-- Vol 6_Chap 50_ Cada uno su camino
+|   |   |   |-- Vol 6_Chap 51_ Roronoa Zoro cae al mar
+|   |   |   |-- Vol 6_Chap 52_ El juramento
+|   |   |   |-- Vol 6_Chap 53_ Sabagashira #1
+|   |   |   |-- Vol 60_Chap 585_ Copa de hermanos
+|   |   |   |-- Vol 60_Chap 586_ La ciudad del mal olor
+|   |   |   |-- Vol 60_Chap 587_ Yo, no escapare
+|   |   |   |-- Vol 60_Chap 588_ El oceano de Sabo
+|   |   |   |-- Vol 60_Chap 589_ Esforzandose a la gloria
+|   |   |   |-- Vol 60_Chap 590_ Mi hermano
+|   |   |   |-- Vol 60_Chap 591_ _Estas seguro de que esto esta bien_
+|   |   |   |-- Vol 60_Chap 592_ Grito
+|   |   |   |-- Vol 60_Chap 593_ Noticias
+|   |   |   |-- Vol 60_Chap 594_ Mensaje
+|   |   |   |-- Vol 61_Chap 595_ Compromiso
+|   |   |   |-- Vol 61_Chap 596_ Espectro
+|   |   |   |-- Vol 61_Chap 597_ 3D 2Y
+|   |   |   |-- Vol 61_Chap 598_ Dos anos despues
+|   |   |   |-- Vol 61_Chap 599_ Los nueve piratas
+|   |   |   |-- Vol 61_Chap 600_ La isla del nuevo comienzo
+|   |   |   |-- Vol 61_Chap 601_ Romance Dawn
+|   |   |   |-- Vol 61_Chap 602_ !!Timon a lo mas abajo!!
+|   |   |   |-- Vol 61_Chap 603_ Guarden esto en sus corazones
+|   |   |   |-- Vol 62_Chap 604_ Dentro de las profundidades
+|   |   |   |-- Vol 62_Chap 605_ El Kraken y los piratas
+|   |   |   |-- Vol 62_Chap 606_ Aventura en el fondo del mar
+|   |   |   |-- Vol 62_Chap 607_ 10 mil metros de profundidad
+|   |   |   |-- Vol 62_Chap 608_ Paraiso bajo el mar
+|   |   |   |-- Vol 62_Chap 609_ Aventura en la isla Gyojin
+|   |   |   |-- Vol 62_Chap 610_ La Adivina Madam Shirley
+|   |   |   |-- Vol 62_Chap 611_ Hodi Jones
+|   |   |   |-- Vol 62_Chap 612_ Llevados por el tiburon que salvaron
+|   |   |   |-- Vol 62_Chap 613_ La princesa sirena en la torre Koukaku
+|   |   |   |-- Vol 62_Chap 614_ Lo hecho, hecho esta
+|   |   |   |-- Vol 63_Chap 615_ La maldicion Mato Mato
+|   |   |   |-- Vol 63_Chap 616_ Aniversario de la venganza
+|   |   |   |-- Vol 63_Chap 617_ El impactante incidente en la colina de coral
+|   |   |   |-- Vol 63_Chap 618_ Propuesta
+|   |   |   |-- Vol 63_Chap 619_ En el bosque del mar
+|   |   |   |-- Vol 63_Chap 620_ El ansiado parque de atracciones
+|   |   |   |-- Vol 63_Chap 621_ Otohime y Tiger
+|   |   |   |-- Vol 63_Chap 622_ Los Piratas de Sol
+|   |   |   |-- Vol 63_Chap 623_ El Pirata Fisher Tiger
+|   |   |   |-- Vol 63_Chap 624_ Reina Otohime
+|   |   |   |-- Vol 63_Chap 625_ Una voluntad heredada
+|   |   |   |-- Vol 63_Chap 626_ Los tres hermanos Neptuno
+|   |   |   |-- Vol 64_Chap 627_ En deuda
+|   |   |   |-- Vol 64_Chap 628_ Limpieza
+|   |   |   |-- Vol 64_Chap 629_ Un Ex-Shichibukai se interpone
+|   |   |   |-- Vol 64_Chap 630_ Desatado
+|   |   |   |-- Vol 64_Chap 631_ La plaza Gyoncorde
+|   |   |   |-- Vol 64_Chap 632_ Ya lo sabia
+|   |   |   |-- Vol 64_Chap 633_ Amigos o enemigos
+|   |   |   |-- Vol 64_Chap 634_ 100.000 vs 10
+|   |   |   |-- Vol 64_Chap 635_ Tan grotesco que pude volar
+|   |   |   |-- Vol 64_Chap 636_ El general de la tierra del futuro
+|   |   |   |-- Vol 65_Chap 637_ Una arca de la antiguedad
+|   |   |   |-- Vol 65_Chap 638_ Huye Hoshi
+|   |   |   |-- Vol 65_Chap 639_ Proteger todo
+|   |   |   |-- Vol 65_Chap 640_ El levantamiento de la isla Gyojin
+|   |   |   |-- Vol 65_Chap 641_ _Que eres tu_
+|   |   |   |-- Vol 65_Chap 642_ Dignidad destruida
+|   |   |   |-- Vol 65_Chap 643_ Fantasma
+|   |   |   |-- Vol 65_Chap 644_ A cero
+|   |   |   |-- Vol 65_Chap 645_ La muerte tambien es venganza
+|   |   |   |-- Vol 65_Chap 646_ Rana
+|   |   |   |-- Vol 66_Chap 647_ Parar a Noah
+|   |   |   |-- Vol 66_Chap 648_ El camino hacia el sol
+|   |   |   |-- Vol 66_Chap 649_ Baile de Besugos y Platijas
+|   |   |   |-- Vol 66_Chap 650_ Dos cambios que necesitas saber
+|   |   |   |-- Vol 66_Chap 651_ La voz del Nuevo Mundo
+|   |   |   |-- Vol 66_Chap 652_ Premoniciones siniestras
+|   |   |   |-- Vol 66_Chap 653_ El sombrero de un heroe
+|   |   |   |-- Vol 66_Chap 654_ Gam
+|   |   |   |-- Vol 66_Chap 655_ Punk Hazard
+|   |   |   |-- Vol 66_Chap 656_ Aventura en la isla ardiente
+|   |   |   |-- Vol 67_Chap 657_ Una cabeza cortada
+|   |   |   |-- Vol 67_Chap 658_ Habitacion de galletas
+|   |   |   |-- Vol 67_Chap 659_ Sobre mi torso
+|   |   |   |-- Vol 67_Chap 660_ El shichibukai Trafalgar Law
+|   |   |   |-- Vol 67_Chap 661_ El Lago de los Bandidos
+|   |   |   |-- Vol 67_Chap 662_ Shichibukai Law Vs. ViceAlmirante Smoker
+|   |   |   |-- Vol 67_Chap 663_ CC
+|   |   |   |-- Vol 67_Chap 664_ Master Caesar Clown
+|   |   |   |-- Vol 67_Chap 665_ CANDY
+|   |   |   |-- Vol 67_Chap 666_ Yeti cool brothers
+|   |   |   |-- Vol 67_Chap 667_ Cool Fight
+|   |   |   |-- Vol 68_Chap 668_ Alianza Pirata
+|   |   |   |-- Vol 68_Chap 669_ La operacion comienza
+|   |   |   |-- Vol 68_Chap 670_ Aire frio con una opcion de lodo
+|   |   |   |-- Vol 68_Chap 671_ La Fruta Gas Gas
+|   |   |   |-- Vol 68_Chap 672_ !!Mi nombre es Kinemon!!
+|   |   |   |-- Vol 68_Chap 673_ Vergo y Joker
+|   |   |   |-- Vol 68_Chap 674_ Los Bystanders
+|   |   |   |-- Vol 68_Chap 675_ Su nombre es Shinokuni
+|   |   |   |-- Vol 68_Chap 676_ El arma de destruccion masiva
+|   |   |   |-- Vol 68_Chap 677_ COUNTER HAZAR
+|   |   |   |-- Vol 68_Chap 678_ Dentro del laboratorio, vestibulo del edificio A
+|   |   |   |-- Vol 69_Chap 679_ El Espiritu del G-5
+|   |   |   |-- Vol 69_Chap 680_ Lider del G-5 de los Marines
+|   |   |   |-- Vol 69_Chap 681_ Luffy vs Maestro
+|   |   |   |-- Vol 69_Chap 682_ Mente Maestra
+|   |   |   |-- Vol 69_Chap 683_ La mujer gelida
+|   |   |   |-- Vol 69_Chap 684_ !Para, Vegapunk!
+|   |   |   |-- Vol 69_Chap 685_ !Mi nombre es Momonosuke!
+|   |   |   |-- Vol 69_Chap 686_ La Mujer de nieve en la Sala de las Galletas
+|   |   |   |-- Vol 69_Chap 687_ Bestia
+|   |   |   |-- Vol 69_Chap 688_ Mocha
+|   |   |   |-- Vol 69_Chap 689_ La isla que parece no existir
+|   |   |   |-- Vol 69_Chap 690_ SAD
+|   |   |   |-- Vol 7_Chap 54_ El senor Perla
+|   |   |   |-- Vol 7_Chap 55_ Jungle Blood
+|   |   |   |-- Vol 7_Chap 56_ No me da la gana
+|   |   |   |-- Vol 7_Chap 57_ Tengo un sueno
+|   |   |   |-- Vol 7_Chap 58_ Viejo asqueroso
+|   |   |   |-- Vol 7_Chap 59_ Obligacion
+|   |   |   |-- Vol 7_Chap 60_ Cuestion de honor
+|   |   |   |-- Vol 7_Chap 61_ Demonio
+|   |   |   |-- Vol 7_Chap 62_ M.H.5
+|   |   |   |-- Vol 70_Chap 691_ El rey del pais de la muerte
+|   |   |   |-- Vol 70_Chap 692_ La asesina de Dressrosa
+|   |   |   |-- Vol 70_Chap 693_ Muere, Por favor
+|   |   |   |-- Vol 70_Chap 694_ Un hombre muy peligroso
+|   |   |   |-- Vol 70_Chap 695_ !Dejadmelo a mi!
+|   |   |   |-- Vol 70_Chap 696_ Intereses coincidentes
+|   |   |   |-- Vol 70_Chap 697_ Negociacion
+|   |   |   |-- Vol 70_Chap 698_ Doflamingo aparece
+|   |   |   |-- Vol 70_Chap 699_ Matutino
+|   |   |   |-- Vol 70_Chap 700_ Ritmo de tipo
+|   |   |   |-- Vol 71_Chap 701_ Aventura en el Pais del Amor, la Pasion y los Juguetes
+|   |   |   |-- Vol 71_Chap 702_ Coliseo Corrida
+|   |   |   |-- Vol 71_Chap 703_ Sala de Espera
+|   |   |   |-- Vol 71_Chap 704_ Lucy y la Estatua de Kyros
+|   |   |   |-- Vol 71_Chap 705_ Maynard El Perseguidor
+|   |   |   |-- Vol 71_Chap 706_ No me voy a reir de ti
+|   |   |   |-- Vol 71_Chap 707_ Bloque B
+|   |   |   |-- Vol 71_Chap 708_ Coliseo de rufianes
+|   |   |   |-- Vol 71_Chap 709_ !!King Punch!!
+|   |   |   |-- Vol 71_Chap 710_ Hacia Green Bit
+|   |   |   |-- Vol 71_Chap 711_ Aventura en la tierra de los Enanos
+|   |   |   |-- Vol 72_Chap 712_ Violet
+|   |   |   |-- Vol 72_Chap 713_ Usoland
+|   |   |   |-- Vol 72_Chap 714_ Lucy y Ucy
+|   |   |   |-- Vol 72_Chap 715_ Un renido bloque C
+|   |   |   |-- Vol 72_Chap 716_ Don Chinjao
+|   |   |   |-- Vol 72_Chap 717_ Lo Que Dressrosa Olvido
+|   |   |   |-- Vol 72_Chap 718_ La Armada Real Riku en los Campos de Flores
+|   |   |   |-- Vol 72_Chap 719_ Abrete Chinjao
+|   |   |   |-- Vol 72_Chap 720_ Gladiadores Convictos
+|   |   |   |-- Vol 72_Chap 721_ Rebecca y el Sr. Soldado
+|   |   |   |-- Vol 73_Chap 722_ Linaje Real
+|   |   |   |-- Vol 73_Chap 723_ Cambio de planes
+|   |   |   |-- Vol 73_Chap 724_ La estrategia de Law
+|   |   |   |-- Vol 73_Chap 725_ La mujer invicta
+|   |   |   |-- Vol 73_Chap 726_ La familia Riku
+|   |   |   |-- Vol 73_Chap 727_ Un heroe al acecho
+|   |   |   |-- Vol 73_Chap 728_ Numero de tragedias
+|   |   |   |-- Vol 73_Chap 729_ Shichibukai Doflamingo vs. Shichibukai Law
+|   |   |   |-- Vol 73_Chap 730_ 3 cartas
+|   |   |   |-- Vol 73_Chap 731_ Operacion Dressrosa S.A.S
+|   |   |   |-- Vol 74_Chap 732_ El mundo subterraneo
+|   |   |   |-- Vol 74_Chap 733_ Lo que el sr. Soldadito desea
+|   |   |   |-- Vol 74_Chap 734_ Torbellino de Rommel
+|   |   |   |-- Vol 74_Chap 735_ La intencion de Fujitora
+|   |   |   |-- Vol 74_Chap 736_ Oficial Supremo Diamante
+|   |   |   |-- Vol 74_Chap 737_ La Torre Ejecutiva
+|   |   |   |-- Vol 74_Chap 738_ Oficial especial de la tropa de Trebol, Sugar
+|   |   |   |-- Vol 74_Chap 739_ Capitan
+|   |   |   |-- Vol 74_Chap 740_ !Cuento contigo!
+|   |   |   |-- Vol 74_Chap 741_ Usoland el mentiroso
+|   |   |   |-- Vol 74_Chap 742_ Siempre estare a tu lado
+|   |   |   |-- Vol 75_Chap 743_ Gran Sacudida en Dressrosa
+|   |   |   |-- Vol 75_Chap 744_ El Oficial General de la Armada Revolucionaria
+|   |   |   |-- Vol 75_Chap 745_ Bird Cage
+|   |   |   |-- Vol 75_Chap 746_ Estrellas
+|   |   |   |-- Vol 75_Chap 747_ Alto Ejecutivo Pica
+|   |   |   |-- Vol 75_Chap 748_ Mi Pago
+|   |   |   |-- Vol 75_Chap 749_ !!Adelante!! Pequeno ejercito de ladrones
+|   |   |   |-- Vol 75_Chap 750_ Estado de Guerra
+|   |   |   |-- Vol 75_Chap 751_ Sabo VS Almirante Fujitora
+|   |   |   |-- Vol 75_Chap 752_ Palma
+|   |   |   |-- Vol 76_Chap 753_ Guerra
+|   |   |   |-- Vol 76_Chap 754_ El placer de conocerte
+|   |   |   |-- Vol 76_Chap 755_ El mundo del hombre
+|   |   |   |-- Vol 76_Chap 756_ El 4o nivel
+|   |   |   |-- Vol 76_Chap 757_ Carta del Triunfo
+|   |   |   |-- Vol 76_Chap 758_ Ignoralo y muevete
+|   |   |   |-- Vol 76_Chap 759_ Plan secreto
+|   |   |   |-- Vol 76_Chap 760_ Las mismas estacas
+|   |   |   |-- Vol 76_Chap 761_ La fruta Ope Ope
+|   |   |   |-- Vol 76_Chap 762_ La ciudad blanca
+|   |   |   |-- Vol 76_Chap 763_ Declaracion Humana
+|   |   |   |-- Vol 77_Chap 764_ Monstruo blanco
+|   |   |   |-- Vol 77_Chap 765_ La isla del destino, Minion
+|   |   |   |-- Vol 77_Chap 766_ Sonrisa
+|   |   |   |-- Vol 77_Chap 767_ Cora-san
+|   |   |   |-- Vol 77_Chap 768_ La isla del destino, Minion
+|   |   |   |-- Vol 77_Chap 769_ El Pirata Bellamy
+|   |   |   |-- Vol 77_Chap 770_ La lanza de Elbaf
+|   |   |   |-- Vol 77_Chap 771_ Fuerza naval Happou, Don Sai
+|   |   |   |-- Vol 77_Chap 772_ Cabbage & Romeo
+|   |   |   |-- Vol 77_Chap 773_ Mitad y mitad
+|   |   |   |-- Vol 77_Chap 774_ Leo, lider de la tropa Tontatta
+|   |   |   |-- Vol 77_Chap 775_ Poniendo todo mi amor en Lucian
+|   |   |   |-- Vol 78_Chap 776_ El heroe del coliseo
+|   |   |   |-- Vol 78_Chap 777_ Zoro VS Pica
+|   |   |   |-- Vol 78_Chap 778_ Tactica No05
+|   |   |   |-- Vol 78_Chap 779_ La ultima pelea
+|   |   |   |-- Vol 78_Chap 780_ La maldicion de Corazon
+|   |   |   |-- Vol 78_Chap 781_ El deseo mas anhelado
+|   |   |   |-- Vol 78_Chap 782_ Encarnacion Del Mal
+|   |   |   |-- Vol 78_Chap 783_ Estas En Mi Camino
+|   |   |   |-- Vol 78_Chap 784_ Gear Fourth
+|   |   |   |-- Vol 78_Chap 785_ Aunque se rompan sus piernas
+|   |   |   |-- Vol 79_Chap 786_ Gatz
+|   |   |   |-- Vol 79_Chap 787_ 4 minutos
+|   |   |   |-- Vol 79_Chap 788_ Como yo peleo
+|   |   |   |-- Vol 79_Chap 789_ !Lucy!
+|   |   |   |-- Vol 79_Chap 790_ Cielo y tierra
+|   |   |   |-- Vol 79_Chap 791_ Ruinas
+|   |   |   |-- Vol 79_Chap 792_ De rodillas
+|   |   |   |-- Vol 79_Chap 793_ El tigre y el perro
+|   |   |   |-- Vol 79_Chap 794_ La aventura de Sabo
+|   |   |   |-- Vol 79_Chap 795_ Suicida
+|   |   |   |-- Vol 8_Chap 63_ No voy a morir
+|   |   |   |-- Vol 8_Chap 64_ Gran lanza de batalla
+|   |   |   |-- Vol 8_Chap 65_ Listo
+|   |   |   |-- Vol 8_Chap 66_ Lanza drestruida
+|   |   |   |-- Vol 8_Chap 67_ SOUP
+|   |   |   |-- Vol 8_Chap 68_ Cuarta persona
+|   |   |   |-- Vol 8_Chap 69_ Arlong Park
+|   |   |   |-- Vol 8_Chap 70_ Gran aventura de Usopp el hombre
+|   |   |   |-- Vol 8_Chap 71_ Senores de toda la creacion
+|   |   |   |-- Vol 80_Chap 796_ La decision del Soldado
+|   |   |   |-- Vol 80_Chap 797_ Rebecca
+|   |   |   |-- Vol 80_Chap 798_ Corazon
+|   |   |   |-- Vol 80_Chap 799_ Padre e hijos
+|   |   |   |-- Vol 80_Chap 800_ Juramento de subordinado
+|   |   |   |-- Vol 80_Chap 801_ Se anuncia una nueva era
+|   |   |   |-- Vol 80_Chap 802_ Zou
+|   |   |   |-- Vol 80_Chap 803_ Escalando Zou
+|   |   |   |-- Vol 80_Chap 804_ Una Aventura En La Espalda Del Elefante
+|   |   |   |-- Vol 80_Chap 805_ La tribu Mink
+|   |   |   |-- Vol 80_Chap 806_ La fortaleza de la tripa derecha
+|   |   |   |-- Vol 81_Chap 807_ Hace diez dias
+|   |   |   |-- Vol 81_Chap 808_ El duque Inuarashi
+|   |   |   |-- Vol 81_Chap 809_ Maestro Nekomamushi
+|   |   |   |-- Vol 81_Chap 810_ Los piratas del sombrero rizado han llegado
+|   |   |   |-- Vol 81_Chap 811_ Koro
+|   |   |   |-- Vol 81_Chap 812_ La banda Capone Bege
+|   |   |   |-- Vol 81_Chap 813_ La fiesta del te
+|   |   |   |-- Vol 81_Chap 814_ Vamos a ver al Maestro Nekomamushi
+|   |   |   |-- Vol 81_Chap 815_ Llevame contigo
+|   |   |   |-- Vol 81_Chap 816_ Perro vs Gato
+|   |   |   |-- Vol 82_Chap 817_ Raizou de la niebla
+|   |   |   |-- Vol 82_Chap 818_ Dentro de la ballena
+|   |   |   |-- Vol 82_Chap 819_ El heredero del clan Kouzuki, Momonosuke
+|   |   |   |-- Vol 82_Chap 820_ Perro Y gato tienen una historia
+|   |   |   |-- Vol 82_Chap 821_ Entendido
+|   |   |   |-- Vol 82_Chap 822_ Bajando del elefante
+|   |   |   |-- Vol 82_Chap 823_ Un mundo agitado
+|   |   |   |-- Vol 82_Chap 824_ Pequenos juegos de piratas
+|   |   |   |-- Vol 82_Chap 825_ la historieta del WE Times
+|   |   |   |-- Vol 82_Chap 826_ 0 y 4
+|   |   |   |-- Vol 82_Chap 827_ Totland
+|   |   |   |-- Vol 83_Chap 828_ 1 y 2
+|   |   |   |-- Vol 83_Chap 829_ Yonkou, la pirata Charlotte Linlin
+|   |   |   |-- Vol 83_Chap 830_ Al que le caen las apuestas
+|   |   |   |-- Vol 83_Chap 831_ Aventura en un Misterioso Bosque
+|   |   |   |-- Vol 83_Chap 832_ El Reino Germa
+|   |   |   |-- Vol 83_Chap 833_ Vinsmoke Judge
+|   |   |   |-- Vol 83_Chap 834_ Mi sueno
+|   |   |   |-- Vol 83_Chap 835_ Nacion de las almas
+|   |   |   |-- Vol 83_Chap 836_ La Vivre Card de Lola
+|   |   |   |-- Vol 83_Chap 837_ Luffy vs Comandante Cracker
+|   |   |   |-- Vol 83_Chap 838_ Choniki
+|   |   |   |-- Vol 84_Chap 839_ Nunca olvidare la deuda que tengo contigo
+|   |   |   |-- Vol 84_Chap 840_ Mascara de Hierro
+|   |   |   |-- Vol 84_Chap 841_ Hacia el East Blue
+|   |   |   |-- Vol 84_Chap 842_ El poder de la llenura
+|   |   |   |-- Vol 84_Chap 843_ Vinsmoke Sanji
+|   |   |   |-- Vol 84_Chap 844_ Luffy Vs. Sanji
+|   |   |   |-- Vol 84_Chap 845_ La armada enfurecida
+|   |   |   |-- Vol 84_Chap 846_ La defensa de Tamago
+|   |   |   |-- Vol 84_Chap 847_ Luffy y Big Mom
+|   |   |   |-- Vol 84_Chap 848_ Adios
+|   |   |   |-- Vol 85_Chap 849_ Choniki en el Mundo de los Espejos
+|   |   |   |-- Vol 85_Chap 850_ Rayo de esperanza
+|   |   |   |-- Vol 85_Chap 851_ Colilla de cigarro
+|   |   |   |-- Vol 85_Chap 852_ El fracaso del Germa
+|   |   |   |-- Vol 85_Chap 853_ !No es aqui!
+|   |   |   |-- Vol 85_Chap 854_ !_Que rayos estoy haciendo_!
+|   |   |   |-- Vol 85_Chap 855_ !GROOOWWWL!
+|   |   |   |-- Vol 85_Chap 856_ Mentiroso
+|   |   |   |-- Vol 85_Chap 857_ Torre
+|   |   |   |-- Vol 85_Chap 858_ Encuentro
+|   |   |   |-- Vol 86_Chap 859_ Plan para asesinar a un Yonkou
+|   |   |   |-- Vol 86_Chap 860_ La fiesta comienza a las 10
+|   |   |   |-- Vol 86_Chap 861_ El Actor Consumado
+|   |   |   |-- Vol 86_Chap 862_ El pensador consumado
+|   |   |   |-- Vol 86_Chap 863_ El caballero consumado
+|   |   |   |-- Vol 86_Chap 864_ El plan de asesinato de la familia Vinsmoke
+|   |   |   |-- Vol 86_Chap 865_ Hey, madre
+|   |   |   |-- Vol 86_Chap 866_ Nacida Para Destruir
+|   |   |   |-- Vol 86_Chap 867_ Feliz Cumpleanos
+|   |   |   |-- Vol 86_Chap 868_ KX Launcher
+|   |   |   |-- Vol 86_Chap 869_ Bajo asedio
+|   |   |   |-- Vol 87_Chap 870_ Despedida
+|   |   |   |-- Vol 87_Chap 871_ !Vamos, Caesar!
+|   |   |   |-- Vol 87_Chap 872_ Suave y Esponjoso
+|   |   |   |-- Vol 87_Chap 873_ Atrapados Como Dulces en una Jaula
+|   |   |   |-- Vol 87_Chap 874_
+|   |   |   |-- Vol 87_Chap 875_ El honor de una mujer
+|   |   |   |-- Vol 87_Chap 876_ !Pudding aparece coincidentemente!
+|   |   |   |-- Vol 87_Chap 877_ No tan dulce
+|   |   |   |-- Vol 87_Chap 878_ La tribu Mink, el guardian en jefe Pedro
+|   |   |   |-- Vol 87_Chap 879_ UNO DE LOS TRES COMANDANTES DULCES DE BIG MOM
+|   |   |   |-- Vol 88_Chap 880_ SIN SALIDA
+|   |   |   |-- Vol 88_Chap 881_ Habitacion de olas
+|   |   |   |-- Vol 88_Chap 882_ FUERA DE LAS ESPECTATIVAS DE UN YONKOU
+|   |   |   |-- Vol 88_Chap 883_ HORA DEL TE
+|   |   |   |-- Vol 88_Chap 884_ _QUIEN_
+|   |   |   |-- Vol 88_Chap 885_ Me llamo Brulee
+|   |   |   |-- Vol 88_Chap 886_ Ese es mi estilo de vida
+|   |   |   |-- Vol 88_Chap 887_ En algun lugar, alguien esta deseando tu felicidad
+|   |   |   |-- Vol 88_Chap 888_ Leon
+|   |   |   |-- Vol 88_Chap 889_ Una mama desconocida
+|   |   |   |-- Vol 89_Chap 890_ Big Mom En Cubierta
+|   |   |   |-- Vol 89_Chap 891_ Ellos Confian en Mi
+|   |   |   |-- Vol 89_Chap 892_ Reconociendo A un Enemigo Poderoso
+|   |   |   |-- Vol 89_Chap 893_ La 36° Hija De La Familia Charlotte - Flampe
+|   |   |   |-- Vol 89_Chap 894_ 12_05 A.M
+|   |   |   |-- Vol 89_Chap 895_ El Pirata Luffy vs El Comandante Dulce Katakuri
+|   |   |   |-- Vol 89_Chap 896_ Un Ultimo Deseo
+|   |   |   |-- Vol 89_Chap 897_ El Plan De Pekoms Para Escapar De La Isla Cacao
+|   |   |   |-- Vol 89_Chap 898_ Definitivamente Volveremos
+|   |   |   |-- Vol 89_Chap 899_ El Ultimo Baluarte
+|   |   |   |-- Vol 89_Chap 900_ Mal Final Musical
+|   |   |   |-- Vol 9_Chap 72_ Viviendo apropiadamente
+|   |   |   |-- Vol 9_Chap 73_ El monstruo de Grand Line
+|   |   |   |-- Vol 9_Chap 74_ Business
+|   |   |   |-- Vol 9_Chap 75_ Cartas de navegacion y hombres-pez
+|   |   |   |-- Vol 9_Chap 76_ Dormir
+|   |   |   |-- Vol 9_Chap 77_ Un paso en tu sueno
+|   |   |   |-- Vol 9_Chap 78_ Bellemere-san
+|   |   |   |-- Vol 9_Chap 79_ Vivir
+|   |   |   |-- Vol 9_Chap 80_ Un crimen es un crimen
+|   |   |   |-- Vol 9_Chap 81_ Lagrimas
+|   |   |   |-- Vol 90_Chap 901_ Incluso Si Mueres, No Mueras
+|   |   |   |-- Vol 90_Chap 902_ End Roll
+|   |   |   |-- Vol 90_Chap 903_ El Quinto Emperador
+|   |   |   |-- Vol 90_Chap 904_ Aparecen Los Comandantes De La Armada Revolucionaria
+|   |   |   |-- Vol 90_Chap 905_ Un Mundo Hermoso
+|   |   |   |-- Vol 90_Chap 906_ La Tierra Sagrada De Mary Geise
+|   |   |   |-- Vol 90_Chap 907_ El Trono Vacio
+|   |   |   |-- Vol 90_Chap 908_ Comienza El Reverie
+|   |   |   -- Vol 90_Chap 909_ Seppuku
+|   |   |-- Solo Leveling
+|   |   |   |-- Capítulo 1
+|   |   |   |-- Capítulo 10
+|   |   |   |-- Capítulo 100
+|   |   |   |-- Capítulo 101
+|   |   |   |-- Capítulo 102
+|   |   |   |-- Capítulo 103
+|   |   |   |-- Capítulo 104
+|   |   |   |-- Capítulo 105
+|   |   |   |-- Capítulo 106
+|   |   |   |-- Capítulo 107
+|   |   |   |-- Capítulo 108
+|   |   |   |-- Capítulo 109
+|   |   |   |-- Capítulo 11
+|   |   |   |-- Capítulo 110
+|   |   |   |-- Capítulo 111  — Fin de la Primera Temporada
+|   |   |   |-- Capítulo 112
+|   |   |   |-- Capítulo 113
+|   |   |   |-- Capítulo 114
+|   |   |   |-- Capítulo 115
+|   |   |   |-- Capítulo 116
+|   |   |   |-- Capítulo 117
+|   |   |   |-- Capítulo 118
+|   |   |   |-- Capítulo 119
+|   |   |   |-- Capítulo 12
+|   |   |   |-- Capítulo 120
+|   |   |   |-- Capítulo 121
+|   |   |   |-- Capítulo 122
+|   |   |   |-- Capítulo 123
+|   |   |   |-- Capítulo 124
+|   |   |   |-- Capítulo 125
+|   |   |   |-- Capítulo 126
+|   |   |   |-- Capítulo 127
+|   |   |   |-- Capítulo 128
+|   |   |   |-- Capítulo 129
+|   |   |   |-- Capítulo 13
+|   |   |   |-- Capítulo 130
+|   |   |   |-- Capítulo 131
+|   |   |   |-- Capítulo 132
+|   |   |   |-- Capítulo 133
+|   |   |   |-- Capítulo 134
+|   |   |   |-- Capítulo 135
+|   |   |   |-- Capítulo 136
+|   |   |   |-- Capítulo 137
+|   |   |   |-- Capítulo 138
+|   |   |   |-- Capítulo 139
+|   |   |   |-- Capítulo 14
+|   |   |   |-- Capítulo 140
+|   |   |   |-- Capítulo 141
+|   |   |   |-- Capítulo 142
+|   |   |   |-- Capítulo 143
+|   |   |   |-- Capítulo 144
+|   |   |   |-- Capítulo 145
+|   |   |   |-- Capítulo 146
+|   |   |   |-- Capítulo 147
+|   |   |   |-- Capítulo 148
+|   |   |   |-- Capítulo 149
+|   |   |   |-- Capítulo 15
+|   |   |   |-- Capítulo 150
+|   |   |   |-- Capítulo 151
+|   |   |   |-- Capítulo 152
+|   |   |   |-- Capítulo 153
+|   |   |   |-- Capítulo 154
+|   |   |   |-- Capítulo 155
+|   |   |   |-- Capítulo 156
+|   |   |   |-- Capítulo 157
+|   |   |   |-- Capítulo 158
+|   |   |   |-- Capítulo 159
+|   |   |   |-- Capítulo 16
+|   |   |   |-- Capítulo 160
+|   |   |   |-- Capítulo 161
+|   |   |   |-- Capítulo 162
+|   |   |   |-- Capítulo 163
+|   |   |   |-- Capítulo 164
+|   |   |   |-- Capítulo 165
+|   |   |   |-- Capítulo 166
+|   |   |   |-- Capítulo 167
+|   |   |   |-- Capítulo 168
+|   |   |   |-- Capítulo 169
+|   |   |   |-- Capítulo 17
+|   |   |   |-- Capítulo 170
+|   |   |   |-- Capítulo 171
+|   |   |   |-- Capítulo 172
+|   |   |   |-- Capítulo 173
+|   |   |   |-- Capítulo 174
+|   |   |   |-- Capítulo 175
+|   |   |   |-- Capítulo 176
+|   |   |   |-- Capítulo 177
+|   |   |   |-- Capítulo 178
+|   |   |   |-- Capítulo 179
+|   |   |   |-- Capítulo 18
+|   |   |   |-- Capítulo 180  — Final
+|   |   |   |-- Capítulo 180.5  — Anuncio
+|   |   |   |-- Capítulo 181  — Inicio del After Story
+|   |   |   |-- Capítulo 182
+|   |   |   |-- Capítulo 183
+|   |   |   |-- Capítulo 184
+|   |   |   |-- Capítulo 185
+|   |   |   |-- Capítulo 186
+|   |   |   |-- Capítulo 187
+|   |   |   |-- Capítulo 188
+|   |   |   |-- Capítulo 189
+|   |   |   |-- Capítulo 19
+|   |   |   |-- Capítulo 190
+|   |   |   |-- Capítulo 191
+|   |   |   |-- Capítulo 192
+|   |   |   |-- Capítulo 193
+|   |   |   |-- Capítulo 194
+|   |   |   |-- Capítulo 195
+|   |   |   |-- Capítulo 196
+|   |   |   |-- Capítulo 197
+|   |   |   |-- Capítulo 198
+|   |   |   |-- Capítulo 199
+|   |   |   |-- Capítulo 2
+|   |   |   |-- Capítulo 20
+|   |   |   |-- Capítulo 200
+|   |   |   |-- Capítulo 201  — Capítulo final del after story
+|   |   |   |-- Capítulo 201.5  — Aviso
+|   |   |   |-- Capítulo 21
+|   |   |   |-- Capítulo 22
+|   |   |   |-- Capítulo 23
+|   |   |   |-- Capítulo 24
+|   |   |   |-- Capítulo 25
+|   |   |   |-- Capítulo 26
+|   |   |   |-- Capítulo 27
+|   |   |   |-- Capítulo 28
+|   |   |   |-- Capítulo 29
+|   |   |   |-- Capítulo 3
+|   |   |   |-- Capítulo 30
+|   |   |   |-- Capítulo 31
+|   |   |   |-- Capítulo 32
+|   |   |   |-- Capítulo 33
+|   |   |   |-- Capítulo 34
+|   |   |   |-- Capítulo 35
+|   |   |   |-- Capítulo 36
+|   |   |   |-- Capítulo 37
+|   |   |   |-- Capítulo 38
+|   |   |   |-- Capítulo 39
+|   |   |   |-- Capítulo 4
+|   |   |   |-- Capítulo 40
+|   |   |   |-- Capítulo 41
+|   |   |   |-- Capítulo 42
+|   |   |   |-- Capítulo 43
+|   |   |   |-- Capítulo 44
+|   |   |   |-- Capítulo 45
+|   |   |   |-- Capítulo 46
+|   |   |   |-- Capítulo 47
+|   |   |   |-- Capítulo 48
+|   |   |   |-- Capítulo 49
+|   |   |   |-- Capítulo 5
+|   |   |   |-- Capítulo 50
+|   |   |   |-- Capítulo 51
+|   |   |   |-- Capítulo 52
+|   |   |   |-- Capítulo 53
+|   |   |   |-- Capítulo 54
+|   |   |   |-- Capítulo 55
+|   |   |   |-- Capítulo 56
+|   |   |   |-- Capítulo 57
+|   |   |   |-- Capítulo 58
+|   |   |   |-- Capítulo 59
+|   |   |   |-- Capítulo 6
+|   |   |   |-- Capítulo 60
+|   |   |   |-- Capítulo 61
+|   |   |   |-- Capítulo 62
+|   |   |   |-- Capítulo 63
+|   |   |   |-- Capítulo 64
+|   |   |   |-- Capítulo 65
+|   |   |   |-- Capítulo 66
+|   |   |   |-- Capítulo 67
+|   |   |   |-- Capítulo 68
+|   |   |   |-- Capítulo 69
+|   |   |   |-- Capítulo 7
+|   |   |   |-- Capítulo 70
+|   |   |   |-- Capítulo 71
+|   |   |   |-- Capítulo 72
+|   |   |   |-- Capítulo 73
+|   |   |   |-- Capítulo 74
+|   |   |   |-- Capítulo 75
+|   |   |   |-- Capítulo 76
+|   |   |   |-- Capítulo 77
+|   |   |   |-- Capítulo 78  — Solo leveling
+|   |   |   |-- Capítulo 78.5
+|   |   |   |-- Capítulo 79
+|   |   |   |-- Capítulo 8
+|   |   |   |-- Capítulo 80
+|   |   |   |-- Capítulo 81
+|   |   |   |-- Capítulo 82  — Anormalidades en la Torre del Demonio
+|   |   |   |-- Capítulo 83.5  — Capítulo 83
+|   |   |   |-- Capítulo 84
+|   |   |   |-- Capítulo 85
+|   |   |   |-- Capítulo 86
+|   |   |   |-- Capítulo 87
+|   |   |   |-- Capítulo 88
+|   |   |   |-- Capítulo 89
+|   |   |   |-- Capítulo 9
+|   |   |   |-- Capítulo 90
+|   |   |   |-- Capítulo 91
+|   |   |   |-- Capítulo 92
+|   |   |   |-- Capítulo 93
+|   |   |   |-- Capítulo 94
+|   |   |   |-- Capítulo 95
+|   |   |   |-- Capítulo 96
+|   |   |   |-- Capítulo 97
+|   |   |   |-- Capítulo 98
+|   |   |   -- Capítulo 99
+|   |   |-- Solo Leveling Hunter Origin
+|   |   |   |-- Capítulo 1  — Cazador origen  La historia de Alicia Blanche
+|   |   |   |-- Capítulo 10  — Cazador origen Historia de Isla Wright
+|   |   |   |-- Capítulo 11  — Cazador origen Historia de Thomas Andre
+|   |   |   |-- Capítulo 12  — Cazador origen Historia de Shimizu Akari
+|   |   |   |-- Capítulo 13  — Cazador origen Historia de Esil Radiru
+|   |   |   |-- Capítulo 14  — Cazador origen Historia de Tawata Kanae
+|   |   |   |-- Capítulo 15  — Cazador origen Historia de Goto Ryuji
+|   |   |   |-- Capítulo 16  — Cazador origen La historia de Seorin
+|   |   |   |-- Capítulo 17  — Cazador origen Historia de Cha Hae-In, la Princesa de la Espada Pura
+|   |   |   |-- Capítulo 18  — Cazador origen Historia de Lennart Niermann
+|   |   |   |-- Capítulo 19  — Cazador origen i-dle, parte 1
+|   |   |   |-- Capítulo 2  — Cazador origen La historia de Meilin Fisher
+|   |   |   |-- Capítulo 20  — Cazador origen Sung Jinah
+|   |   |   |-- Capítulo 21  — i-dle ②
+|   |   |   |-- Capítulo 22  — Historia de Sung Il-Hwan
+|   |   |   |-- Capítulo 23  — Historia de Laura Walker
+|   |   |   |-- Capítulo 24  — Historia de Christopher Reed
+|   |   |   |-- Capítulo 25  — Historia de Sian Halat
+|   |   |   |-- Capítulo 26  — Historia de Son Kihoon
+|   |   |   |-- Capítulo 27  — Historia de Meri Laine
+|   |   |   |-- Capítulo 28  — Historia de Sugimoto Reiji
+|   |   |   |-- Capítulo 29  — Cazador origen Elena Renault
+|   |   |   |-- Capítulo 3  — Cazador Origem La historia de Yoo Soohyun
+|   |   |   |-- Capítulo 30  — Cazador origen Myro, la sucesora de las llamas blancas
+|   |   |   |-- Capítulo 31  — Cazador origen Antoine Martinez
+|   |   |   |-- Capítulo 4  — Cazador origen La historia de Amamiya Mirei
+|   |   |   |-- Capítulo 5  — Cazador origen Historia de Han Se-Mi
+|   |   |   |-- Capítulo 6  — Cazador origen La historia de Go Gunhee
+|   |   |   |-- Capítulo 7  — Cazador origen La historia de Charlotte y Harper 1
+|   |   |   |-- Capítulo 8  — Cazador origen La historia de Charlotte y Harper 2
+|   |   |   -- Capítulo 9  — Cazador origen Historia de Gina
+|   |   |-- Solo Leveling Ragnarok
+|   |   |   |-- Capítulo 0
+|   |   |   |-- Capítulo 0.5
+|   |   |   |-- Capítulo 1
+|   |   |   |-- Capítulo 10
+|   |   |   |-- Capítulo 11
+|   |   |   |-- Capítulo 12
+|   |   |   |-- Capítulo 13
+|   |   |   |-- Capítulo 13.05
+|   |   |   |-- Capítulo 14
+|   |   |   |-- Capítulo 15
+|   |   |   |-- Capítulo 16
+|   |   |   |-- Capítulo 17
+|   |   |   |-- Capítulo 18
+|   |   |   |-- Capítulo 19
+|   |   |   |-- Capítulo 2
+|   |   |   |-- Capítulo 20
+|   |   |   |-- Capítulo 21
+|   |   |   |-- Capítulo 22
+|   |   |   |-- Capítulo 23
+|   |   |   |-- Capítulo 24
+|   |   |   |-- Capítulo 25
+|   |   |   |-- Capítulo 26
+|   |   |   |-- Capítulo 27
+|   |   |   |-- Capítulo 28
+|   |   |   |-- Capítulo 29
+|   |   |   |-- Capítulo 3
+|   |   |   |-- Capítulo 30
+|   |   |   |-- Capítulo 31
+|   |   |   |-- Capítulo 32
+|   |   |   |-- Capítulo 33
+|   |   |   |-- Capítulo 34
+|   |   |   |-- Capítulo 35
+|   |   |   |-- Capítulo 36
+|   |   |   |-- Capítulo 37
+|   |   |   |-- Capítulo 38
+|   |   |   |-- Capítulo 39
+|   |   |   |-- Capítulo 4
+|   |   |   |-- Capítulo 40
+|   |   |   |-- Capítulo 41
+|   |   |   |-- Capítulo 42
+|   |   |   |-- Capítulo 43
+|   |   |   |-- Capítulo 44
+|   |   |   |-- Capítulo 45
+|   |   |   |-- Capítulo 45.05  — Aviso del autor
+|   |   |   |-- Capítulo 46
+|   |   |   |-- Capítulo 47  — Capítulo final de la primera temporada
+|   |   |   |-- Capítulo 47.05  — Aviso del autor
+|   |   |   |-- Capítulo 48  — Primer capítulo de la segunda temporada
+|   |   |   |-- Capítulo 49
+|   |   |   |-- Capítulo 5
+|   |   |   |-- Capítulo 50
+|   |   |   |-- Capítulo 51
+|   |   |   |-- Capítulo 52
+|   |   |   |-- Capítulo 53
+|   |   |   |-- Capítulo 54
+|   |   |   |-- Capítulo 55
+|   |   |   |-- Capítulo 56
+|   |   |   |-- Capítulo 57
+|   |   |   |-- Capítulo 58
+|   |   |   |-- Capítulo 59
+|   |   |   |-- Capítulo 6
+|   |   |   |-- Capítulo 60
+|   |   |   |-- Capítulo 61
+|   |   |   |-- Capítulo 62
+|   |   |   |-- Capítulo 62.05  — Aviso del autor
+|   |   |   |-- Capítulo 63
+|   |   |   |-- Capítulo 64
+|   |   |   |-- Capítulo 65
+|   |   |   |-- Capítulo 65.5
+|   |   |   |-- Capítulo 66
+|   |   |   |-- Capítulo 67
+|   |   |   |-- Capítulo 68  — Capítulo final de la segunda temporada
+|   |   |   |-- Capítulo 68.5
+|   |   |   |-- Capítulo 7
+|   |   |   |-- Capítulo 8
+|   |   |   -- Capítulo 9
+|   |   |-- SPY x FAMILY
+|   |   |   |-- Vol 1_Chap 0_
+|   |   |   |-- Vol 1_Chap 1_
+|   |   |   |-- Vol 1_Chap 118_
+|   |   |   |-- Vol 1_Chap 2_
+|   |   |   |-- Vol 1_Chap 3_
+|   |   |   |-- Vol 1_Chap 4_
+|   |   |   |-- Vol 1_Chap 5_
+|   |   |   |-- Vol 10_Chap 62.5_
+|   |   |   |-- Vol 10_Chap 62.6_
+|   |   |   |-- Vol 10_Chap 62.7_
+|   |   |   |-- Vol 10_Chap 62_
+|   |   |   |-- Vol 10_Chap 63_
+|   |   |   |-- Vol 10_Chap 64.5_
+|   |   |   |-- Vol 10_Chap 64_
+|   |   |   |-- Vol 10_Chap 65_
+|   |   |   |-- Vol 10_Chap 66_
+|   |   |   |-- Vol 11_Chap 67.2_
+|   |   |   |-- Vol 11_Chap 67_
+|   |   |   |-- Vol 11_Chap 68.5_
+|   |   |   |-- Vol 11_Chap 68_
+|   |   |   |-- Vol 11_Chap 69_
+|   |   |   |-- Vol 11_Chap 70_
+|   |   |   |-- Vol 11_Chap 71.5_
+|   |   |   |-- Vol 11_Chap 71_
+|   |   |   |-- Vol 11_Chap 72_
+|   |   |   |-- Vol 11_Chap 73_
+|   |   |   |-- Vol 11_Chap 74_
+|   |   |   |-- Vol 11_Chap 75_
+|   |   |   |-- Vol 12_Chap 76_
+|   |   |   |-- Vol 12_Chap 77_
+|   |   |   |-- Vol 12_Chap 78.5_
+|   |   |   |-- Vol 12_Chap 78_
+|   |   |   |-- Vol 12_Chap 79_
+|   |   |   |-- Vol 12_Chap 80_
+|   |   |   |-- Vol 12_Chap 81_
+|   |   |   |-- Vol 12_Chap 82_
+|   |   |   |-- Vol 12_Chap 83_
+|   |   |   |-- Vol 12_Chap 84_
+|   |   |   |-- Vol 13_Chap 85_
+|   |   |   |-- Vol 13_Chap 86_
+|   |   |   |-- Vol 13_Chap 87_
+|   |   |   |-- Vol 13_Chap 88_
+|   |   |   |-- Vol 13_Chap 89_
+|   |   |   |-- Vol 13_Chap 90.5_
+|   |   |   |-- Vol 13_Chap 90_
+|   |   |   |-- Vol 13_Chap 91_
+|   |   |   |-- Vol 13_Chap 92_
+|   |   |   |-- Vol 14_Chap 105.5_
+|   |   |   |-- Vol 14_Chap 106_
+|   |   |   |-- Vol 14_Chap 107_
+|   |   |   |-- Vol 14_Chap 108_
+|   |   |   |-- Vol 14_Chap 109_
+|   |   |   |-- Vol 14_Chap 110_
+|   |   |   |-- Vol 14_Chap 111_
+|   |   |   |-- Vol 14_Chap 112.2_
+|   |   |   |-- Vol 14_Chap 113_
+|   |   |   |-- Vol 14_Chap 114.5_
+|   |   |   |-- Vol 14_Chap 115_
+|   |   |   |-- Vol 14_Chap 116.5_
+|   |   |   |-- Vol 14_Chap 117_
+|   |   |   |-- Vol 14_Chap 119_
+|   |   |   |-- Vol 14_Chap 120.5_
+|   |   |   |-- Vol 14_Chap 121_
+|   |   |   |-- Vol 14_Chap 122_
+|   |   |   |-- Vol 14_Chap 123.1_
+|   |   |   |-- Vol 14_Chap 123.2_
+|   |   |   |-- Vol 14_Chap 123.5_
+|   |   |   |-- Vol 14_Chap 124_
+|   |   |   |-- Vol 14_Chap 125_
+|   |   |   |-- Vol 14_Chap 126_
+|   |   |   |-- Vol 14_Chap 127.1_
+|   |   |   |-- Vol 14_Chap 127.2_
+|   |   |   |-- Vol 14_Chap 127.5_
+|   |   |   |-- Vol 14_Chap 128_
+|   |   |   |-- Vol 14_Chap 129_
+|   |   |   |-- Vol 14_Chap 130_
+|   |   |   |-- Vol 14_Chap 131_
+|   |   |   |-- Vol 14_Chap 132_
+|   |   |   |-- Vol 14_Chap 133_
+|   |   |   |-- Vol 14_Chap 134_
+|   |   |   |-- Vol 14_Chap 93_
+|   |   |   |-- Vol 14_Chap 94_
+|   |   |   |-- Vol 14_Chap 95_
+|   |   |   |-- Vol 14_Chap 96.5_
+|   |   |   |-- Vol 14_Chap 96.6_
+|   |   |   |-- Vol 14_Chap 96_
+|   |   |   |-- Vol 14_Chap 97_
+|   |   |   |-- Vol 14_Chap 98.5_
+|   |   |   |-- Vol 14_Chap 98_
+|   |   |   |-- Vol 14_Chap 99_
+|   |   |   |-- Vol 2_Chap 10_
+|   |   |   |-- Vol 2_Chap 11_
+|   |   |   |-- Vol 2_Chap 6_
+|   |   |   |-- Vol 2_Chap 7_
+|   |   |   |-- Vol 2_Chap 8.5_
+|   |   |   |-- Vol 2_Chap 8_
+|   |   |   |-- Vol 2_Chap 9_
+|   |   |   |-- Vol 3_Chap 12_
+|   |   |   |-- Vol 3_Chap 13_
+|   |   |   |-- Vol 3_Chap 14_
+|   |   |   |-- Vol 3_Chap 15.5_
+|   |   |   |-- Vol 3_Chap 15.6_
+|   |   |   |-- Vol 3_Chap 15_
+|   |   |   |-- Vol 3_Chap 16_
+|   |   |   |-- Vol 3_Chap 17_
+|   |   |   |-- Vol 4_Chap 18.5_
+|   |   |   |-- Vol 4_Chap 18_
+|   |   |   |-- Vol 4_Chap 19_
+|   |   |   |-- Vol 4_Chap 20_
+|   |   |   |-- Vol 4_Chap 21_
+|   |   |   |-- Vol 4_Chap 22_
+|   |   |   |-- Vol 4_Chap 23_
+|   |   |   |-- Vol 5_Chap 24.5_
+|   |   |   |-- Vol 5_Chap 24_
+|   |   |   |-- Vol 5_Chap 25_
+|   |   |   |-- Vol 5_Chap 26_
+|   |   |   |-- Vol 5_Chap 27.5_
+|   |   |   |-- Vol 5_Chap 27_
+|   |   |   |-- Vol 5_Chap 28_
+|   |   |   |-- Vol 5_Chap 29.5_
+|   |   |   |-- Vol 5_Chap 29_
+|   |   |   |-- Vol 5_Chap 30_
+|   |   |   |-- Vol 6_Chap 31_
+|   |   |   |-- Vol 6_Chap 32_
+|   |   |   |-- Vol 6_Chap 33_
+|   |   |   |-- Vol 6_Chap 34_
+|   |   |   |-- Vol 6_Chap 35_
+|   |   |   |-- Vol 6_Chap 36.5_
+|   |   |   |-- Vol 6_Chap 36_
+|   |   |   |-- Vol 6_Chap 37.5_
+|   |   |   |-- Vol 6_Chap 37_
+|   |   |   |-- Vol 7_Chap 38_
+|   |   |   |-- Vol 7_Chap 39_
+|   |   |   |-- Vol 7_Chap 40.5_
+|   |   |   |-- Vol 7_Chap 40_
+|   |   |   |-- Vol 7_Chap 41_
+|   |   |   |-- Vol 7_Chap 42_
+|   |   |   |-- Vol 7_Chap 43.5_
+|   |   |   |-- Vol 7_Chap 43_
+|   |   |   |-- Vol 7_Chap 44_
+|   |   |   |-- Vol 8_Chap 45_
+|   |   |   |-- Vol 8_Chap 46_
+|   |   |   |-- Vol 8_Chap 47_
+|   |   |   |-- Vol 8_Chap 48_
+|   |   |   |-- Vol 8_Chap 49_
+|   |   |   |-- Vol 8_Chap 50_
+|   |   |   |-- Vol 8_Chap 51.5_
+|   |   |   |-- Vol 8_Chap 51_
+|   |   |   |-- Vol 8_Chap 52_
+|   |   |   |-- Vol 8_Chap 53.5_
+|   |   |   |-- Vol 8_Chap 53_
+|   |   |   |-- Vol 9_Chap 54_
+|   |   |   |-- Vol 9_Chap 55_
+|   |   |   |-- Vol 9_Chap 56_
+|   |   |   |-- Vol 9_Chap 57_
+|   |   |   |-- Vol 9_Chap 58.5_
+|   |   |   |-- Vol 9_Chap 58.6_
+|   |   |   |-- Vol 9_Chap 58_
+|   |   |   |-- Vol 9_Chap 59_
+|   |   |   |-- Vol 9_Chap 60_
+|   |   |   -- Vol 9_Chap 61_
+|   |   -- Zero kara Hajimeru Mahou no Sho
+|   |       |-- Capítulo 1
+|   |       |-- Capítulo 10
+|   |       |-- Capítulo 11
+|   |       |-- Capítulo 2
+|   |       |-- Capítulo 3
+|   |       |-- Capítulo 4
+|   |       |-- Capítulo 5
+|   |       |-- Capítulo 6
+|   |       |-- Capítulo 7
+|   |       |-- Capítulo 8
+|   |       -- Capítulo 9
+|   -- Portadas
+|       -- Manga
+|           -- Chainsaw Man
+|               -- info.json
+|-- noticias
+|   |-- management
+|   |   |-- commands
 |   |   |   |-- __init__.py
-|   |   |   |-- 0001_initial.py
-|   |   |   |-- 0002_alter_noticia_options_and_more.py
-|   |   |   |-- 0003_noticia_slug.py
-|   |   |   |-- 0004_noticia_contenido_alter_noticia_ann_id_and_more.py
-|   |   |   -- 0005_noticia_contenido_es.py
-|   |   |-- services
-|   |   |   |-- __init__.py
-|   |   |   |-- ann.py
-|   |   |   -- sincronizacion.py
+|   |   |   |-- retraducir_noticias.py
+|   |   |   -- scrapear_noticias.py
+|   |   -- __init__.py
+|   |-- migrations
 |   |   |-- __init__.py
-|   |   |-- admin.py
-|   |   |-- apps.py
-|   |   |-- models.py
-|   |   |-- serializers.py
-|   |   |-- tests.py
-|   |   |-- urls.py
-|   |   -- views.py
-|   |-- usuarios
-|   |   |-- migrations
-|   |   |   |-- __init__.py
-|   |   |   -- 0001_initial.py
+|   |   |-- 0001_initial.py
+|   |   |-- 0002_alter_noticia_options_and_more.py
+|   |   |-- 0003_noticia_slug.py
+|   |   |-- 0004_noticia_contenido_alter_noticia_ann_id_and_more.py
+|   |   -- 0005_noticia_contenido_es.py
+|   |-- services
 |   |   |-- __init__.py
-|   |   |-- admin.py
-|   |   |-- apps.py
-|   |   |-- models.py
-|   |   |-- serializers.py
-|   |   |-- tests.py
-|   |   |-- urls.py
-|   |   -- views.py
-|   |-- .env
-|   |-- db.sqlite3
-|   |-- manage.py
-|   -- PipRequirements.txt
-|-- front-end
-|   |-- assets
-|   |   |-- img
-|   |   |-- Diagrama_Gantt.jpeg
-|   |   -- Diagrama_Pert.jpeg
-|   |-- componentes
-|   |   |-- footer
-|   |   |   |-- footer.css
-|   |   |   -- footer.html
-|   |   |-- header
-|   |   |   |-- header.css
-|   |   |   |-- header.html
-|   |   |   -- header.js
-|   |   |-- componentes.js
-|   |   -- temas.css
-|   -- paginas
-|       |-- detalle-noticia
-|       |   |-- detalle-noticia.css
-|       |   |-- detalle-noticia.html
-|       |   -- detalle-noticia.js
-|       |-- login
-|       |   |-- login.css
-|       |   |-- login.html
-|       |   -- login.js
-|       |-- novedades
-|       |   |-- novedades.css
-|       |   |-- novedades.html
-|       |   -- novedades.js
-|       |-- perfil
-|       |   |-- perfil.css
-|       |   |-- perfil.html
-|       |   -- perfil.js
-|       |-- recuperar_contrasena
-|       |   |-- recuperar-contrasena.css
-|       |   |-- recuperar-contrasena.html
-|       |   -- recuperar-contrasena.js
-|       -- registro
-|           |-- registro.css
-|           |-- registro.html
-|           -- registro.js
-|-- .gitignore
-|-- MEMORIA.md
-|-- PruebasLoginRegistro.md
-|-- README.md
-|-- structure.txt
--- tr.ps1
+|   |   |-- ann.py
+|   |   -- sincronizacion.py
+|   |-- __init__.py
+|   |-- admin.py
+|   |-- apps.py
+|   |-- models.py
+|   |-- serializers.py
+|   |-- tests.py
+|   |-- urls.py
+|   -- views.py
+|-- usuarios
+|   |-- migrations
+|   |   |-- __init__.py
+|   |   -- 0001_initial.py
+|   |-- __init__.py
+|   |-- admin.py
+|   |-- apps.py
+|   |-- models.py
+|   |-- serializers.py
+|   |-- tests.py
+|   |-- urls.py
+|   -- views.py
+|-- .env
+|-- db.sqlite3
+|-- manage.py
+-- PipRequirements.txt

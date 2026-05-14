@@ -25,7 +25,7 @@ function Get-TreeAscii {
             }
             else {
                 # Si el switch -f está presente, devolvemos $true y el archivo se incluye
-                (-not $f.IsPresent) -and ($_.Extension -ne ".jpg")
+                (-not $f.IsPresent) -and ($_.Extension -ne ".jpg") -and ($_.Extension -ne ".webp") -and ($_.Extension -ne ".png") 
             }
         } |
         Sort-Object @{ Expression = { -not $_.PSIsContainer } }, Name

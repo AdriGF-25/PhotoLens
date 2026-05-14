@@ -996,3 +996,127 @@ Sprint perfil — sesiones 1 y 2 (11–12 mayo 2026)
 - `capitulos_leidos` y `mangas_leidos` devuelven `0` como placeholder hasta
   implementar el modelo de progreso de lectura.
 - El avatar se sirve como URL absoluta construida con `request.build_absolute_uri()`.
+
+---
+
+## Resumen para memoria — 13/05/2026
+
+fix(perfil): renovación automática de token JWT caducado
+
+### Descripción
+El access token JWT caducaba (5 min por defecto) y redirigía al login
+aunque el usuario tuviera sesión activa.
+
+### Solución
+- Nueva función `obtenerTokenValido()` en perfil.js: lee el payload JWT,
+  detecta si ha caducado y llama a `renovarToken()` antes de redirigir.
+- `renovarToken()` hace POST a `/api/token/refresh/` con el refresh token
+  guardado en localStorage/sessionStorage.
+- Si el refresh también ha caducado, entonces sí redirige al login.
+- `settings.py`: ACCESS 60min, REFRESH 7 días.
+
+### Archivos modificados
+- `front-end/paginas/perfil/perfil.js`
+- `back-end/config/settings.py`
+
+---
+
+# Resumen para memoria — 14 mayo 2026
+
+---
+
+## 1. Descripción
+
+Durante esta sesión se avanzó en el módulo de **manga y servicios externos** del proyecto anime'n'chill.
+Se analizó en profundidad la página de novedades como referencia de patrón de código,
+y se diseñó la arquitectura completa de la página de manga con sus tres componentes principales:
+cuadrícula de portadas, sección "continuar leyendo" y modal de detalle con capítulos por volumen.
+También se creó la capa de servicios back-end para integración con la API de MangaDex.
+
+---
+
+## 2. Temporalización
+
+| Bloque | Tarea |
+|---|---|
+| Revisión | Análisis del código de novedades como base visual y lógica |
+| Back-end | Creación de `services/`: mangadex.py, sincronizacion.py, scrapear_portadas.py |
+| Front-end assets | Añadir placeholders para noticia, logo y portada |
+| Front-end manga | Estructura HTML de manga.html, manga.css y manga.js (pendiente de contenido) |
+| Documentación | Commits separados por responsabilidad, memoria y explicación técnica |
+
+---
+
+## 3. Requisitos trabajados
+
+- **DWES**: capa de servicios desacoplada de las vistas · integración con API externa (MangaDex)
+- **DWES**: modelo `Progreso` como relación N:M con datos extra (usuario ↔ capítulo)
+- **DWES**: modelo `Favorito` como segunda relación N:M con datos extra (usuario ↔ manga/anime)
+- **DWEC**: persistencia de estado de lectura en `localStorage`
+- **DWEC**: modal accesible (`role="dialog"`, `aria-modal`, cierre con Escape)
+- **DWEC**: agrupación y renderizado dinámico de capítulos por volumen
+- **DIW**: diseño responsive en 4 breakpoints · dark mode · animaciones de carga skeleton
+
+---
+
+## 4. Arquitectura
+front-end/
+├── paginas/
+│ ├── novedades/ → noticiero (base de referencia visual)
+│ └── manga/ → listado de manga (en desarrollo)
+│ ├── manga.html → estructura: continuar + cuadrícula + modal
+│ ├── manga.css → (pendiente)
+│ └── manga.js → (pendiente)
+└── assets/
+├── placeholder-noticia.jpg
+├── placeholder-logo.png
+└── placeholder-portada.jpg
+
+back-end/
+└── anime/
+├── models.py → Manga, Capitulo, Progreso, Favorito, Genero
+├── serializers.py → MangaListSerializer, MangaDetailSerializer, CapituloSerializer
+└── services/
+├── _init_.py
+├── mangadex.py → cliente API MangaDex
+├── sincronizacion.py → sync datos → BD
+└── scrapear_portadas.py → descarga portadas a media/
+
+text
+
+---
+
+## 5. Datos
+
+### Modelos principales trabajados
+
+| Modelo | Campos clave | Relaciones |
+|---|---|---|
+| `Manga` | titulo, estado, portada_url, portada_local, destacado | ManyToMany → Genero |
+| `Capitulo` | numero (Decimal), volumen, ruta_imagenes | FK → Manga |
+| `Progreso` | pagina_actual, completado, fecha_lectura | FK → User · FK → Capitulo |
+| `Favorito` | tipo, nota_personal, fecha_guardado | FK → User · FK → Manga · FK → Anime |
+
+### Endpoints usados desde el front
+
+| Endpoint | Método | Para qué |
+|---|---|---|
+| `/api/manga/mangas/` | GET | Listado de manga para la cuadrícula |
+| `/api/manga/capitulos/?manga=ID` | GET | Capítulos de un manga para el modal |
+| `/api/noticias/noticias/` | GET | Noticias para novedades |
+| `/api/noticias/sincronizar/` | POST | Forzar sync con ANN |
+
+### Progreso en localStorage
+
+```json
+{
+  "anc_progreso_manga": {
+    "42": {
+      "capituloId": 318,
+      "capituloNumero": 7,
+      "capituloTitulo": "El despertar",
+      "fecha": "2026-05-14T02:15:00.000Z"
+    }
+  }
+}
+```

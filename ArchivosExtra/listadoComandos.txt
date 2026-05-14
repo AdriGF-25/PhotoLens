@@ -61,3 +61,25 @@ Sincronización_noticias
 Metodo: GET
 url:http://127.0.0.1:8000/api/noticias/noticias/sincronizar/
 
+
+--------------------------------------------------------------
+scrapear_portadas
+--------------------------------------------------------------
+
+# Lanzar el menú interactivo
+python manage.py scrapear_portadas
+text
+════════════════════════════════════════════════════
+   anime'n'chill — Gestor de portadas MangaDex
+════════════════════════════════════════════════════
+  [1]  Sincronizar todo  (solo cambios)
+  [2]  Forzar todo       (actualiza siempre)
+  [3]  Prueba de conexión (sin guardar en BD)
+  [4]  Buscar un manga    (sin guardar en BD)
+  [5]  Ver catálogo local
+  [0]  Salir
+════════════════════════════════════════════════════
+  Elige una opción: _
+bash
+# También funciona sin menú si lo automatizas (por ejemplo en un cron)
+python manage.py scrapear_portadas --forzar
