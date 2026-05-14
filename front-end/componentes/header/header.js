@@ -1,8 +1,4 @@
-/* ------------------- CABECERA/NAV ---------------- */
-
-
-// ------------------- ICONOS SVG POR TEMA ------------------- //
-
+/* ------------------- ICONOS SVG POR TEMA ------------------- */
 
 const ICONOS_TEMA = {
     claro: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -23,31 +19,25 @@ const ICONOS_TEMA = {
 };
 
 
-// ------------------- RUTAS RELATIVAS ------------------- //
-
+/* ------------------- RUTAS RELATIVAS ------------------- */
 
 function resolverRuta(nombrePagina) {
-    // Todas las páginas están en: /front-end/paginas/NOMBRE/NOMBRE.html
-    // Desde cualquiera de ellas, subir un nivel lleva a /front-end/paginas/
-    const ruta = window.location.pathname;
+    const ruta         = window.location.pathname;
     const estaEnPaginas = ruta.includes('/paginas/');
 
     if (estaEnPaginas) {
         return `../${nombrePagina}/${nombrePagina}.html`;
     }
 
-    // Fallback: desde raíz o rutas desconocidas
     return `front-end/paginas/${nombrePagina}/${nombrePagina}.html`;
 }
 
 
-// ------------------- UTILIDADES TEMA ------------------- //
-
+/* ------------------- UTILIDADES TEMA ------------------- */
 
 function obtenerTemaActual() {
     return document.documentElement.getAttribute('data-tema') || 'oscuro';
 }
-
 
 function actualizarIconoTema() {
     const botonTema = document.getElementById('botonTema');
@@ -57,7 +47,6 @@ function actualizarIconoTema() {
     botonTema.innerHTML = ICONOS_TEMA[tema] || ICONOS_TEMA['oscuro'];
 }
 
-
 function aplicarTema(tema) {
     document.documentElement.setAttribute('data-tema', tema);
     actualizarIconoTema();
@@ -65,13 +54,12 @@ function aplicarTema(tema) {
 }
 
 
-// ------------------- MARCADO DE ENLACE ACTIVO ------------------- //
-
+/* ------------------- MARCADO DE ENLACE ACTIVO ------------------- */
 
 function marcarEnlaceActivo() {
-    const ruta           = window.location.pathname;
-    const nombreArchivo  = ruta.split('/').pop().replace('.html', '');
-    const enlaces        = document.querySelectorAll('.cabecera__enlace[data-pagina]');
+    const ruta          = window.location.pathname;
+    const nombreArchivo = ruta.split('/').pop().replace('.html', '');
+    const enlaces       = document.querySelectorAll('.cabecera__enlace[data-pagina]');
 
     enlaces.forEach(function(enlace) {
         const paginaEnlace = enlace.getAttribute('data-pagina');
@@ -84,22 +72,22 @@ function marcarEnlaceActivo() {
 }
 
 
-// ------------------- CONFIGURAR ENLACES DINÁMICOS ------------------- //
-
+/* ------------------- CONFIGURAR ENLACES DINÁMICOS ------------------- */
 
 function configurarEnlaces() {
     const enlaceLogo      = document.getElementById('enlaceLogo');
     const enlaceNovedades = document.getElementById('enlaceNovedades');
+    const enlaceManga     = document.getElementById('enlaceManga');
     const enlacePerfil    = document.getElementById('enlacePerfil');
 
     if (enlaceLogo)      enlaceLogo.href      = resolverRuta('novedades');
     if (enlaceNovedades) enlaceNovedades.href  = resolverRuta('novedades');
+    if (enlaceManga)     enlaceManga.href      = resolverRuta('manga');
     if (enlacePerfil)    enlacePerfil.href     = resolverRuta('perfil');
 }
 
 
-// ------------------- INICIAR CABECERA ------------------- //
-
+/* ------------------- INICIAR CABECERA ------------------- */
 
 function iniciarCabecera() {
     const botonMenu           = document.getElementById('botonMenu');
@@ -114,7 +102,7 @@ function iniciarCabecera() {
     let timerCierre = null;
 
 
-    // ---- Tema guardado ---- //
+    /* ---- Tema guardado ---- */
     const temaGuardado = localStorage.getItem('tema');
     if (temaGuardado && ICONOS_TEMA[temaGuardado]) {
         document.documentElement.setAttribute('data-tema', temaGuardado);
@@ -122,7 +110,7 @@ function iniciarCabecera() {
     actualizarIconoTema();
 
 
-    // ---- Menú hamburguesa ---- //
+    /* ---- Menú hamburguesa ---- */
     if (botonMenu && navegacionPrincipal) {
         botonMenu.addEventListener('click', function() {
             navegacionPrincipal.classList.toggle('cabecera__nav--visible');
@@ -138,7 +126,7 @@ function iniciarCabecera() {
     }
 
 
-    // ---- Selector de tema: hover + clic combinados ---- //
+    /* ---- Selector de tema: hover + clic combinados ---- */
     if (selectorTema && botonTema && menuTema) {
 
         selectorTema.addEventListener('mouseenter', function() {
@@ -167,7 +155,7 @@ function iniciarCabecera() {
     }
 
 
-    // ---- Opciones de tema ---- //
+    /* ---- Opciones de tema ---- */
     if (opcionesTema.length > 0) {
         opcionesTema.forEach(function(opcion) {
             opcion.addEventListener('click', function() {
@@ -182,7 +170,7 @@ function iniciarCabecera() {
     }
 
 
-    // ---- Clic fuera cierra el menú ---- //
+    /* ---- Clic fuera cierra el menú ---- */
     document.addEventListener('click', function(evento) {
         const clicDentroTema = evento.target.closest('.selector-tema');
         const clicDentroNav  = evento.target.closest('.cabecera__nav');
@@ -199,7 +187,7 @@ function iniciarCabecera() {
     });
 
 
-    // ---- Resize ---- //
+    /* ---- Resize ---- */
     window.addEventListener('resize', function() {
         if (window.innerWidth > 700 && navegacionPrincipal) {
             navegacionPrincipal.classList.remove('cabecera__nav--visible');
@@ -207,10 +195,9 @@ function iniciarCabecera() {
     });
 
 
-    // ---- Enlace activo + rutas dinámicas ---- //
+    /* ---- Enlace activo + rutas dinámicas ---- */
     marcarEnlaceActivo();
     configurarEnlaces();
 }
-
 
 iniciarCabecera();
