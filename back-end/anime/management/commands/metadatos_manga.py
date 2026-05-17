@@ -12,7 +12,7 @@ from anime.services.mangadex       import consultar_manga, get_catalogo_local, T
 # ------------------- COMANDO PRINCIPAL ------------------- #
 
 class Command(BaseCommand):
-    help = 'Menú de scraping y sincronización de portadas desde MangaDex'
+    help = 'Menú para obtener portadas y metadatos desde la API oficial de MangaDex'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -25,7 +25,6 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.forzar = kwargs['forzar']
         self._mostrar_menu()
-
 
     # ------------------- MENÚ ------------------- #
 

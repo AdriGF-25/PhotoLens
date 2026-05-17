@@ -8,7 +8,17 @@ param(
 if ([string]::IsNullOrWhiteSpace($Ruta)) {
     $Ruta = "."
 }
+
 $RutaCompleta = (Resolve-Path $Ruta).Path
+
+function Test-EsDirectorioManga {
+    param(
+        [string]$Directorio
+    )
+
+    $rutaNormalizada = [System.IO.Path]::GetFullPath($Directorio).TrimEnd('\')
+    return $rutaNormalizada -match '[\\/]back-end[\\/]media[\\/]Manga$'
+}
 
 function Get-TreeAscii {
     param(
@@ -24,8 +34,10 @@ function Get-TreeAscii {
                 $_.Name -notin $ExcluirDirectorios
             }
             else {
-                # Si el switch -f está presente, devolvemos $true y el archivo se incluye
-                (-not $f.IsPresent) -and ($_.Extension -ne ".jpg") -and ($_.Extension -ne ".webp") -and ($_.Extension -ne ".png") 
+                (-not $f.IsPresent) -and
+                ($_.Extension -ne ".jpg") -and
+                ($_.Extension -ne ".webp") -and
+                ($_.Extension -ne ".png")
             }
         } |
         Sort-Object @{ Expression = { -not $_.PSIsContainer } }, Name
@@ -39,6 +51,10 @@ function Get-TreeAscii {
         $linea
 
         if ($item.PSIsContainer) {
+            if (Test-EsDirectorioManga -Directorio $Directorio) {
+                continue
+            }
+
             $nuevoPrefijo = if ($esUltimo) { $Prefijo + "    " } else { $Prefijo + "|   " }
 
             Get-TreeAscii -Directorio $item.FullName `

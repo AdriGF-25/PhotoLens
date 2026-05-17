@@ -25,15 +25,20 @@
 |   |-- PaginaManga.md
 |   |-- PaginaManga_Y_Scraper.md
 |   |-- Perfil.md
+|   |-- poblar_capitulos.py.md
+|   |-- Registrar_manga.py.md
 |   -- Script Diagnostico Manga.md
 |-- back-end
 |   |-- anime
 |   |   |-- management
 |   |   |   -- commands
-|   |   |       -- scrapear_portadas.py
+|   |   |       |-- metadatos_manga.py
+|   |   |       |-- poblar_capitulos.py
+|   |   |       -- registrar_mangas.py
 |   |   |-- migrations
 |   |   |   |-- __init__.py
-|   |   |   -- 0001_initial.py
+|   |   |   |-- 0001_initial.py
+|   |   |   -- 0002_remove_anime_generos_and_more.py
 |   |   |-- services
 |   |   |   |-- __init__.py
 |   |   |   |-- mangadex.py
