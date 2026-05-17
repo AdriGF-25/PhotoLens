@@ -1,36 +1,30 @@
 """
-anime'n'chill — Panel de administración
+anime'n'chill — Panel de administración (solo Manga)
 """
 
 from django.contrib import admin
-from .models import Genero, Manga, Anime, Capitulo, Episodio, Favorito, Progreso
+from .models import Genero, Manga, Capitulo, Favorito, Progreso
 
 
+# ------------------- GÉNERO ------------------- #
 @admin.register(Genero)
 class GeneroAdmin(admin.ModelAdmin):
-    list_display       = ("nombre", "slug")
+    list_display        = ("nombre", "slug")
     prepopulated_fields = {"slug": ("nombre",)}
-    search_fields      = ("nombre",)
+    search_fields       = ("nombre",)
 
 
+# ------------------- MANGA ------------------- #
 @admin.register(Manga)
 class MangaAdmin(admin.ModelAdmin):
-    list_display   = ("titulo", "autor", "estado", "anio_publicacion", "destacado")
-    list_filter    = ("estado", "destacado")
-    search_fields  = ("titulo", "autor", "mangadex_id")
+    list_display      = ("titulo", "autor", "estado", "anio_publicacion", "destacado")
+    list_filter       = ("estado", "destacado")
+    search_fields     = ("titulo", "autor", "mangadex_id")
     filter_horizontal = ("generos",)
-    list_editable  = ("destacado",)
+    list_editable     = ("destacado",)
 
 
-@admin.register(Anime)
-class AnimeAdmin(admin.ModelAdmin):
-    list_display   = ("titulo", "estudio", "tipo", "estado", "anio_emision", "destacado")
-    list_filter    = ("estado", "tipo", "destacado")
-    search_fields  = ("titulo", "estudio")
-    filter_horizontal = ("generos",)
-    list_editable  = ("destacado",)
-
-
+# ------------------- CAPÍTULO ------------------- #
 @admin.register(Capitulo)
 class CapituloAdmin(admin.ModelAdmin):
     list_display  = ("manga", "numero", "titulo", "volumen", "fecha_publicacion")
@@ -39,19 +33,13 @@ class CapituloAdmin(admin.ModelAdmin):
     ordering      = ("manga", "numero")
 
 
-@admin.register(Episodio)
-class EpisodioAdmin(admin.ModelAdmin):
-    list_display  = ("anime", "numero", "titulo", "duracion_min", "fecha_emision")
-    list_filter   = ("anime",)
-    search_fields = ("anime__titulo", "titulo")
-
-
+# ------------------- FAVORITO ------------------- #
 @admin.register(Favorito)
 class FavoritoAdmin(admin.ModelAdmin):
-    list_display = ("usuario", "tipo", "manga", "anime", "fecha_guardado")
-    list_filter  = ("tipo",)
+    list_display = ("usuario", "manga", "fecha_guardado")
 
 
+# ------------------- PROGRESO ------------------- #
 @admin.register(Progreso)
 class ProgresoAdmin(admin.ModelAdmin):
     list_display = ("usuario", "capitulo", "pagina_actual", "completado", "fecha_lectura")

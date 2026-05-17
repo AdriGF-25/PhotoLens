@@ -68,3 +68,18 @@ diagnostico_manga.py
 cd back-end
 python manage.py shell -c "exec(open('diagnostico_manga.py', encoding='utf-8').read())"
 
+
+--------------------------------------------------------------
+poblar_capitulos.py
+--------------------------------------------------------------
+Poblar todos los mangas que esten en BD
+python manage.py poblar_capitulos
+
+Solo un manga concreto
+python manage.py poblar_capitulos --manga "Chainsaw Man"
+
+Simular sin tocar la BD (recomendado primero)
+python manage.py poblar_capitulos --dry-run
+
+Limpiar y repoblar (si cambiaste carpetas)
+python manage.py poblar_capitulos --manga "Fire Force" --limpiar
