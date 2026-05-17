@@ -1220,3 +1220,107 @@ El `CORS_ALLOWED_ORIGINS` en `settings.py` solo tiene:
 python
 
 `CORS_ALLOWED_ORIGINS = [     "http://127.0.0.1:5500",    "http://localhost:5500", ]`
+
+# Resumen para memoria — 17/18 mayo 2026
+
+Sesión de refactorización completa del backend de la app anime,
+eliminación de modelos innecesarios y automatización de la gestión
+de mangas mediante commands y servicios.
+
+---
+
+## 1. Descripción
+
+Se ha realizado un refactor profundo de la app `anime` del backend,
+eliminando todo lo relacionado con Anime/Episodio al ser contenido
+fuera del alcance actual del proyecto. Se han limpiado modelos,
+serializers, views, filters, admin y urls. Se han creado tres
+management commands para automatizar la gestión de mangas y se ha
+renombrado el command de portadas para reflejar correctamente su
+función (consumo de API oficial, no scraping).
+
+---
+
+## 2. Temporalización
+
+17/18 mayo 2026
+
+---
+
+## 3. Lo que se ha hecho
+
+### 3.1 Refactor de modelos (models.py)
+- Eliminados: modelo Anime, modelo Episodio
+- Simplificado: Favorito ahora solo apunta a Manga
+  (eliminados campos anime y tipo)
+- Renombradas todas las tablas con Meta.db_table:
+  mangas, capitulos, generos, favoritos, progresos
+- Migración limpia: migrate anime zero → makemigrations → migrate
+- Durante makemigrations Django detectó campo manga nullable en
+  Favorito — resuelto con opción 1 + valor por defecto 1
+  (BD limpia, sin datos reales afectados)
+
+### 3.2 Limpieza en cascada
+- serializers.py → eliminados AnimeListSerializer,
+  AnimeDetailSerializer, EpisodioSerializer
+  FavoritoSerializer simplificado (solo manga)
+  GuardarFavoritoInputSerializer eliminado campo tipo
+- filters.py → eliminado AnimeFilter completo
+- admin.py → eliminados AnimeAdmin, EpisodioAdmin
+- views.py → eliminados AnimeViewSet, EpisodioViewSet
+  @action guardar_favorito reescrito simplificado
+- urls.py → desregistrados routers de anime y episodio
+  Solo queda registrado el router de manga
+
+### 3.3 Management commands creados
+
+| Command            | Función                                          |
+|--------------------|--------------------------------------------------|
+| registrar_mangas   | Lee media/Manga/ y crea objetos Manga en BD      |
+| poblar_capitulos   | Crea objetos Capitulo desde subcarpetas          |
+| metadatos_manga    | Menú interactivo — portadas y metadatos MangaDex |
+
+Todos los commands incluyen flag --dry-run para simular
+sin escribir en BD.
+
+### 3.4 Servicios (services/)
+- mangadex.py: consulta API MangaDex v5, construye URL de
+  portada CDN, extrae autor/géneros/descripción/estado.
+  TERMINOS_CUSTOM para títulos cuyo nombre de carpeta no
+  coincide exactamente con MangaDex
+- sincronizacion.py: compara BD vs API y decide
+  crear / actualizar / omitir según si portada_url cambió.
+  Acepta flag forzar=True para actualizar siempre.
+
+### 3.5 Renombrado
+- scrapear_portadas.py → metadatos_manga.py
+  El término "scrapear" era semánticamente incorrecto —
+  se consume una API REST oficial y pública de MangaDex
+
+### 3.6 Herramienta auxiliar de desarrollo
+- diagnostico_manga.py: script interactivo de diagnóstico
+  ejecutable desde Django shell. Muestra estado de BD,
+  estructura de carpetas, formato de imágenes y capítulos
+  por manga. No es parte del sistema productivo.
+
+---
+
+## 4. Flujo completo de gestión de mangas
+
+python manage.py registrar_mangas    # 1. Registra en BD
+python manage.py poblar_capitulos    # 2. Crea capítulos
+python manage.py metadatos_manga     # 3. Portadas y metadatos
+
+---
+
+## 5. Arquitectura de datos resultante
+
+Manga ──< Capitulo
+  │
+  └──< Favorito >── User
+  │
+  └──< Progreso >── Capitulo
+  │
+  └──>< Genero
+
+Tablas BD: mangas, capitulos, generos, favoritos, progresos

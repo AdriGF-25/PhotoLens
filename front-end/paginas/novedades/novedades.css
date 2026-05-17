@@ -472,3 +472,113 @@ button {
         font-size: 0.85rem;
     }
 }
+
+/* ------------------- PAGINACION ------------------- */
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.paginacion__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border: 1px solid var(--borde);
+    border-radius: 3px;
+    color: var(--texto-suave);
+    font-size: 1.4rem;
+    font-weight: 700;
+    transition: border-color 0.15s ease, color 0.15s ease;
+    background: none;
+    cursor: pointer;
+}
+
+.paginacion__btn:hover:not(:disabled) {
+    border-color: var(--acento);
+    color: var(--texto);
+}
+
+.paginacion__btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.paginacion__numeros {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+}
+
+.paginacion__numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.2rem;
+    height: 2.2rem;
+    padding: 0 0.4rem;
+    border: 1px solid var(--borde);
+    border-radius: 3px;
+    color: var(--texto-suave);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+    background: none;
+    cursor: pointer;
+}
+
+.paginacion__numero:hover {
+    border-color: var(--acento);
+    color: var(--texto);
+}
+
+.paginacion__numero--activo {
+    border-color: var(--acento);
+    background-color: var(--acento);
+    color: #111111;
+    font-weight: 800;
+    cursor: default;
+}
+
+.paginacion__puntos {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2.2rem;
+    color: var(--texto-muy-suave);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    cursor: default;
+    user-select: none;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 700px) {
+    .paginacion__numero {
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.78rem;
+    }
+
+    .paginacion__btn {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .paginacion {
+        gap: 0.3rem;
+    }
+}

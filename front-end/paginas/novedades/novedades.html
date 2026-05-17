@@ -66,9 +66,16 @@
         <section class="seccion-noticias" aria-label="Listado de novedades">
             <div class="cuadricula-noticias"></div>
 
-            <div class="zona-cargar">
-                <button class="boton-secundario">Cargar más novedades</button>
-            </div>
+            <!-- ------------------- PAGINACION ------------------- -->
+            <nav class="paginacion" aria-label="Paginación de noticias">
+                <button class="paginacion__btn paginacion__btn--anterior" aria-label="Página anterior" disabled>
+                    &#8249;
+                </button>
+                <div class="paginacion__numeros"></div>
+                <button class="paginacion__btn paginacion__btn--siguiente" aria-label="Página siguiente">
+                    &#8250;
+                </button>
+            </nav>
         </section>
 
     </main>

@@ -4,7 +4,9 @@ const API_NOTICIAS    = 'http://127.0.0.1:8000/api/noticias/noticias/';
 const API_SINCRONIZAR = 'http://127.0.0.1:8000/api/noticias/noticias/sincronizar/';
 const IMAGEN_PLACEHOLDER = '../../assets/img/placeholder-noticia.jpg';
 
-// Mapa de tipo ANN → categoría de filtro y etiqueta visual
+const SESSION_KEY_PAGINA = 'anc_noticias_pagina';
+const SESSION_KEY_FILTRO = 'anc_noticias_filtro';
+
 const TIPO_CATEGORIA = {
     manga:  { filtro: 'manga',      etiqueta: 'Manga',       clase: 'etiqueta--manga'      },
     anime:  { filtro: 'anime',      etiqueta: 'Anime',       clase: 'etiqueta--anime'      },
@@ -15,10 +17,31 @@ const CATEGORIA_DEFECTO = { filtro: 'lanzamiento', etiqueta: 'Lanzamiento', clas
 
 // ------------------- ESTADO ------------------- //
 
-let paginaActual   = 1;
-let hayMasPaginas  = false;
-let filtroActivo   = 'todo';
-let todasLasTarjetas = [];  // guardamos los datos para re-filtrar sin pedir de nuevo
+let paginaActual    = 1;
+let totalPaginas    = 1;
+let filtroActivo    = 'todo';
+let todasLasTarjetas = [];
+
+
+// ------------------- SESSION STORAGE ------------------- //
+
+function guardarEstadoSesion() {
+    sessionStorage.setItem(SESSION_KEY_PAGINA, paginaActual);
+    sessionStorage.setItem(SESSION_KEY_FILTRO, filtroActivo);
+}
+
+function restaurarEstadoSesion() {
+    const paginaGuardada = sessionStorage.getItem(SESSION_KEY_PAGINA);
+    const filtroGuardado = sessionStorage.getItem(SESSION_KEY_FILTRO);
+
+    if (paginaGuardada) paginaActual = parseInt(paginaGuardada, 10);
+    if (filtroGuardado) filtroActivo = filtroGuardado;
+}
+
+function limpiarEstadoSesion() {
+    sessionStorage.removeItem(SESSION_KEY_PAGINA);
+    sessionStorage.removeItem(SESSION_KEY_FILTRO);
+}
 
 
 // ------------------- UTILIDADES ------------------- //
@@ -30,16 +53,13 @@ function obtenerCategoria(tipo) {
 
 function formatearFecha(fechaISO) {
     if (!fechaISO) return '';
-    const fecha = new Date(fechaISO);
-    return fecha.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+    return new Date(fechaISO).toLocaleDateString('es-ES', {
+        day: 'numeric', month: 'short', year: 'numeric'
+    });
 }
 
-
 function obtenerImagenNoticia(noticia) {
-    if (noticia.imagen_url && noticia.imagen_url.trim() !== '') {
-        return noticia.imagen_url;
-    }
-
+    if (noticia.imagen_url && noticia.imagen_url.trim() !== '') return noticia.imagen_url;
     return IMAGEN_PLACEHOLDER;
 }
 
@@ -47,16 +67,16 @@ function crearAtributoOnErrorImagen() {
     return `this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}';`;
 }
 
+
 // ------------------- RENDER HERO ------------------- //
 
 function renderizarHero(noticia) {
     const cat = obtenerCategoria(noticia.tipo);
     const heroImagen = document.querySelector('.hero__imagen');
-    const imagen = obtenerImagenNoticia(noticia);
 
-    heroImagen.src = imagen;
+    heroImagen.src = obtenerImagenNoticia(noticia);
     heroImagen.alt = noticia.titulo;
-    heroImagen.onerror = function() {
+    heroImagen.onerror = function () {
         this.onerror = null;
         this.src = IMAGEN_PLACEHOLDER;
     };
@@ -74,14 +94,13 @@ function renderizarHero(noticia) {
     etiquetaHero.className = `etiqueta ${cat.clase}`;
 
     const enlaceHero = document.querySelector('.boton-primario');
-    const slugHero   = noticia.slug
+    enlaceHero.href = noticia.slug
         ? `/front-end/paginas/detalle-noticia/detalle-noticia.html?slug=${noticia.slug}`
         : `/front-end/paginas/detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
-
-    enlaceHero.href   = slugHero;
     enlaceHero.target = '_self';
     enlaceHero.removeAttribute('rel');
 }
+
 
 // ------------------- RENDER TARJETAS ------------------- //
 
@@ -90,25 +109,19 @@ function crearTarjeta(noticia) {
     const imagen = obtenerImagenNoticia(noticia);
     const fecha  = formatearFecha(noticia.fecha_ann || noticia.created_at);
 
-    // Construimos el enlace a la página de detalle usando el slug
-    // Si no hay slug (no debería ocurrir), caemos al id como fallback
     const enlaceDetalle = noticia.slug
-    ? `/front-end/paginas/detalle-noticia/detalle-noticia.html?slug=${noticia.slug}`
-    : `/front-end/paginas/detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
+        ? `/front-end/paginas/detalle-noticia/detalle-noticia.html?slug=${noticia.slug}`
+        : `/front-end/paginas/detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
 
     const article = document.createElement('article');
     article.className = 'tarjeta';
     article.dataset.categoria = cat.filtro;
 
     article.innerHTML = `
-        <!-- Imagen con etiqueta superpuesta -->
         <a href="${enlaceDetalle}" class="tarjeta__imagen-contenedor">
-            <!-- Etiqueta y comentarios superpuestos sobre la imagen -->
             <div class="tarjeta__imagen-meta">
                 <span class="etiqueta ${cat.clase}">${cat.etiqueta}</span>
-                <!-- STUB: comentarios — visible cuando se implemente el feature -->
-                <span class="tarjeta__comentarios oculto" aria-label="Comentarios">
-                    <span>💬</span>
+                <span class="tarjeta__comentarios oculto" aria-label="Comentarios">                    
                     <span class="tarjeta__comentarios-numero">0</span>
                 </span>
             </div>
@@ -124,9 +137,7 @@ function crearTarjeta(noticia) {
         </a>
         <div class="tarjeta__cuerpo">
             <h2 class="tarjeta__titulo">
-                <a href="${enlaceDetalle}" class="tarjeta__enlace">
-                    ${noticia.titulo}
-                </a>
+                <a href="${enlaceDetalle}" class="tarjeta__enlace">${noticia.titulo}</a>
             </h2>
             <p class="tarjeta__resumen">${noticia.descripcion || 'Sin descripción disponible.'}</p>
             <div class="tarjeta__pie">
@@ -139,31 +150,26 @@ function crearTarjeta(noticia) {
     return article;
 }
 
-function renderizarTarjetas(noticias, limpiar = false) {
+function renderizarTarjetas(noticias) {
     const cuadricula = document.querySelector('.cuadricula-noticias');
+    cuadricula.innerHTML = '';
+    todasLasTarjetas = [];
 
-    if (limpiar) {
-        cuadricula.innerHTML = '';
-        todasLasTarjetas = [];
-    }
-
-    noticias.forEach(function(noticia) {
+    noticias.forEach(function (noticia) {
         const tarjeta = crearTarjeta(noticia);
         cuadricula.appendChild(tarjeta);
         todasLasTarjetas.push(tarjeta);
     });
 
-    // Aplicamos el filtro activo sobre las tarjetas nuevas
     aplicarFiltroActual();
 }
 
 
-// ------------------- ESTADO DE CARGA ------------------- //
+// ------------------- SKELETON / ERROR ------------------- //
 
 function mostrarSkeleton() {
     const cuadricula = document.querySelector('.cuadricula-noticias');
     cuadricula.innerHTML = '';
-
     for (let i = 0; i < 6; i++) {
         cuadricula.innerHTML += `
             <article class="tarjeta">
@@ -181,27 +187,23 @@ function mostrarSkeleton() {
 
 function mostrarError(mensaje) {
     const cuadricula = document.querySelector('.cuadricula-noticias');
-    const conteo = document.querySelector('.conteo-resultados strong');
-    const zonaCargar = document.querySelector('.zona-cargar');
+    todasLasTarjetas = [];
 
     cuadricula.innerHTML = `
         <div class="estado-vacio">
-            <p class="estado-vacio__mensaje">⚠️ ${mensaje}</p>
+            <p class="estado-vacio__mensaje">${mensaje}</p>
             <button class="boton-secundario" id="btnReintentar">Reintentar</button>
         </div>
     `;
 
-    todasLasTarjetas = [];
+    const conteo = document.querySelector('.conteo-resultados strong');
+    if (conteo) conteo.textContent = '0';
 
-    if (conteo) {
-        conteo.textContent = '0';
-    }
-
-    if (zonaCargar) {
-        zonaCargar.style.display = 'none';
-    }
-
-    document.getElementById('btnReintentar')?.addEventListener('click', cargarNoticias);
+    document.getElementById('btnReintentar')?.addEventListener('click', function () {
+        limpiarEstadoSesion();
+        paginaActual = 1;
+        cargarPagina(paginaActual);
+    });
 }
 
 
@@ -213,31 +215,80 @@ async function sincronizarConANN() {
 }
 
 async function obtenerNoticias(pagina = 1) {
-    const url       = `${API_NOTICIAS}?page=${pagina}`;
-    const respuesta = await fetch(url);
-
+    const respuesta = await fetch(`${API_NOTICIAS}?page=${pagina}`);
     if (!respuesta.ok) throw new Error(`Error ${respuesta.status} al obtener noticias`);
-
     return await respuesta.json();
 }
 
 
-// ------------------- CARGA PRINCIPAL ------------------- //
+// ------------------- PAGINACIÓN ------------------- //
 
-async function cargarNoticias() {
+function renderizarPaginacion(total, actual) {
+    const contenedor = document.querySelector('.paginacion__numeros');
+    const btnAnterior = document.querySelector('.paginacion__btn--anterior');
+    const btnSiguiente = document.querySelector('.paginacion__btn--siguiente');
+
+    contenedor.innerHTML = '';
+
+    // Botones < >
+    btnAnterior.disabled = actual <= 1;
+    btnSiguiente.disabled = actual >= total;
+
+    // Calcula qué números mostrar: 3 antes + actual + 3 después
+    const rango = new Set();
+    rango.add(1);
+    rango.add(total);
+
+    for (let i = Math.max(2, actual - 2); i <= Math.min(total - 1, actual + 2); i++) {
+        rango.add(i);
+    }
+
+    const paginas = Array.from(rango).sort(function (a, b) { return a - b; });
+
+    paginas.forEach(function (num, idx) {
+        // Añadir "..." si hay salto
+        if (idx > 0 && num - paginas[idx - 1] > 1) {
+            const puntos = document.createElement('span');
+            puntos.className = 'paginacion__puntos';
+            puntos.textContent = '···';
+            contenedor.appendChild(puntos);
+        }
+
+        const btn = document.createElement('button');
+        btn.className = 'paginacion__numero' + (num === actual ? ' paginacion__numero--activo' : '');
+        btn.textContent = num;
+        btn.setAttribute('aria-label', `Ir a página ${num}`);
+        if (num === actual) btn.setAttribute('aria-current', 'page');
+
+        btn.addEventListener('click', function () {
+            if (num !== paginaActual) irAPagina(num);
+        });
+
+        contenedor.appendChild(btn);
+    });
+}
+
+function irAPagina(num) {
+    paginaActual = num;
+    guardarEstadoSesion();
+    cargarPagina(paginaActual);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+// ------------------- CARGA POR PÁGINA ------------------- //
+
+async function cargarPagina(pagina) {
     mostrarSkeleton();
 
     try {
-        let datos = await obtenerNoticias(1);
+        let datos = await obtenerNoticias(pagina);
 
-        // Si la BD está vacía, sincronizamos primero
+        // BD vacía → sincronizar y reintentar
         if (datos.count === 0) {
             await sincronizarConANN();
-            datos = await obtenerNoticias(1);
+            datos = await obtenerNoticias(pagina);
         }
-
-        paginaActual  = 1;
-        hayMasPaginas = !!datos.next;
 
         const noticias = datos.results;
 
@@ -246,12 +297,15 @@ async function cargarNoticias() {
             return;
         }
 
-        // Primera noticia → hero; el resto → tarjetas
-        renderizarHero(noticias[0]);
-        renderizarTarjetas(noticias.slice(1), true);
+        // Calcular total de páginas desde la API
+        const pageSize = noticias.length || 1;
+        totalPaginas = Math.ceil(datos.count / pageSize);
 
+        renderizarHero(noticias[0]);
+        renderizarTarjetas(noticias.slice(1));
         actualizarContador();
-        actualizarBotonCargarMas();
+        renderizarPaginacion(totalPaginas, paginaActual);
+        sincronizarBotonesFiltroDom();
 
     } catch (error) {
         console.error('Error al cargar noticias:', error);
@@ -259,48 +313,23 @@ async function cargarNoticias() {
     }
 }
 
-async function cargarMas() {
-    if (!hayMasPaginas) return;
-
-    paginaActual++;
-
-    try {
-        const datos    = await obtenerNoticias(paginaActual);
-        hayMasPaginas  = !!datos.next;
-
-        renderizarTarjetas(datos.results, false);
-        actualizarContador();
-        actualizarBotonCargarMas();
-
-    } catch (error) {
-        console.error('Error al cargar más noticias:', error);
-    }
-}
-
 
 // ------------------- FILTROS ------------------- //
 
 function aplicarFiltroActual() {
-    let cantidad = 0;
-
-    todasLasTarjetas.forEach(function(tarjeta) {
-        const categoriaTargeta = tarjeta.dataset.categoria;
-        const debeVerse = (filtroActivo === 'todo') || (categoriaTargeta === filtroActivo);
-
+    todasLasTarjetas.forEach(function (tarjeta) {
+        const debeVerse = filtroActivo === 'todo' || tarjeta.dataset.categoria === filtroActivo;
         tarjeta.classList.toggle('tarjeta--oculta', !debeVerse);
-        if (debeVerse) cantidad++;
     });
-
-    actualizarContador(cantidad);
+    actualizarContador();
 }
 
 function actualizarContador(cantidad) {
     const conteo = document.querySelector('.conteo-resultados strong');
     if (!conteo) return;
 
-    // Si no pasamos cantidad, contamos las visibles
     if (cantidad === undefined) {
-        cantidad = todasLasTarjetas.filter(function(t) {
+        cantidad = todasLasTarjetas.filter(function (t) {
             return !t.classList.contains('tarjeta--oculta');
         }).length;
     }
@@ -308,31 +337,39 @@ function actualizarContador(cantidad) {
     conteo.textContent = cantidad;
 }
 
-function actualizarBotonCargarMas() {
-    const zona = document.querySelector('.zona-cargar');
-    if (!zona) return;
-    zona.style.display = hayMasPaginas ? 'flex' : 'none';
+// Sincroniza el botón activo del DOM con filtroActivo restaurado de sesión
+function sincronizarBotonesFiltroDom() {
+    document.querySelectorAll('.filtro').forEach(function (boton) {
+        boton.classList.toggle('filtro--activo', boton.dataset.filtro === filtroActivo);
+    });
 }
 
 
 // ------------------- EVENTOS ------------------- //
 
-document.querySelectorAll('.filtro').forEach(function(boton) {
-    boton.addEventListener('click', function() {
-        document.querySelectorAll('.filtro').forEach(function(b) {
-            b.classList.remove('filtro--activo');
-        });
-
-        boton.classList.add('filtro--activo');
+document.querySelectorAll('.filtro').forEach(function (boton) {
+    boton.addEventListener('click', function () {
         filtroActivo = boton.dataset.filtro;
+        guardarEstadoSesion();
+        sincronizarBotonesFiltroDom();
         aplicarFiltroActual();
     });
 });
 
-document.querySelector('.zona-cargar .boton-secundario')
-    ?.addEventListener('click', cargarMas);
+document.querySelector('.paginacion__btn--anterior')
+    ?.addEventListener('click', function () {
+        if (paginaActual > 1) irAPagina(paginaActual - 1);
+    });
+
+document.querySelector('.paginacion__btn--siguiente')
+    ?.addEventListener('click', function () {
+        if (paginaActual < totalPaginas) irAPagina(paginaActual + 1);
+    });
 
 
 // ------------------- INICIO ------------------- //
 
-document.addEventListener('DOMContentLoaded', cargarNoticias);
+document.addEventListener('DOMContentLoaded', function () {
+    restaurarEstadoSesion();
+    cargarPagina(paginaActual);
+});
