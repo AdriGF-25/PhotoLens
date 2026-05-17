@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga | anime'n'chill</title>
+
+    <link rel="stylesheet" href="manga.css">
+</head>
+<body>
+
+    <!-- ------------------- CABECERA/NAV ---------------- -->
+    <div id="contenedor-header"></div>
+
+    <main class="contenido-principal">
+
+        <!-- ------------------- FILTROS ------------------- -->
+        <section class="zona-filtros" aria-label="Filtros de manga">
+            <div class="zona-filtros__interior">
+                <div class="filtros" id="contenedorFiltros" role="group" aria-label="Filtrar por categoría">
+                    <button class="filtro filtro--activo" data-filtro="todo">Todo</button>
+                    <button class="filtro" data-filtro="accion">Acción</button>
+                    <button class="filtro" data-filtro="aventura">Aventura</button>
+                    <button class="filtro" data-filtro="romance">Romance</button>
+                    <button class="filtro" data-filtro="terror">Terror</button>
+                    <button class="filtro" data-filtro="comedia">Comedia</button>
+                    <button class="filtro" data-filtro="fantasia">Fantasía</button>
+                    <button class="filtro" data-filtro="sci-fi">Sci-Fi</button>
+                </div>
+                <div class="manga-busqueda">
+                    <input
+                        type="search"
+                        class="manga-busqueda__input"
+                        id="inputBusqueda"
+                        placeholder="Buscar manga..."
+                        aria-label="Buscar manga por título"
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------- SECCIONES POR CATEGORÍA ------------------- -->
+        <div class="manga-secciones" id="contenedorSecciones">
+
+            <!-- ------------------- SECCIÓN ACCIÓN ------------------- -->
+            <section class="manga-seccion" data-categoria="accion" aria-label="Manga de acción">
+                <div class="manga-seccion__cabecera">
+                    <div class="manga-seccion__titulo-grupo">
+                        <span class="manga-seccion__etiqueta etiqueta--accion">Acción</span>
+                        <h2 class="manga-seccion__titulo">Acción</h2>
+                    </div>
+                    <span class="manga-seccion__conteo">0 títulos</span>
+                </div>
+                <div class="manga-grid" id="grid-accion">
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="1" data-categoria="accion" tabindex="0" role="button" aria-label="Ver detalles de Chainsaw Man">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de Chainsaw Man"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">Chainsaw Man</h3>
+                            <span class="manga-tarjeta__capitulos">97 caps.</span>
+                        </div>
+                    </article>
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="2" data-categoria="accion" tabindex="0" role="button" aria-label="Ver detalles de Kimetsu no Yaiba">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de Kimetsu no Yaiba"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">Kimetsu no Yaiba</h3>
+                            <span class="manga-tarjeta__capitulos">205 caps.</span>
+                        </div>
+                    </article>
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="3" data-categoria="accion" tabindex="0" role="button" aria-label="Ver detalles de Gachiakuta">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de Gachiakuta"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">Gachiakuta</h3>
+                            <span class="manga-tarjeta__capitulos">68 caps.</span>
+                        </div>
+                    </article>
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="4" data-categoria="accion" tabindex="0" role="button" aria-label="Ver detalles de Solo Leveling">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de Solo Leveling"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">Solo Leveling</h3>
+                            <span class="manga-tarjeta__capitulos">179 caps.</span>
+                        </div>
+                    </article>
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="5" data-categoria="accion" tabindex="0" role="button" aria-label="Ver detalles de Fire Force">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de Fire Force"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">Fire Force</h3>
+                            <span class="manga-tarjeta__capitulos">304 caps.</span>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ------------------- SECCIÓN AVENTURA ------------------- -->
+            <section class="manga-seccion" data-categoria="aventura" aria-label="Manga de aventura">
+                <div class="manga-seccion__cabecera">
+                    <div class="manga-seccion__titulo-grupo">
+                        <span class="manga-seccion__etiqueta etiqueta--aventura">Aventura</span>
+                        <h2 class="manga-seccion__titulo">Aventura</h2>
+                    </div>
+                    <span class="manga-seccion__conteo">0 títulos</span>
+                </div>
+                <div class="manga-grid" id="grid-aventura">
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="6" data-categoria="aventura" tabindex="0" role="button" aria-label="Ver detalles de One Piece">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de One Piece"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">One Piece</h3>
+                            <span class="manga-tarjeta__capitulos">1110+ caps.</span>
+                        </div>
+                    </article>
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="7" data-categoria="aventura" tabindex="0" role="button" aria-label="Ver detalles de BLAME!">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de BLAME!"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">BLAME!</h3>
+                            <span class="manga-tarjeta__capitulos">66 caps.</span>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ------------------- SECCIÓN ROMANCE ------------------- -->
+            <section class="manga-seccion" data-categoria="romance" aria-label="Manga de romance">
+                <div class="manga-seccion__cabecera">
+                    <div class="manga-seccion__titulo-grupo">
+                        <span class="manga-seccion__etiqueta etiqueta--romance">Romance</span>
+                        <h2 class="manga-seccion__titulo">Romance</h2>
+                    </div>
+                    <span class="manga-seccion__conteo">0 títulos</span>
+                </div>
+                <div class="manga-grid" id="grid-romance">
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="8" data-categoria="romance" tabindex="0" role="button" aria-label="Ver detalles de Horimiya">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de Horimiya"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">Horimiya</h3>
+                            <span class="manga-tarjeta__capitulos">122 caps.</span>
+                        </div>
+                    </article>
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="9" data-categoria="romance" tabindex="0" role="button" aria-label="Ver detalles de SPY x FAMILY">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de SPY x FAMILY"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">SPY x FAMILY</h3>
+                            <span class="manga-tarjeta__capitulos">100+ caps.</span>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ------------------- SECCIÓN SCI-FI ------------------- -->
+            <section class="manga-seccion" data-categoria="sci-fi" aria-label="Manga de ciencia ficción">
+                <div class="manga-seccion__cabecera">
+                    <div class="manga-seccion__titulo-grupo">
+                        <span class="manga-seccion__etiqueta etiqueta--sci-fi">Sci-Fi</span>
+                        <h2 class="manga-seccion__titulo">Ciencia Ficción</h2>
+                    </div>
+                    <span class="manga-seccion__conteo">0 títulos</span>
+                </div>
+                <div class="manga-grid" id="grid-sci-fi">
+
+                    <!-- ------------------- TARJETA MANGA ------------------- -->
+                    <article class="manga-tarjeta" data-id="10" data-categoria="sci-fi" tabindex="0" role="button" aria-label="Ver detalles de Zero kara Hajimeru">
+                        <div class="manga-tarjeta__portada-contenedor">
+                            <img
+                                class="manga-tarjeta__portada"
+                                src="../../assets/placeholders/placeholder-portada.jpg"
+                                alt="Portada de Zero kara Hajimeru Mahou no Sho"
+                                loading="lazy"
+                                width="200"
+                                height="290"
+                            >
+                            <div class="manga-tarjeta__overlay">
+                                <span class="manga-tarjeta__overlay-icono">📖</span>
+                            </div>
+                        </div>
+                        <div class="manga-tarjeta__info">
+                            <h3 class="manga-tarjeta__titulo">Zero kara Hajimeru</h3>
+                            <span class="manga-tarjeta__capitulos">46 caps.</span>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+        </div>
+        <!-- ------------------- FIN SECCIONES ------------------- -->
+
+    </main>
+
+    <!-- ------------------- MODAL DETALLE MANGA ------------------- -->
+    <div class="manga-modal" id="mangaModal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" aria-hidden="true">
+        <div class="manga-modal__fondo" id="modalFondo"></div>
+        <div class="manga-modal__contenedor">
+
+            <!-- ------------------- PANEL IZQUIERDO (1/3) ------------------- -->
+            <aside class="manga-modal__panel-izq">
+                <div class="manga-modal__portada-contenedor">
+                    <img
+                        class="manga-modal__portada"
+                        id="modalPortada"
+                        src="../../assets/placeholders/placeholder-portada.jpg"
+                        alt="Portada del manga seleccionado"
+                        width="260"
+                        height="380"
+                    >
+                </div>
+                <div class="manga-modal__info-lateral">
+                    <h2 class="manga-modal__titulo" id="modalTitulo">Título del Manga</h2>
+                    <span class="manga-modal__genero" id="modalGenero">Acción</span>
+                </div>
+                <button class="manga-modal__boton-continuar" id="modalBotonContinuar" aria-label="Continuar lectura">
+                    <span class="manga-modal__boton-icono">▶</span>
+                    <span class="manga-modal__boton-texto">
+                        Continuar<br>
+                        <small id="modalUltimoCapitulo">Capítulo 47</small>
+                    </span>
+                </button>
+            </aside>
+
+            <!-- ------------------- PANEL DERECHO (2/3) — CAPÍTULOS ------------------- -->
+            <div class="manga-modal__panel-der">
+                <div class="manga-modal__cabecera-der">
+                    <h3 class="manga-modal__subtitulo">Capítulos</h3>
+                    <button class="manga-modal__cerrar" id="modalCerrar" aria-label="Cerrar modal">✕</button>
+                </div>
+                <div class="manga-modal__capitulos-lista" id="modalCapitulosLista">
+                    <!-- ------------------- VOLUMEN DESPLEGABLE ------------------- -->
+                    <details class="manga-volumen" open>
+                        <summary class="manga-volumen__cabecera">
+                            <span class="manga-volumen__nombre">Volumen 1</span>
+                            <span class="manga-volumen__rango">Caps. 1 – 7</span>
+                            <span class="manga-volumen__flecha">▾</span>
+                        </summary>
+                        <div class="manga-volumen__grid">
+                            <button class="manga-cap-btn" data-cap="1" aria-label="Ir al capítulo 1">
+                                <span class="manga-cap-btn__num">1</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="2" aria-label="Ir al capítulo 2">
+                                <span class="manga-cap-btn__num">2</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="3" aria-label="Ir al capítulo 3">
+                                <span class="manga-cap-btn__num">3</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="4" aria-label="Ir al capítulo 4">
+                                <span class="manga-cap-btn__num">4</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="5" aria-label="Ir al capítulo 5">
+                                <span class="manga-cap-btn__num">5</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="6" aria-label="Ir al capítulo 6">
+                                <span class="manga-cap-btn__num">6</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="7" aria-label="Ir al capítulo 7">
+                                <span class="manga-cap-btn__num">7</span>
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- ------------------- VOLUMEN DESPLEGABLE ------------------- -->
+                    <details class="manga-volumen">
+                        <summary class="manga-volumen__cabecera">
+                            <span class="manga-volumen__nombre">Volumen 2</span>
+                            <span class="manga-volumen__rango">Caps. 8 – 16</span>
+                            <span class="manga-volumen__flecha">▾</span>
+                        </summary>
+                        <div class="manga-volumen__grid">
+                            <button class="manga-cap-btn" data-cap="8" aria-label="Ir al capítulo 8">
+                                <span class="manga-cap-btn__num">8</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="9" aria-label="Ir al capítulo 9">
+                                <span class="manga-cap-btn__num">9</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="10" aria-label="Ir al capítulo 10">
+                                <span class="manga-cap-btn__num">10</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="11" aria-label="Ir al capítulo 11">
+                                <span class="manga-cap-btn__num">11</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="12" aria-label="Ir al capítulo 12">
+                                <span class="manga-cap-btn__num">12</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="13" aria-label="Ir al capítulo 13">
+                                <span class="manga-cap-btn__num">13</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="14" aria-label="Ir al capítulo 14">
+                                <span class="manga-cap-btn__num">14</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="15" aria-label="Ir al capítulo 15">
+                                <span class="manga-cap-btn__num">15</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="16" aria-label="Ir al capítulo 16">
+                                <span class="manga-cap-btn__num">16</span>
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- ------------------- VOLUMEN DESPLEGABLE ------------------- -->
+                    <details class="manga-volumen">
+                        <summary class="manga-volumen__cabecera">
+                            <span class="manga-volumen__nombre">Volumen 3</span>
+                            <span class="manga-volumen__rango">Caps. 17 – 25</span>
+                            <span class="manga-volumen__flecha">▾</span>
+                        </summary>
+                        <div class="manga-volumen__grid">
+                            <button class="manga-cap-btn" data-cap="17" aria-label="Ir al capítulo 17">
+                                <span class="manga-cap-btn__num">17</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="18" aria-label="Ir al capítulo 18">
+                                <span class="manga-cap-btn__num">18</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="19" aria-label="Ir al capítulo 19">
+                                <span class="manga-cap-btn__num">19</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="20" aria-label="Ir al capítulo 20">
+                                <span class="manga-cap-btn__num">20</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="21" aria-label="Ir al capítulo 21">
+                                <span class="manga-cap-btn__num">21</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="22" aria-label="Ir al capítulo 22">
+                                <span class="manga-cap-btn__num">22</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="23" aria-label="Ir al capítulo 23">
+                                <span class="manga-cap-btn__num">23</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="24" aria-label="Ir al capítulo 24">
+                                <span class="manga-cap-btn__num">24</span>
+                            </button>
+                            <button class="manga-cap-btn" data-cap="25" aria-label="Ir al capítulo 25">
+                                <span class="manga-cap-btn__num">25</span>
+                            </button>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ------------------- FIN MODAL ------------------- -->
+
+    <!-- ------------------- FOOTER ---------------- -->
+    <div id="contenedor-footer"></div>
+
+    <script src="../../componentes/componentes.js"></script>
+    <script src="./manga.js"></script>
+</body>
+</html>
