@@ -1120,3 +1120,103 @@ text
   }
 }
 ```
+
+
+---
+
+## 🧠 Resumen para memoria — [[17/05/2026]]
+
+## Página de Manga — Primera versión estática
+
+---
+
+## 1. Descripción
+
+Se ha construido la página de manga (`front-end/paginas/manga/`) completa en tres archivos. La página muestra una biblioteca organizada por categorías con un grid de tarjetas de portada. Al hacer clic en cualquier manga se abre un modal de detalle que muestra la portada, un botón de continuar lectura y los capítulos agrupados por volúmenes en desplegables. Los datos son completamente **hardcodeados** en JS a la espera de conectar con la API.
+
+---
+
+## 2. Temporalización
+
+Sprint actual (semana frontend). Próximo paso: conectar con `/api/mangas/` y MangaDex para portadas reales.
+
+---
+
+## 3. Archivos modificados
+
+|Archivo|Estado|
+|---|---|
+|`front-end/paginas/manga/manga.html`|✅ Creado|
+|`front-end/paginas/manga/manga.css`|✅ Creado|
+|`front-end/paginas/manga/manga.js`|✅ Creado|
+
+---
+
+## 4. Arquitectura
+
+**HTML** — Estructura semántica con `<section>` por categoría, `<article>` por tarjeta, `<details>/<summary>` para volúmenes y `role="dialog"` en el modal. Sigue exactamente el patrón de `novedades.html` (inyección de header/footer via `componentes.js`).
+
+**CSS** — Variables de tema (`--fondo`, `--acento`, `--borde`, `--texto`, `--sombra`) del sistema de 4 temas existente. Grid con `auto-fill + minmax` para que se adapte solo. Botones 3D con `box-shadow` inferior + `translateY` en hover/active. Modal con entrada animada `translateY + scale`. Responsive en 4 breakpoints (`>1100`, `1100-701`, `700-501`, `≤500`).
+
+**JS** — Módulo sin frameworks. Patrón: constantes → datos → estado → utilidades → lógica → eventos → init. Funciones pequeñas y con responsabilidad única. El array `DATOS_MANGA` es el origen de verdad temporal, sustituible por `fetch` al backend sin cambiar el resto del código.
+
+---
+
+## 5. Datos
+
+text
+
+`DATOS_MANGA (hardcodeado, temporal) ├── id, titulo, categoria, genero ├── portada → placeholder local ├── ultimoCapitulo → número hardcodeado └── volumenes → [{ nombre, rango, caps: [array de números] }]`
+
+**Estados de capítulo implementados:**
+
+- `manga-cap-btn--leido` → cap < ultimoCapitulo
+    
+- `manga-cap-btn--actual` → cap === ultimoCapitulo
+    
+- Sin clase → cap > ultimoCapitulo (no leído)
+    
+
+---
+
+## 🔗 Plan de conexión con MangaDex
+
+Con los archivos del backend revisados, ya sé exactamente qué hay que hacer. El backend **ya está preparado**, tiene todo lo necesario:
+
+## Lo que ya existe y funciona
+
+|Endpoint|Qué devuelve|
+|---|---|
+|`GET /api/mangas/`|Lista con `id, titulo, autor, estado, portada, destacado`|
+|`GET /api/mangas/{id}/`|Detalle completo con géneros, total_capitulos, etc.|
+|`GET /api/mangas/{id}/capitulos/`|Todos los caps ordenados por número|
+|`GET /api/mangas/{id}/portada-mangadex/`|Dispara fetch a MangaDex, guarda y devuelve la URL|
+
+## Lo que necesita el JS para funcionar
+
+El `manga.js` actual usa `DATOS_MANGA` hardcodeado. Hay que sustituirlo por 3 peticiones:
+
+1. **`GET /api/mangas/?page_size=100`** → para construir el grid
+    
+2. **`GET /api/mangas/{id}/capitulos/`** → al abrir el modal
+    
+3. **`GET /api/mangas/{id}/portada-mangadex/`** → si `portada` viene vacío
+    
+
+## Un detalle importante a verificar
+
+El serializer devuelve `portada` que usa la property del modelo:
+
+python
+
+`@property def portada(self):     if self.portada_local:        return self.portada_local.url    return self.portada_url or ""`
+
+Si `portada_url` está vacío en DB, el JS tiene que llamar a `/portada-mangadex/` para obtenerla y cachearla. Eso ya lo gestiona el backend automáticamente.
+
+## Un problema a resolver antes
+
+El `CORS_ALLOWED_ORIGINS` en `settings.py` solo tiene:
+
+python
+
+`CORS_ALLOWED_ORIGINS = [     "http://127.0.0.1:5500",    "http://localhost:5500", ]`
