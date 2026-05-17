@@ -1,5 +1,5 @@
 """
-anime'n'chill — Vistas (ViewSets + @action)
+anime'n'chill — Vistas (solo Manga)
 """
 
 import requests
@@ -12,19 +12,18 @@ from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .filters import MangaFilter, AnimeFilter
-from .models import Genero, Manga, Anime, Capitulo, Episodio, Favorito, Progreso
+from .filters import MangaFilter
+from .models import Genero, Manga, Capitulo, Favorito, Progreso
 from .serializers import (
     GeneroSerializer,
     MangaListSerializer, MangaDetailSerializer,
-    AnimeListSerializer, AnimeDetailSerializer,
-    CapituloSerializer, EpisodioSerializer,
+    CapituloSerializer,
     FavoritoSerializer, ProgresoSerializer,
     GuardarFavoritoInputSerializer,
 )
 
 
-# ------------------- GÉNERO -------------------
+# ------------------- GÉNERO ------------------- #
 class GeneroViewSet(ModelViewSet):
     queryset         = Genero.objects.all()
     serializer_class = GeneroSerializer
@@ -35,14 +34,14 @@ class GeneroViewSet(ModelViewSet):
         return [IsAdminUser()]
 
 
-# ------------------- MANGA -------------------
+# ------------------- MANGA ------------------- #
 class MangaViewSet(ModelViewSet):
-    queryset       = Manga.objects.prefetch_related("generos").all()
+    queryset        = Manga.objects.prefetch_related("generos").all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = MangaFilter
-    search_fields  = ["titulo", "titulo_original", "autor", "descripcion"]
+    search_fields   = ["titulo", "titulo_original", "autor", "descripcion"]
     ordering_fields = ["anio_publicacion", "titulo", "created_at"]
-    ordering       = ["-created_at"]
+    ordering        = ["-created_at"]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -54,16 +53,16 @@ class MangaViewSet(ModelViewSet):
             return [AllowAny()]
         return [IsAuthenticated()]
 
-    # ─────────── @action: capítulos del manga ───────────
+    # ── @action: capítulos del manga ── #
     @action(detail=True, methods=["get"], url_path="capitulos")
     def capitulos(self, request, pk=None):
         """GET /api/mangas/{id}/capitulos/"""
-        manga     = self.get_object()
-        capitulos = manga.capitulos.all().order_by("numero")
+        manga      = self.get_object()
+        capitulos  = manga.capitulos.all().order_by("numero")
         serializer = CapituloSerializer(capitulos, many=True)
         return Response(serializer.data)
 
-    # ─────────── @action: portada desde MangaDex ───────────
+    # ── @action: portada desde MangaDex ── #
     @action(detail=True, methods=["get"], url_path="portada-mangadex")
     def portada_mangadex(self, request, pk=None):
         """GET /api/mangas/{id}/portada-mangadex/"""
@@ -83,8 +82,8 @@ class MangaViewSet(ModelViewSet):
             data     = response.json()
 
             if data.get("data"):
-                cover      = data["data"][0]
-                filename   = cover["attributes"]["fileName"]
+                cover       = data["data"][0]
+                filename    = cover["attributes"]["fileName"]
                 portada_url = (
                     f"https://uploads.mangadex.org/covers/"
                     f"{manga.mangadex_id}/{filename}"
@@ -104,7 +103,7 @@ class MangaViewSet(ModelViewSet):
                 status=status.HTTP_503_SERVICE_UNAVAILABLE
             )
 
-    # ─────────── @action: guardar favorito ───────────
+    # ── @action: guardar favorito ── #
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def guardar_favorito(self, request, pk=None):
         """POST /api/mangas/{id}/guardar_favorito/"""
@@ -116,7 +115,6 @@ class MangaViewSet(ModelViewSet):
             usuario=request.user,
             manga=manga,
             defaults={
-                "tipo": "manga",
                 "nota_personal": input_ser.validated_data.get("nota_personal", "")
             }
         )
@@ -133,64 +131,7 @@ class MangaViewSet(ModelViewSet):
         )
 
 
-# ------------------- ANIME -------------------
-class AnimeViewSet(ModelViewSet):
-    queryset        = Anime.objects.prefetch_related("generos").all()
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_class = AnimeFilter
-    search_fields   = ["titulo", "titulo_japones", "estudio", "descripcion"]
-    ordering_fields = ["anio_emision", "titulo", "created_at"]
-    ordering        = ["-created_at"]
-
-    def get_serializer_class(self):
-        if self.action == "list":
-            return AnimeListSerializer
-        return AnimeDetailSerializer
-
-    def get_permissions(self):
-        if self.action in ["list", "retrieve", "episodios"]:
-            return [AllowAny()]
-        return [IsAuthenticated()]
-
-    # ─────────── @action: episodios del anime ───────────
-    @action(detail=True, methods=["get"])
-    def episodios(self, request, pk=None):
-        """GET /api/animes/{id}/episodios/"""
-        anime     = self.get_object()
-        episodios = anime.episodios.all().order_by("numero")
-        serializer = EpisodioSerializer(episodios, many=True)
-        return Response(serializer.data)
-
-    # ─────────── @action: guardar favorito ───────────
-    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
-    def guardar_favorito(self, request, pk=None):
-        """POST /api/animes/{id}/guardar_favorito/"""
-        anime     = self.get_object()
-        input_ser = GuardarFavoritoInputSerializer(data=request.data)
-        input_ser.is_valid(raise_exception=True)
-
-        favorito, creado = Favorito.objects.get_or_create(
-            usuario=request.user,
-            anime=anime,
-            defaults={
-                "tipo": "anime",
-                "nota_personal": input_ser.validated_data.get("nota_personal", "")
-            }
-        )
-
-        if not creado:
-            return Response(
-                {"error": "Este anime ya está en tus favoritos."},
-                status=status.HTTP_409_CONFLICT
-            )
-
-        return Response(
-            {"mensaje": f"'{anime.titulo}' guardado en favoritos."},
-            status=status.HTTP_201_CREATED
-        )
-
-
-# ------------------- CAPÍTULO -------------------
+# ------------------- CAPÍTULO ------------------- #
 class CapituloViewSet(ModelViewSet):
     queryset         = Capitulo.objects.select_related("manga").all()
     serializer_class = CapituloSerializer
@@ -204,7 +145,7 @@ class CapituloViewSet(ModelViewSet):
             return [AllowAny()]
         return [IsAuthenticated()]
 
-    # ─────────── @action: marcar progreso de lectura ───────────
+    # ── @action: marcar progreso ── #
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def marcar_progreso(self, request, pk=None):
         """POST /api/capitulos/{id}/marcar_progreso/"""
@@ -224,24 +165,9 @@ class CapituloViewSet(ModelViewSet):
         )
 
 
-# ------------------- EPISODIO -------------------
-class EpisodioViewSet(ModelViewSet):
-    queryset         = Episodio.objects.select_related("anime").all()
-    serializer_class = EpisodioSerializer
-    filter_backends  = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ["anime"]
-    ordering_fields  = ["numero", "fecha_emision"]
-    ordering         = ["numero"]
-
-    def get_permissions(self):
-        if self.action in ["list", "retrieve"]:
-            return [AllowAny()]
-        return [IsAuthenticated()]
-
-
-# ------------------- FAVORITOS -------------------
+# ------------------- FAVORITO ------------------- #
 class FavoritoViewSet(ModelViewSet):
-    serializer_class  = FavoritoSerializer
+    serializer_class   = FavoritoSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
