@@ -1324,3 +1324,53 @@ Manga ──< Capitulo
   └──>< Genero
 
 Tablas BD: mangas, capitulos, generos, favoritos, progresos
+
+
+---
+
+# Resumen para memoria - 18/05/2026
+
+## 1. Descripción
+
+Se corrigió el sistema de paginación de la página de novedades para evitar que el frontend generase páginas inexistentes que terminaban provocando errores 404. Además, se mantuvo la persistencia de estado con `sessionStorage` para conservar la página actual y el filtro activo durante la sesión del usuario.
+
+## 2. Temporalización
+
+Trabajo realizado en una única sesión el 18/05/2026.
+
+## 3. Requisitos
+
+- Limitar la navegación únicamente a las páginas reales existentes en la base de datos.
+- Evitar que el usuario pueda acceder a páginas fantasma generadas por un cálculo incorrecto.
+- Mantener la persistencia de `paginaActual` y `filtroActivo` dentro de la misma pestaña.
+- Conservar el sistema de hero, cuadrícula de tarjetas y filtros ya implementado.
+
+## 4. Arquitectura
+
+- `novedades.html`: estructura base de la página, contenedor del hero, filtros, grid de noticias y paginación.
+- `novedades.css`: estilos visuales del hero, tarjetas, filtros, skeletons y paginador responsive.
+- `novedades.js`: lógica completa de carga de noticias, renderizado, filtros, paginación y persistencia de sesión.
+
+## 5. Datos
+
+- Endpoint principal: `GET /api/noticias/noticias/?page=n`
+- Endpoint de sincronización: `POST /api/noticias/noticias/sincronizar/`
+- Claves de sesión utilizadas:
+  - `anc_noticias_pagina`
+  - `anc_noticias_filtro`
+
+## 6. Problema detectado
+
+El cálculo anterior del número total de páginas utilizaba `datos.results.length` como divisor sin tener en cuenta si la página actual era la última. Esto provocaba que, al llegar a una página con menos elementos, el total calculado creciera artificialmente y el paginador mostrara páginas que realmente no existían en el backend.
+
+## 7. Solución aplicada
+
+Se implementó una nueva lógica para calcular el total de páginas basada en la respuesta real de Django REST Framework:
+
+- Si `datos.next` es `null`, la página actual se considera la última.
+- Si `datos.next` existe, se calcula el total solo desde una página válida.
+- Se añadió además una comprobación de seguridad para corregir `paginaActual` si el valor restaurado desde `sessionStorage` supera el número real de páginas disponibles.
+
+## 8. Resultado
+
+El paginador ahora solo permite navegar hasta la última página real existente en la base de datos. Se evita el error 404 por navegación a páginas inexistentes y se mejora la experiencia de usuario al mantener la posición y el filtro activo al volver atrás.

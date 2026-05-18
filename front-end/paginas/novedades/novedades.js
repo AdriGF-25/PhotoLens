@@ -17,9 +17,9 @@ const CATEGORIA_DEFECTO = { filtro: 'lanzamiento', etiqueta: 'Lanzamiento', clas
 
 // ------------------- ESTADO ------------------- //
 
-let paginaActual    = 1;
-let totalPaginas    = 1;
-let filtroActivo    = 'todo';
+let paginaActual     = 1;
+let totalPaginas     = 1;
+let filtroActivo     = 'todo';
 let todasLasTarjetas = [];
 
 
@@ -67,6 +67,30 @@ function crearAtributoOnErrorImagen() {
     return `this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}';`;
 }
 
+// Calcula totalPaginas a partir de lo que devuelve DRF:
+// Usa next/previous para extraer el numero de pagina real de la ultima pagina
+function calcularTotalPaginas(datos) {
+    // Si no hay siguiente pagina, la actual ES la ultima
+    if (!datos.next) return paginaActual;
+
+    // Intenta extraer el numero de pagina de la URL "next"
+    // y deducir el total desde "count" y "page_size"
+    try {
+        const url    = new URL(datos.next);
+        const siguientePag = parseInt(url.searchParams.get('page'), 10);
+        // "siguiente" existe → items por pagina = results de la pagina actual
+        // Solo es fiable si la pagina actual está completa (no es la ultima)
+        const itemsPorPagina = datos.results.length;
+        if (itemsPorPagina > 0 && datos.count > 0) {
+            return Math.ceil(datos.count / itemsPorPagina);
+        }
+        // Fallback: al menos existe la siguiente
+        return siguientePag;
+    } catch (_) {
+        return paginaActual + 1;
+    }
+}
+
 
 // ------------------- RENDER HERO ------------------- //
 
@@ -81,7 +105,7 @@ function renderizarHero(noticia) {
         this.src = IMAGEN_PLACEHOLDER;
     };
 
-    document.querySelector('.hero__titulo').textContent = noticia.titulo;
+    document.querySelector('.hero__titulo').textContent     = noticia.titulo;
     document.querySelector('.hero__descripcion').textContent = noticia.descripcion || '';
 
     const metaSpans = document.querySelectorAll('.hero__meta span');
@@ -91,7 +115,7 @@ function renderizarHero(noticia) {
 
     const etiquetaHero = document.querySelector('.hero .etiqueta');
     etiquetaHero.textContent = cat.etiqueta;
-    etiquetaHero.className = `etiqueta ${cat.clase}`;
+    etiquetaHero.className   = `etiqueta ${cat.clase}`;
 
     const enlaceHero = document.querySelector('.boton-primario');
     enlaceHero.href = noticia.slug
@@ -114,14 +138,14 @@ function crearTarjeta(noticia) {
         : `/front-end/paginas/detalle-noticia/detalle-noticia.html?id=${noticia.id}`;
 
     const article = document.createElement('article');
-    article.className = 'tarjeta';
+    article.className        = 'tarjeta';
     article.dataset.categoria = cat.filtro;
 
     article.innerHTML = `
         <a href="${enlaceDetalle}" class="tarjeta__imagen-contenedor">
             <div class="tarjeta__imagen-meta">
                 <span class="etiqueta ${cat.clase}">${cat.etiqueta}</span>
-                <span class="tarjeta__comentarios oculto" aria-label="Comentarios">                    
+                <span class="tarjeta__comentarios oculto" aria-label="Comentarios">
                     <span class="tarjeta__comentarios-numero">0</span>
                 </span>
             </div>
@@ -153,7 +177,7 @@ function crearTarjeta(noticia) {
 function renderizarTarjetas(noticias) {
     const cuadricula = document.querySelector('.cuadricula-noticias');
     cuadricula.innerHTML = '';
-    todasLasTarjetas = [];
+    todasLasTarjetas     = [];
 
     noticias.forEach(function (noticia) {
         const tarjeta = crearTarjeta(noticia);
@@ -224,17 +248,15 @@ async function obtenerNoticias(pagina = 1) {
 // ------------------- PAGINACIÓN ------------------- //
 
 function renderizarPaginacion(total, actual) {
-    const contenedor = document.querySelector('.paginacion__numeros');
-    const btnAnterior = document.querySelector('.paginacion__btn--anterior');
+    const contenedor   = document.querySelector('.paginacion__numeros');
+    const btnAnterior  = document.querySelector('.paginacion__btn--anterior');
     const btnSiguiente = document.querySelector('.paginacion__btn--siguiente');
 
     contenedor.innerHTML = '';
 
-    // Botones < >
-    btnAnterior.disabled = actual <= 1;
+    btnAnterior.disabled  = actual <= 1;
     btnSiguiente.disabled = actual >= total;
 
-    // Calcula qué números mostrar: 3 antes + actual + 3 después
     const rango = new Set();
     rango.add(1);
     rango.add(total);
@@ -246,10 +268,9 @@ function renderizarPaginacion(total, actual) {
     const paginas = Array.from(rango).sort(function (a, b) { return a - b; });
 
     paginas.forEach(function (num, idx) {
-        // Añadir "..." si hay salto
         if (idx > 0 && num - paginas[idx - 1] > 1) {
             const puntos = document.createElement('span');
-            puntos.className = 'paginacion__puntos';
+            puntos.className   = 'paginacion__puntos';
             puntos.textContent = '···';
             contenedor.appendChild(puntos);
         }
@@ -284,7 +305,7 @@ async function cargarPagina(pagina) {
     try {
         let datos = await obtenerNoticias(pagina);
 
-        // BD vacía → sincronizar y reintentar
+        // BD vacía → sincronizar y reintentar solo desde pagina 1
         if (datos.count === 0) {
             await sincronizarConANN();
             datos = await obtenerNoticias(pagina);
@@ -297,9 +318,15 @@ async function cargarPagina(pagina) {
             return;
         }
 
-        // Calcular total de páginas desde la API
-        const pageSize = noticias.length || 1;
-        totalPaginas = Math.ceil(datos.count / pageSize);
+        // ── CLAVE: totalPaginas se calcula solo cuando next existe y la pagina esta completa
+        // Si next es null → esta es la ultima pagina → no generamos paginas fantasma
+        totalPaginas = calcularTotalPaginas(datos);
+
+        // Sanidad: si por sesion guardada paginaActual > totalPaginas, corregir
+        if (paginaActual > totalPaginas) {
+            paginaActual = totalPaginas;
+            guardarEstadoSesion();
+        }
 
         renderizarHero(noticias[0]);
         renderizarTarjetas(noticias.slice(1));
@@ -337,7 +364,6 @@ function actualizarContador(cantidad) {
     conteo.textContent = cantidad;
 }
 
-// Sincroniza el botón activo del DOM con filtroActivo restaurado de sesión
 function sincronizarBotonesFiltroDom() {
     document.querySelectorAll('.filtro').forEach(function (boton) {
         boton.classList.toggle('filtro--activo', boton.dataset.filtro === filtroActivo);
