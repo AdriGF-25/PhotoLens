@@ -14,6 +14,7 @@ const CLASE_FILTRO_ACTIVO  = 'filtro--activo';
 const CLASE_SECCION_OCULTA = 'manga-seccion--oculta';
 const CLASE_TARJETA_OCULTA = 'manga-tarjeta--oculta';
 const CLASE_MODAL_VISIBLE  = 'manga-modal--visible';
+const STORAGE_PREFIX       = 'anc_progreso_';
 
 
 /* ------------------- DATOS HARDCODED (temporal) ------------------- */
@@ -161,8 +162,8 @@ const DATOS_MANGA = [
 
 /* ------------------- ESTADO ------------------- */
 
-let filtroActivo   = 'todo';
-let terminoBusqueda = '';
+let filtroActivo      = 'todo';
+let terminoBusqueda   = '';
 let mangaSeleccionado = null;
 
 
@@ -182,6 +183,29 @@ function actualizarConteo(seccionEl, cantidad) {
         conteo.textContent = `${cantidad} título${cantidad !== 1 ? 's' : ''}`;
     }
 }
+
+
+/* ------------------- PROGRESO (LOCALSTORAGE) ------------------- */
+
+/**
+ * Lee el progreso guardado de un manga.
+ * @param {number} mangaId
+ * @returns {{ ultimoCapitulo: number|null, capitulosLeidos: number[] }}
+ */
+function leerProgreso(mangaId) {
+    try {
+        const raw = localStorage.getItem(STORAGE_PREFIX + mangaId);
+        if (!raw) return { ultimoCapitulo: null, capitulosLeidos: [] };
+        const data = JSON.parse(raw);
+        return {
+            ultimoCapitulo  : data.ultimoCapitulo  ?? null,
+            capitulosLeidos : Array.isArray(data.capitulosLeidos) ? data.capitulosLeidos : [],
+        };
+    } catch {
+        return { ultimoCapitulo: null, capitulosLeidos: [] };
+    }
+}
+
 
 /* ------------------- FILTRADO ------------------- */
 
@@ -248,7 +272,13 @@ function iniciarBuscador() {
 
 /* ------------------- MODAL — CONSTRUCCIÓN ------------------- */
 
-function construirCapitulos(volumenes, ultimoCapitulo) {
+/**
+ * Construye la lista de capítulos en el modal.
+ * @param {Array}    volumenes
+ * @param {number}   ultimoCapitulo   - Número del último cap leído/actual
+ * @param {number[]} capitulosLeidos  - Caps completados explícitamente
+ */
+function construirCapitulos(volumenes, ultimoCapitulo, capitulosLeidos = []) {
     const lista = obtenerElemento('#modalCapitulosLista');
 
     if (!lista) return;
@@ -280,14 +310,18 @@ function construirCapitulos(volumenes, ultimoCapitulo) {
             boton.dataset.cap = numCap;
             boton.setAttribute('aria-label', `Ir al capítulo ${numCap}`);
 
-            if (numCap < ultimoCapitulo) {
-                boton.classList.add('manga-cap-btn--leido');
-            } else if (numCap === ultimoCapitulo) {
+            // Un cap está leído si: está en el array explícito de leídos,
+            // o su número es menor que el último capítulo visto.
+            const estaLeido  = capitulosLeidos.includes(numCap) || numCap < ultimoCapitulo;
+            const esActual   = numCap === ultimoCapitulo;
+
+            if (esActual) {
                 boton.classList.add('manga-cap-btn--actual');
+            } else if (estaLeido) {
+                boton.classList.add('manga-cap-btn--leido');
             }
 
             boton.innerHTML = `<span class="manga-cap-btn__num">${numCap}</span>`;
-
             boton.addEventListener('click', () => manejarClickCapitulo(numCap));
 
             grid.appendChild(boton);
@@ -299,32 +333,48 @@ function construirCapitulos(volumenes, ultimoCapitulo) {
     });
 }
 
+
+/* ------------------- MODAL — CAPÍTULO CLICK ------------------- */
+
+/**
+ * Navega al lector para el capítulo indicado.
+ * Usa el ID del manga seleccionado y el número de capítulo como parámetros de URL.
+ */
 function manejarClickCapitulo(numCap) {
-    /* STUB: navegación a lector — se implementará más adelante */
-    console.log(`Navegar al capítulo ${numCap} de ${mangaSeleccionado?.titulo}`);
+    if (!mangaSeleccionado) return;
+    window.location.href = `../lector/lector.html?manga=${mangaSeleccionado.id}&numero=${numCap}`;
 }
 
 
 /* ------------------- MODAL — ABRIR / CERRAR ------------------- */
 
 function abrirModal(datosManga) {
-    mangaSeleccionado = datosManga;
+    // Leer progreso guardado y fusionarlo con los datos del manga
+    const progreso = leerProgreso(datosManga.id);
 
-    const modal           = obtenerElemento(SELECTOR_MODAL);
-    const modalPortada    = obtenerElemento('#modalPortada');
-    const modalTitulo     = obtenerElemento('#modalTitulo');
-    const modalGenero     = obtenerElemento('#modalGenero');
-    const modalUltimoCap  = obtenerElemento('#modalUltimoCapitulo');
+    // Si hay progreso guardado, usarlo; si no, mantener el del hardcode
+    const ultimoCap = progreso.ultimoCapitulo !== null
+        ? progreso.ultimoCapitulo
+        : datosManga.ultimoCapitulo;
+
+    // Guardar referencia con el progreso actualizado
+    mangaSeleccionado = { ...datosManga, ultimoCapitulo: ultimoCap };
+
+    const modal          = obtenerElemento(SELECTOR_MODAL);
+    const modalPortada   = obtenerElemento('#modalPortada');
+    const modalTitulo    = obtenerElemento('#modalTitulo');
+    const modalGenero    = obtenerElemento('#modalGenero');
+    const modalUltimoCap = obtenerElemento('#modalUltimoCapitulo');
 
     if (!modal) return;
 
-    modalPortada.src         = datosManga.portada;
-    modalPortada.alt         = `Portada de ${datosManga.titulo}`;
-    modalTitulo.textContent  = datosManga.titulo;
-    modalGenero.textContent  = datosManga.genero;
-    modalUltimoCap.textContent = `Capítulo ${datosManga.ultimoCapitulo}`;
+    modalPortada.src            = datosManga.portada;
+    modalPortada.alt            = `Portada de ${datosManga.titulo}`;
+    modalTitulo.textContent     = datosManga.titulo;
+    modalGenero.textContent     = datosManga.genero;
+    modalUltimoCap.textContent  = `Capítulo ${ultimoCap}`;
 
-    construirCapitulos(datosManga.volumenes, datosManga.ultimoCapitulo);
+    construirCapitulos(datosManga.volumenes, ultimoCap, progreso.capitulosLeidos);
 
     modal.setAttribute('aria-hidden', 'false');
     modal.classList.add(CLASE_MODAL_VISIBLE);
