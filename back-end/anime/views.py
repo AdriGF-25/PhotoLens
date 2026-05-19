@@ -1,7 +1,7 @@
 """
 anime'n'chill — Vistas (solo Manga)
 """
-
+import os
 import requests
 from django.conf import settings
 from rest_framework import status
@@ -141,7 +141,7 @@ class CapituloViewSet(ModelViewSet):
     ordering         = ["numero"]
 
     def get_permissions(self):
-        if self.action in ["list", "retrieve"]:
+        if self.action in ["list", "retrieve","paginas"]:
             return [AllowAny()]
         return [IsAuthenticated()]
 
@@ -163,6 +163,53 @@ class CapituloViewSet(ModelViewSet):
             {"mensaje": "Progreso actualizado.", "completado": progreso.completado},
             status=status.HTTP_200_OK
         )
+    @action(
+    detail=True,
+    methods=["get"],
+    url_path="paginas",
+    permission_classes=[AllowAny],)
+    def paginas(self, request, pk=None):
+        """
+        GET /api/capitulos/{id}/paginas/
+    
+        Devuelve la lista ordenada de URLs de imagen del capítulo,
+        construida a partir del campo `ruta_imagenes` (ruta relativa
+        dentro de MEDIA_ROOT, ej: "Manga/Chainsaw Man/capitulo-1/").
+    
+        Respuesta:
+            { "paginas": ["http://…/media/…/001.jpg", …], "total": N }
+        """
+        capitulo = self.get_object()
+    
+        if not capitulo.ruta_imagenes:
+            return Response({"paginas": [], "total": 0})
+    
+        ruta_completa = os.path.join(settings.MEDIA_ROOT, capitulo.ruta_imagenes)
+    
+        if not os.path.isdir(ruta_completa):
+            return Response({"paginas": [], "total": 0})
+    
+        EXTENSIONES = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+    
+        try:
+            archivos = sorted(
+                f for f in os.listdir(ruta_completa)
+                if os.path.splitext(f.lower())[1] in EXTENSIONES
+            )
+        except OSError:
+            return Response({"paginas": [], "total": 0})
+    
+        # Construir URL absoluta respetando MEDIA_URL
+        ruta_rel = capitulo.ruta_imagenes.replace("\\", "/").strip("/")
+        media_url = request.build_absolute_uri(settings.MEDIA_URL).rstrip("/")
+    
+        paginas_urls = [
+            f"{media_url}/{ruta_rel}/{archivo}"
+            for archivo in archivos
+        ]
+    
+        return Response({"paginas": paginas_urls, "total": len(paginas_urls)})
+ 
 
 
 # ------------------- FAVORITO ------------------- #
