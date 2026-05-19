@@ -141,18 +141,6 @@ body {
     align-items: center;
 }
 
-.campo__enlace-olvidada {
-    font-size: 0.8rem;
-    color: #e8a838;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.campo__enlace-olvidada:hover {
-    color: #f0bb55;
-}
-
 .campo__input-contenedor {
     position: relative;
     width: 100%;
