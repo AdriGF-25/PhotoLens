@@ -1,0 +1,429 @@
+/* ------------------- LECTOR.CSS ------------------- */
+
+
+/* ------------------- BASE ------------------- */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.lector-pagina {
+    background-color: #0c0c0c;
+    color: var(--texto);
+    font-family: Arial, sans-serif;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+button {
+    font: inherit;
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+
+img {
+    display: block;
+}
+
+
+/* ------------------- BARRA SUPERIOR ------------------- */
+
+.lector__barra {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 1rem;
+    background-color: rgba(10, 10, 10, 0.96);
+    border-bottom: 1px solid var(--borde);
+    flex-shrink: 0;
+    gap: 0.75rem;
+}
+
+
+/* ---- Botón salir ---- */
+
+.lector__salir {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem 0.35rem 0.55rem;
+    border: 1px solid var(--borde);
+    border-radius: 2px;
+    color: var(--texto-suave);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.lector__salir:hover {
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+.lector__salir-icono {
+    font-size: 0.7rem;
+}
+
+
+/* ---- Centro ---- */
+
+.lector__barra-centro {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    flex: 1;
+    justify-content: center;
+}
+
+.lector__manga-titulo {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--texto);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.lector__sep {
+    color: var(--texto-muy-suave);
+    font-size: 0.7rem;
+    flex-shrink: 0;
+}
+
+.lector__cap-nombre {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--texto-suave);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
+}
+
+
+/* ---- Contador ---- */
+
+.lector__barra-derecha {
+    flex-shrink: 0;
+}
+
+.lector__contador {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--acento);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+
+/* ------------------- VISOR ------------------- */
+
+.lector__visor {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #0c0c0c;
+}
+
+
+/* ---- Contenedor de imagen ---- */
+
+.lector__imagen-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.lector__imagen {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center top;
+    transition: opacity 0.18s ease;
+    pointer-events: none;
+}
+
+.lector__imagen--cargando {
+    opacity: 0;
+}
+
+
+/* ---- Zonas de click ---- */
+
+.lector__zona {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.lector__zona--izq {
+    left: 0;
+    cursor: pointer;
+}
+
+.lector__zona--der {
+    right: 0;
+    cursor: pointer;
+}
+
+
+/* ---- Spinner ---- */
+
+.lector__spinner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0c0c0c;
+    z-index: 10;
+}
+
+.lector__spinner[hidden] {
+    display: none;
+}
+
+.lector__spinner-anillo {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--borde);
+    border-top-color: var(--acento);
+    border-radius: 50%;
+    animation: lector-girar 0.7s linear infinite;
+}
+
+@keyframes lector-girar {
+    to { transform: rotate(360deg); }
+}
+
+
+/* ---- Estado vacío ---- */
+
+.lector__vacio,
+.lector__error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.lector__vacio[hidden],
+.lector__error[hidden] {
+    display: none;
+}
+
+.lector__vacio-icono,
+.lector__error-icono {
+    font-size: 2.5rem;
+    opacity: 0.4;
+}
+
+.lector__vacio-texto,
+.lector__error-texto {
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+    max-width: 280px;
+    line-height: 1.5;
+}
+
+.lector__vacio-btn,
+.lector__error-btn {
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--borde);
+    border-radius: 2px;
+    color: var(--texto-suave);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.lector__vacio-btn:hover,
+.lector__error-btn:hover {
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+
+/* ------------------- NAVEGACIÓN INFERIOR ------------------- */
+
+.lector__nav {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 52px;
+    padding: 0 0.75rem;
+    background-color: rgba(10, 10, 10, 0.96);
+    border-top: 1px solid var(--borde);
+    flex-shrink: 0;
+}
+
+
+/* ---- Botones ---- */
+
+.lector__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--borde);
+    border-radius: 2px;
+    color: var(--texto-suave);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: border-color 0.15s, color 0.15s, background-color 0.15s, opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.lector__btn:hover:not(:disabled) {
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+.lector__btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.lector__btn--pag .lector__btn-flecha {
+    font-size: 0.95rem;
+    line-height: 1;
+}
+
+.lector__btn--cap {
+    color: var(--texto-muy-suave);
+    font-size: 0.68rem;
+}
+
+.lector__btn--cap:hover:not(:disabled) {
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+.lector__btn-flecha {
+    font-size: 0.8rem;
+}
+
+
+/* ---- Barra de progreso ---- */
+
+.lector__progreso {
+    flex: 1;
+    height: 4px;
+    background-color: var(--borde);
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 40px;
+}
+
+.lector__progreso-fill {
+    height: 100%;
+    background-color: var(--acento);
+    border-radius: 2px;
+    transition: width 0.2s ease;
+    width: 0%;
+}
+
+
+/* ------------------- TRANSICIÓN DE PÁGINA ------------------- */
+
+.lector__imagen--fade-out {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+}
+
+.lector__imagen--fade-in {
+    opacity: 1;
+    transition: opacity 0.18s ease;
+}
+
+
+/* ------------------- RESPONSIVE ------------------- */
+
+@media (max-width: 700px) {
+    .lector__barra {
+        height: 44px;
+        padding: 0 0.75rem;
+    }
+
+    .lector__manga-titulo {
+        max-width: 120px;
+        font-size: 0.72rem;
+    }
+
+    .lector__cap-nombre {
+        max-width: 140px;
+        font-size: 0.7rem;
+    }
+
+    .lector__btn-label {
+        display: none;
+    }
+
+    .lector__btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.78rem;
+    }
+
+    .lector__btn-flecha {
+        font-size: 1rem;
+    }
+
+    .lector__nav {
+        height: 48px;
+        gap: 0.4rem;
+        padding: 0 0.6rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .lector__salir-texto {
+        display: none;
+    }
+
+    .lector__salir {
+        padding: 0.35rem 0.55rem;
+    }
+}

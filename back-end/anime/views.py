@@ -7,6 +7,7 @@ from django.conf import settings
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
@@ -54,18 +55,30 @@ class MangaViewSet(ModelViewSet):
         return [IsAuthenticated()]
 
     # ── @action: capítulos del manga ── #
-    @action(detail=True, methods=["get"], url_path="capitulos")
+    @action(
+        detail=True,
+        methods=["get"],
+        url_path="capitulos",
+        authentication_classes=[],      # ← sin autenticación JWT
+        permission_classes=[AllowAny],
+    )
     def capitulos(self, request, pk=None):
-        """GET /api/mangas/{id}/capitulos/"""
+        """GET /api/anime/mangas/{id}/capitulos/"""
         manga      = self.get_object()
         capitulos  = manga.capitulos.all().order_by("numero")
         serializer = CapituloSerializer(capitulos, many=True)
         return Response(serializer.data)
 
     # ── @action: portada desde MangaDex ── #
-    @action(detail=True, methods=["get"], url_path="portada-mangadex")
+    @action(
+        detail=True,
+        methods=["get"],
+        url_path="portada-mangadex",
+        authentication_classes=[],
+        permission_classes=[AllowAny],
+    )
     def portada_mangadex(self, request, pk=None):
-        """GET /api/mangas/{id}/portada-mangadex/"""
+        """GET /api/anime/mangas/{id}/portada-mangadex/"""
         manga = self.get_object()
 
         if not manga.mangadex_id:
@@ -106,7 +119,7 @@ class MangaViewSet(ModelViewSet):
     # ── @action: guardar favorito ── #
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def guardar_favorito(self, request, pk=None):
-        """POST /api/mangas/{id}/guardar_favorito/"""
+        """POST /api/anime/mangas/{id}/guardar_favorito/"""
         manga     = self.get_object()
         input_ser = GuardarFavoritoInputSerializer(data=request.data)
         input_ser.is_valid(raise_exception=True)
@@ -141,14 +154,14 @@ class CapituloViewSet(ModelViewSet):
     ordering         = ["numero"]
 
     def get_permissions(self):
-        if self.action in ["list", "retrieve","paginas"]:
+        if self.action in ["list", "retrieve", "paginas"]:
             return [AllowAny()]
         return [IsAuthenticated()]
 
     # ── @action: marcar progreso ── #
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def marcar_progreso(self, request, pk=None):
-        """POST /api/capitulos/{id}/marcar_progreso/"""
+        """POST /api/anime/capitulos/{id}/marcar_progreso/"""
         capitulo   = self.get_object()
         pagina     = request.data.get("pagina_actual", 1)
         completado = request.data.get("completado", False)
@@ -163,34 +176,37 @@ class CapituloViewSet(ModelViewSet):
             {"mensaje": "Progreso actualizado.", "completado": progreso.completado},
             status=status.HTTP_200_OK
         )
+
+    # ── @action: páginas del capítulo ── #
     @action(
-    detail=True,
-    methods=["get"],
-    url_path="paginas",
-    permission_classes=[AllowAny],)
+        detail=True,
+        methods=["get"],
+        url_path="paginas",
+        authentication_classes=[],      # ← sin autenticación JWT
+        permission_classes=[AllowAny],
+    )
     def paginas(self, request, pk=None):
         """
-        GET /api/capitulos/{id}/paginas/
-    
+        GET /api/anime/capitulos/{id}/paginas/
+
         Devuelve la lista ordenada de URLs de imagen del capítulo,
-        construida a partir del campo `ruta_imagenes` (ruta relativa
-        dentro de MEDIA_ROOT, ej: "Manga/Chainsaw Man/capitulo-1/").
-    
+        construida a partir del campo `ruta_imagenes`.
+
         Respuesta:
             { "paginas": ["http://…/media/…/001.jpg", …], "total": N }
         """
         capitulo = self.get_object()
-    
+
         if not capitulo.ruta_imagenes:
             return Response({"paginas": [], "total": 0})
-    
+
         ruta_completa = os.path.join(settings.MEDIA_ROOT, capitulo.ruta_imagenes)
-    
+
         if not os.path.isdir(ruta_completa):
             return Response({"paginas": [], "total": 0})
-    
+
         EXTENSIONES = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
-    
+
         try:
             archivos = sorted(
                 f for f in os.listdir(ruta_completa)
@@ -198,18 +214,16 @@ class CapituloViewSet(ModelViewSet):
             )
         except OSError:
             return Response({"paginas": [], "total": 0})
-    
-        # Construir URL absoluta respetando MEDIA_URL
-        ruta_rel = capitulo.ruta_imagenes.replace("\\", "/").strip("/")
+
+        ruta_rel  = capitulo.ruta_imagenes.replace("\\", "/").strip("/")
         media_url = request.build_absolute_uri(settings.MEDIA_URL).rstrip("/")
-    
+
         paginas_urls = [
             f"{media_url}/{ruta_rel}/{archivo}"
             for archivo in archivos
         ]
-    
+
         return Response({"paginas": paginas_urls, "total": len(paginas_urls)})
- 
 
 
 # ------------------- FAVORITO ------------------- #

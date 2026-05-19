@@ -1374,3 +1374,50 @@ Se implementó una nueva lógica para calcular el total de páginas basada en la
 ## 8. Resultado
 
 El paginador ahora solo permite navegar hasta la última página real existente en la base de datos. Se evita el error 404 por navegación a páginas inexistentes y se mejora la experiencia de usuario al mantener la posición y el filtro activo al volver atrás.
+
+---
+
+**Resumen para memoria - 2026-05-18**  
+Se ha simplificado la vista de manga eliminando iconos decorativos y dejando una interfaz más limpia y coherente con el estilo oscuro del proyecto. Además, se ha mantenido la interacción del modal con tarjetas, capítulos y progreso, preparando la pantalla para integrar datos de MangaDex mediante portadas y feed de capítulos.
+
+## 1. Descripción
+
+Se ha trabajado sobre la página de manga del proyecto `anime'n'chill` para mejorar la presentación visual y la interacción del catálogo. El objetivo ha sido reducir elementos decorativos innecesarios y mantener una estructura clara para lectura y navegación. El modal sigue siendo el punto principal de detalle para cada manga, con acceso a capítulos y continuidad de lectura.
+
+## 2. Temporalización
+
+La tarea se ha realizado en una fase de refactorización de la interfaz, después de tener montada la estructura base de HTML, CSS y JavaScript. En este momento se ha priorizado la limpieza visual y la cohesión del componente antes de continuar con la integración completa de datos externos. Esta secuencia ayuda a evitar duplicidades y facilita futuras mejoras.
+
+## 3. Requisitos
+
+La página mantiene filtros por categoría, buscador por título y apertura del modal al clicar en una tarjeta. También conserva el sistema de progreso local para identificar el último capítulo leído. Para la conexión con datos reales, MangaDex ofrece la portada mediante la relación `cover_art` y los capítulos mediante el endpoint de feed del manga.
+
+## 4. Arquitectura
+
+La solución se apoya en HTML semántico, CSS con nomenclatura BEM y JavaScript modular con funciones pequeñas. El catálogo usa tarjetas por categoría y un modal reutilizable para mostrar información detallada. La futura integración con MangaDex encaja bien con esta estructura porque permite cargar portada y capítulos sin cambiar el flujo principal de la interfaz.
+
+## 5. Datos
+
+De momento se mantiene una base de datos temporal en JavaScript para asociar cada tarjeta con su información y su progreso local. MangaDex permite obtener la portada usando el identificador del manga y el nombre del archivo de cover, y permite consultar los capítulos con `/manga/{id}/feed`. Esto hace posible sustituir los datos estáticos por datos reales en una fase posterior sin rediseñar toda la pantalla.
+
+## **Resumen para memoria — 19/05/2026**
+El lector de manga no mostraba contenido y lanzaba "No se pudo cargar el capítulo".
+
+1. Descripción
+Se corrigieron tres bugs encadenados que impedían que el lector cargase las páginas de un capítulo.
+
+2. Cambios realizados
+front-end/paginas/lector/lector.js
+
+API_BASE cambiado de http://localhost:8000/api → http://localhost:8000/api/anime para coincidir con el prefijo definido en config/urls.py
+
+back-end/anime/views.py
+
+Añadido @action paginas en CapituloViewSet → genera el endpoint GET /api/anime/capitulos/{id}/paginas/ que lee la carpeta ruta_imagenes, lista los archivos de imagen y devuelve { paginas: [...urls], total: N }
+
+Añadido permission_classes = [IsAuthenticated] a nivel de clase para forzar que get_permissions() sobreescriba el permiso global de REST_FRAMEWORK en settings.py
+
+Añadido "paginas" a la condición AllowAny en get_permissions() para que el endpoint sea público sin autenticación
+
+3. Causa raíz
+El DEFAULT_PERMISSION_CLASSES global en settings.py estaba configurado como IsAuthenticated, lo que sobreescribía el permission_classes=[AllowAny] del @action. Declarar permission_classes explícitamente a nivel de clase fuerza a DRF a usar get_permissions() siempre.

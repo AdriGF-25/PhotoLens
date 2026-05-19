@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lector | anime'n'chill</title>
+
+    <link rel="stylesheet" href="../../componentes/temas.css">
+    <link rel="stylesheet" href="./lector.css">
+</head>
+<body class="lector-pagina">
+
+    <!-- ------------------- BARRA SUPERIOR ------------------- -->
+    <header class="lector__barra" id="lectorBarra">
+
+        <button class="lector__salir" id="lectorSalir" aria-label="Salir del lector">
+            <span class="lector__salir-icono">✕</span>
+            <span class="lector__salir-texto">Salir</span>
+        </button>
+
+        <div class="lector__barra-centro">
+            <span class="lector__manga-titulo" id="lectorMangaTitulo">Cargando…</span>
+            <span class="lector__sep" aria-hidden="true">›</span>
+            <span class="lector__cap-nombre" id="lectorCapNombre"></span>
+        </div>
+
+        <div class="lector__barra-derecha">
+            <span class="lector__contador" id="lectorContador" aria-live="polite">— / —</span>
+        </div>
+
+    </header>
+
+    <!-- ------------------- VISOR PRINCIPAL ------------------- -->
+    <main class="lector__visor" id="lectorVisor">
+
+        <!-- Spinner de carga -->
+        <div class="lector__spinner" id="lectorSpinner" role="status" aria-label="Cargando" hidden>
+            <div class="lector__spinner-anillo"></div>
+        </div>
+
+        <!-- Imagen de página -->
+        <div class="lector__imagen-wrap" id="lectorImagenWrap">
+            <img
+                class="lector__imagen"
+                id="lectorImagen"
+                src=""
+                alt="Página del manga"
+                draggable="false"
+            >
+            <!-- Zonas de click para pasar página -->
+            <button class="lector__zona lector__zona--izq" id="zonaIzq" aria-label="Página anterior" tabindex="-1"></button>
+            <button class="lector__zona lector__zona--der" id="zonaDer" aria-label="Página siguiente" tabindex="-1"></button>
+        </div>
+
+        <!-- Estado vacío / sin imágenes -->
+        <div class="lector__vacio" id="lectorVacio" hidden>
+            <span class="lector__vacio-icono">📭</span>
+            <p class="lector__vacio-texto">No hay páginas disponibles para este capítulo.</p>
+            <button class="lector__vacio-btn" id="lectorVacioSalir">Volver a la biblioteca</button>
+        </div>
+
+        <!-- Estado de error -->
+        <div class="lector__error" id="lectorError" hidden>
+            <span class="lector__error-icono">⚠</span>
+            <p class="lector__error-texto">No se pudo cargar el capítulo.</p>
+            <button class="lector__error-btn" id="lectorErrorSalir">Volver a la biblioteca</button>
+        </div>
+
+    </main>
+
+    <!-- ------------------- NAVEGACIÓN INFERIOR ------------------- -->
+    <nav class="lector__nav" id="lectorNav" aria-label="Navegación de páginas y capítulos">
+
+        <button
+            class="lector__btn lector__btn--cap"
+            id="btnCapAnterior"
+            aria-label="Capítulo anterior"
+            disabled
+        >
+            <span class="lector__btn-flecha">‹‹</span>
+            <span class="lector__btn-label">Cap. ant.</span>
+        </button>
+
+        <button
+            class="lector__btn lector__btn--pag"
+            id="btnPaginaAnterior"
+            aria-label="Página anterior"
+            disabled
+        >
+            <span class="lector__btn-flecha">‹</span>
+            <span class="lector__btn-label">Anterior</span>
+        </button>
+
+        <!-- Barra de progreso del capítulo -->
+        <div class="lector__progreso" role="progressbar" aria-valuemin="1" aria-valuemax="1" aria-valuenow="1" id="lectorProgreso">
+            <div class="lector__progreso-fill" id="lectorProgresoFill"></div>
+        </div>
+
+        <button
+            class="lector__btn lector__btn--pag"
+            id="btnPaginaSiguiente"
+            aria-label="Página siguiente"
+        >
+            <span class="lector__btn-label">Siguiente</span>
+            <span class="lector__btn-flecha">›</span>
+        </button>
+
+        <button
+            class="lector__btn lector__btn--cap"
+            id="btnCapSiguiente"
+            aria-label="Capítulo siguiente"
+            disabled
+        >
+            <span class="lector__btn-label">Cap. sig.</span>
+            <span class="lector__btn-flecha">››</span>
+        </button>
+
+    </nav>
+
+    <script src="./lector.js"></script>
+</body>
+</html>

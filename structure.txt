@@ -1,4 +1,6 @@
 ﻿.
+|-- .clinerules
+|   -- REGLAS.md
 |-- .obsidian
 |   |-- themes
 |   |   -- AnuPpuccin
@@ -22,10 +24,13 @@
 |   |-- listadoComandos.txt
 |   |-- Login y registro.md
 |   |-- Los Serializers.md
+|   |-- Novedades.js.md
+|   |-- Paginacion_persistente.md
 |   |-- PaginaManga.md
 |   |-- PaginaManga_Y_Scraper.md
 |   |-- Perfil.md
 |   |-- poblar_capitulos.py.md
+|   |-- PruebasLoginRegistro.md
 |   |-- Registrar_manga.py.md
 |   -- Script Diagnostico Manga.md
 |-- back-end
@@ -142,6 +147,10 @@
 |       |   |-- detalle-noticia.css
 |       |   |-- detalle-noticia.html
 |       |   -- detalle-noticia.js
+|       |-- lector
+|       |   |-- lector.css
+|       |   |-- lector.html
+|       |   -- lector.js
 |       |-- login
 |       |   |-- login.css
 |       |   |-- login.html
@@ -158,17 +167,20 @@
 |       |   |-- perfil.css
 |       |   |-- perfil.html
 |       |   -- perfil.js
-|       |-- recuperar_contrasena
-|       |   |-- recuperar-contrasena.css
-|       |   |-- recuperar-contrasena.html
-|       |   -- recuperar-contrasena.js
 |       -- registro
 |           |-- registro.css
 |           |-- registro.html
 |           -- registro.js
+|-- PDF'S
+|   |-- Anexo Postman.md
+|   |-- Enunciado.pdf
+|   |-- Requisitos.pdf
+|   |-- Semana 1.md
+|   |-- Semana 2.md
+|   |-- Semana 3.md
+|   -- Semana 4.md
 |-- .gitignore
 |-- MEMORIA.md
-|-- PruebasLoginRegistro.md
 |-- README.md
 |-- structure.txt
 -- tr.ps1

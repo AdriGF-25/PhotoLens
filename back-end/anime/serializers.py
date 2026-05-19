@@ -13,43 +13,76 @@ class GeneroSerializer(serializers.ModelSerializer):
         fields = ["id", "nombre", "slug"]
 
 
-# ------------------- MANGA ------------------- #
+# ------------------- MANGA LIST ------------------- #
 class MangaListSerializer(serializers.ModelSerializer):
     """Serializer ligero para listados."""
-    portada = serializers.SerializerMethodField()
+    portada         = serializers.SerializerMethodField()
+    categoria       = serializers.SerializerMethodField()
+    generos         = GeneroSerializer(many=True, read_only=True)
+    total_capitulos = serializers.SerializerMethodField()
 
     class Meta:
         model  = Manga
-        fields = ["id", "titulo", "autor", "estado",
-                  "anio_publicacion", "portada", "destacado"]
+        fields = [
+            "id", "titulo", "autor", "estado",
+            "anio_publicacion", "portada", "destacado",
+            "categoria", "generos", "total_capitulos",
+        ]
 
     def get_portada(self, obj):
         return obj.portada
 
+    def get_total_capitulos(self, obj):
+        return obj.capitulos.count()
 
+    def get_categoria(self, obj):
+        genero = obj.generos.first()
+        if not genero:
+            return "sin-categoria"
+        slug = (genero.slug or "").lower()
+        mapa = {
+            "accion":           "accion",
+            "acción":           "accion",
+            "aventura":         "aventura",
+            "romance":          "romance",
+            "terror":           "terror",
+            "comedia":          "comedia",
+            "fantasia":         "fantasia",
+            "fantasía":         "fantasia",
+            "sci-fi":           "sci-fi",
+            "scifi":            "sci-fi",
+            "ciencia-ficcion":  "sci-fi",
+            "ciencia-ficción":  "sci-fi",
+        }
+        return mapa.get(slug, "sin-categoria")
+
+
+# ------------------- MANGA DETAIL ------------------- #
 class MangaDetailSerializer(serializers.ModelSerializer):
     """
-    Patron mixto lectura/escritura:
+    Patrón mixto lectura/escritura:
     - generos_detalle → lectura (objeto completo)
     - generos         → escritura (lista de IDs)
     """
     generos_detalle = GeneroSerializer(source="generos", many=True, read_only=True)
     generos         = serializers.PrimaryKeyRelatedField(
-                        queryset=Genero.objects.all(), many=True, required=False)
+        queryset=Genero.objects.all(), many=True, required=False
+    )
     portada         = serializers.SerializerMethodField()
     total_capitulos = serializers.SerializerMethodField()
+    categoria       = serializers.SerializerMethodField()
 
     class Meta:
         model  = Manga
         fields = [
             "id", "mangadex_id", "titulo", "titulo_original", "descripcion",
             "autor", "anio_publicacion", "estado", "portada", "portada_url",
-            "portada_local", "generos", "generos_detalle",
+            "portada_local", "generos", "generos_detalle", "categoria",
             "destacado", "total_capitulos", "created_at", "updated_at",
         ]
         extra_kwargs = {
-            "created_at"   : {"read_only": True},
-            "updated_at"   : {"read_only": True},
+            "created_at":   {"read_only": True},
+            "updated_at":   {"read_only": True},
             "portada_local": {"write_only": True},
         }
 
@@ -58,6 +91,27 @@ class MangaDetailSerializer(serializers.ModelSerializer):
 
     def get_total_capitulos(self, obj):
         return obj.capitulos.count()
+
+    def get_categoria(self, obj):
+        genero = obj.generos.first()
+        if not genero:
+            return "sin-categoria"
+        slug = (genero.slug or "").lower()
+        mapa = {
+            "accion":           "accion",
+            "acción":           "accion",
+            "aventura":         "aventura",
+            "romance":          "romance",
+            "terror":           "terror",
+            "comedia":          "comedia",
+            "fantasia":         "fantasia",
+            "fantasía":         "fantasia",
+            "sci-fi":           "sci-fi",
+            "scifi":            "sci-fi",
+            "ciencia-ficcion":  "sci-fi",
+            "ciencia-ficción":  "sci-fi",
+        }
+        return mapa.get(slug, "sin-categoria")
 
 
 # ------------------- CAPÍTULO ------------------- #
@@ -84,7 +138,7 @@ class FavoritoSerializer(serializers.ModelSerializer):
         model  = Favorito
         fields = ["id", "usuario", "manga", "fecha_guardado", "nota_personal"]
         extra_kwargs = {
-            "usuario"       : {"read_only": True},
+            "usuario":        {"read_only": True},
             "fecha_guardado": {"read_only": True},
         }
 
@@ -98,8 +152,8 @@ class ProgresoSerializer(serializers.ModelSerializer):
         fields = ["id", "usuario", "capitulo", "capitulo_info",
                   "fecha_lectura", "completado", "pagina_actual"]
         extra_kwargs = {
-            "usuario"      : {"read_only": True},
-            "fecha_lectura": {"read_only": True},
+            "usuario":        {"read_only": True},
+            "fecha_lectura":  {"read_only": True},
         }
 
 

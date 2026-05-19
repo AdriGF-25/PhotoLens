@@ -3,6 +3,7 @@
 
 /* ------------------- CONSTANTES ------------------- */
 
+const API_BASE             = 'http://localhost:8000/api/anime';
 const SELECTOR_FILTRO      = '.filtro';
 const SELECTOR_SECCIONES   = '.manga-seccion';
 const SELECTOR_TARJETAS    = '.manga-tarjeta';
@@ -15,149 +16,27 @@ const CLASE_SECCION_OCULTA = 'manga-seccion--oculta';
 const CLASE_TARJETA_OCULTA = 'manga-tarjeta--oculta';
 const CLASE_MODAL_VISIBLE  = 'manga-modal--visible';
 const STORAGE_PREFIX       = 'anc_progreso_';
+const PORTADA_PLACEHOLDER  = '../../assets/placeholders/placeholder-portada.jpg';
 
 
-/* ------------------- DATOS HARDCODED (temporal) ------------------- */
+/* ------------------- MAPA DE ETIQUETAS ------------------- */
 
-const DATOS_MANGA = [
-    {
-        id: 1,
-        titulo: 'Chainsaw Man',
-        categoria: 'accion',
-        genero: 'Acción',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 47,
-        volumenes: [
-            { nombre: 'Volumen 1',  rango: 'Caps. 1 – 7',   caps: [1,2,3,4,5,6,7] },
-            { nombre: 'Volumen 2',  rango: 'Caps. 8 – 16',  caps: [8,9,10,11,12,13,14,15,16] },
-            { nombre: 'Volumen 3',  rango: 'Caps. 17 – 25', caps: [17,18,19,20,21,22,23,24,25] },
-            { nombre: 'Volumen 4',  rango: 'Caps. 26 – 34', caps: [26,27,28,29,30,31,32,33,34] },
-            { nombre: 'Volumen 5',  rango: 'Caps. 35 – 43', caps: [35,36,37,38,39,40,41,42,43] },
-            { nombre: 'Parte II',   rango: 'Caps. 44 – 97', caps: Array.from({ length: 54 }, (_, i) => i + 44) }
-        ]
-    },
-    {
-        id: 2,
-        titulo: 'Kimetsu no Yaiba',
-        categoria: 'accion',
-        genero: 'Acción',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 120,
-        volumenes: [
-            { nombre: 'Arco Selección Final', rango: 'Caps. 1 – 22',   caps: Array.from({ length: 22 }, (_, i) => i + 1) },
-            { nombre: 'Arco Hermano Tambor',  rango: 'Caps. 23 – 44',  caps: Array.from({ length: 22 }, (_, i) => i + 23) },
-            { nombre: 'Arco Tren Infinito',   rango: 'Caps. 45 – 70',  caps: Array.from({ length: 26 }, (_, i) => i + 45) },
-            { nombre: 'Arco Distrito Placer', rango: 'Caps. 71 – 99',  caps: Array.from({ length: 29 }, (_, i) => i + 71) },
-            { nombre: 'Arco Aldea Herrero',   rango: 'Caps. 100 – 127', caps: Array.from({ length: 28 }, (_, i) => i + 100) },
-            { nombre: 'Arco Final',           rango: 'Caps. 128 – 205', caps: Array.from({ length: 78 }, (_, i) => i + 128) }
-        ]
-    },
-    {
-        id: 3,
-        titulo: 'Gachiakuta',
-        categoria: 'accion',
-        genero: 'Acción',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 30,
-        volumenes: [
-            { nombre: 'Volumen 1', rango: 'Caps. 1 – 10',  caps: Array.from({ length: 10 }, (_, i) => i + 1) },
-            { nombre: 'Volumen 2', rango: 'Caps. 11 – 25', caps: Array.from({ length: 15 }, (_, i) => i + 11) },
-            { nombre: 'Volumen 3', rango: 'Caps. 26 – 68', caps: Array.from({ length: 43 }, (_, i) => i + 26) }
-        ]
-    },
-    {
-        id: 4,
-        titulo: 'Solo Leveling',
-        categoria: 'accion',
-        genero: 'Acción',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 90,
-        volumenes: [
-            { nombre: 'Arco Despertar',   rango: 'Caps. 1 – 45',   caps: Array.from({ length: 45 }, (_, i) => i + 1) },
-            { nombre: 'Arco Crecimiento', rango: 'Caps. 46 – 110',  caps: Array.from({ length: 65 }, (_, i) => i + 46) },
-            { nombre: 'Arco Final',       rango: 'Caps. 111 – 179', caps: Array.from({ length: 69 }, (_, i) => i + 111) }
-        ]
-    },
-    {
-        id: 5,
-        titulo: 'Fire Force',
-        categoria: 'accion',
-        genero: 'Acción',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 1,
-        volumenes: [
-            { nombre: 'Arco Brigada 8',  rango: 'Caps. 1 – 50',   caps: Array.from({ length: 50 }, (_, i) => i + 1) },
-            { nombre: 'Arco Evangelist', rango: 'Caps. 51 – 150',  caps: Array.from({ length: 100 }, (_, i) => i + 51) },
-            { nombre: 'Arco Final',      rango: 'Caps. 151 – 304', caps: Array.from({ length: 154 }, (_, i) => i + 151) }
-        ]
-    },
-    {
-        id: 6,
-        titulo: 'One Piece',
-        categoria: 'aventura',
-        genero: 'Aventura',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 550,
-        volumenes: [
-            { nombre: 'Saga Este Azul',   rango: 'Caps. 1 – 100',    caps: Array.from({ length: 100 }, (_, i) => i + 1) },
-            { nombre: 'Saga Arabasta',    rango: 'Caps. 101 – 217',   caps: Array.from({ length: 117 }, (_, i) => i + 101) },
-            { nombre: 'Saga Skypiea',     rango: 'Caps. 218 – 302',   caps: Array.from({ length: 85 }, (_, i) => i + 218) },
-            { nombre: 'Saga Water 7',     rango: 'Caps. 303 – 441',   caps: Array.from({ length: 139 }, (_, i) => i + 303) },
-            { nombre: 'Saga Marineford', rango: 'Caps. 442 – 597',   caps: Array.from({ length: 156 }, (_, i) => i + 442) },
-            { nombre: 'Nueva世界',       rango: 'Caps. 598 – 1110+', caps: Array.from({ length: 513 }, (_, i) => i + 598) }
-        ]
-    },
-    {
-        id: 7,
-        titulo: 'BLAME!',
-        categoria: 'aventura',
-        genero: 'Aventura / Sci-Fi',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 30,
-        volumenes: [
-            { nombre: 'Volumen 1 – 5',  rango: 'Caps. 1 – 33',  caps: Array.from({ length: 33 }, (_, i) => i + 1) },
-            { nombre: 'Volumen 6 – 10', rango: 'Caps. 34 – 66', caps: Array.from({ length: 33 }, (_, i) => i + 34) }
-        ]
-    },
-    {
-        id: 8,
-        titulo: 'Horimiya',
-        categoria: 'romance',
-        genero: 'Romance',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 60,
-        volumenes: [
-            { nombre: 'Volumen 1 – 4',  rango: 'Caps. 1 – 40',   caps: Array.from({ length: 40 }, (_, i) => i + 1) },
-            { nombre: 'Volumen 5 – 8',  rango: 'Caps. 41 – 85',  caps: Array.from({ length: 45 }, (_, i) => i + 41) },
-            { nombre: 'Volumen 9 – 16', rango: 'Caps. 86 – 122', caps: Array.from({ length: 37 }, (_, i) => i + 86) }
-        ]
-    },
-    {
-        id: 9,
-        titulo: 'SPY x FAMILY',
-        categoria: 'romance',
-        genero: 'Comedia / Acción',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 55,
-        volumenes: [
-            { nombre: 'Misión 1 – 20',  rango: 'Caps. 1 – 20',   caps: Array.from({ length: 20 }, (_, i) => i + 1) },
-            { nombre: 'Misión 21 – 60', rango: 'Caps. 21 – 60',  caps: Array.from({ length: 40 }, (_, i) => i + 21) },
-            { nombre: 'Misión 61 – 100+', rango: 'Caps. 61 – 100+', caps: Array.from({ length: 40 }, (_, i) => i + 61) }
-        ]
-    },
-    {
-        id: 10,
-        titulo: 'Zero kara Hajimeru',
-        categoria: 'sci-fi',
-        genero: 'Fantasía / Sci-Fi',
-        portada: '../../assets/placeholders/placeholder-portada.jpg',
-        ultimoCapitulo: 20,
-        volumenes: [
-            { nombre: 'Volumen 1 – 3', rango: 'Caps. 1 – 22',  caps: Array.from({ length: 22 }, (_, i) => i + 1) },
-            { nombre: 'Volumen 4 – 6', rango: 'Caps. 23 – 46', caps: Array.from({ length: 24 }, (_, i) => i + 23) }
-        ]
-    }
-];
+const ETIQUETAS = {
+    'todo'         : 'Todo',
+    'accion'       : 'Acción',
+    'aventura'     : 'Aventura',
+    'romance'      : 'Romance',
+    'terror'       : 'Terror',
+    'comedia'      : 'Comedia',
+    'fantasia'     : 'Fantasía',
+    'sci-fi'       : 'Sci-Fi',
+    'sin-categoria': 'Sin Categoría',
+};
+
+function etiquetaLegible(categoria) {
+    return ETIQUETAS[categoria]
+        ?? categoria.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+}
 
 
 /* ------------------- ESTADO ------------------- */
@@ -165,6 +44,8 @@ const DATOS_MANGA = [
 let filtroActivo      = 'todo';
 let terminoBusqueda   = '';
 let mangaSeleccionado = null;
+let mangasCargados    = [];   // todos los mangas (sin filtro) para los filtros disponibles
+let debounceTimer     = null;
 
 
 /* ------------------- UTILIDADES ------------------- */
@@ -177,6 +58,11 @@ function obtenerTodos(selector) {
     return document.querySelectorAll(selector);
 }
 
+function mostrarOculto(el, visible) {
+    if (!el) return;
+    el.hidden = !visible;
+}
+
 function actualizarConteo(seccionEl, cantidad) {
     const conteo = seccionEl.querySelector('.manga-seccion__conteo');
     if (conteo) {
@@ -184,14 +70,53 @@ function actualizarConteo(seccionEl, cantidad) {
     }
 }
 
+function normalizarTexto(valor) {
+    return (valor ?? '').toString().trim().toLowerCase();
+}
+
+function normalizarCategoria(valor) {
+    return normalizarTexto(valor)
+        .replace(/\s+/g, '-')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+}
+
+function obtenerTitulo(manga) {
+    return manga.titulo ?? manga.nombre ?? manga.title ?? 'Sin título';
+}
+
+function obtenerCategoria(manga) {
+    if (manga.categoria && manga.categoria !== 'sin-categoria') {
+        return manga.categoria;
+    }
+    const genero = manga.generos && manga.generos.length > 0 ? manga.generos[0] : null;
+    return normalizarCategoria(genero?.slug ?? genero?.nombre ?? 'sin-categoria');
+}
+
+function obtenerTotalCapitulos(manga) {
+    return manga.total_capitulos ?? 0;
+}
+
+function obtenerPortada(manga) {
+    const portada = manga.portada ?? manga.portada_url ?? null;
+    if (!portada) return PORTADA_PLACEHOLDER;
+    if (typeof portada !== 'string') return PORTADA_PLACEHOLDER;
+    if (portada.startsWith('http://') || portada.startsWith('https://')) return portada;
+    if (portada.startsWith('/')) return `http://localhost:8000${portada}`;
+    return portada;
+}
+
+function obtenerIdManga(manga) {
+    return manga.id ?? manga.pk;
+}
+
+function obtenerNumeroCapitulo(capitulo) {
+    return parseFloat(capitulo.numero ?? capitulo.num ?? capitulo.capitulo);
+}
+
 
 /* ------------------- PROGRESO (LOCALSTORAGE) ------------------- */
 
-/**
- * Lee el progreso guardado de un manga.
- * @param {number} mangaId
- * @returns {{ ultimoCapitulo: number|null, capitulosLeidos: number[] }}
- */
 function leerProgreso(mangaId) {
     try {
         const raw = localStorage.getItem(STORAGE_PREFIX + mangaId);
@@ -206,52 +131,200 @@ function leerProgreso(mangaId) {
     }
 }
 
+function guardarProgreso(mangaId, numCap, completado = false) {
+    try {
+        const progreso = leerProgreso(mangaId);
+        progreso.ultimoCapitulo = numCap;
+        if (completado && !progreso.capitulosLeidos.includes(numCap)) {
+            progreso.capitulosLeidos.push(numCap);
+        }
+        localStorage.setItem(STORAGE_PREFIX + mangaId, JSON.stringify(progreso));
+    } catch (e) {
+        console.warn('[Manga] No se pudo guardar progreso:', e);
+    }
+}
 
-/* ------------------- FILTRADO ------------------- */
 
-function aplicarFiltros() {
-    const secciones = obtenerTodos(SELECTOR_SECCIONES);
+/* ------------------- API ------------------- */
 
-    secciones.forEach(seccion => {
-        const categoria    = seccion.dataset.categoria;
-        const tarjetas     = seccion.querySelectorAll(SELECTOR_TARJETAS);
-        let tarjetasVis    = 0;
+async function fetchMangas(params = {}) {
+    // Construir query string con los parámetros que vengan
+    const query = new URLSearchParams();
 
-        tarjetas.forEach(tarjeta => {
-            const categoriaTarjeta = tarjeta.dataset.categoria;
-            const tituloTarjeta    = tarjeta.querySelector('.manga-tarjeta__titulo')
-                                            .textContent.toLowerCase();
-            const coincideFiltro   = filtroActivo === 'todo' || categoriaTarjeta === filtroActivo;
-            const coincideBusqueda = tituloTarjeta.includes(terminoBusqueda.toLowerCase());
+    if (params.genero_slug) query.set('genero_slug', params.genero_slug);
+    if (params.search)      query.set('search',      params.search);
 
-            if (coincideFiltro && coincideBusqueda) {
-                tarjeta.classList.remove(CLASE_TARJETA_OCULTA);
-                tarjetasVis++;
-            } else {
-                tarjeta.classList.add(CLASE_TARJETA_OCULTA);
-            }
-        });
+    // Recoger TODAS las páginas
+    let url      = `${API_BASE}/mangas/?${query.toString()}`;
+    let resultado = [];
 
-        const seccionVisible = (filtroActivo === 'todo' || categoria === filtroActivo) && tarjetasVis > 0;
+    while (url) {
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status} al cargar mangas`);
+        const data = await resp.json();
 
-        seccion.classList.toggle(CLASE_SECCION_OCULTA, !seccionVisible);
-        actualizarConteo(seccion, tarjetasVis);
+        if (Array.isArray(data)) return data;        // sin paginación
+        resultado = resultado.concat(data.results ?? []);
+        url       = data.next ?? null;
+    }
+
+    return resultado;
+}
+
+async function fetchCapitulos(mangaId) {
+    const resp = await fetch(`${API_BASE}/mangas/${mangaId}/capitulos/`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status} al cargar capítulos`);
+    const data = await resp.json();
+    if (Array.isArray(data)) return data;
+    return data.results ?? [];
+}
+
+
+/* ------------------- GENERACIÓN DE TARJETAS ------------------- */
+
+function crearTarjeta(manga) {
+    const article   = document.createElement('article');
+    article.className = 'manga-tarjeta';
+
+    const idManga   = obtenerIdManga(manga);
+    const titulo    = obtenerTitulo(manga);
+    const categoria = obtenerCategoria(manga);
+
+    article.dataset.id        = idManga;
+    article.dataset.categoria = categoria;
+    article.setAttribute('tabindex', '0');
+    article.setAttribute('role', 'button');
+    article.setAttribute('aria-label', `Ver detalles de ${titulo}`);
+
+    const totalCaps = obtenerTotalCapitulos(manga);
+    const portada   = obtenerPortada(manga);
+
+    article.innerHTML = `
+        <div class="manga-tarjeta__portada-contenedor">
+            <img
+                class="manga-tarjeta__portada"
+                src="${portada}"
+                alt="Portada de ${titulo}"
+                loading="lazy"
+                width="200"
+                height="290"
+            >
+        </div>
+        <div class="manga-tarjeta__info">
+            <h3 class="manga-tarjeta__titulo">${titulo}</h3>
+            <span class="manga-tarjeta__capitulos">${totalCaps} caps.</span>
+        </div>
+    `;
+
+    return article;
+}
+
+function renderizarTarjetas(mangas) {
+    const contenedorSecciones = obtenerElemento('#contenedorSecciones');
+    if (!contenedorSecciones) return;
+
+    contenedorSecciones.innerHTML = '';
+    const categoriasUnicas = [...new Set(mangas.map(obtenerCategoria))].sort();
+
+    categoriasUnicas.forEach(categoria => {
+        const section = document.createElement('section');
+        section.className = 'manga-seccion';
+        section.dataset.categoria = categoria;
+        section.setAttribute('aria-label', `Manga de ${etiquetaLegible(categoria)}`);
+
+        const grid = document.createElement('div');
+        grid.className = 'manga-grid';
+        grid.id = `grid-${categoria}`;
+
+        section.innerHTML = `
+            <div class="manga-seccion__cabecera">
+                <div class="manga-seccion__titulo-grupo">
+                    <span class="manga-seccion__etiqueta etiqueta--${categoria}">${etiquetaLegible(categoria)}</span>
+                    <h2 class="manga-seccion__titulo">${etiquetaLegible(categoria)}</h2>
+                </div>
+                <span class="manga-seccion__conteo">0 títulos</span>
+            </div>
+        `;
+        section.appendChild(grid);
+        contenedorSecciones.appendChild(section);
     });
+
+    mangas.forEach(manga => {
+        const categoria = obtenerCategoria(manga);
+        const grid      = document.getElementById(`grid-${categoria}`);
+        if (grid) grid.appendChild(crearTarjeta(manga));
+    });
+
+    // Actualizar conteos tras renderizar
+    const secciones = obtenerTodos(SELECTOR_SECCIONES);
+    secciones.forEach(seccion => {
+        const cat      = seccion.dataset.categoria;
+        const cantidad = mangas.filter(m => obtenerCategoria(m) === cat).length;
+        actualizarConteo(seccion, cantidad);
+    });
+}
+
+
+/* ------------------- CARGA CON FILTROS DE DJANGO ------------------- */
+
+async function cargarYRenderizar() {
+    const contenedorSecciones = obtenerElemento('#contenedorSecciones');
+
+    // Indicador de carga visual
+    if (contenedorSecciones) {
+        contenedorSecciones.innerHTML =
+            '<p class="manga-cargando">Cargando...</p>';
+    }
+
+    try {
+        const params = {};
+
+        // Solo manda genero_slug si no es "todo"
+        if (filtroActivo !== 'todo') params.genero_slug = filtroActivo;
+
+        // Búsqueda de texto usa el parámetro search de DRF
+        if (terminoBusqueda) params.search = terminoBusqueda;
+
+        const mangas = await fetchMangas(params);
+        renderizarTarjetas(mangas);
+        iniciarTarjetas(mangas);
+
+    } catch (err) {
+        console.error('[Manga] Error al cargar:', err);
+        if (contenedorSecciones) {
+            contenedorSecciones.innerHTML =
+                '<p class="manga-error">No se pudo cargar el catálogo. Inténtalo de nuevo.</p>';
+        }
+    }
 }
 
 
 /* ------------------- FILTROS — EVENTOS ------------------- */
 
 function iniciarFiltros() {
-    const botonesFiltro = obtenerTodos(SELECTOR_FILTRO);
+    const filtrosContainer = obtenerElemento('#contenedorFiltros');
+    if (!filtrosContainer) return;
 
-    botonesFiltro.forEach(boton => {
-        boton.addEventListener('click', () => {
-            botonesFiltro.forEach(b => b.classList.remove(CLASE_FILTRO_ACTIVO));
-            boton.classList.add(CLASE_FILTRO_ACTIVO);
-            filtroActivo = boton.dataset.filtro;
-            aplicarFiltros();
+    // Categorías disponibles extraídas de los mangas ya cargados
+    const categorias          = [...new Set(mangasCargados.map(obtenerCategoria))];
+    const categoriasOrdenadas = ['todo', ...categorias.sort()];
+
+    filtrosContainer.innerHTML = '';
+
+    categoriasOrdenadas.forEach(cat => {
+        const button = document.createElement('button');
+        button.className      = `filtro${cat === filtroActivo ? ` ${CLASE_FILTRO_ACTIVO}` : ''}`;
+        button.dataset.filtro = cat;
+        button.textContent    = etiquetaLegible(cat);
+
+        button.addEventListener('click', () => {
+            obtenerTodos(SELECTOR_FILTRO).forEach(b => b.classList.remove(CLASE_FILTRO_ACTIVO));
+            button.classList.add(CLASE_FILTRO_ACTIVO);
+            filtroActivo = cat;
+            cargarYRenderizar();   // ← petición a Django con filtro
         });
+
+        filtrosContainer.appendChild(button);
     });
 }
 
@@ -260,66 +333,73 @@ function iniciarFiltros() {
 
 function iniciarBuscador() {
     const inputBusqueda = obtenerElemento(SELECTOR_BUSQUEDA);
-
     if (!inputBusqueda) return;
 
     inputBusqueda.addEventListener('input', (e) => {
         terminoBusqueda = e.target.value.trim();
-        aplicarFiltros();
+
+        // Debounce: espera 400ms antes de lanzar la petición
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            cargarYRenderizar();   // ← petición a Django con search
+        }, 400);
     });
 }
 
 
 /* ------------------- MODAL — CONSTRUCCIÓN ------------------- */
 
-/**
- * Construye la lista de capítulos en el modal.
- * @param {Array}    volumenes
- * @param {number}   ultimoCapitulo   - Número del último cap leído/actual
- * @param {number[]} capitulosLeidos  - Caps completados explícitamente
- */
-function construirCapitulos(volumenes, ultimoCapitulo, capitulosLeidos = []) {
+function construirCapitulos(capitulos, ultimoCapitulo, capitulosLeidos = []) {
     const lista = obtenerElemento('#modalCapitulosLista');
-
     if (!lista) return;
 
     lista.innerHTML = '';
 
-    volumenes.forEach((volumen, indice) => {
+    if (!capitulos || capitulos.length === 0) {
+        lista.innerHTML = '<p class="manga-modal__sin-caps">No hay capítulos disponibles.</p>';
+        return;
+    }
+
+    const ordenados = [...capitulos].sort((a, b) =>
+        obtenerNumeroCapitulo(a) - obtenerNumeroCapitulo(b)
+    );
+
+    const BLOQUE = 20;
+
+    for (let i = 0; i < ordenados.length; i += BLOQUE) {
+        const grupo   = ordenados.slice(i, i + BLOQUE);
+        const primero = obtenerNumeroCapitulo(grupo[0]);
+        const ultimo  = obtenerNumeroCapitulo(grupo[grupo.length - 1]);
+
         const details = document.createElement('details');
         details.className = 'manga-volumen';
-
-        if (indice === 0) {
-            details.setAttribute('open', '');
-        }
+        if (i === 0) details.setAttribute('open', '');
 
         const summary = document.createElement('summary');
         summary.className = 'manga-volumen__cabecera';
         summary.innerHTML = `
-            <span class="manga-volumen__nombre">${volumen.nombre}</span>
-            <span class="manga-volumen__rango">${volumen.rango}</span>
+            <span class="manga-volumen__nombre">Caps. ${primero} – ${ultimo}</span>
+            <span class="manga-volumen__rango">${grupo.length} capítulos</span>
             <span class="manga-volumen__flecha">▾</span>
         `;
 
         const grid = document.createElement('div');
         grid.className = 'manga-volumen__grid';
 
-        volumen.caps.forEach(numCap => {
-            const boton = document.createElement('button');
-            boton.className = 'manga-cap-btn';
+        grupo.forEach(cap => {
+            const numCap = obtenerNumeroCapitulo(cap);
+            const boton  = document.createElement('button');
+            boton.className   = 'manga-cap-btn';
             boton.dataset.cap = numCap;
             boton.setAttribute('aria-label', `Ir al capítulo ${numCap}`);
 
-            // Un cap está leído si: está en el array explícito de leídos,
-            // o su número es menor que el último capítulo visto.
-            const estaLeido  = capitulosLeidos.includes(numCap) || numCap < ultimoCapitulo;
-            const esActual   = numCap === ultimoCapitulo;
+            const estaLeido =
+                capitulosLeidos.includes(numCap) ||
+                (ultimoCapitulo !== null && numCap < ultimoCapitulo);
+            const esActual = numCap === ultimoCapitulo;
 
-            if (esActual) {
-                boton.classList.add('manga-cap-btn--actual');
-            } else if (estaLeido) {
-                boton.classList.add('manga-cap-btn--leido');
-            }
+            if (esActual)       boton.classList.add('manga-cap-btn--actual');
+            else if (estaLeido) boton.classList.add('manga-cap-btn--leido');
 
             boton.innerHTML = `<span class="manga-cap-btn__num">${numCap}</span>`;
             boton.addEventListener('click', () => manejarClickCapitulo(numCap));
@@ -330,63 +410,73 @@ function construirCapitulos(volumenes, ultimoCapitulo, capitulosLeidos = []) {
         details.appendChild(summary);
         details.appendChild(grid);
         lista.appendChild(details);
-    });
+    }
 }
 
 
 /* ------------------- MODAL — CAPÍTULO CLICK ------------------- */
 
-/**
- * Navega al lector para el capítulo indicado.
- * Usa el ID del manga seleccionado y el número de capítulo como parámetros de URL.
- */
 function manejarClickCapitulo(numCap) {
     if (!mangaSeleccionado) return;
-    window.location.href = `../lector/lector.html?manga=${mangaSeleccionado.id}&numero=${numCap}`;
+    window.location.href =
+        `../lector/lector.html?manga=${mangaSeleccionado.id}&numero=${numCap}`;
 }
 
 
 /* ------------------- MODAL — ABRIR / CERRAR ------------------- */
 
-function abrirModal(datosManga) {
-    // Leer progreso guardado y fusionarlo con los datos del manga
-    const progreso = leerProgreso(datosManga.id);
-
-    // Si hay progreso guardado, usarlo; si no, mantener el del hardcode
-    const ultimoCap = progreso.ultimoCapitulo !== null
-        ? progreso.ultimoCapitulo
-        : datosManga.ultimoCapitulo;
-
-    // Guardar referencia con el progreso actualizado
-    mangaSeleccionado = { ...datosManga, ultimoCapitulo: ultimoCap };
+async function abrirModal(manga) {
+    mangaSeleccionado = manga;
 
     const modal          = obtenerElemento(SELECTOR_MODAL);
     const modalPortada   = obtenerElemento('#modalPortada');
     const modalTitulo    = obtenerElemento('#modalTitulo');
     const modalGenero    = obtenerElemento('#modalGenero');
     const modalUltimoCap = obtenerElemento('#modalUltimoCapitulo');
+    const lista          = obtenerElemento('#modalCapitulosLista');
 
     if (!modal) return;
 
-    modalPortada.src            = datosManga.portada;
-    modalPortada.alt            = `Portada de ${datosManga.titulo}`;
-    modalTitulo.textContent     = datosManga.titulo;
-    modalGenero.textContent     = datosManga.genero;
-    modalUltimoCap.textContent  = `Capítulo ${ultimoCap}`;
+    const idManga   = obtenerIdManga(manga);
+    const progreso  = leerProgreso(idManga);
+    const ultimoCap = progreso.ultimoCapitulo ?? null;
+    const titulo    = obtenerTitulo(manga);
+    const categoria = obtenerCategoria(manga);
 
-    construirCapitulos(datosManga.volumenes, ultimoCap, progreso.capitulosLeidos);
+    modalPortada.src             = obtenerPortada(manga);
+    modalPortada.alt             = `Portada de ${titulo}`;
+    modalTitulo.textContent      = titulo;
+    modalGenero.textContent      = etiquetaLegible(categoria);
+    modalUltimoCap.textContent   =
+        ultimoCap !== null ? `Capítulo ${ultimoCap}` : 'Sin progreso';
+
+    const botonContinuar = obtenerElemento('#modalBotonContinuar');
+    if (botonContinuar) {
+        botonContinuar.onclick = () => manejarClickCapitulo(ultimoCap ?? 1);
+    }
 
     modal.setAttribute('aria-hidden', 'false');
     modal.classList.add(CLASE_MODAL_VISIBLE);
     document.body.style.overflow = 'hidden';
 
+    if (lista) lista.innerHTML =
+        '<p class="manga-modal__sin-caps">Cargando capítulos…</p>';
+
     const botonCerrar = obtenerElemento(SELECTOR_CERRAR);
     if (botonCerrar) botonCerrar.focus();
+
+    try {
+        const capitulos = await fetchCapitulos(manga.id);
+        construirCapitulos(capitulos, ultimoCap, progreso.capitulosLeidos);
+    } catch (e) {
+        console.error('[Manga] Error al cargar capítulos:', e);
+        if (lista) lista.innerHTML =
+            '<p class="manga-modal__sin-caps">No se pudieron cargar los capítulos.</p>';
+    }
 }
 
 function cerrarModal() {
     const modal = obtenerElemento(SELECTOR_MODAL);
-
     if (!modal) return;
 
     modal.classList.remove(CLASE_MODAL_VISIBLE);
@@ -402,13 +492,8 @@ function iniciarModal() {
     const fondoModal  = obtenerElemento(SELECTOR_FONDO);
     const botonCerrar = obtenerElemento(SELECTOR_CERRAR);
 
-    if (fondoModal) {
-        fondoModal.addEventListener('click', cerrarModal);
-    }
-
-    if (botonCerrar) {
-        botonCerrar.addEventListener('click', cerrarModal);
-    }
+    if (fondoModal)  fondoModal.addEventListener('click', cerrarModal);
+    if (botonCerrar) botonCerrar.addEventListener('click', cerrarModal);
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') cerrarModal();
@@ -418,48 +503,56 @@ function iniciarModal() {
 
 /* ------------------- TARJETAS — EVENTOS ------------------- */
 
-function iniciarTarjetas() {
-    const tarjetas = obtenerTodos(SELECTOR_TARJETAS);
+function iniciarTarjetas(mangas) {
+    const contenedorSecciones = obtenerElemento('#contenedorSecciones');
+    if (!contenedorSecciones) return;
 
-    tarjetas.forEach(tarjeta => {
-        const idManga = parseInt(tarjeta.dataset.id, 10);
-        const datos   = DATOS_MANGA.find(m => m.id === idManga);
+    // Eliminar listeners anteriores clonando el nodo
+    const nuevo = contenedorSecciones.cloneNode(true);
+    contenedorSecciones.parentNode.replaceChild(nuevo, contenedorSecciones);
 
-        if (!datos) return;
-
-        tarjeta.addEventListener('click', () => abrirModal(datos));
-
-        tarjeta.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                abrirModal(datos);
-            }
-        });
+    nuevo.addEventListener('click', (e) => {
+        const tarjeta = e.target.closest(SELECTOR_TARJETAS);
+        if (!tarjeta) return;
+        const idManga = tarjeta.dataset.id;
+        const datos   = mangas.find(m => String(obtenerIdManga(m)) === String(idManga));
+        if (datos) abrirModal(datos);
     });
-}
 
-
-/* ------------------- CONTEOS INICIALES ------------------- */
-
-function iniciarConteos() {
-    const secciones = obtenerTodos(SELECTOR_SECCIONES);
-
-    secciones.forEach(seccion => {
-        const categoria = seccion.dataset.categoria;
-        const cantidad  = DATOS_MANGA.filter(m => m.categoria === categoria).length;
-        actualizarConteo(seccion, cantidad);
+    nuevo.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const tarjeta = e.target.closest(SELECTOR_TARJETAS);
+        if (!tarjeta) return;
+        e.preventDefault();
+        const idManga = tarjeta.dataset.id;
+        const datos   = mangas.find(m => String(obtenerIdManga(m)) === String(idManga));
+        if (datos) abrirModal(datos);
     });
 }
 
 
 /* ------------------- INIT ------------------- */
 
-function iniciar() {
-    iniciarConteos();
-    iniciarFiltros();
-    iniciarBuscador();
-    iniciarTarjetas();
+async function iniciar() {
     iniciarModal();
+    iniciarBuscador();
+
+    try {
+        // Carga inicial sin filtros para tener todas las categorías disponibles
+        mangasCargados = await fetchMangas();
+
+        iniciarFiltros();           // genera botones con categorías reales
+        renderizarTarjetas(mangasCargados);
+        iniciarTarjetas(mangasCargados);
+
+    } catch (err) {
+        console.error('[Manga] Error al cargar la biblioteca:', err);
+        const contenedorSecciones = obtenerElemento('#contenedorSecciones');
+        if (contenedorSecciones) {
+            contenedorSecciones.innerHTML =
+                '<p class="manga-error">No se pudo cargar el catálogo.</p>';
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', iniciar);
