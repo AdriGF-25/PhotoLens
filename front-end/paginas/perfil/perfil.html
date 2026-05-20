@@ -75,28 +75,6 @@
             </div>
         </section>
 
-        <!-- ------------------- SECCIÓN RECOMENDADOS ------------------- -->
-        <section class="seccion-perfil" aria-label="Mangas recomendados">
-            <div class="seccion-perfil__interior">
-                <div class="seccion-perfil__cabecera">
-                    <div class="seccion-perfil__cabecera-grupo">
-                        <h2 class="seccion-perfil__titulo">Recomendados para ti</h2>
-                        <span class="seccion-perfil__subtitulo">Basado en tu historial de lectura</span>
-                    </div>
-                    <button class="boton-refrescar" id="btnRefrescarRecomendados" aria-label="Refrescar recomendaciones">
-                        ↻ Actualizar
-                    </button>
-                </div>
-
-                <div class="cuadricula-recientes" id="cuadriculaRecomendados">
-                    <!-- Las tarjetas de recomendados se generan desde JS -->
-                </div>
-
-                <div class="estado-vacio oculto" id="estadoVacioRecomendados">
-                    <p class="estado-vacio__mensaje">Lee algún manga para obtener recomendaciones.</p>
-                </div>
-            </div>
-        </section>
 
         <!-- ------------------- MODAL: EDITAR PERFIL ------------------- -->
         <div class="modal-fondo" id="modalFondo" aria-hidden="true">
@@ -150,7 +128,7 @@
                         <span class="campo__error" id="errorNombre"></span>
                     </div>
 
-                    <!-- Email (pendiente de verificación) -->
+                    <!-- Email -->
                     <div class="campo">
                         <label class="campo__etiqueta" for="inputEmail">
                             Email
@@ -205,7 +183,46 @@
             </div>
         </div>
 
-    </main>
+        <!-- ------------------- MODAL DETALLE MANGA (RECIENTES) ------------------- -->
+        <div class="manga-modal" id="mangaModal" role="dialog" aria-modal="true" aria-labelledby="modalTituloManga" aria-hidden="true">
+            <div class="manga-modal__fondo" id="modalFondoManga"></div>
+            <div class="manga-modal__contenedor">
+        
+                <!-- ------------------- PANEL IZQUIERDO ------------------- -->
+                <aside class="manga-modal__panel-izq">
+                    <div class="manga-modal__portada-contenedor">
+                        <img
+                            class="manga-modal__portada"
+                            id="modalPortada"
+                            src=""
+                            alt="Portada del manga seleccionado"
+                            width="260"
+                            height="380"
+                        >
+                    </div>
+                    <div class="manga-modal__info-lateral">
+                        <h2 class="manga-modal__titulo" id="modalTituloManga">Título del Manga</h2>
+                        <span class="manga-modal__genero" id="modalGenero">Género</span>
+                    </div>
+                    <button class="manga-modal__boton-continuar" id="modalBotonContinuar" aria-label="Continuar lectura">
+                        Continuar<br>
+                        <small id="modalUltimoCapitulo">Sin progreso</small>
+                    </button>
+                </aside>
+        
+                <!-- ------------------- PANEL DERECHO — CAPÍTULOS ------------------- -->
+                <div class="manga-modal__panel-der">
+                    <div class="manga-modal__cabecera-der">
+                        <h3 class="manga-modal__subtitulo">Capítulos</h3>
+                        <button class="manga-modal__cerrar" id="modalCerrar" aria-label="Cerrar modal">✕</button>
+                    </div>
+                    <div class="manga-modal__capitulos-lista" id="modalCapitulosLista">
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+        <!-- ------------------- FIN MODAL MANGA ------------------- -->    </main>
 
     <!-- ------------------- FOOTER ---------------- -->
     <div id="contenedor-footer"></div>

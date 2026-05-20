@@ -16,6 +16,8 @@ const CLASE_SECCION_OCULTA = 'manga-seccion--oculta';
 const CLASE_TARJETA_OCULTA = 'manga-tarjeta--oculta';
 const CLASE_MODAL_VISIBLE  = 'manga-modal--visible';
 const STORAGE_PREFIX       = 'anc_progreso_';
+const STORAGE_RECIENTES    = 'anc_recientes';
+const MAX_RECIENTES        = 20;
 const PORTADA_PLACEHOLDER  = '../../assets/placeholders/placeholder-portada.jpg';
 
 
@@ -44,7 +46,7 @@ function etiquetaLegible(categoria) {
 let filtroActivo      = 'todo';
 let terminoBusqueda   = '';
 let mangaSeleccionado = null;
-let mangasCargados    = [];   // todos los mangas (sin filtro) para los filtros disponibles
+let mangasCargados    = [];
 let debounceTimer     = null;
 
 
@@ -145,16 +147,51 @@ function guardarProgreso(mangaId, numCap, completado = false) {
 }
 
 
+// ------------------- RECIENTES (LOCALSTORAGE) ------------------- //
+
+
+function actualizarRecientes(manga, ultimoCapitulo) {
+    try {
+        const raw      = localStorage.getItem(STORAGE_RECIENTES);
+        let recientes  = raw ? JSON.parse(raw) : [];
+
+        // Quitar si ya existe para moverlo al principio
+        recientes = recientes.filter(function(m) {
+            return String(m.id) !== String(obtenerIdManga(manga));
+        });
+
+        // Insertar al principio con los datos actualizados
+        recientes.unshift({
+            id              : obtenerIdManga(manga),
+            titulo          : obtenerTitulo(manga),
+            portada         : obtenerPortada(manga),
+            categoria       : obtenerCategoria(manga),
+            total_capitulos : obtenerTotalCapitulos(manga),
+            ultimo_capitulo : ultimoCapitulo,
+        });
+
+        // Limitar al máximo
+        if (recientes.length > MAX_RECIENTES) {
+            recientes = recientes.slice(0, MAX_RECIENTES);
+        }
+
+        localStorage.setItem(STORAGE_RECIENTES, JSON.stringify(recientes));
+    } catch (e) {
+        console.warn('[Manga] No se pudo actualizar recientes:', e);
+    }
+}
+
+
+
 /* ------------------- API ------------------- */
 
+
 async function fetchMangas(params = {}) {
-    // Construir query string con los parámetros que vengan
     const query = new URLSearchParams();
 
     if (params.genero_slug) query.set('genero_slug', params.genero_slug);
     if (params.search)      query.set('search',      params.search);
 
-    // Recoger TODAS las páginas
     let url      = `${API_BASE}/mangas/?${query.toString()}`;
     let resultado = [];
 
@@ -163,7 +200,7 @@ async function fetchMangas(params = {}) {
         if (!resp.ok) throw new Error(`HTTP ${resp.status} al cargar mangas`);
         const data = await resp.json();
 
-        if (Array.isArray(data)) return data;        // sin paginación
+        if (Array.isArray(data)) return data;
         resultado = resultado.concat(data.results ?? []);
         url       = data.next ?? null;
     }
@@ -255,7 +292,6 @@ function renderizarTarjetas(mangas) {
         if (grid) grid.appendChild(crearTarjeta(manga));
     });
 
-    // Actualizar conteos tras renderizar
     const secciones = obtenerTodos(SELECTOR_SECCIONES);
     secciones.forEach(seccion => {
         const cat      = seccion.dataset.categoria;
@@ -270,7 +306,6 @@ function renderizarTarjetas(mangas) {
 async function cargarYRenderizar() {
     const contenedorSecciones = obtenerElemento('#contenedorSecciones');
 
-    // Indicador de carga visual
     if (contenedorSecciones) {
         contenedorSecciones.innerHTML =
             '<p class="manga-cargando">Cargando...</p>';
@@ -279,10 +314,7 @@ async function cargarYRenderizar() {
     try {
         const params = {};
 
-        // Solo manda genero_slug si no es "todo"
         if (filtroActivo !== 'todo') params.genero_slug = filtroActivo;
-
-        // Búsqueda de texto usa el parámetro search de DRF
         if (terminoBusqueda) params.search = terminoBusqueda;
 
         const mangas = await fetchMangas(params);
@@ -305,7 +337,6 @@ function iniciarFiltros() {
     const filtrosContainer = obtenerElemento('#contenedorFiltros');
     if (!filtrosContainer) return;
 
-    // Categorías disponibles extraídas de los mangas ya cargados
     const categorias          = [...new Set(mangasCargados.map(obtenerCategoria))];
     const categoriasOrdenadas = ['todo', ...categorias.sort()];
 
@@ -321,7 +352,7 @@ function iniciarFiltros() {
             obtenerTodos(SELECTOR_FILTRO).forEach(b => b.classList.remove(CLASE_FILTRO_ACTIVO));
             button.classList.add(CLASE_FILTRO_ACTIVO);
             filtroActivo = cat;
-            cargarYRenderizar();   // ← petición a Django con filtro
+            cargarYRenderizar();
         });
 
         filtrosContainer.appendChild(button);
@@ -338,10 +369,9 @@ function iniciarBuscador() {
     inputBusqueda.addEventListener('input', (e) => {
         terminoBusqueda = e.target.value.trim();
 
-        // Debounce: espera 400ms antes de lanzar la petición
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
-            cargarYRenderizar();   // ← petición a Django con search
+            cargarYRenderizar();
         }, 400);
     });
 }
@@ -418,6 +448,9 @@ function construirCapitulos(capitulos, ultimoCapitulo, capitulosLeidos = []) {
 
 function manejarClickCapitulo(numCap) {
     if (!mangaSeleccionado) return;
+    // Guardar progreso y actualizar recientes al ir a leer
+    guardarProgreso(mangaSeleccionado.id, numCap);
+    actualizarRecientes(mangaSeleccionado, numCap);
     window.location.href =
         `../lector/lector.html?manga=${mangaSeleccionado.id}&numero=${numCap}`;
 }
@@ -507,7 +540,6 @@ function iniciarTarjetas(mangas) {
     const contenedorSecciones = obtenerElemento('#contenedorSecciones');
     if (!contenedorSecciones) return;
 
-    // Eliminar listeners anteriores clonando el nodo
     const nuevo = contenedorSecciones.cloneNode(true);
     contenedorSecciones.parentNode.replaceChild(nuevo, contenedorSecciones);
 
@@ -538,10 +570,9 @@ async function iniciar() {
     iniciarBuscador();
 
     try {
-        // Carga inicial sin filtros para tener todas las categorías disponibles
         mangasCargados = await fetchMangas();
 
-        iniciarFiltros();           // genera botones con categorías reales
+        iniciarFiltros();
         renderizarTarjetas(mangasCargados);
         iniciarTarjetas(mangasCargados);
 
