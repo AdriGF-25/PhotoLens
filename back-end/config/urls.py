@@ -13,12 +13,14 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     # ------------------- AUTH JWT -------------------
-    path("api/token/",         TokenObtainPairView.as_view(), name="token_obtain"),
-    path("api/token/refresh/", TokenRefreshView.as_view(),    name="token_refresh"),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 
     # ------------------- APPS -------------------
-    path("api/anime/",    include("anime.urls")),
+    path("api/anime/", include("anime.urls")),
     path("api/noticias/", include("noticias.urls")),
     path("api/usuarios/", include("usuarios.urls")),
+]
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

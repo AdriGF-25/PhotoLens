@@ -1,13 +1,12 @@
 """
 anime'n'chill — Vistas (solo Manga)
 """
+
 import os
-import requests
 from django.conf import settings
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
@@ -17,16 +16,16 @@ from .filters import MangaFilter
 from .models import Genero, Manga, Capitulo, Favorito, Progreso
 from .serializers import (
     GeneroSerializer,
-    MangaListSerializer, MangaDetailSerializer,
+    MangaListSerializer,
+    MangaDetailSerializer,
     CapituloSerializer,
-    FavoritoSerializer, ProgresoSerializer,
+    FavoritoSerializer,
     GuardarFavoritoInputSerializer,
 )
 
 
-# ------------------- GÉNERO ------------------- #
 class GeneroViewSet(ModelViewSet):
-    queryset         = Genero.objects.all()
+    queryset = Genero.objects.all()
     serializer_class = GeneroSerializer
 
     def get_permissions(self):
@@ -35,14 +34,13 @@ class GeneroViewSet(ModelViewSet):
         return [IsAdminUser()]
 
 
-# ------------------- MANGA ------------------- #
 class MangaViewSet(ModelViewSet):
-    queryset        = Manga.objects.prefetch_related("generos").all()
+    queryset = Manga.objects.prefetch_related("generos").all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = MangaFilter
-    search_fields   = ["titulo", "titulo_original", "autor", "descripcion"]
+    search_fields = ["titulo", "titulo_original", "autor", "descripcion"]
     ordering_fields = ["anio_publicacion", "titulo", "created_at"]
-    ordering        = ["-created_at"]
+    ordering = ["-created_at"]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -50,86 +48,33 @@ class MangaViewSet(ModelViewSet):
         return MangaDetailSerializer
 
     def get_permissions(self):
-        if self.action in ["list", "retrieve", "capitulos", "portada_mangadex"]:
+        if self.action in ["list", "retrieve", "capitulos"]:
             return [AllowAny()]
         return [IsAuthenticated()]
 
-    # ── @action: capítulos del manga ── #
     @action(
         detail=True,
         methods=["get"],
         url_path="capitulos",
-        authentication_classes=[],      # ← sin autenticación JWT
-        permission_classes=[AllowAny],
-    )
-    def capitulos(self, request, pk=None):
-        """GET /api/anime/mangas/{id}/capitulos/"""
-        manga      = self.get_object()
-        capitulos  = manga.capitulos.all().order_by("numero")
-        serializer = CapituloSerializer(capitulos, many=True)
-        return Response(serializer.data)
-
-    # ── @action: portada desde MangaDex ── #
-    @action(
-        detail=True,
-        methods=["get"],
-        url_path="portada-mangadex",
         authentication_classes=[],
         permission_classes=[AllowAny],
     )
-    def portada_mangadex(self, request, pk=None):
-        """GET /api/anime/mangas/{id}/portada-mangadex/"""
+    def capitulos(self, request, pk=None):
         manga = self.get_object()
+        capitulos = manga.capitulos.all().order_by("numero")
+        serializer = CapituloSerializer(capitulos, many=True)
+        return Response(serializer.data)
 
-        if not manga.mangadex_id:
-            return Response(
-                {"error": "Este manga no tiene ID de MangaDex configurado."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        try:
-            url      = f"{settings.MANGADEX_API_URL}/cover"
-            params   = {"manga[]": manga.mangadex_id, "limit": 1}
-            response = requests.get(url, params=params, timeout=10)
-            response.raise_for_status()
-            data     = response.json()
-
-            if data.get("data"):
-                cover       = data["data"][0]
-                filename    = cover["attributes"]["fileName"]
-                portada_url = (
-                    f"https://uploads.mangadex.org/covers/"
-                    f"{manga.mangadex_id}/{filename}"
-                )
-                manga.portada_url = portada_url
-                manga.save(update_fields=["portada_url"])
-                return Response({"portada_url": portada_url})
-
-            return Response(
-                {"error": "No se encontró portada en MangaDex."},
-                status=status.HTTP_404_NOT_FOUND
-            )
-
-        except requests.RequestException as e:
-            return Response(
-                {"error": f"Error al conectar con MangaDex: {str(e)}"},
-                status=status.HTTP_503_SERVICE_UNAVAILABLE
-            )
-
-    # ── @action: guardar favorito ── #
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def guardar_favorito(self, request, pk=None):
-        """POST /api/anime/mangas/{id}/guardar_favorito/"""
-        manga     = self.get_object()
+        manga = self.get_object()
         input_ser = GuardarFavoritoInputSerializer(data=request.data)
         input_ser.is_valid(raise_exception=True)
 
         favorito, creado = Favorito.objects.get_or_create(
             usuario=request.user,
             manga=manga,
-            defaults={
-                "nota_personal": input_ser.validated_data.get("nota_personal", "")
-            }
+            defaults={"nota_personal": input_ser.validated_data.get("nota_personal", "")}
         )
 
         if not creado:
@@ -144,26 +89,23 @@ class MangaViewSet(ModelViewSet):
         )
 
 
-# ------------------- CAPÍTULO ------------------- #
 class CapituloViewSet(ModelViewSet):
-    queryset         = Capitulo.objects.select_related("manga").all()
+    queryset = Capitulo.objects.select_related("manga").all()
     serializer_class = CapituloSerializer
-    filter_backends  = [DjangoFilterBackend, OrderingFilter]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ["manga", "volumen"]
-    ordering_fields  = ["numero", "fecha_publicacion"]
-    ordering         = ["numero"]
+    ordering_fields = ["numero", "fecha_publicacion"]
+    ordering = ["numero"]
 
     def get_permissions(self):
         if self.action in ["list", "retrieve", "paginas"]:
             return [AllowAny()]
         return [IsAuthenticated()]
 
-    # ── @action: marcar progreso ── #
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def marcar_progreso(self, request, pk=None):
-        """POST /api/anime/capitulos/{id}/marcar_progreso/"""
-        capitulo   = self.get_object()
-        pagina     = request.data.get("pagina_actual", 1)
+        capitulo = self.get_object()
+        pagina = request.data.get("pagina_actual", 1)
         completado = request.data.get("completado", False)
 
         progreso, _ = Progreso.objects.update_or_create(
@@ -177,24 +119,14 @@ class CapituloViewSet(ModelViewSet):
             status=status.HTTP_200_OK
         )
 
-    # ── @action: páginas del capítulo ── #
     @action(
         detail=True,
         methods=["get"],
         url_path="paginas",
-        authentication_classes=[],      # ← sin autenticación JWT
+        authentication_classes=[],
         permission_classes=[AllowAny],
     )
     def paginas(self, request, pk=None):
-        """
-        GET /api/anime/capitulos/{id}/paginas/
-
-        Devuelve la lista ordenada de URLs de imagen del capítulo,
-        construida a partir del campo `ruta_imagenes`.
-
-        Respuesta:
-            { "paginas": ["http://…/media/…/001.jpg", …], "total": N }
-        """
         capitulo = self.get_object()
 
         if not capitulo.ruta_imagenes:
@@ -205,30 +137,25 @@ class CapituloViewSet(ModelViewSet):
         if not os.path.isdir(ruta_completa):
             return Response({"paginas": [], "total": 0})
 
-        EXTENSIONES = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+        extensiones = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
         try:
             archivos = sorted(
                 f for f in os.listdir(ruta_completa)
-                if os.path.splitext(f.lower())[1] in EXTENSIONES
+                if os.path.splitext(f.lower())[1] in extensiones
             )
         except OSError:
             return Response({"paginas": [], "total": 0})
 
-        ruta_rel  = capitulo.ruta_imagenes.replace("\\", "/").strip("/")
+        ruta_rel = capitulo.ruta_imagenes.replace("\\", "/").strip("/")
         media_url = request.build_absolute_uri(settings.MEDIA_URL).rstrip("/")
 
-        paginas_urls = [
-            f"{media_url}/{ruta_rel}/{archivo}"
-            for archivo in archivos
-        ]
-
+        paginas_urls = [f"{media_url}/{ruta_rel}/{archivo}" for archivo in archivos]
         return Response({"paginas": paginas_urls, "total": len(paginas_urls)})
 
 
-# ------------------- FAVORITO ------------------- #
 class FavoritoViewSet(ModelViewSet):
-    serializer_class   = FavoritoSerializer
+    serializer_class = FavoritoSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):

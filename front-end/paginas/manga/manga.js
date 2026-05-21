@@ -3,7 +3,7 @@
 
 /* ------------------- CONSTANTES ------------------- */
 
-const API_BASE             = 'http://localhost:8000/api/anime';
+const API_BASE             = 'http://127.0.0.1:8000/api/anime';
 const SELECTOR_FILTRO      = '.filtro';
 const SELECTOR_SECCIONES   = '.manga-seccion';
 const SELECTOR_TARJETAS    = '.manga-tarjeta';
@@ -101,11 +101,26 @@ function obtenerTotalCapitulos(manga) {
 
 function obtenerPortada(manga) {
     const portada = manga.portada ?? manga.portada_url ?? null;
-    if (!portada) return PORTADA_PLACEHOLDER;
-    if (typeof portada !== 'string') return PORTADA_PLACEHOLDER;
-    if (portada.startsWith('http://') || portada.startsWith('https://')) return portada;
-    if (portada.startsWith('/')) return `http://localhost:8000${portada}`;
-    return portada;
+
+    if (!portada || typeof portada !== 'string') {
+        return PORTADA_PLACEHOLDER;
+    }
+
+    const portadaLimpia = portada.trim();
+
+    if (!portadaLimpia) {
+        return PORTADA_PLACEHOLDER;
+    }
+
+    if (portadaLimpia.startsWith('http://') || portadaLimpia.startsWith('https://')) {
+        return portadaLimpia;
+    }
+
+    if (portadaLimpia.startsWith('/')) {
+        return `http://127.0.0.1:8000${portadaLimpia}`;
+    }
+
+    return `http://127.0.0.1:8000/media/${portadaLimpia.replace(/^media\//, '')}`;
 }
 
 function obtenerIdManga(manga) {
@@ -238,14 +253,15 @@ function crearTarjeta(manga) {
 
     article.innerHTML = `
         <div class="manga-tarjeta__portada-contenedor">
-            <img
-                class="manga-tarjeta__portada"
-                src="${portada}"
-                alt="Portada de ${titulo}"
-                loading="lazy"
-                width="200"
-                height="290"
-            >
+        <img
+            class="manga-tarjeta__portada"
+            src="${portada}"
+            alt="Portada de ${titulo}"
+            loading="lazy"
+            width="200"
+            height="290"
+            onerror="this.onerror=null;this.src='${PORTADA_PLACEHOLDER}'"
+        >
         </div>
         <div class="manga-tarjeta__info">
             <h3 class="manga-tarjeta__titulo">${titulo}</h3>

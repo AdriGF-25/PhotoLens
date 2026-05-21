@@ -1,20 +1,16 @@
 """
 anime'n'chill — Configuración principal de Django
 """
-
+import os
 from pathlib import Path
 from datetime import timedelta
 
-# ------------------- RUTAS -------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-cambia-esto-en-produccion"
-
 DEBUG = True
-
 ALLOWED_HOSTS = ["*"]
 
-# ------------------- APPS -------------------
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -22,18 +18,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third-party
     "rest_framework",
     "rest_framework_simplejwt",
     "corsheaders",
     "django_filters",
-    # Apps propias
     "anime",
     "noticias",
     "usuarios",
 ]
 
-# ------------------- MIDDLEWARE -------------------
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -47,7 +40,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
-# ------------------- TEMPLATES -------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -66,7 +58,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# ------------------- BASE DE DATOS -------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -74,7 +65,6 @@ DATABASES = {
     }
 }
 
-# ------------------- VALIDACIÓN CONTRASEÑAS -------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -82,20 +72,17 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# ------------------- INTERNACIONALIZACIÓN -------------------
 LANGUAGE_CODE = "es-es"
 TIME_ZONE = "Europe/Madrid"
 USE_I18N = True
 USE_TZ = True
 
-# ------------------- ARCHIVOS ESTÁTICOS Y MEDIA -------------------
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# ------------------- CORS -------------------
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
     "http://127.0.0.1:5501",
@@ -103,7 +90,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5501",
 ]
 
-# ------------------- DJANGO REST FRAMEWORK -------------------
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -120,14 +106,10 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 12,
 }
 
-# ------------------- JWT -------------------
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME":  timedelta(minutes=60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS":  True,
+    "ROTATE_REFRESH_TOKENS": True,
 }
 
-# ------------------- APIs EXTERNAS -------------------
-MANGADEX_API_URL = "https://api.mangadex.org"
-ANN_API_URL      = "https://www.animenewsnetwork.com/encyclopedia/api.php"
-MANGAPI_KEY      = ""
+ANN_API_URL = "https://www.animenewsnetwork.com/encyclopedia/api.php"

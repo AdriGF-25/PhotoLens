@@ -1,11 +1,10 @@
 // ------------------- CONSTANTES ------------------- //
 
-const API_BASE         = 'http://127.0.0.1:8000/api/usuarios/';
-const API_PERFIL       = `${API_BASE}perfil/`;
-const API_EDITAR       = `${API_BASE}perfil/editar/`;
-const API_MANGA        = 'http://127.0.0.1:8000/api/anime/mangas/';
-// Constantes para la sección recientes (lógica de manga)
-const API_MANGA_BASE       = 'http://localhost:8000/api/anime';
+const API_BASE = 'http://127.0.0.1:8000/api/usuarios/';
+const API_PERFIL = `${API_BASE}perfil/`;
+const API_EDITAR = `${API_BASE}perfil/editar/`;
+const API_MANGA = 'http://127.0.0.1:8000/api/anime/mangas/';
+const API_MANGA_BASE = 'http://127.0.0.1:8000/api/anime';
 const PORTADA_PLACEHOLDER  = '../../assets/placeholders/placeholder-portada.jpg';
 const STORAGE_PREFIX_MANGA = 'anc_progreso_';
 const CLASE_MODAL_VISIBLE  = 'manga-modal--visible';
@@ -230,11 +229,26 @@ function rec_obtenerCategoria(manga) {
 
 function rec_obtenerPortada(manga) {
     const portada = manga.portada ?? manga.portada_url ?? null;
-    if (!portada) return PORTADA_PLACEHOLDER;
-    if (typeof portada !== 'string') return PORTADA_PLACEHOLDER;
-    if (portada.startsWith('http://') || portada.startsWith('https://')) return portada;
-    if (portada.startsWith('/')) return `http://localhost:8000${portada}`;
-    return portada;
+
+    if (!portada || typeof portada !== 'string') {
+        return PORTADA_PLACEHOLDER;
+    }
+
+    const portadaLimpia = portada.trim();
+
+    if (!portadaLimpia) {
+        return PORTADA_PLACEHOLDER;
+    }
+
+    if (portadaLimpia.startsWith('http://') || portadaLimpia.startsWith('https://')) {
+        return portadaLimpia;
+    }
+
+    if (portadaLimpia.startsWith('/')) {
+        return `http://127.0.0.1:8000${portadaLimpia}`;
+    }
+
+    return `http://127.0.0.1:8000/media/${portadaLimpia.replace(/^media\//, '')}`;
 }
 
 function rec_obtenerIdManga(manga) {
@@ -574,10 +588,10 @@ function crearTarjetaManga(manga, esRecomendado) {
     const article = document.createElement('article');
     article.className = 'tarjeta-manga';
 
-    const enlace  = manga.enlace || '#';
-    const portada = manga.portada || manga.imagen || IMAGEN_PLACEHOLDER;
-    const titulo  = manga.titulo  || manga.nombre || 'Sin título';
-    const sub     = esRecomendado
+    const enlace = manga.enlace || '#';
+    const portada = rec_obtenerPortada(manga);
+    const titulo = manga.titulo || manga.nombre || 'Sin título';
+    const sub = esRecomendado
         ? (manga.genero || manga.tipo || 'Manga')
         : (manga.ultimo_capitulo || 'Sin progreso');
 
@@ -592,7 +606,7 @@ function crearTarjetaManga(manga, esRecomendado) {
                 src="${portada}"
                 alt="${titulo}"
                 loading="lazy"
-                onerror="this.onerror=null;this.src='${IMAGEN_PLACEHOLDER}'"
+                onerror="this.onerror=null;this.src='${PORTADA_PLACEHOLDER}'"
             >
             ${badgeHtml}
         </a>
