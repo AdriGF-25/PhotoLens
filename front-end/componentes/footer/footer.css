@@ -25,11 +25,16 @@
     max-width: 420px;
 }
 
-.pie__logo {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--texto);
-    text-decoration: none;
+/* ------------------- LOGO IMG ------------------- */
+
+.footer-logo {
+    display: block;
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35))
+            drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+    transition: filter 0.15s ease;
 }
 
 .pie__logo-acento {

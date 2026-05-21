@@ -5,6 +5,7 @@
     backdrop-filter: blur(14px);
 }
 
+
 .cabecera__barra-acento {
     height: 3px;
     background: var(--acento);
@@ -21,16 +22,16 @@
     padding: 0.85rem 1.5rem;
 }
 
-.cabecera__logo {
-    text-decoration: none;
-    flex-shrink: 0;
-}
+/* ------------------- LOGO IMG ------------------- */
 
-.cabecera__logo-texto {
-    font-size: 1.25rem;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    text-transform: lowercase;
+.header-logo {
+    display: block;
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35))
+            drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+    transition: filter 0.15s ease;
 }
 
 .cabecera__nav {
@@ -158,7 +159,6 @@
 }
 [data-tema="oscuro"] .cabecera__barra-acento { background: #e8a838; }
 [data-tema="oscuro"] .cabecera__logo { color: #f0f0f0; }
-[data-tema="oscuro"] .cabecera__logo-acento { color: #e8a838; }
 [data-tema="oscuro"] .cabecera__enlace { color: #808080; }
 [data-tema="oscuro"] .cabecera__enlace:hover,
 [data-tema="oscuro"] .cabecera__enlace:focus-visible { color: #f0f0f0; background-color: rgba(255, 255, 255, 0.06); }
@@ -179,7 +179,6 @@
 }
 [data-tema="claro"] .cabecera__barra-acento { background: #c8890a; }
 [data-tema="claro"] .cabecera__logo { color: #111111; }
-[data-tema="claro"] .cabecera__logo-acento { color: #c8890a; }
 [data-tema="claro"] .cabecera__enlace { color: #666666; }
 [data-tema="claro"] .cabecera__enlace:hover,
 [data-tema="claro"] .cabecera__enlace:focus-visible { color: #111111; background-color: rgba(0, 0, 0, 0.05); }
@@ -200,7 +199,6 @@
 }
 [data-tema="tarde"] .cabecera__barra-acento { background: #f0a030; }
 [data-tema="tarde"] .cabecera__logo { color: #f5e4c8; }
-[data-tema="tarde"] .cabecera__logo-acento { color: #f0a030; }
 [data-tema="tarde"] .cabecera__enlace { color: #a08060; }
 [data-tema="tarde"] .cabecera__enlace:hover,
 [data-tema="tarde"] .cabecera__enlace:focus-visible { color: #f5e4c8; background-color: rgba(255, 255, 255, 0.05); }
@@ -221,7 +219,6 @@
 }
 [data-tema="noche"] .cabecera__barra-acento { background: #c8a060; }
 [data-tema="noche"] .cabecera__logo { color: #b0b0b0; }
-[data-tema="noche"] .cabecera__logo-acento { color: #c8a060; }
 [data-tema="noche"] .cabecera__enlace { color: #555555; }
 [data-tema="noche"] .cabecera__enlace:hover,
 [data-tema="noche"] .cabecera__enlace:focus-visible { color: #b0b0b0; background-color: rgba(255, 255, 255, 0.04); }
@@ -283,7 +280,6 @@
 }
 
 @media (max-width: 500px) {
-    .cabecera__logo-texto { font-size: 1.1rem; }
 
     .selector-tema__boton,
     .cabecera__boton-perfil,
