@@ -5,13 +5,15 @@ anime'n'chill — Serializers de usuarios
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+
+from anime.models import Progreso
 from .models import Perfil
 
 
 # ------------------- PERFIL -------------------
 class PerfilSerializer(serializers.ModelSerializer):
     class Meta:
-        model  = Perfil
+        model = Perfil
         fields = ["avatar", "bio", "fecha_nacimiento", "pais", "updated_at"]
         extra_kwargs = {"updated_at": {"read_only": True}}
 
@@ -20,12 +22,12 @@ class PerfilSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     """Solo lectura — devuelve todos los datos del usuario + campos de perfil aplanados."""
 
-    avatar          = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
     capitulos_leidos = serializers.SerializerMethodField()
-    mangas_leidos    = serializers.SerializerMethodField()
+    mangas_leidos = serializers.SerializerMethodField()
 
     class Meta:
-        model  = User
+        model = User
         fields = [
             "id", "username", "email", "first_name",
             "last_name", "date_joined",
@@ -48,12 +50,19 @@ class UsuarioSerializer(serializers.ModelSerializer):
         return None
 
     def get_capitulos_leidos(self, obj):
-        # Reservado para implementación futura con modelo de progreso
-        return 0
+        # Cuenta exactamente en cuántos progresos de este usuario el campo "completado" es True
+        return Progreso.objects.filter(
+            usuario=obj,
+            completado=True
+        ).count()
 
     def get_mangas_leidos(self, obj):
-        # Reservado para implementación futura con modelo de progreso
-        return 0
+        # Cuenta mangas distintos navegando desde el progreso -> capitulo -> manga
+        # Solo cuenta mangas donde haya leído al menos un capítulo completo
+        return Progreso.objects.filter(
+            usuario=obj,
+            completado=True
+        ).values('capitulo__manga').distinct().count()
 
 
 # ------------------- USUARIO EDITAR (escritura parcial) -------------------
@@ -63,10 +72,10 @@ class UsuarioEditarSerializer(serializers.ModelSerializer):
     Requiere password_actual para confirmar los cambios.
     """
     password_actual = serializers.CharField(write_only=True, required=True)
-    avatar          = serializers.ImageField(write_only=True, required=False)
+    avatar = serializers.ImageField(write_only=True, required=False)
 
     class Meta:
-        model  = User
+        model = User
         fields = ["username", "password_actual", "avatar"]
 
     def validate_username(self, value):
@@ -76,7 +85,7 @@ class UsuarioEditarSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        usuario  = self.context["request"].user
+        usuario = self.context["request"].user
         password = data.pop("password_actual")
         autenticado = authenticate(
             username=usuario.username,
@@ -107,12 +116,12 @@ class UsuarioEditarSerializer(serializers.ModelSerializer):
 # ------------------- REGISTRO -------------------
 class RegistroSerializer(serializers.ModelSerializer):
     """Crea usuario + perfil en un solo paso."""
-    password  = serializers.CharField(write_only=True, min_length=6)
+    password = serializers.CharField(write_only=True, min_length=6)
     password2 = serializers.CharField(write_only=True, label="Confirmar contraseña")
-    email     = serializers.EmailField(required=True)
+    email = serializers.EmailField(required=True)
 
     class Meta:
-        model  = User
+        model = User
         fields = ["username", "email", "first_name",
                   "last_name", "password", "password2"]
 
@@ -126,7 +135,7 @@ class RegistroSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("password2")
         password = validated_data.pop("password")
-        user     = User(**validated_data)
+        user = User(**validated_data)
         user.set_password(password)
         user.save()
         Perfil.objects.create(usuario=user)
@@ -136,28 +145,23 @@ class RegistroSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("Este correo ya está registrado.")
         return value
-    
+
 # ------------------- CAMBIAR CONTRASEÑA -------------------
 class CambiarPasswordSerializer(serializers.Serializer):
     """
     Cambia la contraseña del usuario.
-    Funciona en dos modos:
-      - logueado:    requiere password_actual + nueva_password + nueva_password2
-      - no logueado: requiere email + password_actual + nueva_password + nueva_password2
     """
-    email            = serializers.EmailField(required=False)
-    password_actual  = serializers.CharField(write_only=True)
-    nueva_password   = serializers.CharField(write_only=True, min_length=6)
-    nueva_password2  = serializers.CharField(write_only=True)
+    email = serializers.EmailField(required=False)
+    password_actual = serializers.CharField(write_only=True)
+    nueva_password = serializers.CharField(write_only=True, min_length=6)
+    nueva_password2 = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        # Confirmación de nueva contraseña
         if data["nueva_password"] != data["nueva_password2"]:
             raise serializers.ValidationError(
                 {"nueva_password2": "Las contraseñas nuevas no coinciden."}
             )
 
-        # Obtener el usuario — logueado o por email
         request = self.context.get("request")
         if request and request.user.is_authenticated:
             usuario = request.user
@@ -174,7 +178,6 @@ class CambiarPasswordSerializer(serializers.Serializer):
                     {"email": "No existe ninguna cuenta con ese email."}
                 )
 
-        # Verificar contraseña actual
         autenticado = authenticate(
             username=usuario.username,
             password=data["password_actual"]
@@ -184,6 +187,5 @@ class CambiarPasswordSerializer(serializers.Serializer):
                 {"password_actual": "La contraseña actual no es correcta."}
             )
 
-        # Guardamos el usuario en los datos validados para usarlo en la vista
         data["_usuario"] = usuario
         return data

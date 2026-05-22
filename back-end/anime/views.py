@@ -105,17 +105,44 @@ class CapituloViewSet(ModelViewSet):
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def marcar_progreso(self, request, pk=None):
         capitulo = self.get_object()
-        pagina = request.data.get("pagina_actual", 1)
-        completado = request.data.get("completado", False)
+
+        try:
+            pagina = int(request.data.get("pagina_actual", 1))
+        except (TypeError, ValueError):
+            return Response(
+                {"pagina_actual": "Debe ser un número entero válido."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if pagina < 1:
+            pagina = 1
+
+        completado_raw = request.data.get("completado", False)
+
+        if isinstance(completado_raw, bool):
+            completado = completado_raw
+        elif isinstance(completado_raw, str):
+            completado = completado_raw.strip().lower() in ["true", "1", "yes", "si", "sí"]
+        else:
+            completado = bool(completado_raw)
 
         progreso, _ = Progreso.objects.update_or_create(
             usuario=request.user,
             capitulo=capitulo,
-            defaults={"pagina_actual": pagina, "completado": completado}
+            defaults={
+                "pagina_actual": pagina,
+                "completado": completado
+            }
         )
 
         return Response(
-            {"mensaje": "Progreso actualizado.", "completado": progreso.completado},
+            {
+                "mensaje": "Progreso actualizado.",
+                "capitulo_id": capitulo.id,
+                "manga_id": capitulo.manga_id,
+                "pagina_actual": progreso.pagina_actual,
+                "completado": progreso.completado
+            },
             status=status.HTTP_200_OK
         )
 
@@ -152,7 +179,6 @@ class CapituloViewSet(ModelViewSet):
 
         paginas_urls = [f"{media_url}/{ruta_rel}/{archivo}" for archivo in archivos]
         return Response({"paginas": paginas_urls, "total": len(paginas_urls)})
-
 
 class FavoritoViewSet(ModelViewSet):
     serializer_class = FavoritoSerializer
