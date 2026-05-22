@@ -8,7 +8,7 @@
     <!-- ------------------- FUENTE ------------------- -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- ------------------- ESTILOS ------------------- -->
     <link rel="stylesheet" href="../../componentes/temas.css">
@@ -24,33 +24,34 @@
             alt=""
         >
         <div class="login-fondo__overlay"></div>
+        <div class="login-fondo__detalle"></div>
     </div>
 
     <!-- ------------------- PÁGINA ------------------- -->
     <main class="login-pagina">
 
-        <!-- Logo encima del formulario -->
+        <!-- ------------------- LOGO ------------------- -->
         <a href="/front-end/paginas/novedades/novedades.html" class="login-logo" aria-label="Ir a la página principal">
-            anime<span class="login-logo__acento">'n'</span>chill
+            <img src="../../assets/logo_anime'n'chill.png" alt="anime'n'chill" class="login-logo__imagen">
         </a>
-
         <!-- ------------------- BANNER ÉXITO ------------------- -->
         <div class="login-banner-exito oculto" id="bannerExito" role="status">
             <span>✓ ¡Cuenta creada! Ya puedes iniciar sesión.</span>
         </div>
 
-        <!-- Caja del formulario -->
-        <div class="login-caja">
+        <!-- ------------------- CAJA ------------------- -->
+        <section class="login-caja" aria-labelledby="tituloLogin">
 
             <!-- ------------------- CABECERA ------------------- -->
             <header class="login-caja__cabecera">
-                <h1 class="login-caja__titulo">Bienvenido de nuevo</h1>
+                <span class="login-caja__etiqueta">Acceso</span>
+                <h1 class="login-caja__titulo" id="tituloLogin">Bienvenido de nuevo</h1>
             </header>
 
             <!-- ------------------- FORMULARIO ------------------- -->
             <form class="login-formulario" id="formularioLogin" novalidate>
 
-                <!-- Nombre de usuario -->
+                <!-- ------------------- NOMBRE DE USUARIO ------------------- -->
                 <div class="campo">
                     <label class="campo__etiqueta" for="loginEmail">Nombre de usuario</label>
                     <input
@@ -64,7 +65,7 @@
                     >
                 </div>
 
-                <!-- Contraseña -->
+                <!-- ------------------- CONTRASEÑA ------------------- -->
                 <div class="campo">
                     <div class="campo__etiqueta-fila">
                         <label class="campo__etiqueta" for="loginPassword">Contraseña</label>
@@ -93,7 +94,7 @@
                     </div>
                 </div>
 
-                <!-- Recuérdame -->
+                <!-- ------------------- RECORDAR ------------------- -->
                 <label class="recordar__label">
                     <input type="checkbox" class="recordar__checkbox" id="loginRecordar" name="recordar">
                     <span class="recordar__texto">Recuérdame en este dispositivo</span>
@@ -104,7 +105,7 @@
                     <span id="errorGlobalTexto"></span>
                 </div>
 
-                <!-- Submit -->
+                <!-- ------------------- SUBMIT ------------------- -->
                 <button type="submit" class="boton-login" id="botonLogin">
                     Iniciar sesión
                 </button>
@@ -122,7 +123,7 @@
                 </a>
             </footer>
 
-        </div>
+        </section>
 
     </main>
 

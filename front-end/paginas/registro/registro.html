@@ -8,7 +8,7 @@
     <!-- ------------------- FUENTE ------------------- -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- ------------------- ESTILOS ------------------- -->
     <link rel="stylesheet" href="../../componentes/temas.css">
@@ -24,24 +24,31 @@
             alt=""
         >
         <div class="registro-fondo__overlay"></div>
+        <div class="registro-fondo__detalle"></div>
     </div>
 
     <!-- ------------------- PÁGINA ------------------- -->
     <main class="registro-pagina">
 
+        <!-- ------------------- LOGO ------------------- -->
+        <a href="/front-end/paginas/novedades/novedades.html" class="registro-logo" aria-label="Ir a la página principal">
+            <img src="../../assets/logo_anime'n'chill.png" alt="anime'n'chill" class="registro-logo__imagen">
+        </a>
+
         <!-- ------------------- CAJA ------------------- -->
-        <div class="registro-caja">
+        <section class="registro-caja" aria-labelledby="tituloRegistro">
 
             <!-- ------------------- CABECERA ------------------- -->
             <header class="registro-caja__cabecera">
-                <h1 class="registro-caja__titulo">Crea tu cuenta</h1>
-                <p class="registro-caja__subtitulo">Es gratis y solo tarda un momento</p>
+                <span class="registro-caja__etiqueta">Registro</span>
+                <h1 class="registro-caja__titulo" id="tituloRegistro">Crea tu cuenta</h1>
+                <p class="registro-caja__subtitulo">Es gratis y solo tarda un momento.</p>
             </header>
 
             <!-- ------------------- FORMULARIO ------------------- -->
             <form class="registro-formulario" id="formularioRegistro" novalidate>
 
-                <!-- Fila: Nombre + Apellido -->
+                <!-- ------------------- FILA NOMBRE/APELLIDO ------------------- -->
                 <div class="registro-fila">
                     <div class="campo">
                         <label class="campo__etiqueta" for="registroNombre">Nombre</label>
@@ -54,6 +61,7 @@
                             placeholder="Tu nombre"
                         >
                     </div>
+
                     <div class="campo">
                         <label class="campo__etiqueta" for="registroApellido">Apellido</label>
                         <input
@@ -67,7 +75,7 @@
                     </div>
                 </div>
 
-                <!-- Usuario -->
+                <!-- ------------------- USUARIO ------------------- -->
                 <div class="campo">
                     <label class="campo__etiqueta" for="registroUsername">Nombre de usuario</label>
                     <input
@@ -76,12 +84,12 @@
                         id="registroUsername"
                         name="username"
                         autocomplete="username"
-                        placeholder="1234"
+                        placeholder="Tu nombre de usuario"
                         required
                     >
                 </div>
 
-                <!-- Email -->
+                <!-- ------------------- EMAIL ------------------- -->
                 <div class="campo">
                     <label class="campo__etiqueta" for="registroEmail">Correo electrónico</label>
                     <input
@@ -95,7 +103,7 @@
                     >
                 </div>
 
-                <!-- Contraseña -->
+                <!-- ------------------- CONTRASEÑA ------------------- -->
                 <div class="campo">
                     <label class="campo__etiqueta" for="registroPassword">Contraseña</label>
                     <div class="campo__input-contenedor">
@@ -111,7 +119,7 @@
                         <button type="button" class="campo__boton-ojo" id="botonOjo1" aria-label="Mostrar contraseña" aria-pressed="false">
                             <svg class="ojo-icono ojo-icono--cerrado" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.45 0 0 1-2.16 3.19"/>
                                 <line x1="1" y1="1" x2="23" y2="23"/>
                             </svg>
                             <svg class="ojo-icono ojo-icono--abierto oculto" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -122,7 +130,7 @@
                     </div>
                 </div>
 
-                <!-- Confirmar Contraseña -->
+                <!-- ------------------- CONFIRMAR CONTRASEÑA ------------------- -->
                 <div class="campo">
                     <label class="campo__etiqueta" for="registroPassword2">Confirmar contraseña</label>
                     <div class="campo__input-contenedor">
@@ -138,7 +146,7 @@
                         <button type="button" class="campo__boton-ojo" id="botonOjo2" aria-label="Mostrar confirmación" aria-pressed="false">
                             <svg class="ojo-icono ojo-icono--cerrado" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.45 0 0 1-2.16 3.19"/>
                                 <line x1="1" y1="1" x2="23" y2="23"/>
                             </svg>
                             <svg class="ojo-icono ojo-icono--abierto oculto" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -154,7 +162,7 @@
                     <span id="errorGlobalTexto"></span>
                 </div>
 
-                <!-- Submit -->
+                <!-- ------------------- SUBMIT ------------------- -->
                 <button type="submit" class="boton-registro" id="botonRegistro">
                     Crear cuenta
                 </button>
@@ -169,7 +177,7 @@
                 </p>
             </footer>
 
-        </div>
+        </section>
 
     </main>
 

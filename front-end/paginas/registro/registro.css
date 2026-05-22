@@ -1,7 +1,36 @@
-/* ------------------- FUENTE ------------------- */
+/* ------------------- BASE ------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
     font-family: 'Inter', Arial, sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
 /* ------------------- FONDO ------------------- */
@@ -10,6 +39,7 @@ body {
     position: fixed;
     inset: 0;
     z-index: 0;
+    overflow: hidden;
 }
 
 .registro-fondo__imagen {
@@ -17,20 +47,32 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.45) saturate(0.65);
+    filter: brightness(0.6) saturate(0.88) contrast(1.04);
+    transform: scale(1.03);
 }
 
 .registro-fondo__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.55) 0%,
-        rgba(0, 0, 0, 0.7) 100%
-    );
+    background:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.92) 0%,
+            rgba(0, 0, 0, 0.64) 48%,
+            rgba(0, 0, 0, 0.38) 100%
+        );
 }
 
-/* ------------------- LAYOUT PÁGINA ------------------- */
+.registro-fondo__detalle {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top left, rgba(232, 168, 56, 0.16), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(232, 168, 56, 0.09), transparent 28%);
+    pointer-events: none;
+}
+
+/* ------------------- LAYOUT ------------------- */
 
 .registro-pagina {
     position: relative;
@@ -41,6 +83,26 @@ body {
     justify-content: center;
     min-height: 100vh;
     padding: 2.5rem 1.5rem;
+    gap: 1.4rem;
+}
+
+/* ------------------- LOGO ------------------- */
+
+.registro-logo {
+    display: inline-flex;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.registro-logo:hover {
+    transform: translateY(-1px);
+}
+
+.registro-logo__imagen {
+    display: block;
+    height: 160px;
+    width: auto;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
 }
 
 /* ------------------- CAJA ------------------- */
@@ -48,15 +110,23 @@ body {
 .registro-caja {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.4rem;
     width: 100%;
-    max-width: 520px;
-    padding: 2.5rem 2.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    background-color: rgba(12, 12, 12, 0.96);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    box-sizing: border-box;
+    max-width: 540px;
+    padding: 2.35rem 2.15rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(30, 30, 30, 0.88) 0%,
+            rgba(18, 18, 18, 0.96) 100%
+        );
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.48),
+        0 1px 0 rgba(255, 255, 255, 0.03) inset;
 }
 
 /* ------------------- CABECERA ------------------- */
@@ -64,20 +134,34 @@ body {
 .registro-caja__cabecera {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.45rem;
+}
+
+.registro-caja__etiqueta {
+    display: inline-block;
+    width: fit-content;
+    padding: 0.22rem 0.7rem;
+    border-radius: 2px;
+    background-color: rgba(232, 168, 56, 0.16);
+    color: var(--acento);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .registro-caja__titulo {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     color: #ffffff;
-    line-height: 1.25;
 }
 
 .registro-caja__subtitulo {
-    font-size: 0.88rem;
-    color: rgba(255, 255, 255, 0.38);
-    font-weight: 400;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.92rem;
+    line-height: 1.55;
 }
 
 /* ------------------- FORMULARIO ------------------- */
@@ -88,12 +172,12 @@ body {
     gap: 1rem;
 }
 
-/* ------------------- FILA DOS COLUMNAS ------------------- */
+/* ------------------- FILA ------------------- */
 
 .registro-fila {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
+    gap: 0.8rem;
 }
 
 /* ------------------- CAMPO ------------------- */
@@ -101,14 +185,16 @@ body {
 .campo {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.45rem;
     width: 100%;
 }
 
 .campo__etiqueta {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .campo__input-contenedor {
@@ -119,141 +205,138 @@ body {
 .campo__input {
     display: block;
     width: 100%;
-    box-sizing: border-box;
-    padding: 0.7rem 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 9px;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #e8e8e8;
-    font-size: 0.92rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.04);
+    color: var(--texto);
+    font-size: 0.94rem;
     font-family: inherit;
-    font-weight: 400;
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .campo__input::placeholder {
-    color: rgba(255, 255, 255, 0.22);
-    font-weight: 400;
+    color: rgba(255, 255, 255, 0.26);
+}
+
+.campo__input:hover {
+    border-color: rgba(232, 168, 56, 0.28);
+    background-color: rgba(255, 255, 255, 0.06);
 }
 
 .campo__input:focus {
-    border-color: #e8a838;
+    border-color: var(--acento);
+    background-color: rgba(255, 255, 255, 0.07);
     box-shadow: 0 0 0 3px rgba(232, 168, 56, 0.14);
 }
 
-/* Espacio para botón ojo */
 #registroPassword,
 #registroPassword2 {
-    padding-right: 2.75rem;
+    padding-right: 2.9rem;
 }
 
-/* ------------------- BOTÓN OJO ------------------- */
+/* ------------------- BOTON OJO ------------------- */
 
 .campo__boton-ojo {
     position: absolute;
     top: 50%;
-    right: 0.7rem;
+    right: 0.75rem;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    color: rgba(255, 255, 255, 0.3);
-    background: none;
-    border: none;
-    cursor: pointer;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.34);
     padding: 0.2rem;
     transition: color 0.2s ease;
 }
 
 .campo__boton-ojo:hover {
-    color: #e8a838;
+    color: var(--acento);
+}
+
+.campo__boton-ojo:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 3px;
+    border-radius: 3px;
 }
 
 /* ------------------- ERROR GLOBAL ------------------- */
 
 .registro-error-global {
-    padding: 0.7rem 0.9rem;
-    border: 1px solid rgba(224, 85, 85, 0.3);
-    border-radius: 9px;
-    background-color: rgba(224, 85, 85, 0.08);
+    padding: 0.8rem 0.95rem;
+    border: 1px solid rgba(224, 85, 85, 0.35);
+    border-radius: 3px;
+    background-color: rgba(120, 28, 28, 0.26);
+    color: #ff8a8a;
     font-size: 0.88rem;
-    color: #ff8080;
-    font-weight: 400;
+    font-weight: 500;
 }
 
-/* ------------------- BOTÓN SUBMIT ------------------- */
+/* ------------------- BOTON ------------------- */
 
 .boton-registro {
     width: 100%;
-    box-sizing: border-box;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 10px;
-    background-color: #e8a838;
+    padding: 0.88rem 1rem;
+    border-radius: 3px;
+    background-color: var(--acento);
     color: #111111;
-    font-size: 0.95rem;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
-    margin-top: 0.15rem;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.2s ease;
 }
 
 .boton-registro:hover {
-    background-color: #f0bb55;
+    background-color: var(--acento-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(232, 168, 56, 0.18);
 }
 
 .boton-registro:disabled {
-    opacity: 0.5;
+    opacity: 0.55;
     cursor: not-allowed;
 }
 
-/* ------------------- PIE CAJA ------------------- */
+/* ------------------- PIE ------------------- */
 
 .registro-caja__pie {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
-    padding-top: 0.75rem;
+    gap: 0.7rem;
+    padding-top: 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.07);
     text-align: center;
 }
 
 .registro-caja__pie-texto {
+    color: rgba(255, 255, 255, 0.42);
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.38);
-    font-weight: 400;
 }
 
 .registro-caja__enlace {
-    color: #e8a838;
-    text-decoration: none;
-    font-weight: 600;
+    color: var(--acento);
+    font-weight: 700;
     transition: color 0.2s ease;
 }
 
 .registro-caja__enlace:hover {
-    color: #f0bb55;
+    color: var(--acento-hover);
 }
 
 /* ------------------- UTILIDAD ------------------- */
 
 .oculto {
     display: none !important;
-}
-
-
-/* ------------------- BANNER ÉXITO ------------------- */
-
-.login-banner-exito {
-    padding: 0.7rem 0.9rem;
-    border: 1px solid rgba(80, 200, 120, 0.3);
-    border-radius: 9px;
-    background-color: rgba(80, 200, 120, 0.08);
-    font-size: 0.88rem;
-    color: #6dde9a;
-    font-weight: 400;
 }
 
 /* ------------------- RESPONSIVE > 1100px ------------------- */
@@ -263,7 +346,7 @@ body {
 
 @media (max-width: 1100px) {
     .registro-caja {
-        max-width: 480px;
+        max-width: 500px;
     }
 }
 
@@ -272,11 +355,19 @@ body {
 @media (max-width: 700px) {
     .registro-pagina {
         justify-content: flex-start;
-        padding-top: 3rem;
+        padding-top: 3.25rem;
+    }
+
+    .registro-logo {
+        font-size: 1.6rem;
     }
 
     .registro-caja {
-        padding: 1.75rem 1.5rem;
+        padding: 2rem 1.6rem;
+    }
+
+    .registro-caja__titulo {
+        font-size: 1.75rem;
     }
 }
 
@@ -284,7 +375,12 @@ body {
 
 @media (max-width: 500px) {
     .registro-pagina {
-        padding: 2rem 1rem;
+        padding: 2.25rem 1rem;
+        gap: 1.1rem;
+    }
+
+    .registro-logo {
+        font-size: 1.45rem;
     }
 
     .registro-fila {
@@ -292,12 +388,23 @@ body {
     }
 
     .registro-caja {
-        padding: 1.5rem 1.25rem;
-        border-radius: 14px;
-        gap: 1rem;
+        padding: 1.5rem 1.2rem;
+        gap: 1.1rem;
     }
 
     .registro-caja__titulo {
-        font-size: 1.3rem;
+        font-size: 1.45rem;
+    }
+
+    .registro-caja__subtitulo {
+        font-size: 0.88rem;
+    }
+
+    .campo__input {
+        padding: 0.82rem 0.92rem;
+    }
+
+    .boton-registro {
+        padding: 0.82rem 1rem;
     }
 }
