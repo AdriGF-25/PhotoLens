@@ -5,9 +5,9 @@ const API_PERFIL = `${API_BASE}perfil/`;
 const API_EDITAR = `${API_BASE}perfil/editar/`;
 const API_MANGA = 'http://127.0.0.1:8000/api/anime/mangas/';
 const API_MANGA_BASE = 'http://127.0.0.1:8000/api/anime';
-const PORTADA_PLACEHOLDER  = '../../assets/placeholders/placeholder-portada.jpg';
+const PORTADA_PLACEHOLDER = '../../assets/placeholders/placeholder-portada.jpg';
 const STORAGE_PREFIX_MANGA = 'anc_progreso_';
-const CLASE_MODAL_VISIBLE  = 'manga-modal--visible';
+const CLASE_MODAL_VISIBLE = 'manga-modal--visible';
 const SELECTOR_TARJETAS_REC = '.manga-tarjeta';
 
 const IMAGEN_PLACEHOLDER = 'https://picsum.photos/seed/manga-cover/300/450';
@@ -15,23 +15,17 @@ const AVATAR_PLACEHOLDER = 'https://picsum.photos/seed/perfil-user/120/120';
 
 const MAX_RECOMENDADOS = 5;
 
-
 // ------------------- UTILIDADES ------------------- //
-
-// ------------------- UTILIDADES ------------------- //
-
 
 function obtenerToken() {
     return localStorage.getItem('access_token')
         ?? sessionStorage.getItem('access_token');
 }
 
-
 function obtenerRefreshToken() {
     return localStorage.getItem('refresh_token')
         ?? sessionStorage.getItem('refresh_token');
 }
-
 
 function guardarNuevoToken(accessToken) {
     if (localStorage.getItem('refresh_token')) {
@@ -41,16 +35,15 @@ function guardarNuevoToken(accessToken) {
     }
 }
 
-
 async function renovarToken() {
     const refresh = obtenerRefreshToken();
     if (!refresh) return null;
 
     try {
         const respuesta = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
-            method:  'POST',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ refresh })
+            body: JSON.stringify({ refresh })
         });
 
         if (!respuesta.ok) return null;
@@ -64,24 +57,39 @@ async function renovarToken() {
     }
 }
 
-
 async function obtenerTokenValido() {
     const token = obtenerToken();
     if (!token) return null;
 
-    // Comprobamos si el token ha caducado leyendo el payload JWT
     try {
-        const payload   = JSON.parse(atob(token.split('.')[1]));
-        const caducado  = payload.exp * 1000 < Date.now();
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const caducado = payload.exp * 1000 < Date.now();
 
         if (!caducado) return token;
 
-        // Caducado → intentamos renovar
         return await renovarToken();
 
     } catch {
         return await renovarToken();
     }
+}
+
+function obtenerUsuarioIdDesdeToken() {
+    const token = obtenerToken();
+    if (!token) return null;
+
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.user_id ?? payload.id ?? null;
+    } catch {
+        return null;
+    }
+}
+
+function obtenerClaveProgresoUsuario(mangaId) {
+    const usuarioId = obtenerUsuarioIdDesdeToken();
+    if (!usuarioId || !mangaId) return null;
+    return `${STORAGE_PREFIX_MANGA}${usuarioId}_${mangaId}`;
 }
 
 function redirigirLogin() {
@@ -91,8 +99,8 @@ function redirigirLogin() {
 function calcularDiasActivo(fechaISO) {
     if (!fechaISO) return 0;
     const inicio = new Date(fechaISO);
-    const ahora  = new Date();
-    const diff   = Math.floor((ahora - inicio) / (1000 * 60 * 60 * 24));
+    const ahora = new Date();
+    const diff = Math.floor((ahora - inicio) / (1000 * 60 * 60 * 24));
     return diff >= 0 ? diff : 0;
 }
 
@@ -107,16 +115,16 @@ function limpiarErrores() {
 
 function mostrarErrorCampo(idError, idInput, mensaje) {
     const spanError = document.getElementById(idError);
-    const input     = document.getElementById(idInput);
+    const input = document.getElementById(idInput);
     if (spanError) spanError.textContent = mensaje;
-    if (input)     input.classList.add('campo__input--error');
+    if (input) input.classList.add('campo__input--error');
 }
 
 function mostrarFeedbackModal(mensaje, tipo) {
     const feedback = document.getElementById('modalFeedback');
     if (!feedback) return;
     feedback.textContent = mensaje;
-    feedback.className   = `modal__feedback modal__feedback--${tipo}`;
+    feedback.className = `modal__feedback modal__feedback--${tipo}`;
     feedback.classList.remove('oculto');
 }
 
@@ -127,18 +135,16 @@ function ocultarFeedbackModal() {
     feedback.className = 'modal__feedback oculto';
 }
 
-
 // ------------------- RENDER PERFIL ------------------- //
 
 function renderizarPerfil(datos) {
     const nombre = document.getElementById('perfilNombre');
-    const email  = document.getElementById('perfilEmail');
+    const email = document.getElementById('perfilEmail');
     const avatar = document.getElementById('avatarImagen');
 
     if (nombre) nombre.textContent = datos.username || 'Usuario';
-    if (email)  email.textContent  = datos.email    || '';
+    if (email) email.textContent = datos.email || '';
     if (avatar) {
-        // ✅ avatar ya viene en la raíz gracias al SerializerMethodField
         avatar.src = datos.avatar || AVATAR_PLACEHOLDER;
         avatar.onerror = function() {
             this.onerror = null;
@@ -147,20 +153,19 @@ function renderizarPerfil(datos) {
     }
 
     const statCapitulos = document.getElementById('statCapitulos');
-    const statMangas    = document.getElementById('statMangas');
-    const statDias      = document.getElementById('statDias');
+    const statMangas = document.getElementById('statMangas');
+    const statDias = document.getElementById('statDias');
 
     if (statCapitulos) statCapitulos.textContent = datos.capitulos_leidos ?? 0;
-    if (statMangas)    statMangas.textContent    = datos.mangas_leidos    ?? 0;
-    if (statDias)      statDias.textContent      = calcularDiasActivo(datos.date_joined);
+    if (statMangas) statMangas.textContent = datos.mangas_leidos ?? 0;
+    if (statDias) statDias.textContent = calcularDiasActivo(datos.date_joined);
 
-    // Precargamos el formulario
-    const inputNombre   = document.getElementById('inputNombre');
-    const inputEmail    = document.getElementById('inputEmail');
+    const inputNombre = document.getElementById('inputNombre');
+    const inputEmail = document.getElementById('inputEmail');
     const avatarPreview = document.getElementById('avatarPreview');
 
-    if (inputNombre)   inputNombre.value = datos.username || '';
-    if (inputEmail)    inputEmail.value  = datos.email    || '';
+    if (inputNombre) inputNombre.value = datos.username || '';
+    if (inputEmail) inputEmail.value = datos.email || '';
     if (avatarPreview) {
         avatarPreview.src = datos.avatar || AVATAR_PLACEHOLDER;
         avatarPreview.onerror = function() {
@@ -170,9 +175,7 @@ function renderizarPerfil(datos) {
     }
 }
 
-
 // ------------------- CARGAR PERFIL ------------------- //
-
 
 async function cargarPerfil() {
     const token = await obtenerTokenValido();
@@ -202,11 +205,7 @@ async function cargarPerfil() {
     }
 }
 
-
 // ------------------- RECIENTES (API) ------------------- //
-
-
-// — Utilidades de manga (replicadas de manga.js para uso local) —
 
 function rec_obtenerTitulo(manga) {
     return manga.titulo ?? manga.nombre ?? manga.title ?? 'Sin título';
@@ -257,15 +256,36 @@ function rec_obtenerIdManga(manga) {
 
 function rec_leerProgreso(mangaId) {
     try {
-        const raw = localStorage.getItem(STORAGE_PREFIX_MANGA + mangaId);
-        if (!raw) return { ultimoCapitulo: null, capitulosLeidos: [] };
+        const clave = obtenerClaveProgresoUsuario(mangaId);
+        if (!clave) {
+            return {
+                ultimoCapitulo: null,
+                capitulosLeidos: [],
+                ultimaApertura: null,
+            };
+        }
+
+        const raw = localStorage.getItem(clave);
+        if (!raw) {
+            return {
+                ultimoCapitulo: null,
+                capitulosLeidos: [],
+                ultimaApertura: null,
+            };
+        }
+
         const data = JSON.parse(raw);
         return {
-            ultimoCapitulo  : data.ultimoCapitulo  ?? null,
-            capitulosLeidos : Array.isArray(data.capitulosLeidos) ? data.capitulosLeidos : [],
+            ultimoCapitulo: data.ultimoCapitulo ?? null,
+            capitulosLeidos: Array.isArray(data.capitulosLeidos) ? data.capitulosLeidos : [],
+            ultimaApertura: data.ultimaApertura ?? null,
         };
     } catch {
-        return { ultimoCapitulo: null, capitulosLeidos: [] };
+        return {
+            ultimoCapitulo: null,
+            capitulosLeidos: [],
+            ultimaApertura: null,
+        };
     }
 }
 
@@ -273,20 +293,77 @@ function rec_obtenerNumeroCapitulo(capitulo) {
     return parseFloat(capitulo.numero ?? capitulo.num ?? capitulo.capitulo);
 }
 
+function rec_obtenerMangasRecientes() {
+    const recientes = [];
+    const usuarioId = obtenerUsuarioIdDesdeToken();
 
-// — Tarjeta —
+    if (!usuarioId) return recientes;
+
+    const prefijoUsuario = `${STORAGE_PREFIX_MANGA}${usuarioId}_`;
+
+    for (let i = 0; i < localStorage.length; i += 1) {
+        const clave = localStorage.key(i);
+        if (!clave || !clave.startsWith(prefijoUsuario)) continue;
+
+        const mangaId = clave.slice(prefijoUsuario.length);
+        if (!mangaId) continue;
+
+        const progreso = rec_leerProgreso(mangaId);
+        if (!progreso.ultimaApertura) continue;
+
+        recientes.push({
+            mangaId,
+            ultimaApertura: progreso.ultimaApertura,
+        });
+    }
+
+    return recientes
+        .sort(function(a, b) {
+            return new Date(b.ultimaApertura) - new Date(a.ultimaApertura);
+        })
+        .slice(0, 5);
+}
+
+async function rec_cargarMangasPorIds(idsOrdenados) {
+    const peticiones = idsOrdenados.map(function(id) {
+        return fetch(`${API_MANGA_BASE}/mangas/${id}/`)
+            .then(function(resp) {
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                return resp.json();
+            })
+            .catch(function() {
+                return null;
+            });
+    });
+
+    const resultados = await Promise.all(peticiones);
+    const mapa = new Map();
+
+    resultados.forEach(function(manga) {
+        if (!manga) return;
+        mapa.set(String(rec_obtenerIdManga(manga)), manga);
+    });
+
+    return idsOrdenados
+        .map(function(id) {
+            return mapa.get(String(id)) ?? null;
+        })
+        .filter(Boolean);
+}
+
+// ------------------- TARJETA ------------------- //
 
 function rec_crearTarjeta(manga) {
-    const article     = document.createElement('article');
+    const article = document.createElement('article');
     article.className = 'manga-tarjeta';
 
-    const idManga   = rec_obtenerIdManga(manga);
-    const titulo    = rec_obtenerTitulo(manga);
+    const idManga = rec_obtenerIdManga(manga);
+    const titulo = rec_obtenerTitulo(manga);
     const categoria = rec_obtenerCategoria(manga);
     const totalCaps = manga.total_capitulos ?? 0;
-    const portada   = rec_obtenerPortada(manga);
+    const portada = rec_obtenerPortada(manga);
 
-    article.dataset.id        = idManga;
+    article.dataset.id = idManga;
     article.dataset.categoria = categoria;
     article.setAttribute('tabindex', '0');
     article.setAttribute('role', 'button');
@@ -313,10 +390,10 @@ function rec_crearTarjeta(manga) {
     return article;
 }
 
-
-// — Modal —
+// ------------------- MODAL ------------------- //
 
 let rec_mangaSeleccionado = null;
+let rec_mangasActuales = [];
 
 function rec_cerrarModal() {
     const modal = document.getElementById('mangaModal');
@@ -351,15 +428,15 @@ function rec_construirCapitulos(capitulos, ultimoCapitulo, capitulosLeidos = [])
     const BLOQUE = 20;
 
     for (let i = 0; i < ordenados.length; i += BLOQUE) {
-        const grupo   = ordenados.slice(i, i + BLOQUE);
+        const grupo = ordenados.slice(i, i + BLOQUE);
         const primero = rec_obtenerNumeroCapitulo(grupo[0]);
-        const ultimo  = rec_obtenerNumeroCapitulo(grupo[grupo.length - 1]);
+        const ultimo = rec_obtenerNumeroCapitulo(grupo[grupo.length - 1]);
 
-        const details   = document.createElement('details');
+        const details = document.createElement('details');
         details.className = 'manga-volumen';
         if (i === 0) details.setAttribute('open', '');
 
-        const summary   = document.createElement('summary');
+        const summary = document.createElement('summary');
         summary.className = 'manga-volumen__cabecera';
         summary.innerHTML = `
             <span class="manga-volumen__nombre">Caps. ${primero} – ${ultimo}</span>
@@ -372,8 +449,8 @@ function rec_construirCapitulos(capitulos, ultimoCapitulo, capitulosLeidos = [])
 
         grupo.forEach(function(cap) {
             const numCap = rec_obtenerNumeroCapitulo(cap);
-            const boton  = document.createElement('button');
-            boton.className   = 'manga-cap-btn';
+            const boton = document.createElement('button');
+            boton.className = 'manga-cap-btn';
             boton.dataset.cap = numCap;
             boton.setAttribute('aria-label', `Ir al capítulo ${numCap}`);
 
@@ -382,7 +459,7 @@ function rec_construirCapitulos(capitulos, ultimoCapitulo, capitulosLeidos = [])
                 (ultimoCapitulo !== null && numCap < ultimoCapitulo);
             const esActual = numCap === ultimoCapitulo;
 
-            if (esActual)       boton.classList.add('manga-cap-btn--actual');
+            if (esActual) boton.classList.add('manga-cap-btn--actual');
             else if (estaLeido) boton.classList.add('manga-cap-btn--leido');
 
             boton.innerHTML = `<span class="manga-cap-btn__num">${numCap}</span>`;
@@ -402,25 +479,25 @@ function rec_construirCapitulos(capitulos, ultimoCapitulo, capitulosLeidos = [])
 async function rec_abrirModal(manga) {
     rec_mangaSeleccionado = manga;
 
-    const modal          = document.getElementById('mangaModal');
-    const modalPortada   = document.getElementById('modalPortada');
-    const modalTitulo    = document.getElementById('modalTituloManga');
-    const modalGenero    = document.getElementById('modalGenero');
+    const modal = document.getElementById('mangaModal');
+    const modalPortada = document.getElementById('modalPortada');
+    const modalTitulo = document.getElementById('modalTituloManga');
+    const modalGenero = document.getElementById('modalGenero');
     const modalUltimoCap = document.getElementById('modalUltimoCapitulo');
-    const lista          = document.getElementById('modalCapitulosLista');
+    const lista = document.getElementById('modalCapitulosLista');
 
     if (!modal) return;
 
-    const idManga   = rec_obtenerIdManga(manga);
-    const progreso  = rec_leerProgreso(idManga);
+    const idManga = rec_obtenerIdManga(manga);
+    const progreso = rec_leerProgreso(idManga);
     const ultimoCap = progreso.ultimoCapitulo ?? null;
-    const titulo    = rec_obtenerTitulo(manga);
+    const titulo = rec_obtenerTitulo(manga);
     const categoria = rec_obtenerCategoria(manga);
 
-    modalPortada.src           = rec_obtenerPortada(manga);
-    modalPortada.alt           = `Portada de ${titulo}`;
-    modalTitulo.textContent    = titulo;
-    modalGenero.textContent    = categoria;
+    modalPortada.src = rec_obtenerPortada(manga);
+    modalPortada.alt = `Portada de ${titulo}`;
+    modalTitulo.textContent = titulo;
+    modalGenero.textContent = categoria;
     modalUltimoCap.textContent =
         ultimoCap !== null ? `Capítulo ${ultimoCap}` : 'Sin progreso';
 
@@ -435,96 +512,78 @@ async function rec_abrirModal(manga) {
     modal.classList.add(CLASE_MODAL_VISIBLE);
     document.body.style.overflow = 'hidden';
 
-    if (lista) lista.innerHTML =
-        '<p class="manga-modal__sin-caps">Cargando capítulos…</p>';
+    if (lista) {
+        lista.innerHTML = '<p class="manga-modal__sin-caps">Cargando capítulos…</p>';
+    }
 
     try {
         const respuesta = await fetch(`${API_MANGA_BASE}/mangas/${idManga}/capitulos/`);
         if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
-        const data      = await respuesta.json();
+        const data = await respuesta.json();
         const capitulos = Array.isArray(data) ? data : (data.results ?? []);
         rec_construirCapitulos(capitulos, ultimoCap, progreso.capitulosLeidos);
     } catch (e) {
         console.error('[Perfil] Error al cargar capítulos:', e);
-        if (lista) lista.innerHTML =
-            '<p class="manga-modal__sin-caps">No se pudieron cargar los capítulos.</p>';
+        if (lista) {
+            lista.innerHTML = '<p class="manga-modal__sin-caps">No se pudieron cargar los capítulos.</p>';
+        }
     }
 }
 
 function rec_iniciarModal() {
-    const fondoModal  = document.getElementById('modalFondoManga');
+    const fondoModal = document.getElementById('modalFondoManga');
     const botonCerrar = document.getElementById('modalCerrar');
 
-    if (fondoModal)  fondoModal.addEventListener('click', rec_cerrarModal);
+    if (fondoModal) fondoModal.addEventListener('click', rec_cerrarModal);
     if (botonCerrar) botonCerrar.addEventListener('click', rec_cerrarModal);
 }
 
-
-// — Render principal —
+// ------------------- RENDER PRINCIPAL ------------------- //
 
 async function renderizarRecientes() {
-    const cuadricula  = document.getElementById('cuadriculaRecientes');
+    const cuadricula = document.getElementById('cuadriculaRecientes');
     const estadoVacio = document.getElementById('estadoVacioRecientes');
-    const conteo      = document.getElementById('conteoRecientes');
+    const conteo = document.getElementById('conteoRecientes');
 
     if (!cuadricula) return;
 
-    // Indicador de carga
     cuadricula.classList.remove('oculto');
     if (estadoVacio) estadoVacio.classList.add('oculto');
     cuadricula.innerHTML = '<p style="padding:1rem;color:var(--texto-suave);font-size:0.85rem;">Cargando...</p>';
 
     try {
-        // Recogemos todas las páginas igual que en manga.js
-        let url    = `${API_MANGA_BASE}/mangas/`;
-        let mangas = [];
+        const recientes = rec_obtenerMangasRecientes();
+        const idsRecientes = recientes.map(function(item) {
+            return item.mangaId;
+        });
 
-        while (url) {
-            const resp = await fetch(url);
-            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-            const data = await resp.json();
-            if (Array.isArray(data)) { mangas = data; break; }
-            mangas = mangas.concat(data.results ?? []);
-            url    = data.next ?? null;
+        if (idsRecientes.length === 0) {
+            cuadricula.classList.add('oculto');
+            if (estadoVacio) estadoVacio.classList.remove('oculto');
+            if (conteo) conteo.textContent = '0';
+            rec_mangasActuales = [];
+            return;
         }
+
+        const mangas = await rec_cargarMangasPorIds(idsRecientes);
 
         if (mangas.length === 0) {
             cuadricula.classList.add('oculto');
             if (estadoVacio) estadoVacio.classList.remove('oculto');
             if (conteo) conteo.textContent = '0';
+            rec_mangasActuales = [];
             return;
         }
 
+        rec_mangasActuales = mangas;
+
         cuadricula.classList.remove('oculto');
         if (estadoVacio) estadoVacio.classList.add('oculto');
-        if (conteo) conteo.textContent = Math.min(mangas.length, MAX_RECOMENDADOS);
+        if (conteo) conteo.textContent = String(mangas.length);
 
         cuadricula.innerHTML = '';
-        mangas.slice(0, MAX_RECOMENDADOS).forEach(function(manga) {
+        mangas.forEach(function(manga) {
             cuadricula.appendChild(rec_crearTarjeta(manga));
-        });
-
-        // Eventos de clic en tarjetas (delegación)
-        cuadricula.addEventListener('click', function(e) {
-            const tarjeta = e.target.closest(SELECTOR_TARJETAS_REC);
-            if (!tarjeta) return;
-            const idManga = tarjeta.dataset.id;
-            const datos   = mangas.find(function(m) {
-                return String(rec_obtenerIdManga(m)) === String(idManga);
-            });
-            if (datos) rec_abrirModal(datos);
-        });
-
-        cuadricula.addEventListener('keydown', function(e) {
-            if (e.key !== 'Enter' && e.key !== ' ') return;
-            const tarjeta = e.target.closest(SELECTOR_TARJETAS_REC);
-            if (!tarjeta) return;
-            e.preventDefault();
-            const idManga = tarjeta.dataset.id;
-            const datos   = mangas.find(function(m) {
-                return String(rec_obtenerIdManga(m)) === String(idManga);
-            });
-            if (datos) rec_abrirModal(datos);
         });
 
     } catch (error) {
@@ -534,16 +593,53 @@ async function renderizarRecientes() {
     }
 }
 
+function rec_iniciarEventosRecientes() {
+    const cuadricula = document.getElementById('cuadriculaRecientes');
+    if (!cuadricula || cuadricula.dataset.eventosIniciados === 'true') return;
+
+    cuadricula.addEventListener('click', function(e) {
+        const tarjeta = e.target.closest(SELECTOR_TARJETAS_REC);
+        if (!tarjeta) return;
+
+        const idManga = tarjeta.dataset.id;
+        const datos = rec_mangasActuales.find(function(m) {
+            return String(rec_obtenerIdManga(m)) === String(idManga);
+        });
+
+        if (datos) rec_abrirModal(datos);
+    });
+
+    cuadricula.addEventListener('keydown', function(e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+
+        const tarjeta = e.target.closest(SELECTOR_TARJETAS_REC);
+        if (!tarjeta) return;
+
+        e.preventDefault();
+        const idManga = tarjeta.dataset.id;
+        const datos = rec_mangasActuales.find(function(m) {
+            return String(rec_obtenerIdManga(m)) === String(idManga);
+        });
+
+        if (datos) rec_abrirModal(datos);
+    });
+
+    cuadricula.dataset.eventosIniciados = 'true';
+}
 
 // ------------------- RECOMENDADOS ------------------- //
 
+function obtenerRecientes() {
+    return [];
+}
+
 async function cargarRecomendados() {
-    const cuadricula  = document.getElementById('cuadriculaRecomendados');
+    const cuadricula = document.getElementById('cuadriculaRecomendados');
     const estadoVacio = document.getElementById('estadoVacioRecomendados');
 
     if (!cuadricula) return;
 
-    const recientes     = obtenerRecientes();
+    const recientes = obtenerRecientes();
     const titulosLeidos = recientes.map(function(m) {
         return m.titulo?.toLowerCase().trim();
     });
@@ -553,7 +649,7 @@ async function cargarRecomendados() {
 
         if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
 
-        const datos  = await respuesta.json();
+        const datos = await respuesta.json();
         const mangas = datos.results || datos;
 
         const candidatos = mangas.filter(function(m) {
@@ -580,7 +676,6 @@ async function cargarRecomendados() {
         if (estadoVacio) estadoVacio.classList.remove('oculto');
     }
 }
-
 
 // ------------------- TARJETA MANGA ------------------- //
 
@@ -619,7 +714,6 @@ function crearTarjetaManga(manga, esRecomendado) {
     return article;
 }
 
-
 // ------------------- MODAL ------------------- //
 
 function abrirModal() {
@@ -641,16 +735,15 @@ function cerrarModal() {
     if (inputPassword) inputPassword.value = '';
 }
 
-
 // ------------------- VALIDACIÓN ------------------- //
 
 function validarFormulario() {
     limpiarErrores();
     let esValido = true;
 
-    const nombre   = document.getElementById('inputNombre')?.value.trim();
+    const nombre = document.getElementById('inputNombre')?.value.trim();
     const password = document.getElementById('inputPasswordActual')?.value;
-    const archivo  = document.getElementById('inputAvatar')?.files[0];
+    const archivo = document.getElementById('inputAvatar')?.files[0];
 
     if (!nombre || nombre.length < 3) {
         mostrarErrorCampo('errorNombre', 'inputNombre', 'El nombre debe tener al menos 3 caracteres.');
@@ -670,9 +763,7 @@ function validarFormulario() {
     return esValido;
 }
 
-
 // ------------------- GUARDAR CAMBIOS ------------------- //
-
 
 async function guardarCambios(e) {
     e.preventDefault();
@@ -688,11 +779,11 @@ async function guardarCambios(e) {
     const btnGuardar = document.getElementById('btnGuardarCambios');
     if (btnGuardar) {
         btnGuardar.textContent = 'Guardando...';
-        btnGuardar.disabled    = true;
+        btnGuardar.disabled = true;
     }
 
     const formData = new FormData();
-    formData.append('username',        document.getElementById('inputNombre')?.value.trim());
+    formData.append('username', document.getElementById('inputNombre')?.value.trim());
     formData.append('password_actual', document.getElementById('inputPasswordActual')?.value);
 
     const archivo = document.getElementById('inputAvatar')?.files[0];
@@ -700,9 +791,9 @@ async function guardarCambios(e) {
 
     try {
         const respuesta = await fetch(API_EDITAR, {
-            method:  'PATCH',
+            method: 'PATCH',
             headers: { 'Authorization': `Bearer ${token}` },
-            body:    formData,
+            body: formData,
         });
 
         const datos = await respuesta.json();
@@ -731,23 +822,20 @@ async function guardarCambios(e) {
     } finally {
         if (btnGuardar) {
             btnGuardar.textContent = 'Guardar cambios';
-            btnGuardar.disabled    = false;
+            btnGuardar.disabled = false;
         }
     }
 }
-
 
 // ------------------- CERRAR SESIÓN ------------------- //
 
 function cerrarSesion() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    localStorage.removeItem('anc_recientes');
     sessionStorage.removeItem('access_token');
     sessionStorage.removeItem('refresh_token');
     redirigirLogin();
 }
-
 
 // ------------------- PREVIEW AVATAR ------------------- //
 
@@ -772,7 +860,6 @@ document.getElementById('inputAvatar')
         };
         reader.readAsDataURL(archivo);
     });
-
 
 // ------------------- EVENTOS ------------------- //
 
@@ -803,16 +890,25 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') cerrarModal();
 });
 
+window.addEventListener('pageshow', function() {
+    renderizarRecientes();
+});
+
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        renderizarRecientes();
+    }
+});
 
 // ------------------- INICIO ------------------- //
 
 document.addEventListener('DOMContentLoaded', function() {
     cargarPerfil();
     rec_iniciarModal();
+    rec_iniciarEventosRecientes();
     renderizarRecientes();
     cargarRecomendados();
 });
-
 
 /* ------------------- IR A CAMBIAR CONTRASEÑA ------------------- */
 

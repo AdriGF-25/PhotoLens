@@ -1,24 +1,21 @@
 /* ------------------- LECTOR.JS ------------------- */
 
-
 /* ------------------- CONSTANTES ------------------- */
 
-const API_BASE        = 'http://localhost:8000/api/anime';
-const STORAGE_PREFIX  = 'anc_progreso_';
-const URL_MANGA       = '../manga/manga.html';
-
+const API_BASE       = 'http://localhost:8000/api/anime';
+const STORAGE_PREFIX = 'anc_progreso_';
+const URL_MANGA      = '../manga/manga.html';
 
 /* ------------------- ESTADO ------------------- */
 
 const estado = {
-    mangaId        : null,
-    tituloManga    : '',
-    capitulos      : [],   // todos los caps del manga ordenados
-    capIndice      : -1,   // índice actual en `capitulos`
-    paginas        : [],   // URLs de imágenes del cap actual
-    paginaActual   : 0,    // 0-indexed
+    mangaId      : null,
+    tituloManga  : '',
+    capitulos    : [],
+    capIndice    : -1,
+    paginas      : [],
+    paginaActual : 0,
 };
-
 
 /* ------------------- UTILIDADES ------------------- */
 
@@ -36,6 +33,28 @@ function parseNumero(val) {
     return isNaN(n) ? null : n;
 }
 
+function obtenerToken() {
+    return localStorage.getItem('access_token')
+        ?? sessionStorage.getItem('access_token');
+}
+
+function obtenerUsuarioIdDesdeToken() {
+    const token = obtenerToken();
+    if (!token) return null;
+
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.user_id ?? payload.id ?? null;
+    } catch {
+        return null;
+    }
+}
+
+function obtenerClaveProgresoUsuario(mangaId) {
+    const usuarioId = obtenerUsuarioIdDesdeToken();
+    if (!usuarioId || !mangaId) return null;
+    return `${STORAGE_PREFIX}${usuarioId}_${mangaId}`;
+}
 
 /* ------------------- URL PARAMS ------------------- */
 
@@ -53,38 +72,61 @@ function actualizarURL(numero) {
     window.history.replaceState({}, '', url);
 }
 
-
 /* ------------------- PROGRESO (LOCALSTORAGE) ------------------- */
 
 function leerProgreso(mangaId) {
     try {
-        const raw = localStorage.getItem(STORAGE_PREFIX + mangaId);
-        if (!raw) return { ultimoCapitulo: null, capitulosLeidos: [] };
+        const clave = obtenerClaveProgresoUsuario(mangaId);
+        if (!clave) {
+            return {
+                ultimoCapitulo: null,
+                capitulosLeidos: [],
+                ultimaApertura: null,
+            };
+        }
+
+        const raw = localStorage.getItem(clave);
+        if (!raw) {
+            return {
+                ultimoCapitulo: null,
+                capitulosLeidos: [],
+                ultimaApertura: null,
+            };
+        }
+
         const data = JSON.parse(raw);
         return {
-            ultimoCapitulo  : data.ultimoCapitulo  ?? null,
-            capitulosLeidos : Array.isArray(data.capitulosLeidos) ? data.capitulosLeidos : [],
+            ultimoCapitulo : data.ultimoCapitulo ?? null,
+            capitulosLeidos: Array.isArray(data.capitulosLeidos) ? data.capitulosLeidos : [],
+            ultimaApertura : data.ultimaApertura ?? null,
         };
     } catch {
-        return { ultimoCapitulo: null, capitulosLeidos: [] };
+        return {
+            ultimoCapitulo: null,
+            capitulosLeidos: [],
+            ultimaApertura: null,
+        };
     }
 }
 
 function guardarProgreso(mangaId, numCap, completado = false) {
     try {
+        const clave = obtenerClaveProgresoUsuario(mangaId);
+        if (!clave) return;
+
         const progreso = leerProgreso(mangaId);
         progreso.ultimoCapitulo = numCap;
+        progreso.ultimaApertura = new Date().toISOString();
 
         if (completado && !progreso.capitulosLeidos.includes(numCap)) {
             progreso.capitulosLeidos.push(numCap);
         }
 
-        localStorage.setItem(STORAGE_PREFIX + mangaId, JSON.stringify(progreso));
+        localStorage.setItem(clave, JSON.stringify(progreso));
     } catch (e) {
         console.warn('[Lector] No se pudo guardar progreso:', e);
     }
 }
-
 
 /* ------------------- API ------------------- */
 
@@ -106,7 +148,6 @@ async function fetchPaginas(capituloId) {
     return resp.json();
 }
 
-
 /* ------------------- UI — BARRA ------------------- */
 
 function actualizarBarra() {
@@ -122,14 +163,12 @@ function actualizarBarra() {
         : '— / —';
 }
 
-
 /* ------------------- UI — IMAGEN ------------------- */
 
 function cargarImagen(url) {
     return new Promise((resolve) => {
         const img = obtenerElemento('lectorImagen');
 
-        // Fade out
         img.classList.add('lector__imagen--fade-out');
 
         const onLoad = () => {
@@ -146,27 +185,26 @@ function cargarImagen(url) {
             resolve();
         };
 
-        img.onload  = onLoad;
+        img.onload = onLoad;
         img.onerror = onError;
-        img.src     = url;
-        img.alt     = `Página ${estado.paginaActual + 1} — ${estado.tituloManga}`;
+        img.src = url;
+        img.alt = `Página ${estado.paginaActual + 1} — ${estado.tituloManga}`;
     });
 }
 
 function actualizarProgresoBarra() {
-    const fill     = obtenerElemento('lectorProgresoFill');
-    const barra    = obtenerElemento('lectorProgreso');
-    const total    = estado.paginas.length;
-    const actual   = estado.paginaActual + 1;
+    const fill = obtenerElemento('lectorProgresoFill');
+    const barra = obtenerElemento('lectorProgreso');
+    const total = estado.paginas.length;
+    const actual = estado.paginaActual + 1;
     const porcentaje = total > 0 ? Math.round((actual / total) * 100) : 0;
 
-    if (fill)  fill.style.width = `${porcentaje}%`;
+    if (fill) fill.style.width = `${porcentaje}%`;
     if (barra) {
-        barra.setAttribute('aria-valuemax',  total);
-        barra.setAttribute('aria-valuenow',  actual);
+        barra.setAttribute('aria-valuemax', total);
+        barra.setAttribute('aria-valuenow', actual);
     }
 }
-
 
 /* ------------------- UI — BOTONES ------------------- */
 
@@ -182,13 +220,11 @@ function actualizarBotones() {
     if (btnCapNext) btnCapNext.disabled = estado.capIndice >= estado.capitulos.length - 1;
 }
 
-
 /* ------------------- SPINNER ------------------- */
 
 function mostrarSpinner(activo) {
     mostrarOculto(obtenerElemento('lectorSpinner'), activo);
 }
-
 
 /* ------------------- NAVEGACIÓN — PÁGINA ------------------- */
 
@@ -210,7 +246,6 @@ async function irPagina(n) {
     actualizarBotones();
     actualizarProgresoBarra();
 
-    // Scroll arriba por si la imagen es larga en móvil
     obtenerElemento('lectorVisor')?.scrollTo(0, 0);
 }
 
@@ -222,7 +257,6 @@ function paginaAnterior() {
     irPagina(estado.paginaActual - 1);
 }
 
-
 /* ------------------- NAVEGACIÓN — CAPÍTULO ------------------- */
 
 async function cargarCapitulo(indice) {
@@ -232,14 +266,14 @@ async function cargarCapitulo(indice) {
     mostrarOculto(obtenerElemento('lectorImagenWrap'), false);
     mostrarOculto(obtenerElemento('lectorVacio'), false);
 
-    estado.capIndice     = indice;
-    estado.paginaActual  = 0;
-    estado.paginas       = [];
+    estado.capIndice = indice;
+    estado.paginaActual = 0;
+    estado.paginas = [];
 
     const cap = estado.capitulos[indice];
 
     try {
-        const data     = await fetchPaginas(cap.id);
+        const data = await fetchPaginas(cap.id);
         estado.paginas = Array.isArray(data.paginas) ? data.paginas : [];
     } catch (e) {
         console.error('[Lector] Error al cargar páginas:', e);
@@ -273,7 +307,6 @@ function capituloAnterior() {
     cargarCapitulo(estado.capIndice - 1);
 }
 
-
 /* ------------------- SALIR ------------------- */
 
 function salir() {
@@ -282,28 +315,22 @@ function salir() {
     window.history.back();
 }
 
-
 /* ------------------- EVENTOS ------------------- */
 
 function iniciarEventos() {
-    // Barra
     obtenerElemento('lectorSalir')?.addEventListener('click', salir);
 
-    // Navegación inferior
     obtenerElemento('btnPaginaAnterior')?.addEventListener('click', paginaAnterior);
     obtenerElemento('btnPaginaSiguiente')?.addEventListener('click', paginaSiguiente);
     obtenerElemento('btnCapAnterior')?.addEventListener('click', capituloAnterior);
     obtenerElemento('btnCapSiguiente')?.addEventListener('click', capituloSiguiente);
 
-    // Estados vacío / error
     obtenerElemento('lectorVacioSalir')?.addEventListener('click', salir);
     obtenerElemento('lectorErrorSalir')?.addEventListener('click', salir);
 
-    // Zonas de click sobre la imagen
     obtenerElemento('zonaIzq')?.addEventListener('click', paginaAnterior);
     obtenerElemento('zonaDer')?.addEventListener('click', paginaSiguiente);
 
-    // Teclado
     document.addEventListener('keydown', (e) => {
         switch (e.key) {
             case 'ArrowRight':
@@ -322,7 +349,6 @@ function iniciarEventos() {
         }
     });
 
-    // Swipe táctil
     let touchStartX = 0;
     const visor = obtenerElemento('lectorVisor');
 
@@ -338,16 +364,13 @@ function iniciarEventos() {
     }, { passive: true });
 }
 
-
 /* ------------------- INIT ------------------- */
 
 async function iniciar() {
     const { mangaId, numero } = obtenerParams();
 
-    // Registrar eventos siempre (para que Salir funcione aunque la API falle)
     iniciarEventos();
 
-    // Validar params mínimos
     if (!mangaId || numero === null) {
         console.warn('[Lector] Faltan parámetros manga/numero en la URL');
         mostrarSpinner(false);
@@ -365,7 +388,7 @@ async function iniciar() {
         ]);
 
         estado.tituloManga = mangaInfo.titulo || '';
-        estado.capitulos   = capitulos;
+        estado.capitulos = capitulos;
 
         const indice = capitulos.findIndex(
             c => parseFloat(c.numero) === numero
