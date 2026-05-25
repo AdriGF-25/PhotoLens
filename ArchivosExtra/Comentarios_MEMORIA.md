@@ -1421,3 +1421,412 @@ Añadido "paginas" a la condición AllowAny en get_permissions() para que el end
 
 3. Causa raíz
 El DEFAULT_PERMISSION_CLASSES global en settings.py estaba configurado como IsAuthenticated, lo que sobreescribía el permission_classes=[AllowAny] del @action. Declarar permission_classes explícitamente a nivel de clase fuerza a DRF a usar get_permissions() siempre.
+
+
+## Resumen para memoria — 20/05/2026
+
+### Corrección de "Leídos recientemente" en perfil de usuario
+
+---
+
+### 1. Descripción
+
+Se ha corregido y desarrollado la sección **"Leídos recientemente"** de la página de perfil,
+que anteriormente mostraba siempre el estado vacío ("Aún no has leído ningún manga")
+independientemente del estado real del catálogo.
+
+---
+
+### 2. Problema detectado
+
+La implementación original leía de `localStorage` bajo la clave `anc_recientes`,
+que nunca era escrita por ninguna parte del sistema. Al estar siempre vacía,
+la sección mostraba permanentemente el estado vacío.
+
+---
+
+### 3. Solución implementada
+
+Se sustituyó la lógica de `localStorage` por una **llamada directa a la API REST**
+del backend Django (`/api/anime/mangas/`), replicando en `perfil.js` las mismas
+funciones que usa `manga.js` para renderizar tarjetas y gestionar el modal de detalle.
+
+---
+
+### 4. Archivos modificados
+
+| Archivo | Cambios |
+|---|---|
+| `perfil.js` | Nuevas constantes, funciones `rec_*`, `renderizarRecientes()` async con fetch, modal completo |
+| `perfil.html` | Añadido HTML del modal de detalle de manga (`#mangaModal`) |
+| `perfil.css` | Añadidos estilos del modal manga, tarjetas manga, volúmenes y botones de capítulo |
+
+---
+
+### 5. Funcionalidades resultantes
+
+- La sección muestra hasta 5 mangas del catálogo con portada, título y número de capítulos
+- Al hacer clic en una tarjeta se abre un modal con los dos paneles (portada + lista de capítulos)
+- Los capítulos se cargan desde la API y se agrupan en bloques de 20
+- El progreso de lectura se lee desde `localStorage` (`anc_progreso_<id>`) igual que en la página de manga
+- El modal se cierra con el botón ✕, haciendo clic en el fondo, o pulsando Escape
+- Diseño y comportamiento idéntico al de la página de manga, responsive en todos los breakpoints
+
+
+
+# Resumen para memoria - 2026-05-21
+
+## 1. Descripción
+
+Durante esta fase del proyecto se corrigió el sistema de gestión y visualización de portadas de manga en la aplicación `anime'n'chill`. El problema detectado era que algunas imágenes no se mostraban correctamente en la página de manga ni en el perfil de usuario, a pesar de estar subidas en Django y almacenadas dentro de la carpeta `media`.
+
+Tras el análisis del flujo completo, se comprobó que el origen del error no estaba únicamente en el frontend, sino en la forma en la que el backend resolvía la portada principal de cada manga. En varios registros se estaba utilizando el campo `portada_url` con rutas manuales antiguas, como `/media/Portada_one_piece.png`, que ya no coincidían con la ubicación real del archivo.
+
+La solución aplicada consistió en hacer que el sistema priorizara siempre imágenes reales gestionadas por Django, ya fuera mediante `portada_local` o mediante el modelo relacionado `Portada`. De este modo, tanto `manga.html` como `perfil` pasaron a consumir una misma fuente válida de imagen desde la API.
+
+## 2. Temporalización
+
+La incidencia se abordó dentro de la fase de integración entre backend y frontend, cuando se realizaron pruebas reales de carga de portadas desde la base de datos. El error se detectó inicialmente al comprobar que algunas imágenes devolvían un `404` al intentar acceder a la ruta servida por Django.
+
+En una primera revisión se analizó el modelo `Manga`, su propiedad `portada` y la relación con el modelo `Portada`. Después se comprobó mediante consola interactiva (`manage.py shell`) qué valores reales estaban almacenados en `portada_local`, `portada_url` y en las portadas relacionadas.
+
+Una vez identificado el problema, se corrigió la prioridad lógica de resolución de la portada, se añadieron imágenes reales desde el panel de administración de Django y se limpiaron datos antiguos que mantenían rutas incorrectas. Finalmente, se verificó que tanto la página de manga como el perfil mostraban correctamente la misma imagen.
+
+## 3. Requisitos
+
+Esta mejora responde directamente a la necesidad de mantener consistencia entre los datos servidos por la API REST y los elementos visualizados en el frontend. Dentro del proyecto, era imprescindible que las portadas de los mangas pudieran cargarse correctamente desde Django y que dichas imágenes estuvieran disponibles en todas las vistas que las consumen.
+
+También se cubre un requisito importante de diseño backend en DAW: evitar soluciones manuales o frágiles cuando existe una estructura de datos ya definida en el modelo. En lugar de depender de rutas escritas manualmente, se reforzó el uso del ORM, de los `ImageField` y de la relación entre modelos para garantizar un comportamiento estable.
+
+Además, esta corrección mejora la mantenibilidad del proyecto, ya que deja una única lógica clara para obtener la portada principal de cada manga, reduciendo incoherencias entre backend, panel de administración y frontend.
+
+## 4. Arquitectura
+
+La solución se apoyó en la estructura existente de modelos del backend Django. El modelo `Manga` mantiene una propiedad calculada llamada `portada`, cuya función es determinar qué imagen debe enviarse como portada principal al frontend. Esta propiedad fue ajustada para seguir un orden de prioridad más robusto:
+
+1. Usar `portada_local` si existe.
+2. Usar la `Portada` marcada como principal.
+3. Usar la primera `Portada` relacionada disponible.
+4. Usar `portada_url` solo como último recurso.
+
+Este cambio fue importante porque `portada_url` contenía en algunos casos rutas antiguas que no apuntaban a archivos reales dentro de `MEDIA_ROOT`. En cambio, las imágenes almacenadas en `ImageField` sí generan URLs válidas a partir del sistema de archivos gestionado por Django.
+
+A nivel de integración, el frontend no tuvo que construir rutas manuales nuevas, sino que pasó a consumir la información ya resuelta por el backend. Esto permitió que las vistas `manga.html` y `perfil` utilizaran la misma fuente de datos para la portada, evitando diferencias visuales entre ambas.
+
+## 5. Datos
+
+Durante la revisión de datos se detectó que algunos mangas tenían valores vacíos en `portada_local`, otros no tenían ninguna `Portada` relacionada y algunos seguían dependiendo de `portada_url` con rutas manuales ya obsoletas. Este era el caso, por ejemplo, de `SPY x FAMILY`, que mantenía una URL antigua aunque ya disponía de una portada válida asociada desde Django.
+
+Para solucionar esta inconsistencia, se subieron imágenes reales a través del panel de administración en el modelo `Portada` para mangas como `One Piece` y `SPY x FAMILY`. Después se comprobó desde `manage.py shell` que la propiedad `portada` devolvía correctamente una ruta válida dentro de `/media/portadas/...`.
+
+Por último, se limpiaron registros antiguos como `portada_url` cuando ya no eran necesarios. Esta limpieza dejó el sistema más consistente y preparado para futuras ampliaciones, ya que las portadas ahora dependen de archivos reales gestionados por Django y no de textos manuales guardados en la base de datos.
+
+
+# Explicación completa - Restyling de login y registro
+
+## 1. Qué se ha cambiado
+
+Se han actualizado los archivos `login.html`, `login.css`, `registro.html` y `registro.css` para que las páginas de autenticación mantengan su estructura original, pero adopten una estética mucho más cercana a la página `novedades`.
+
+Los cambios principales han sido:
+
+- Mantener la estructura base del formulario.
+- Añadir una estética más editorial y oscura.
+- Reforzar el uso del color de acento dorado de la web.
+- Mejorar la visibilidad del fondo.
+- Hacer que login y registro tengan coherencia visual entre sí.
+
+---
+
+## 2. Por qué se ha cambiado
+
+Antes, login y registro funcionaban, pero visualmente parecían pantallas separadas del resto del proyecto.
+
+La página de `novedades` ya tiene una identidad visual bastante clara:
+- fondo oscuro,
+- contrastes fuertes,
+- títulos con peso visual,
+- acento dorado,
+- tarjetas con apariencia sólida,
+- sensación de página moderna de contenido.
+
+En cambio, login y registro tenían:
+- una caja demasiado genérica,
+- inputs con menos personalidad,
+- fondos demasiado apagados,
+- menos relación visual con el resto del proyecto.
+
+Por eso se ha hecho este restyling: para unificar la identidad del proyecto.
+
+---
+
+## 3. Para qué sirve este cambio
+
+Este cambio sirve para:
+
+- Dar una imagen más profesional al proyecto.
+- Hacer que el usuario perciba que todas las páginas pertenecen a la misma aplicación.
+- Mejorar la experiencia visual al entrar en login y registro.
+- Preparar una base visual reutilizable para futuras pantallas del proyecto.
+
+---
+
+## 4. Cambios en HTML
+
+### Login
+En `login.html` no se ha roto la estructura del formulario.  
+Solo se han añadido y ajustado algunos elementos visuales:
+
+- Se mantiene el logo superior.
+- Se añade una etiqueta visual tipo `Acceso`.
+- Se añade un subtítulo bajo el título principal.
+- Se añade una capa extra decorativa en el fondo: `login-fondo__detalle`.
+- La caja principal pasa a estar dentro de una sección más semántica.
+
+### Registro
+En `registro.html` se ha seguido el mismo criterio:
+
+- Se añade el logo superior para que tenga coherencia con login.
+- Se añade una etiqueta visual tipo `Registro`.
+- Se mantiene toda la estructura de campos.
+- Se añade una capa decorativa en el fondo: `registro-fondo__detalle`.
+
+---
+
+## 5. Cambios en CSS
+
+### Fondo
+Antes el fondo estaba muy oscurecido y perdía fuerza.
+
+Ahora:
+- la imagen se sigue oscureciendo para mantener legibilidad,
+- pero se le ha dado más brillo, contraste y saturación,
+- se ha añadido una superposición más trabajada,
+- se han añadido detalles radiales con el color de acento.
+
+Esto hace que el fondo se vea más, pero sin molestar al formulario.
+
+### Caja principal
+Antes la caja parecía un bloque genérico con blur.
+
+Ahora:
+- tiene un fondo más parecido al de una tarjeta oscura de la web,
+- usa bordes más finos y discretos,
+- se ha reducido el redondeado para acercarlo al estilo de `novedades`,
+- la sombra está más trabajada y da profundidad.
+
+### Tipografía
+Se ha reforzado el peso visual de los títulos:
+- títulos más grandes,
+- más negrita,
+- espaciado más cercano al estilo editorial.
+
+Las etiquetas de los campos también pasan a usar mayúsculas suaves y más peso visual.
+
+### Inputs
+Los inputs ahora:
+- tienen un fondo más integrado con el modo oscuro,
+- mejoran el hover,
+- mejoran el focus,
+- usan mejor el color de acento.
+
+### Botones
+Los botones de login y registro ahora siguen más claramente el estilo del botón principal de `novedades`:
+- color dorado,
+- texto en mayúsculas,
+- más peso visual,
+- pequeño desplazamiento al hacer hover.
+
+---
+
+## 6. Coherencia visual conseguida
+
+Con estos cambios, login y registro comparten ahora:
+
+- mismo lenguaje visual,
+- mismo color de acento,
+- misma línea de tarjetas oscuras,
+- misma forma de resaltar títulos,
+- misma forma de tratar el fondo.
+
+Eso hace que, cuando el usuario pase de `novedades` a `login` o `registro`, no parezca que ha salido a otra web distinta.
+
+---
+
+## 7. Relación con el archivo `temas.css`
+
+Se ha respetado el sistema de variables del proyecto:
+- `--fondo`
+- `--fondo-tarjeta`
+- `--borde`
+- `--texto`
+- `--texto-suave`
+- `--texto-muy-suave`
+- `--acento`
+- `--acento-hover`
+
+Esto es importante porque permite:
+- mantener compatibilidad con el sistema de temas,
+- no duplicar colores innecesariamente,
+- facilitar cambios futuros de estilo global.
+
+---
+
+## 8. Archivo y función
+
+### `login.html` y `login.css`
+Su función es permitir el acceso del usuario a la aplicación con una interfaz clara, visualmente coherente y alineada con el resto del proyecto.
+
+### `registro.html` y `registro.css`
+Su función es permitir el alta de nuevos usuarios con una interfaz visual consistente con login y con la identidad general de anime'n'chill.
+
+---
+
+## 9. Resultado final esperado
+
+Después de aplicar estos cambios:
+
+- el fondo se verá más,
+- la caja destacará mejor,
+- el formulario se sentirá más moderno,
+- el diseño estará más conectado con `novedades`,
+- login y registro parecerán parte del mismo sistema visual.
+
+
+
+
+---
+---
+
+# Resumen para memoria - 2026-05-21
+
+## **Quitar opción de cambiar contraseña en editar perfil**
+
+
+## Qué se elimina
+Se elimina únicamente el bloque visual dentro del modal de **Editar perfil** que mostraba el mensaje *“¿Quieres cambiar tu contraseña?”* junto con el enlace hacia la página de cambio de contraseña.
+
+## Qué se mantiene
+Se mantiene todo el resto del modal exactamente igual:
+- Foto de perfil
+- Nombre de usuario
+- Email
+- Campo de contraseña actual
+- Feedback global
+- Botones de cancelar y guardar cambios
+
+## Por qué se hace así
+Este cambio es el más seguro porque actúa solo sobre el bloque responsable de mostrar esa opción.  
+No modifica la estructura general del formulario ni afecta al resto de campos.
+
+## Para qué sirve
+Sirve para que al pulsar **Editar perfil** ya no aparezca la opción de cambiar contraseña, dejando el modal centrado únicamente en la edición de datos del perfil.
+
+## Funciones eliminadas vs añadidas
+
+### Eliminadas
+- La visualización del bloque `.campo-enlace-password`
+- El texto informativo para cambiar contraseña
+- El enlace a la página de recuperación/cambio de contraseña
+- Los estilos CSS exclusivos de ese bloque
+- El ajuste responsive de ese bloque en móvil
+
+### Añadidas
+- No se añade ninguna funcionalidad nueva
+
+## Función del archivo modificado
+
+### `perfil.html`
+Contiene la estructura visual de la página de perfil y del modal de edición.  
+Aquí se elimina el bloque HTML que mostraba la opción de cambiar contraseña.
+
+### `perfil.css`
+Contiene los estilos de la página de perfil y del modal.  
+Aquí se eliminan únicamente las reglas CSS asociadas al bloque retirado para evitar dejar código muerto.
+
+
+---
+
+# Arreglo de leídos recientemente
+
+## 1. Descripción
+
+Se corrigió el bloque de **mangas leídos recientemente** de la página de perfil para que mostrase realmente los últimos mangas abiertos por el usuario, en lugar de una lista estática o desactualizada. [web:317]
+
+El problema principal era que la información de progreso no se estaba relacionando de forma segura con el usuario autenticado y, además, la sección de perfil no se actualizaba correctamente al regresar desde el lector. [web:317][web:472]
+
+La solución aplicada consistió en guardar el progreso de lectura en `localStorage` usando una clave compuesta por el identificador del usuario y el identificador del manga. De esta forma, cada usuario conserva su propio historial de lectura y el perfil puede recuperar únicamente sus datos. [web:317]
+
+## 2. Temporalización
+
+La corrección se realizó durante la fase de ajustes funcionales de la página de perfil, una vez detectado que la lógica visual estaba implementada pero no reflejaba el uso real del lector. [web:317]
+
+Primero se revisó cómo se guardaba el progreso en el lector y después cómo se consumía ese progreso desde el perfil. A partir de ahí se unificó el formato de almacenamiento y se reorganizó la carga de mangas recientes. [web:317]
+
+## 3. Requisitos
+
+Para que la funcionalidad fuese correcta, se definieron tres requisitos principales:
+
+- Guardar el progreso por usuario y por manga.
+- Obtener los mangas recientes a partir de la fecha de última apertura.
+- Mostrar únicamente los 5 últimos mangas abiertos. [web:317]
+
+También fue necesario asegurar que la vista de perfil se refrescase al volver desde la página del lector, ya que el contenido podía estar restaurándose desde caché del navegador. El evento `pageshow` permite manejar este comportamiento de forma fiable. [web:472]
+
+## 4. Arquitectura
+
+La solución se apoyó en dos archivos del frontend:
+
+- `lector.js`, encargado de guardar el progreso.
+- `perfil.js`, encargado de leerlo, ordenarlo y mostrarlo. [web:317]
+
+En `lector.js`, se añadió una clave de almacenamiento con este patrón:
+
+`anc_progreso_{usuarioId}_{mangaId}`
+
+Este enfoque evita mezclar datos entre usuarios distintos dentro del mismo navegador y mantiene el progreso asociado a cada manga de manera individual. `localStorage` almacena información por origen, por lo que esta estrategia permite organizar correctamente los datos sin necesidad de cambios en backend. [web:317]
+
+En `perfil.js`, la lógica de recientes recorre las claves del usuario actual, extrae el campo `ultimaApertura`, ordena los resultados de más reciente a más antiguo y solicita a la API únicamente los mangas necesarios para pintarlos en el mismo orden. [web:317]
+
+Además, se añadió una recarga de la sección al producirse `pageshow` y también al recuperar visibilidad de la pestaña. Esto asegura que el perfil vuelva a dibujar los recientes cuando el usuario regresa desde el lector. [web:472]
+
+## 5. Datos
+
+Cada manga leído almacena una estructura similar a la siguiente:
+
+```json
+{
+  "ultimoCapitulo": 12,
+  "capitulosLeidos":,[3][4][5][6][7]
+  "ultimaApertura": "2026-05-22T18:30:00.000Z"
+}
+```
+
+El campo más importante para esta mejora es `ultimaApertura`, ya que permite ordenar los mangas por uso real y mostrar los últimos abiertos. [web:317]
+
+Gracias a este cambio, la página de perfil ya no depende de una lista fija ni del orden devuelto por la API general de mangas, sino del comportamiento real de lectura del usuario. [web:317]
+
+
+# Explicación clara — arreglo de leídos recientemente
+
+## Qué se cambió
+Se modificó únicamente la lógica relacionada con los mangas leídos recientemente.
+
+## Funciones eliminadas o que dejaron de ser útiles
+- La lógica que mostraba mangas sin usar el historial real del usuario dejó de ser válida.
+- El render que dependía de una lista genérica ya no servía para cumplir el requisito funcional.
+
+## Funciones añadidas o ajustadas
+- Se añadió una clave de progreso por usuario y manga.
+- Se guardó la fecha de última apertura en cada lectura.
+- Se leyó el historial desde perfil para ordenar los mangas recientes.
+- Se refrescó el bloque al volver desde el lector.
+
+## Función del archivo `lector.js`
+Este archivo se encarga de gestionar la lectura de capítulos y guardar el progreso del usuario en el navegador.
+
+## Función del archivo `perfil.js`
+Este archivo se encarga de construir la vista de perfil, recuperar el historial de lectura y mostrar los últimos mangas abiertos en el orden correcto.
+
+## Resultado
+Ahora el perfil muestra los 5 últimos mangas abiertos reales del usuario y se actualiza al volver desde el lector.

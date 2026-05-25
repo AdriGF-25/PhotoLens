@@ -50,7 +50,7 @@ class NoticiaDetalleSerializer(serializers.ModelSerializer):
             "descripcion",
             "contenido",
             "contenido_es",
-            "contenido_mostrar",   # ← campo inteligente para el frontend
+            "contenido_mostrar",
             "imagen_url",
             "url_externa",
             "fecha_ann",

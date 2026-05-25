@@ -73,16 +73,14 @@ python manage.py shell -c "exec(open('diagnostico_manga.py', encoding='utf-8').r
 Registrar y obtener capitulos mas portadas 
 --------------------------------------------------------------
 
-PARA REGISTRAR MANGAS EN LA BD Y POBLAR CAPITULOS DE back-end\media Y
+PARA REGISTRAR MANGAS EN LA BD Y POBLAR CAPITULOS DE back-end\media Y sacar PORTADAS 
 
-# 1. Registrar mangas en BD desde carpetas
+# 1. Registrar mangas en BD desde carpetas y asignar generos
 python manage.py registrar_mangas
+python manage.py asignar_generos
 
 # 2. Poblar capítulos
 python manage.py poblar_capitulos
-
-# 3. Obtener portadas y metadatos desde MangaDex
-python manage.py metadatos_manga
 
 # O para simular primero:
 python manage.py registrar_mangas --dry-run
@@ -100,3 +98,4 @@ python manage.py poblar_capitulos
 
     Limpiar y repoblar (si cambiaste carpetas)
     python manage.py poblar_capitulos --manga "Fire Force" --limpiar
+
