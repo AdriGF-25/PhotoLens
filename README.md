@@ -114,6 +114,8 @@ animeNchill/
 
 ### Primer arranque en un dispositivo nuevo
 
+> **Base de datos:** El proyecto usa SQLite. El archivo `db.sqlite3` **no se incluye en el repositorio** y se genera automáticamente al ejecutar las migraciones. Para disponer de contenido visible tras el arranque, ejecuta los comandos de población del paso 7.
+
 ```bash
 # 1. Clonar el repositorio
 git clone https://github.com/AdriGF-25/animeNchill.git
@@ -128,7 +130,7 @@ source .venv/bin/activate       # Linux / macOS
 cd back-end
 pip install -r PipRequirements.txt
 
-# 4. Aplicar migraciones
+# 4. Aplicar migraciones (crea el archivo db.sqlite3 automáticamente)
 python manage.py migrate
 
 # 5. Crear superusuario para el panel de administración
@@ -136,6 +138,21 @@ python manage.py createsuperuser
 
 # 6. Arrancar el servidor
 python manage.py runserver
+
+# 7. Poblar la base de datos con contenido inicial
+#    (necesario para ver noticias y catálogo de manga en el frontend)
+
+# Scrapear las últimas noticias de Anime News Network
+python manage.py scrapear_noticias --limite 30
+
+# Registrar mangas desde la carpeta media/Manga/
+python manage.py registrar_mangas
+
+# Crear los capítulos a partir de las subcarpetas
+python manage.py poblar_capitulos
+
+# Obtener portadas y metadatos desde MangaDex
+python manage.py metadatos_manga
 ```
 
 La API estará disponible en `http://127.0.0.1:8000/`
