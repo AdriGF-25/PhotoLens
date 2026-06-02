@@ -4,10 +4,11 @@ Uso: python manage.py menu_comandos
 """
 
 from django.core.management.base import BaseCommand
+from django.core.management import call_command
 
 
 class Command(BaseCommand):
-    help = 'Menú interactivo para comprobar comandos del proyecto'
+    help = 'Menú interactivo para ejecutar comandos del proyecto'
 
     def handle(self, *args, **kwargs):
         self._mostrar_menu()
@@ -41,24 +42,18 @@ class Command(BaseCommand):
             self._volver_al_menu()
 
     def _accion_registrar_mangas(self):
-        self.stdout.write(self.style.WARNING(
-            '\n  Ejecuta en otra terminal:\n'
-            '  python manage.py registrar_mangas\n'
-        ))
+        self.stdout.write(self.style.WARNING('\n  Ejecutando registrar_mangas...\n'))
+        call_command('registrar_mangas')
         self._volver_al_menu()
 
     def _accion_poblar_capitulos(self):
-        self.stdout.write(self.style.WARNING(
-            '\n  Ejecuta en otra terminal:\n'
-            '  python manage.py poblar_capitulos\n'
-        ))
+        self.stdout.write(self.style.WARNING('\n  Ejecutando poblar_capitulos...\n'))
+        call_command('poblar_capitulos')
         self._volver_al_menu()
 
     def _accion_asignar_generos(self):
-        self.stdout.write(self.style.WARNING(
-            '\n  Ejecuta en otra terminal:\n'
-            '  python manage.py asignar_generos\n'
-        ))
+        self.stdout.write(self.style.WARNING('\n  Ejecutando asignar_generos...\n'))
+        call_command('asignar_generos')
         self._volver_al_menu()
 
     def _accion_ver_ayuda(self):

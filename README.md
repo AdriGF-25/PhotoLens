@@ -1,4 +1,8 @@
-# anime'n'chill
+<p align="center">
+  <img src="front-end/assets/logo_animenchill.png" alt="anime'n'chill logo" width="300"/>
+</p>
+
+---
 
 ![Django](https://img.shields.io/badge/Django-6.0-092E20?style=flat-square&logo=django&logoColor=white)
 ![DRF](https://img.shields.io/badge/DRF-3.17-red?style=flat-square&logo=django&logoColor=white)
@@ -145,14 +149,19 @@ python manage.py runserver
 # Scrapear las últimas noticias de Anime News Network
 python manage.py scrapear_noticias --limite 30
 
-# Registrar mangas desde la carpeta media/Manga/
-python manage.py registrar_mangas
+# Menu de comandos 
+python manage.py menu_comandos
 
-# Crear los capítulos a partir de las subcarpetas
-python manage.py poblar_capitulos
+  # Con el comando anterior puedes ejecutar los siguiente:
 
-# Obtener portadas y metadatos desde MangaDex
-python manage.py metadatos_manga
+    # Registrar mangas desde la carpeta media/Manga/
+    python manage.py registrar_mangas
+
+    # Crear los capítulos a partir de las subcarpetas
+    python manage.py poblar_capitulos
+
+    # Obtener portadas y metadatos desde MangaDex
+    python manage.py metadatos_manga
 ```
 
 La API estará disponible en `http://127.0.0.1:8000/`
