@@ -20,7 +20,8 @@ class Command(BaseCommand):
         self.stdout.write('  [1]  Registrar mangas')
         self.stdout.write('  [2]  Poblar capítulos')
         self.stdout.write('  [3]  Asignar géneros')
-        self.stdout.write('  [4]  Ver ayuda de comandos')
+        self.stdout.write('  [4]  Ajustar portadas')
+        self.stdout.write('  [5]  Ver ayuda de comandos')
         self.stdout.write('  [0]  Salir')
         self.stdout.write('═' * 52)
 
@@ -30,7 +31,8 @@ class Command(BaseCommand):
             '1': self._accion_registrar_mangas,
             '2': self._accion_poblar_capitulos,
             '3': self._accion_asignar_generos,
-            '4': self._accion_ver_ayuda,
+            '4': self._accion_ajustar_portadas,
+            '5': self._accion_ver_ayuda,
             '0': self._accion_salir,
         }
 
@@ -56,12 +58,18 @@ class Command(BaseCommand):
         call_command('asignar_generos')
         self._volver_al_menu()
 
+    def _accion_ajustar_portadas(self):
+        self.stdout.write(self.style.WARNING('\n  Ejecutando ajustar_portadas...\n'))
+        call_command('ajustar_portadas')
+        self._volver_al_menu()
+
     def _accion_ver_ayuda(self):
         self.stdout.write(self.style.SUCCESS(
             '\n  Comandos disponibles:\n'
             '  - registrar_mangas\n'
             '  - poblar_capitulos\n'
             '  - asignar_generos\n'
+            '  - ajustar_portadas\n'
         ))
         self._volver_al_menu()
 
