@@ -41,12 +41,11 @@ La aplicación combina un backend robusto con Django REST Framework y un fronten
 | Leídos recientemente en perfil (historial real por usuario) | ✅ Funcional |
 | Catálogo de manga con modal de detalle | ✅ Funcional |
 | Lector de manga con páginas por capítulo | ✅ Funcional |
-| Gestión de portadas desde Django Admin | ✅ Funcional |
 | Progreso de lectura por usuario (localStorage) | ✅ Funcional |
 | Favoritos de manga | 🔧 Backend listo, frontend pendiente |
 | Recuperación de contraseña | 🔧 En desarrollo |
 | Verificación de email | 🔧 Pendiente |
-| Conexión en vivo con MangaDex para portadas | 🔧 En desarrollo |
+| Manga destacado en pagina de detalle | 🔧 En desarrollo |
 
 ***
 
